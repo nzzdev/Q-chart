@@ -1,4 +1,4 @@
-System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'chartist/dist/chartist.min.css!', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (_export) {
+System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (_export) {
   'use strict';
 
   var useView, inject, ObserverLocator, Chartist, computedToInline, Papa, ToolboxChart;
@@ -15,7 +15,7 @@ System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'chartist/d
       ObserverLocator = _aureliaBinding.ObserverLocator;
     }, function (_chartist) {
       Chartist = _chartist['default'];
-    }, function (_chartistDistChartistMinCss) {}, function (_computedStyleToInlineStyle) {
+    }, function (_computedStyleToInlineStyle) {
       computedToInline = _computedStyleToInlineStyle['default'];
     }, function (_papaparse) {
       Papa = _papaparse['default'];

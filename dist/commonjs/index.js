@@ -18,8 +18,6 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-require('chartist/dist/chartist.min.css!');
-
 var _computedStyleToInlineStyle = require('computed-style-to-inline-style');
 
 var _computedStyleToInlineStyle2 = _interopRequireDefault(_computedStyleToInlineStyle);

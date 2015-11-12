@@ -12,10 +12,14 @@ module.exports = gulp.task('build-styles', function() {
         autoprefixer({browsers: ['last 3 version', 'chrome 30', 'ios_saf 7']}),
   ];
 
+  sassOptions = {
+    includePaths: ['jspm_packages/github', 'jspm_packages/npm']
+  }
+
   return gulp.src(paths.style)
       // .pipe(changed(paths.outputStyle,{extension: '.css'}))
       .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(postcss(processors))
       .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/'+paths.root}))
 

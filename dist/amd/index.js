@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-framework', 'aurelia-binding', 'chartist', 'chartist/dist/chartist.min.css!', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (exports, _aureliaFramework, _aureliaBinding, _chartist, _chartistDistChartistMinCss, _computedStyleToInlineStyle, _papaparse, _stylesCss) {
+define(['exports', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (exports, _aureliaFramework, _aureliaBinding, _chartist, _computedStyleToInlineStyle, _papaparse, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {

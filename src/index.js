@@ -2,7 +2,6 @@ import {useView, inject} from 'aurelia-framework'
 import {ObserverLocator} from 'aurelia-binding'
 
 import Chartist from 'chartist'
-import 'chartist/dist/chartist.min.css!'
 
 import computedToInline from 'computed-style-to-inline-style'
 import Papa from 'papaparse'
