@@ -1,0 +1,20 @@
+<template>
+  <require from="./ChartDataValueConverter.js"></require>
+  <main class="storytelling-toolbox-chart-container">
+    <div>
+      <div ref="chartElement"></div>
+      <!-- <a href.bind="downloadHref" download="chart.svg" class="button small">Download SVG</a> -->
+    </div>
+    <div>
+      <radiogroup>
+        <div repeat.for="type of chartTypes">
+          <input type="radio" id="button-${type}" value.bind="type" checked.bind="$parent.chartType">
+          <label for="button-${type}">${type}</label>
+        </div>
+      </radiogroup>
+    </div>
+    <div>
+      <textarea value.bind="chartData | chartDataConverter" style="height: 300px; width:100%;" resizable></textarea>
+    </div>
+  </main>
+</template>
