@@ -9,7 +9,7 @@ import Papa from 'papaparse'
 import './styles.css!'
 
 @useView('./index.html')
-@inject(ObserverLocator)
+@inject(ObserverLocator, 'ItemConf')
 export class ToolboxChart {
 
   chartData = {
@@ -32,8 +32,13 @@ export class ToolboxChart {
 
   chartTypes = ['Line', 'Bar'];
 
-  constructor(ObserverLocator) {
-    this.observerLocator = ObserverLocator;
+  constructor(observerLocator, itemConf) {
+
+    this.observerLocator = observerLocator;
+    this.itemConf = itemConf;
+
+    this.itemConf.conf.tool = 'chart';
+    this.itemConf.conf.tool_version = '0.0.1';
 
     this.observerLocator
       .getObserver(this,'chartType')
@@ -73,5 +78,13 @@ export class ToolboxChart {
 
   b64_to_utf8(str) {
       return decodeURIComponent(escape(window.atob(str)));
+  }
+
+  save() {
+    this.itemConf.conf = Object.assign(this.itemConf.conf, {chartConfig: this.chartConfig}, {data: this.chartData});
+    this.itemConf.conf.title = 'MyFirstChart';
+    this.itemConf.save().then((args) => {
+      console.log('saved', args);
+    })
   }
 }

@@ -1,5 +1,9 @@
-define(['exports'], function (exports) {
+define(['exports', 'module'], function (exports, module) {
   'use strict';
 
-  console.log('display storytelling-toolbox-chart');
+  module.exports = display;
+
+  function display(data) {
+    console.log('display storytelling-toolbox-chart', data);
+  }
 });

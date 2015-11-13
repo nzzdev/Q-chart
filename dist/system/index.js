@@ -22,7 +22,7 @@ System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-s
     }, function (_stylesCss) {}],
     execute: function () {
       ToolboxChart = (function () {
-        function ToolboxChart(ObserverLocator) {
+        function ToolboxChart(observerLocator, itemConf) {
           _classCallCheck(this, _ToolboxChart);
 
           this.chartData = {
@@ -37,7 +37,11 @@ System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-s
           };
           this.chartTypes = ['Line', 'Bar'];
 
-          this.observerLocator = ObserverLocator;
+          this.observerLocator = observerLocator;
+          this.itemConf = itemConf;
+
+          this.itemConf.conf.tool = 'chart';
+          this.itemConf.conf.tool_version = '0.0.1';
 
           this.observerLocator.getObserver(this, 'chartType').subscribe(this.drawChart.bind(this));
 
@@ -75,10 +79,19 @@ System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-s
           value: function b64_to_utf8(str) {
             return decodeURIComponent(escape(window.atob(str)));
           }
+        }, {
+          key: 'save',
+          value: function save() {
+            this.itemConf.conf = Object.assign(this.itemConf.conf, { chartConfig: this.chartConfig }, { data: this.chartData });
+            this.itemConf.conf.title = 'MyFirstChart';
+            this.itemConf.save().then(function (args) {
+              console.log('saved', args);
+            });
+          }
         }]);
 
         var _ToolboxChart = ToolboxChart;
-        ToolboxChart = inject(ObserverLocator)(ToolboxChart) || ToolboxChart;
+        ToolboxChart = inject(ObserverLocator, 'ItemConf')(ToolboxChart) || ToolboxChart;
         ToolboxChart = useView('./index.html')(ToolboxChart) || ToolboxChart;
         return ToolboxChart;
       })();

@@ -29,7 +29,7 @@ var _papaparse2 = _interopRequireDefault(_papaparse);
 require('./styles.css!');
 
 var ToolboxChart = (function () {
-  function ToolboxChart(ObserverLocator) {
+  function ToolboxChart(observerLocator, itemConf) {
     _classCallCheck(this, _ToolboxChart);
 
     this.chartData = {
@@ -44,7 +44,11 @@ var ToolboxChart = (function () {
     };
     this.chartTypes = ['Line', 'Bar'];
 
-    this.observerLocator = ObserverLocator;
+    this.observerLocator = observerLocator;
+    this.itemConf = itemConf;
+
+    this.itemConf.conf.tool = 'chart';
+    this.itemConf.conf.tool_version = '0.0.1';
 
     this.observerLocator.getObserver(this, 'chartType').subscribe(this.drawChart.bind(this));
 
@@ -82,10 +86,19 @@ var ToolboxChart = (function () {
     value: function b64_to_utf8(str) {
       return decodeURIComponent(escape(window.atob(str)));
     }
+  }, {
+    key: 'save',
+    value: function save() {
+      this.itemConf.conf = Object.assign(this.itemConf.conf, { chartConfig: this.chartConfig }, { data: this.chartData });
+      this.itemConf.conf.title = 'MyFirstChart';
+      this.itemConf.save().then(function (args) {
+        console.log('saved', args);
+      });
+    }
   }]);
 
   var _ToolboxChart = ToolboxChart;
-  ToolboxChart = (0, _aureliaFramework.inject)(_aureliaBinding.ObserverLocator)(ToolboxChart) || ToolboxChart;
+  ToolboxChart = (0, _aureliaFramework.inject)(_aureliaBinding.ObserverLocator, 'ItemConf')(ToolboxChart) || ToolboxChart;
   ToolboxChart = (0, _aureliaFramework.useView)('./index.html')(ToolboxChart) || ToolboxChart;
   return ToolboxChart;
 })();
