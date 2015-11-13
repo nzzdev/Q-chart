@@ -8,17 +8,18 @@ System.config({
     ]
   },
   paths: {
+    "*": "dist/system/*",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
 
   map: {
     "aurelia-framework": "github:aurelia/framework@0.17.0",
-    "babel": "npm:babel-core@5.8.29",
-    "babel-runtime": "npm:babel-runtime@5.8.29",
+    "babel": "npm:babel-core@5.8.34",
+    "babel-runtime": "npm:babel-runtime@5.8.34",
     "chartist": "npm:chartist@0.9.4",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
-    "core-js": "npm:core-js@1.2.3",
+    "core-js": "npm:core-js@1.2.6",
     "papaparse": "npm:papaparse@4.1.2",
     "github:aurelia/binding@0.10.2": {
       "aurelia-metadata": "github:aurelia/metadata@0.9.0",
@@ -81,7 +82,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.8.29": {
+    "npm:babel-runtime@5.8.34": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:core-js@0.9.18": {
@@ -89,7 +90,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
-    "npm:core-js@1.2.3": {
+    "npm:core-js@1.2.6": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
