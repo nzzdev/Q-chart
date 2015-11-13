@@ -1,5 +1,4 @@
 var gulp          = require('gulp'),
-    changed       = require('gulp-changed'),
     sass          = require('gulp-sass'),
     sourcemaps    = require('gulp-sourcemaps'),
     postcss       = require('gulp-postcss'),
@@ -17,7 +16,6 @@ module.exports = gulp.task('build-styles', function() {
   }
 
   return gulp.src(paths.style)
-      // .pipe(changed(paths.outputStyle,{extension: '.css'}))
       .pipe(sourcemaps.init())
         .pipe(sass(sassOptions).on('error', sass.logError))
         .pipe(postcss(processors))
