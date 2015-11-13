@@ -21,7 +21,7 @@ var deployTargets = [];
 
 // deploy target is different according to branch / tags
 if (process.env.TRAVIS_TAG) {
-  deployTargets.push(slug + '-' + process.env.TRAVIS_TAG);
+  deployTargets.push(slug + '-releases/' + process.env.TRAVIS_TAG + '/');
 }
 if (process.env.TRAVIS_BRANCH) {
   if (process.env.TRAVIS_BRANCH === 'master') {
