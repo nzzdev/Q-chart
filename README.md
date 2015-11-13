@@ -7,4 +7,4 @@
   * `travis encrypt FASTLY_API_KEY= --add`
   * `travis encrypt AWS_SECRET_ACCESS_KEY= --add`
   * `travis encrypt AWS_ACCESS_KEY_ID= --add`
-  * `travis encrypt FASTLY_API_KEY= --add`
+  * `travis encrypt "nzzstorytelling:token" --add notifications.slack`

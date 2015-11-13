@@ -1,5 +1,4 @@
 var gulp  = require('gulp');
-var es    = require('event-stream');
 var gutil = require('gulp-util');
 var AWS   = require('aws-sdk');
 var env   = require('gulp-env');
