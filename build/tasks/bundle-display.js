@@ -16,7 +16,7 @@ function bundleCommands() {
   if(bundle.excludes.length > 0){
     modules = modules + ' - ' + bundle.excludes.join(' - ');
   }
-  bundleCommands.push('jspm bundle-sfx ' + modules + ' ' + bundleName + '.js --minify --skip-source-maps');
+  bundleCommands.push('jspm bundle ' + modules + ' ' + bundleName + '.js --minify --skip-source-maps');
   return bundleCommands;
 }
 

@@ -1,9 +1,35 @@
 var gulp = require('gulp');
+var env = require('gulp-env');
+var fs = require('fs');
 var runSequence = require('run-sequence');
 var to5 = require('gulp-babel');
 var paths = require('../paths');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
+
+env({
+  file: "dev-env.json"
+});
+
+gulp.task('setup-env', function(cb) {
+  var env = {
+    TOOL_VERSION: process.env.TOOL_VERSION,
+  }
+
+  if (process.env.TRAVIS_TAG) {
+    env.TOOL_VERSION = process.env.TRAVIS_TAG;
+  }
+
+  fs.mkdir(paths.output, function() {
+    fs.writeFile(paths.output + 'es6/' + 'env.json', JSON.stringify(env), function() {
+      fs.writeFile(paths.output + 'amd/' + 'env.json', JSON.stringify(env), function() {
+        fs.writeFile(paths.output + 'system/' + 'env.json', JSON.stringify(env), function() {
+          fs.writeFile(paths.output + 'commonjs/' + 'env.json', JSON.stringify(env), cb);
+        });
+      });
+    });
+  });
+});
 
 gulp.task('build-html-es6', function () {
   return gulp.src(paths.html)
@@ -52,7 +78,7 @@ gulp.task('build', function(callback) {
   return runSequence(
     'clean',
     'build-styles',
-    ['build-es6', 'build-commonjs', 'build-amd', 'build-system'],
+    ['setup-env', 'build-es6', 'build-commonjs', 'build-amd', 'build-system'],
     callback
   );
 });

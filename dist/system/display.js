@@ -1,14 +1,18 @@
-System.register([], function (_export) {
+System.register(['chartist', './styles.css!'], function (_export) {
   'use strict';
 
-  _export('default', display);
+  var Chartist;
 
-  function display(data) {
-    console.log('display storytelling-toolbox-chart', data);
+  _export('display', display);
+
+  function display(item, element) {
+    new Chartist.Bar(element, item.data, item.chartConfig);
   }
 
   return {
-    setters: [],
+    setters: [function (_chartist) {
+      Chartist = _chartist['default'];
+    }, function (_stylesCss) {}],
     execute: function () {}
   };
 });

@@ -1,3 +1,6 @@
-export default function display(data) {
-  console.log('display storytelling-toolbox-chart', data);
+import Chartist from 'chartist';
+import './styles.css!'
+
+export function display(item, element) {
+  new Chartist.Bar(element, item.data, item.chartConfig);
 }

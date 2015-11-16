@@ -1,3 +1,5 @@
+import env from './env'
+
 import {useView, inject} from 'aurelia-framework'
 import {ObserverLocator} from 'aurelia-binding'
 
@@ -33,12 +35,13 @@ export class ToolboxChart {
   chartTypes = ['Line', 'Bar'];
 
   constructor(observerLocator, itemConf) {
+    this.env = env;
 
     this.observerLocator = observerLocator;
     this.itemConf = itemConf;
 
     this.itemConf.conf.tool = 'chart';
-    this.itemConf.conf.tool_version = '0.0.1';
+    this.itemConf.conf.tool_version = this.env.TOOL_VERSION;
 
     this.observerLocator
       .getObserver(this,'chartType')

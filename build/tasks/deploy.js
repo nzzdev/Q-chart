@@ -22,13 +22,15 @@ var deployTargets = [];
 // deploy target is different according to branch / tags
 if (process.env.TRAVIS_TAG) {
   deployTargets.push(slug + '-releases/' + process.env.TRAVIS_TAG + '/');
-}
-if (process.env.TRAVIS_BRANCH) {
-  if (process.env.TRAVIS_BRANCH === 'master') {
+
+  // If we have a tagged release on master, we deploy this to the live production environment
+  if (process.env.TRAVIS_BRANCH && process.env.TRAVIS_BRANCH === 'master') {
     deployTargets.push(slug);
-  } else {
-    deployTargets.push(slug + '-' + process.env.TRAVIS_BRANCH);
   }
+}
+
+if (process.env.TRAVIS_BRANCH) {
+  deployTargets.push(slug + '-' + process.env.TRAVIS_BRANCH);
 }
 
 var fastlyPurgeCallback = function(err, result) {

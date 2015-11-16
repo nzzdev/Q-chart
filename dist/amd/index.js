@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (exports, _aureliaFramework, _aureliaBinding, _chartist, _computedStyleToInlineStyle, _papaparse, _stylesCss) {
+define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (exports, _env, _aureliaFramework, _aureliaBinding, _chartist, _computedStyleToInlineStyle, _papaparse, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -10,6 +10,8 @@ define(['exports', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  var _env2 = _interopRequireDefault(_env);
 
   var _Chartist = _interopRequireDefault(_chartist);
 
@@ -33,11 +35,13 @@ define(['exports', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed
       };
       this.chartTypes = ['Line', 'Bar'];
 
+      this.env = _env2['default'];
+
       this.observerLocator = observerLocator;
       this.itemConf = itemConf;
 
       this.itemConf.conf.tool = 'chart';
-      this.itemConf.conf.tool_version = '0.0.1';
+      this.itemConf.conf.tool_version = this.env.TOOL_VERSION;
 
       this.observerLocator.getObserver(this, 'chartType').subscribe(this.drawChart.bind(this));
 

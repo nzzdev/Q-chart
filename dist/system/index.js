@@ -1,14 +1,16 @@
-System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (_export) {
+System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (_export) {
   'use strict';
 
-  var useView, inject, ObserverLocator, Chartist, computedToInline, Papa, ToolboxChart;
+  var env, useView, inject, ObserverLocator, Chartist, computedToInline, Papa, ToolboxChart;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
-    setters: [function (_aureliaFramework) {
+    setters: [function (_env) {
+      env = _env['default'];
+    }, function (_aureliaFramework) {
       useView = _aureliaFramework.useView;
       inject = _aureliaFramework.inject;
     }, function (_aureliaBinding) {
@@ -37,11 +39,13 @@ System.register(['aurelia-framework', 'aurelia-binding', 'chartist', 'computed-s
           };
           this.chartTypes = ['Line', 'Bar'];
 
+          this.env = env;
+
           this.observerLocator = observerLocator;
           this.itemConf = itemConf;
 
           this.itemConf.conf.tool = 'chart';
-          this.itemConf.conf.tool_version = '0.0.1';
+          this.itemConf.conf.tool_version = this.env.TOOL_VERSION;
 
           this.observerLocator.getObserver(this, 'chartType').subscribe(this.drawChart.bind(this));
 
