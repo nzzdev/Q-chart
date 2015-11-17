@@ -23,6 +23,13 @@ var deployTargets = [];
 if (process.env.TRAVIS_TAG) {
   deployTargets.push(slug + '-releases/' + process.env.TRAVIS_TAG + '/');
 
+  // deploy to masked version folders e.g. 0.2.* and 0.*.*
+  if (process.env.TRAVIS_TAG.indexOf('.') >= 0) {
+    var versionDigits = process.env.TRAVIS_TAG.split('.');
+    deployTargets.push(slug + '-releases/' + versionDigits[0] + '.' + versionDigits[1] + '.*' + '/');
+    deployTargets.push(slug + '-releases/' + versionDigits[0] + '.*.*' + '/');
+  }
+
   // If we have a tagged release on master, we deploy this to the live production environment
   if (process.env.TRAVIS_BRANCH && process.env.TRAVIS_BRANCH === 'master') {
     deployTargets.push(slug);

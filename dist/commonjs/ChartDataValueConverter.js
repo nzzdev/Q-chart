@@ -14,6 +14,10 @@ var _papaparse = require('papaparse');
 
 var _papaparse2 = _interopRequireDefault(_papaparse);
 
+var _array2d = require('array2d');
+
+var _array2d2 = _interopRequireDefault(_array2d);
+
 var _aureliaFramework = require('aurelia-framework');
 
 var ChartDataValueConverter = (function () {
@@ -27,8 +31,12 @@ var ChartDataValueConverter = (function () {
       var dataForView = data;
       if (typeof dataForView === 'object') {
         var dataForPapa = {
-          fields: dataForView.labels,
-          data: dataForView.series
+          fields: [dataForView.x.label].concat(dataForView.series.map(function (serie) {
+            return serie.label;
+          })),
+          data: _array2d2['default'].transpose([dataForView.x.data].concat(dataForView.series.map(function (serie) {
+            return serie.data;
+          })))
         };
         dataForView = _papaparse2['default'].unparse(dataForPapa, {
           quotes: false,
@@ -42,9 +50,20 @@ var ChartDataValueConverter = (function () {
     key: 'fromView',
     value: function fromView(data) {
       var parsedData = _papaparse2['default'].parse(data)["data"];
+      var transposedData = _array2d2['default'].transpose(parsedData);
+      var x = transposedData.shift();
+      var series = transposedData;
       var dataForChart = {
-        labels: parsedData.shift().slice(0),
-        series: parsedData.slice(0)
+        x: {
+          label: x.shift(),
+          data: x
+        },
+        series: series.map(function (serie) {
+          return {
+            label: serie.shift(),
+            data: serie
+          };
+        })
       };
       return dataForChart;
     }

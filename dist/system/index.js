@@ -1,7 +1,7 @@
-System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!'], function (_export) {
+System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './display'], function (_export) {
   'use strict';
 
-  var env, useView, inject, ObserverLocator, Chartist, computedToInline, Papa, ToolboxChart;
+  var env, useView, inject, ObserverLocator, Chartist, computedToInline, Papa, displayChart, ToolboxChart;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -21,15 +21,26 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'c
       computedToInline = _computedStyleToInlineStyle['default'];
     }, function (_papaparse) {
       Papa = _papaparse['default'];
-    }, function (_stylesCss) {}],
+    }, function (_stylesCss) {}, function (_display) {
+      displayChart = _display.display;
+    }],
     execute: function () {
       ToolboxChart = (function () {
         function ToolboxChart(observerLocator, itemConf) {
           _classCallCheck(this, _ToolboxChart);
 
           this.chartData = {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-            series: [[12, 9, 7, 8, 5], [2, 1, 3.5, 7, 3], [1, 3, 4, 5, 6]]
+            x: {
+              label: 'date',
+              data: ['2000-01-01', '2000-02-01', '2000-03-01', '2000-04-01', '2000-05-01', '2000-06-01', '2000-07-01', '2000-08-01', '2000-09-01', '2000-10-01', '2000-11-01', '2000-12-01']
+            },
+            series: [{
+              label: 'Juice',
+              data: [106.3, 106.0, 105.4, 101.8, 95.9, 94.1, 102.0, 98.5, 105.1, 99.0, 97.7, 88.2]
+            }, {
+              label: 'Travel',
+              data: [49.843099, 49.931931, 61.478163, 58.981617, 61.223861, 65.601574, 67.89832, 67.028338, 56.441629, 58.83421, 56.283261, 55.38028]
+            }]
           };
           this.chartConfig = {
             fullWidth: true,
@@ -61,17 +72,7 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'c
           key: 'drawChart',
           value: function drawChart() {
             if (!Chartist.hasOwnProperty(this.chartType)) throw 'chartType (' + this.chartType + ') not available';
-            this.chart = new Chartist[this.chartType](this.chartElement, this.chartData, this.chartConfig);
-          }
-        }, {
-          key: 'getChartDataForChartist',
-          value: function getChartDataForChartist(data) {
-            var parsedData = Papa.parse(data)["data"];
-            var dataForChart = {
-              labels: parsedData.shift().slice(0),
-              series: parsedData.slice(0)
-            };
-            return dataForChart;
+            this.chart = displayChart(this.getDataForStorage(), this.chartElement);
           }
         }, {
           key: 'utf8_to_b64',
@@ -86,11 +87,17 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'chartist', 'c
         }, {
           key: 'save',
           value: function save() {
-            this.itemConf.conf = Object.assign(this.itemConf.conf, { chartConfig: this.chartConfig }, { data: this.chartData });
-            this.itemConf.conf.title = 'MyFirstChart';
+            this.itemConf.conf = this.getDataForStorage();
             this.itemConf.save().then(function (args) {
               console.log('saved', args);
             });
+          }
+        }, {
+          key: 'getDataForStorage',
+          value: function getDataForStorage() {
+            var conf = Object.assign(this.itemConf.conf, { chartConfig: this.chartConfig }, { data: this.chartData }, { chartType: this.chartType });
+            conf.title = 'MyFirstChart';
+            return conf;
           }
         }]);
 

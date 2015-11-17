@@ -59,6 +59,7 @@
       "lib": "dist/amd"
     },
     "dependencies": {
+      "array2d": "npm:array2d@^0.0.5",
       "aurelia-framework": "github:aurelia/framework@^0.17.0",
       "chartist": "npm:chartist@^0.9.4",
       "computed-style-to-inline-style": "npm:computed-style-to-inline-style@^1.0.2",

@@ -10,7 +10,17 @@ define(['exports', 'chartist', './styles.css!'], function (exports, _chartist, _
 
   var _Chartist = _interopRequireDefault(_chartist);
 
+  function getChartDataForChartist(data) {
+    var dataForChart = {
+      labels: data.x.data,
+      series: data.series.map(function (serie) {
+        return serie.data;
+      })
+    };
+    return dataForChart;
+  }
+
   function display(item, element) {
-    new _Chartist['default'].Bar(element, item.data, item.chartConfig);
+    return new _Chartist['default'][item.chartType](element, getChartDataForChartist(item.data), item.chartConfig);
   }
 });

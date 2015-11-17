@@ -14,6 +14,7 @@ System.config({
   },
 
   map: {
+    "array2d": "npm:array2d@0.0.5",
     "aurelia-framework": "github:aurelia/framework@0.17.0",
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
@@ -112,6 +113,10 @@ System.config({
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:array2d@0.0.5": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"

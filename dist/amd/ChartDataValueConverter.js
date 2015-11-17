@@ -1,4 +1,4 @@
-define(['exports', 'papaparse', 'aurelia-framework'], function (exports, _papaparse, _aureliaFramework) {
+define(['exports', 'papaparse', 'array2d', 'aurelia-framework'], function (exports, _papaparse, _array2d, _aureliaFramework) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -13,6 +13,8 @@ define(['exports', 'papaparse', 'aurelia-framework'], function (exports, _papapa
 
   var _Papa = _interopRequireDefault(_papaparse);
 
+  var _array2d2 = _interopRequireDefault(_array2d);
+
   var ChartDataValueConverter = (function () {
     function ChartDataValueConverter() {
       _classCallCheck(this, _ChartDataValueConverter);
@@ -24,8 +26,12 @@ define(['exports', 'papaparse', 'aurelia-framework'], function (exports, _papapa
         var dataForView = data;
         if (typeof dataForView === 'object') {
           var dataForPapa = {
-            fields: dataForView.labels,
-            data: dataForView.series
+            fields: [dataForView.x.label].concat(dataForView.series.map(function (serie) {
+              return serie.label;
+            })),
+            data: _array2d2['default'].transpose([dataForView.x.data].concat(dataForView.series.map(function (serie) {
+              return serie.data;
+            })))
           };
           dataForView = _Papa['default'].unparse(dataForPapa, {
             quotes: false,
@@ -39,9 +45,20 @@ define(['exports', 'papaparse', 'aurelia-framework'], function (exports, _papapa
       key: 'fromView',
       value: function fromView(data) {
         var parsedData = _Papa['default'].parse(data)["data"];
+        var transposedData = _array2d2['default'].transpose(parsedData);
+        var x = transposedData.shift();
+        var series = transposedData;
         var dataForChart = {
-          labels: parsedData.shift().slice(0),
-          series: parsedData.slice(0)
+          x: {
+            label: x.shift(),
+            data: x
+          },
+          series: series.map(function (serie) {
+            return {
+              label: serie.shift(),
+              data: serie
+            };
+          })
         };
         return dataForChart;
       }

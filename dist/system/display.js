@@ -5,8 +5,18 @@ System.register(['chartist', './styles.css!'], function (_export) {
 
   _export('display', display);
 
+  function getChartDataForChartist(data) {
+    var dataForChart = {
+      labels: data.x.data,
+      series: data.series.map(function (serie) {
+        return serie.data;
+      })
+    };
+    return dataForChart;
+  }
+
   function display(item, element) {
-    new Chartist.Bar(element, item.data, item.chartConfig);
+    return new Chartist[item.chartType](element, getChartDataForChartist(item.data), item.chartConfig);
   }
 
   return {

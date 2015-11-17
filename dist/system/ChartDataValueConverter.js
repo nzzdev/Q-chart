@@ -1,7 +1,7 @@
-System.register(['papaparse', 'aurelia-framework'], function (_export) {
+System.register(['papaparse', 'array2d', 'aurelia-framework'], function (_export) {
   'use strict';
 
-  var Papa, valueConverter, ChartDataValueConverter;
+  var Papa, array2d, valueConverter, ChartDataValueConverter;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -10,6 +10,8 @@ System.register(['papaparse', 'aurelia-framework'], function (_export) {
   return {
     setters: [function (_papaparse) {
       Papa = _papaparse['default'];
+    }, function (_array2d) {
+      array2d = _array2d['default'];
     }, function (_aureliaFramework) {
       valueConverter = _aureliaFramework.valueConverter;
     }],
@@ -25,8 +27,12 @@ System.register(['papaparse', 'aurelia-framework'], function (_export) {
             var dataForView = data;
             if (typeof dataForView === 'object') {
               var dataForPapa = {
-                fields: dataForView.labels,
-                data: dataForView.series
+                fields: [dataForView.x.label].concat(dataForView.series.map(function (serie) {
+                  return serie.label;
+                })),
+                data: array2d.transpose([dataForView.x.data].concat(dataForView.series.map(function (serie) {
+                  return serie.data;
+                })))
               };
               dataForView = Papa.unparse(dataForPapa, {
                 quotes: false,
@@ -40,9 +46,20 @@ System.register(['papaparse', 'aurelia-framework'], function (_export) {
           key: 'fromView',
           value: function fromView(data) {
             var parsedData = Papa.parse(data)["data"];
+            var transposedData = array2d.transpose(parsedData);
+            var x = transposedData.shift();
+            var series = transposedData;
             var dataForChart = {
-              labels: parsedData.shift().slice(0),
-              series: parsedData.slice(0)
+              x: {
+                label: x.shift(),
+                data: x
+              },
+              series: series.map(function (serie) {
+                return {
+                  label: serie.shift(),
+                  data: serie
+                };
+              })
             };
             return dataForChart;
           }
