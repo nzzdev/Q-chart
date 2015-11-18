@@ -21,6 +21,7 @@ define(['exports', 'chartist', './styles.css!'], function (exports, _chartist, _
   }
 
   function display(item, element) {
+    if (!_Chartist['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
     return new _Chartist['default'][item.chartType](element, getChartDataForChartist(item.data), item.chartConfig);
   }
 });

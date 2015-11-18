@@ -24,6 +24,7 @@ System.register(['papaparse', 'array2d', 'aurelia-framework'], function (_export
         _createClass(ChartDataValueConverter, [{
           key: 'toView',
           value: function toView(data) {
+            if (!data) return data;
             var dataForView = data;
             if (typeof dataForView === 'object') {
               var dataForPapa = {
@@ -45,6 +46,7 @@ System.register(['papaparse', 'array2d', 'aurelia-framework'], function (_export
         }, {
           key: 'fromView',
           value: function fromView(data) {
+            if (!data) return data;
             var parsedData = Papa.parse(data)["data"];
             var transposedData = array2d.transpose(parsedData);
             var x = transposedData.shift();

@@ -6,6 +6,7 @@ import {valueConverter} from 'aurelia-framework'
 export class ChartDataValueConverter {
 
   toView(data) {
+    if (!data) return data;
     var dataForView = data;
     if (typeof dataForView === 'object') {
       let dataForPapa = {
@@ -22,6 +23,7 @@ export class ChartDataValueConverter {
   }
 
   fromView(data) {
+    if (!data) return data;
     let parsedData = Papa.parse(data)["data"];
     let transposedData = array2d.transpose(parsedData);
     let x = transposedData.shift();

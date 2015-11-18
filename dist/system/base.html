@@ -1,5 +1,6 @@
 <template>
   <require from="./ChartDataValueConverter.js"></require>
+  <require from="elements/tool-bar.html"></require>
   <main class="storytelling-toolbox-chart-container">
     <div>Tool Version: ${env.TOOL_VERSION}</div>
     <div>
@@ -9,16 +10,17 @@
     <div>
       <radiogroup>
         <div repeat.for="type of chartTypes">
-          <input type="radio" id="button-${type}" value.bind="type" checked.bind="$parent.chartType">
+          <input type="radio" id="button-${type}" value.bind="type" checked.bind="$parent.item.conf.chartType">
           <label for="button-${type}">${type}</label>
         </div>
       </radiogroup>
     </div>
     <div>
-      <textarea value.bind="chartData | chartDataConverter" style="height: 300px; width:100%;" resizable></textarea>
+      <!-- <textarea value.bind="chartData | chartDataConverter" style="height: 300px; width: calc(100% - 10px);" resizable></textarea> -->
+      <textarea value.bind="item.conf.data | chartDataConverter" style="height: 300px; width: calc(100% - 10px);" resizable></textarea>
     </div>
-    <div>
-      <button click.delegate="save()">save</button>
-    </div>
+    
   </main>
+  <tool-bar actions.bind="actions">
+  </tool-bar>
 </template>

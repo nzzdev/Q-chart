@@ -24,5 +24,6 @@ function getChartDataForChartist(data) {
 }
 
 function display(item, element) {
+  if (!_chartist2['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
   return new _chartist2['default'][item.chartType](element, getChartDataForChartist(item.data), item.chartConfig);
 }

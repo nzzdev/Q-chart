@@ -16,6 +16,7 @@ System.register(['chartist', './styles.css!'], function (_export) {
   }
 
   function display(item, element) {
+    if (!Chartist.hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
     return new Chartist[item.chartType](element, getChartDataForChartist(item.data), item.chartConfig);
   }
 

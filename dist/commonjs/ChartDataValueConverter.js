@@ -28,6 +28,7 @@ var ChartDataValueConverter = (function () {
   _createClass(ChartDataValueConverter, [{
     key: 'toView',
     value: function toView(data) {
+      if (!data) return data;
       var dataForView = data;
       if (typeof dataForView === 'object') {
         var dataForPapa = {
@@ -49,6 +50,7 @@ var ChartDataValueConverter = (function () {
   }, {
     key: 'fromView',
     value: function fromView(data) {
+      if (!data) return data;
       var parsedData = _papaparse2['default'].parse(data)["data"];
       var transposedData = _array2d2['default'].transpose(parsedData);
       var x = transposedData.shift();
