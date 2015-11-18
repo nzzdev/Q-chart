@@ -17,6 +17,7 @@ import {display as displayChart} from './display'
 export class ToolboxChart {
 
   chartTypes = ['Line', 'Bar'];
+  xLabel;
 
   actions = [
     { 
@@ -30,6 +31,10 @@ export class ToolboxChart {
 
     this.observerLocator = observerLocator;
     this.item = item;
+
+    // this.observerLocator
+    //   .getObserver(this,'xLabel')
+    //   .subscribe(this.updateDataFromXLabel.bind(this))
   }
 
   activate(routeParams) {
@@ -58,9 +63,13 @@ export class ToolboxChart {
         .getObserver(this.item.conf,'chartType')
         .subscribe(this.drawChart.bind(this))
 
-      this.observerLocator
-        .getObserver(this.item.conf,'data')
-        .subscribe(this.drawChart.bind(this))
+    this.observerLocator
+      .getObserver(this.item.conf,'data')
+      .subscribe(this.drawChart.bind(this))
+  }
+
+  updateData() {
+    this.item.conf.data = Object.assign({}, this.item.conf.data);
   }
 
   drawChart() {

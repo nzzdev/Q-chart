@@ -14,6 +14,7 @@ exports['default'] = {
   title: 'My Chart',
   tool: 'chart',
   tool_version: _env2['default'].TOOL_VERSION,
+  sources: [],
   data: {
     x: {
       label: 'date',

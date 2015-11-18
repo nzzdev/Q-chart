@@ -66,6 +66,11 @@ define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-st
         this.observerLocator.getObserver(this.item.conf, 'data').subscribe(this.drawChart.bind(this));
       }
     }, {
+      key: 'updateData',
+      value: function updateData() {
+        this.item.conf.data = Object.assign({}, this.item.conf.data);
+      }
+    }, {
       key: 'drawChart',
       value: function drawChart() {
         if (!this.item.conf || !this.item.conf.chartType || !this.chartElement) return;

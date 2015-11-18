@@ -1,10 +1,17 @@
 <template>
   <require from="./ChartDataValueConverter.js"></require>
-  <require from="elements/tool-bar.html"></require>
   <main class="storytelling-toolbox-chart-container">
     <div>Tool Version: ${env.TOOL_VERSION}</div>
     <div>
+      <textarea value.bind="item.conf.data | chartDataConverter" style="height: 300px; width: calc(100% - 10px);" resizable></textarea>
+    </div>
+    <div>
+      <h1 textcontent.bind="item.conf.title" contenteditable="true"></h1>
+      <p textcontent.bind="item.conf.description" contenteditable="true"></p>
       <div ref="chartElement"></div>
+      <div style="text-align: right;" textcontent.bind="item.conf.data.x.label" contenteditable="true" keyup.delegate="updateData()"></div>
+      <!-- <input type="text" value.bind="item.conf.data.x.label"></input> -->
+      
       <!-- <a href.bind="downloadHref" download="chart.svg" class="button small">Download SVG</a> -->
     </div>
     <div>
@@ -15,12 +22,8 @@
         </div>
       </radiogroup>
     </div>
-    <div>
-      <!-- <textarea value.bind="chartData | chartDataConverter" style="height: 300px; width: calc(100% - 10px);" resizable></textarea> -->
-      <textarea value.bind="item.conf.data | chartDataConverter" style="height: 300px; width: calc(100% - 10px);" resizable></textarea>
-    </div>
+    <sources-form sources.two-way="item.conf.sources"></sources-form>
     
   </main>
-  <tool-bar actions.bind="actions">
-  </tool-bar>
+  <tool-bar actions.bind="actions"></tool-bar>
 </template>

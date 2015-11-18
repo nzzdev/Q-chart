@@ -4,6 +4,7 @@ export default {
   title: 'My Chart',
   tool: 'chart',
   tool_version: env.TOOL_VERSION,
+  sources: [],
   data: {
     x: {
       label: 'date',
