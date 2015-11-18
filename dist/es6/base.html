@@ -3,7 +3,7 @@
   <main class="storytelling-toolbox-chart-container">
     <div>Tool Version: ${env.TOOL_VERSION}</div>
     <div>
-      <textarea autosize="true" value.bind="item.conf.data | chartDataConverter" style="width: calc(100% - 10px);" resizable></textarea>
+      <textarea autosize value.bind="item.conf.data | chartDataConverter" style="width: calc(100% - 10px);" resizable></textarea>
     </div>
     <div>
       <h1 textcontent.bind="item.conf.title" contenteditable="true"></h1>
