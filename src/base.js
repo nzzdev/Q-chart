@@ -8,7 +8,7 @@ import Papa from 'papaparse'
 
 import './styles.css!'
 
-import defaultValues from './defaultValues'
+import defaultValues from './resources/defaultValues'
 
 import {display as displayChart} from './display'
 

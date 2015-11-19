@@ -1,4 +1,4 @@
-System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './defaultValues', './display'], function (_export) {
+System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './resources/defaultValues', './display'], function (_export) {
   'use strict';
 
   var env, useView, inject, ObserverLocator, computedToInline, Papa, defaultValues, displayChart, ToolboxChart;
@@ -19,8 +19,8 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-styl
       computedToInline = _computedStyleToInlineStyle['default'];
     }, function (_papaparse) {
       Papa = _papaparse['default'];
-    }, function (_stylesCss) {}, function (_defaultValues) {
-      defaultValues = _defaultValues['default'];
+    }, function (_stylesCss) {}, function (_resourcesDefaultValues) {
+      defaultValues = _resourcesDefaultValues['default'];
     }, function (_display) {
       displayChart = _display.display;
     }],

@@ -6,7 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _env = require('./env');
+var _env = require('../env');
 
 var _env2 = _interopRequireDefault(_env);
 

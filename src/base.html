@@ -1,5 +1,5 @@
 <template>
-  <require from="./ChartDataValueConverter.js"></require>
+  <require from="./resources/ChartDataValueConverter.js"></require>
   <main class="storytelling-toolbox-chart-container">
     <div>Tool Version: ${env.TOOL_VERSION}</div>
     <div>
@@ -10,8 +10,6 @@
       <p textcontent.bind="item.conf.description" contenteditable="true"></p>
       <div ref="chartElement"></div>
       <div style="text-align: right;" textcontent.bind="item.conf.data.x.label" contenteditable="true" keyup.delegate="updateData()"></div>
-      <!-- <input type="text" value.bind="item.conf.data.x.label"></input> -->
-      
       <!-- <a href.bind="downloadHref" download="chart.svg" class="button small">Download SVG</a> -->
     </div>
     <div>

@@ -1,6 +1,6 @@
 import Chartist from 'chartist';
-import getChartistConfig from './chartistConfig';
-import SizeObserver from './SizeObserver';
+import getChartistConfig from './resources/chartistConfig';
+import SizeObserver from './resources/SizeObserver';
 
 import './styles.css!'
 

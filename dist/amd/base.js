@@ -1,4 +1,4 @@
-define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './defaultValues', './display'], function (exports, _env, _aureliaFramework, _aureliaBinding, _computedStyleToInlineStyle, _papaparse, _stylesCss, _defaultValues, _display) {
+define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './resources/defaultValues', './display'], function (exports, _env, _aureliaFramework, _aureliaBinding, _computedStyleToInlineStyle, _papaparse, _stylesCss, _resourcesDefaultValues, _display) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -17,7 +17,7 @@ define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-st
 
   var _Papa = _interopRequireDefault(_papaparse);
 
-  var _defaultValues2 = _interopRequireDefault(_defaultValues);
+  var _defaultValues = _interopRequireDefault(_resourcesDefaultValues);
 
   var ToolboxChart = (function () {
     function ToolboxChart(observerLocator, item) {
@@ -47,7 +47,7 @@ define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-st
               resolve();
             });
           } else {
-            _this.item.setConf(_defaultValues2['default']);
+            _this.item.setConf(_defaultValues['default']);
             _this.addObservers();
             resolve();
           }

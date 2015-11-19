@@ -11,17 +11,17 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-var _chartistConfig = require('./chartistConfig');
+var _resourcesChartistConfig = require('./resources/chartistConfig');
 
-var _chartistConfig2 = _interopRequireDefault(_chartistConfig);
+var _resourcesChartistConfig2 = _interopRequireDefault(_resourcesChartistConfig);
 
-var _SizeObserver = require('./SizeObserver');
+var _resourcesSizeObserver = require('./resources/SizeObserver');
 
-var _SizeObserver2 = _interopRequireDefault(_SizeObserver);
+var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
 
 require('./styles.css!');
 
-var sizeObserver = new _SizeObserver2['default']();
+var sizeObserver = new _resourcesSizeObserver2['default']();
 
 function getChartDataForChartist(data) {
   var dataForChart = {
@@ -34,7 +34,7 @@ function getChartDataForChartist(data) {
 }
 
 function getCombinedChartistConfig(chartConfig, chartType, size, data) {
-  return Object.assign((0, _chartistConfig2['default'])(chartType.toLowerCase(), size, data), chartConfig);
+  return Object.assign((0, _resourcesChartistConfig2['default'])(chartType.toLowerCase(), size, data), chartConfig);
 }
 
 function getElementSize(element) {

@@ -28,9 +28,9 @@ var _papaparse2 = _interopRequireDefault(_papaparse);
 
 require('./styles.css!');
 
-var _defaultValues = require('./defaultValues');
+var _resourcesDefaultValues = require('./resources/defaultValues');
 
-var _defaultValues2 = _interopRequireDefault(_defaultValues);
+var _resourcesDefaultValues2 = _interopRequireDefault(_resourcesDefaultValues);
 
 var _display = require('./display');
 
@@ -62,7 +62,7 @@ var ToolboxChart = (function () {
             resolve();
           });
         } else {
-          _this.item.setConf(_defaultValues2['default']);
+          _this.item.setConf(_resourcesDefaultValues2['default']);
           _this.addObservers();
           resolve();
         }

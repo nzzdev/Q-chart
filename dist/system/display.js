@@ -1,4 +1,4 @@
-System.register(['chartist', './chartistConfig', './SizeObserver', './styles.css!'], function (_export) {
+System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, sizeObserver, cancelResize, drawSize;
@@ -56,10 +56,10 @@ System.register(['chartist', './chartistConfig', './SizeObserver', './styles.css
   return {
     setters: [function (_chartist) {
       Chartist = _chartist['default'];
-    }, function (_chartistConfig) {
-      getChartistConfig = _chartistConfig['default'];
-    }, function (_SizeObserver) {
-      SizeObserver = _SizeObserver['default'];
+    }, function (_resourcesChartistConfig) {
+      getChartistConfig = _resourcesChartistConfig['default'];
+    }, function (_resourcesSizeObserver) {
+      SizeObserver = _resourcesSizeObserver['default'];
     }, function (_stylesCss) {}],
     execute: function () {
       sizeObserver = new SizeObserver();

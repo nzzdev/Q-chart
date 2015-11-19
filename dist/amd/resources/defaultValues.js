@@ -1,4 +1,4 @@
-define(['exports', 'module', './env'], function (exports, module, _env) {
+define(['exports', 'module', '../env'], function (exports, module, _env) {
   'use strict';
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }

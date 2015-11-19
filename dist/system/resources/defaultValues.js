@@ -1,4 +1,4 @@
-System.register(['./env'], function (_export) {
+System.register(['../env'], function (_export) {
   'use strict';
 
   var env;

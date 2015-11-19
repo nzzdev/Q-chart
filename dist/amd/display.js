@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './chartistConfig', './SizeObserver', './styles.css!'], function (exports, _chartist, _chartistConfig, _SizeObserver, _stylesCss) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -10,11 +10,11 @@ define(['exports', 'chartist', './chartistConfig', './SizeObserver', './styles.c
 
   var _Chartist = _interopRequireDefault(_chartist);
 
-  var _getChartistConfig = _interopRequireDefault(_chartistConfig);
+  var _getChartistConfig = _interopRequireDefault(_resourcesChartistConfig);
 
-  var _SizeObserver2 = _interopRequireDefault(_SizeObserver);
+  var _SizeObserver = _interopRequireDefault(_resourcesSizeObserver);
 
-  var sizeObserver = new _SizeObserver2['default']();
+  var sizeObserver = new _SizeObserver['default']();
 
   function getChartDataForChartist(data) {
     var dataForChart = {
