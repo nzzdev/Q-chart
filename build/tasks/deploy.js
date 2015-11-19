@@ -2,15 +2,24 @@ var gulp  = require('gulp');
 var gutil = require('gulp-util');
 var AWS   = require('aws-sdk');
 var env   = require('gulp-env');
+var fs    = require('fs');
 var config = new AWS.Config({
   region: 'eu-west-1'
 });
 var s3 = require('gulp-s3-upload')(config);
 
 if (!process.env.FASTLY_API_KEY || !process.env.S3_BUCKET) {
-  env({
-    file: ".env.json"
-  });
+  var envFile = '.env.json';
+  try {
+    stats = fs.lstatSync(envFile);
+    if (stats.isFile()) {
+      env({
+        file: envFile
+      });
+    }
+  } catch(e) {
+    console.log('No env file found, you won\'t be able to deploy, which is ok. Travis will do it for you.');
+  }
 }
 
 var FastlyPurge = require('fastly-purge');
