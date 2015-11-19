@@ -1,0 +1,32 @@
+@import "fonts";
+@import "colors";
+
+$break-small: 414px;
+$break-large: 768px;
+
+.ct-chart-bar, .ct-chart-line {
+  @include font-labeling("small");
+  @media screen and (min-width: ($break-small)) {
+  	@include font-labeling("large");
+  }
+}
+
+.ct-horizontal-bars .ct-label .ct-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// line chart baseline
+
+.ct-vertical-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+
+.ct-horizontal-bars .ct-horizontal-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}

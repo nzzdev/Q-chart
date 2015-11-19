@@ -1,27 +1,54 @@
 System.register([], function (_export) {
-  "use strict";
+  'use strict';
 
   var bar, line;
   return {
     setters: [],
     execute: function () {
       bar = {
-        fullWidth: true,
+        height: 1000,
         chartPadding: {
-          right: 40
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        reverseData: true,
+        horizontalBars: true,
+        seriesBarDistance: 11,
+        axisX: {
+          showGrid: true,
+          position: 'start'
+        },
+        axisY: {
+          showGrid: false
         }
+
       };
 
-      _export("bar", bar);
+      _export('bar', bar);
 
       line = {
-        fullWidth: true,
-        chartPadding: {
-          right: 40
+
+        height: 200,
+
+        showPoint: false,
+        lineSmooth: false,
+        axisX: {
+          showGrid: true,
+          showLabel: true,
+          labelInterpolationFnc: function skipLabels(value, index) {
+            return index % 12 === 0 ? value : null;
+          }
+        },
+        axisY: {
+          position: 'start',
+          scaleMinSpace: 40
         }
+
       };
 
-      _export("line", line);
+      _export('line', line);
     }
   };
 });

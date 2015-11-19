@@ -1,22 +1,49 @@
-define(["exports"], function (exports) {
-  "use strict";
+define(['exports'], function (exports) {
+  'use strict';
 
-  Object.defineProperty(exports, "__esModule", {
+  Object.defineProperty(exports, '__esModule', {
     value: true
   });
   var bar = {
-    fullWidth: true,
+    height: 1000,
     chartPadding: {
-      right: 40
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    },
+    reverseData: true,
+    horizontalBars: true,
+    seriesBarDistance: 11,
+    axisX: {
+      showGrid: true,
+      position: 'start'
+    },
+    axisY: {
+      showGrid: false
     }
+
   };
 
   exports.bar = bar;
   var line = {
-    fullWidth: true,
-    chartPadding: {
-      right: 40
+
+    height: 200,
+
+    showPoint: false,
+    lineSmooth: false,
+    axisX: {
+      showGrid: true,
+      showLabel: true,
+      labelInterpolationFnc: function skipLabels(value, index) {
+        return index % 12 === 0 ? value : null;
+      }
+    },
+    axisY: {
+      position: 'start',
+      scaleMinSpace: 40
     }
+
   };
   exports.line = line;
 });
