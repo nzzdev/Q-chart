@@ -64,7 +64,8 @@
       "chartist": "npm:chartist@^0.9.4",
       "computed-style-to-inline-style": "npm:computed-style-to-inline-style@^1.0.2",
       "css": "github:systemjs/plugin-css@^0.1.19",
-      "papaparse": "npm:papaparse@^4.1.2"
+      "papaparse": "npm:papaparse@^4.1.2",
+      "raf": "npm:raf@^3.1.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",

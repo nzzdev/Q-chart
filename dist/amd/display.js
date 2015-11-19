@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './chartistConfig', './styles.css!'], function (exports, _chartist, _chartistConfig, _stylesCss) {
+define(['exports', 'chartist', './chartistConfig', './SizeObserver', './styles.css!'], function (exports, _chartist, _chartistConfig, _SizeObserver, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -10,6 +10,12 @@ define(['exports', 'chartist', './chartistConfig', './styles.css!'], function (e
 
   var _Chartist = _interopRequireDefault(_chartist);
 
+  var _getChartistConfig = _interopRequireDefault(_chartistConfig);
+
+  var _SizeObserver2 = _interopRequireDefault(_SizeObserver);
+
+  var sizeObserver = new _SizeObserver2['default']();
+
   function getChartDataForChartist(data) {
     var dataForChart = {
       labels: data.x.data,
@@ -20,12 +26,44 @@ define(['exports', 'chartist', './chartistConfig', './styles.css!'], function (e
     return dataForChart;
   }
 
-  function getCombinedChartistConfig(chartConfig, chartType) {
-    return Object.assign(_chartistConfig[chartType.toLowerCase()], chartConfig);
+  function getCombinedChartistConfig(chartConfig, chartType, size, data) {
+    return Object.assign((0, _getChartistConfig['default'])(chartType.toLowerCase(), size, data), chartConfig);
   }
+
+  function getElementSize(element) {
+    var size = 'small';
+    if (element.getBoundingClientRect) {
+      var rect = element.getBoundingClientRect();
+      if (rect.width && rect.width > 480) {
+        size = 'large';
+      } else {
+        size = 'small';
+      }
+    }
+    return size;
+  }
+
+  var cancelResize;
+  var drawSize;
 
   function display(item, element) {
     if (!_Chartist['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
-    return new _Chartist['default'][item.chartType](element, getChartDataForChartist(item.data), getCombinedChartistConfig(item.chartConfig, item.chartType));
+
+    var data = getChartDataForChartist(item.data);
+    drawSize = getElementSize(element);
+
+    new _Chartist['default'][item.chartType](element, data, getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data));
+
+    if (cancelResize) {
+      cancelResize();
+    }
+    cancelResize = sizeObserver.onResize(function () {
+      var newSize = getElementSize(element);
+      if (drawSize !== newSize) {
+        drawSize = newSize;
+        new _Chartist['default'][item.chartType](element, data, getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data));
+      }
+    });
+    return true;
   }
 });
