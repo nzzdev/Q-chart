@@ -10,7 +10,7 @@ System.register(['./env'], function (_export) {
       _export('default', {
         title: 'My Chart',
         tool: 'chart',
-        tool_version: env.TOOL_VERSION,
+        toolVersion: env.TOOL_VERSION,
         sources: [],
         data: {
           x: {
@@ -25,12 +25,7 @@ System.register(['./env'], function (_export) {
             data: [49.843099, 49.931931, 61.478163, 58.981617, 61.223861, 65.601574, 67.89832, 67.028338, 56.441629, 58.83421, 56.283261, 55.38028]
           }]
         },
-        chartConfig: {
-          fullWidth: true,
-          chartPadding: {
-            right: 40
-          }
-        },
+        chartConfig: {},
         chartType: 'Bar'
       });
     }

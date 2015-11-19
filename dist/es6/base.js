@@ -31,10 +31,6 @@ export class ToolboxChart {
 
     this.observerLocator = observerLocator;
     this.item = item;
-
-    // this.observerLocator
-    //   .getObserver(this,'xLabel')
-    //   .subscribe(this.updateDataFromXLabel.bind(this))
   }
 
   activate(routeParams) {

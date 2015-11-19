@@ -3,7 +3,7 @@ import env from './env'
 export default {
   title: 'My Chart',
   tool: 'chart',
-  tool_version: env.TOOL_VERSION,
+  toolVersion: env.TOOL_VERSION,
   sources: [],
   data: {
     x: {
@@ -61,10 +61,7 @@ export default {
     ]
   },
   chartConfig: {
-    fullWidth: true,
-    chartPadding: {
-      right: 40
-    }
+
   },
   chartType: 'Bar'
 }
