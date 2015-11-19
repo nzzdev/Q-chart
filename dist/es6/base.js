@@ -1,6 +1,6 @@
 import env from './env'
 
-import {useView, inject} from 'aurelia-framework'
+import {inject} from 'aurelia-framework'
 import {ObserverLocator} from 'aurelia-binding'
 
 import computedToInline from 'computed-style-to-inline-style'
@@ -12,7 +12,6 @@ import defaultValues from './resources/defaultValues'
 
 import {display as displayChart} from './display'
 
-@useView('./base.html')
 @inject(ObserverLocator, 'Item')
 export class ToolboxChart {
 

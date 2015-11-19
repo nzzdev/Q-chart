@@ -102,7 +102,6 @@ define(['exports', './env', 'aurelia-framework', 'aurelia-binding', 'computed-st
 
     var _ToolboxChart = ToolboxChart;
     ToolboxChart = (0, _aureliaFramework.inject)(_aureliaBinding.ObserverLocator, 'Item')(ToolboxChart) || ToolboxChart;
-    ToolboxChart = (0, _aureliaFramework.useView)('./base.html')(ToolboxChart) || ToolboxChart;
     return ToolboxChart;
   })();
 

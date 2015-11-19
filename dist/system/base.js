@@ -1,7 +1,7 @@
 System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-style-to-inline-style', 'papaparse', './styles.css!', './resources/defaultValues', './display'], function (_export) {
   'use strict';
 
-  var env, useView, inject, ObserverLocator, computedToInline, Papa, defaultValues, displayChart, ToolboxChart;
+  var env, inject, ObserverLocator, computedToInline, Papa, defaultValues, displayChart, ToolboxChart;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -11,7 +11,6 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-styl
     setters: [function (_env) {
       env = _env['default'];
     }, function (_aureliaFramework) {
-      useView = _aureliaFramework.useView;
       inject = _aureliaFramework.inject;
     }, function (_aureliaBinding) {
       ObserverLocator = _aureliaBinding.ObserverLocator;
@@ -108,7 +107,6 @@ System.register(['./env', 'aurelia-framework', 'aurelia-binding', 'computed-styl
 
         var _ToolboxChart = ToolboxChart;
         ToolboxChart = inject(ObserverLocator, 'Item')(ToolboxChart) || ToolboxChart;
-        ToolboxChart = useView('./base.html')(ToolboxChart) || ToolboxChart;
         return ToolboxChart;
       })();
 
