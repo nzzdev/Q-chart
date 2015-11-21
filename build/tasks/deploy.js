@@ -25,7 +25,7 @@ if (!process.env.FASTLY_API_KEY || !process.env.S3_BUCKET) {
 var FastlyPurge = require('fastly-purge');
 var fastlyPurge = new FastlyPurge(process.env.FASTLY_API_KEY);
 
-var slug          = 'toolbox-tools/chart';
+var slug          = 'Q-renderers/chart';
 var deployTargets = [];
 
 // deploy target is different according to branch / tags

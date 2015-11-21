@@ -1,8 +1,75 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.configure = configure;
+exports.display = display;
 
-function configure(aurelia, config) {}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _chartist = require('chartist');
+
+var _chartist2 = _interopRequireDefault(_chartist);
+
+var _resourcesChartistConfig = require('./resources/chartistConfig');
+
+var _resourcesChartistConfig2 = _interopRequireDefault(_resourcesChartistConfig);
+
+var _resourcesSizeObserver = require('./resources/SizeObserver');
+
+var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
+
+require('./styles.css!');
+
+var sizeObserver = new _resourcesSizeObserver2['default']();
+
+function getChartDataForChartist(data) {
+  var dataForChart = {
+    labels: data.x.data,
+    series: data.series.map(function (serie) {
+      return serie.data;
+    })
+  };
+  return dataForChart;
+}
+
+function getCombinedChartistConfig(chartConfig, chartType, size, data) {
+  return Object.assign((0, _resourcesChartistConfig2['default'])(chartType.toLowerCase(), size, data), chartConfig);
+}
+
+function getElementSize(element) {
+  var size = 'small';
+  if (element.getBoundingClientRect) {
+    var rect = element.getBoundingClientRect();
+    if (rect.width && rect.width > 480) {
+      size = 'large';
+    } else {
+      size = 'small';
+    }
+  }
+  return size;
+}
+
+var cancelResize;
+var drawSize;
+
+function display(item, element) {
+  if (!_chartist2['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
+
+  var data = getChartDataForChartist(item.data);
+  drawSize = getElementSize(element);
+
+  new _chartist2['default'][item.chartType](element, data, getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data));
+
+  if (cancelResize) {
+    cancelResize();
+  }
+  cancelResize = sizeObserver.onResize(function () {
+    var newSize = getElementSize(element);
+    if (drawSize !== newSize) {
+      drawSize = newSize;
+      new _chartist2['default'][item.chartType](element, data, getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data));
+    }
+  });
+  return true;
+}

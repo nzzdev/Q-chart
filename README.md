@@ -1,4 +1,4 @@
-# NZZ Storytelling Toolbox Charting Tool
+# NZZ Storytelling Q Charting Renderer
 
 
 ## Travis Setup
