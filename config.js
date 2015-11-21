@@ -25,6 +25,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.19",
     "papaparse": "npm:papaparse@4.1.2",
     "raf": "npm:raf@3.1.0",
+    "text": "github:systemjs/plugin-text@0.0.3",
     "github:aurelia/binding@0.11.4": {
       "aurelia-metadata": "github:aurelia/metadata@0.10.1",
       "aurelia-pal": "github:aurelia/pal@0.3.0",

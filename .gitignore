@@ -6,3 +6,5 @@ jspm_packages
 build/reports
 deployable-build
 dist/env.json
+dist/*/dev-view.js
+dist/*/dev-styles.css

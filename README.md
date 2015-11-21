@@ -1,5 +1,8 @@
 # NZZ Storytelling Q Charting Renderer
 
+## Development
+Run `gulp watch` to get a webserver. Point your Browser to the URL given in the console.
+This will show you 2 charts renderered within an article context. This all comes from `index.html`, `src/dev-view.js` and `src/dev-styles.scss`.
 
 ## Travis Setup
   * Github Token for JSPM: https://gist.github.com/topheman/25241e48a1b4f91ec6d4
