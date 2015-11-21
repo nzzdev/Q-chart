@@ -3,12 +3,12 @@ var gulp  = require('gulp'),
 
 var bundle = {
   includes: [
-    'display'
+    'index'
   ],
   excludes: []
 }
 
-var bundleName = 'deployable-build/display'
+var bundleName = 'deployable-build/index'
 
 function bundleCommands() {
   var bundleCommands = [];
@@ -20,4 +20,4 @@ function bundleCommands() {
   return bundleCommands;
 }
 
-gulp.task('bundle-display', shell.task(bundleCommands()));
+gulp.task('bundle', shell.task(bundleCommands()));

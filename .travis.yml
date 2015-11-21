@@ -9,7 +9,7 @@ install:
 - npm install
 - jspm install
 script:
-- gulp bundle-display
+- gulp bundle
 - gulp deploy
 env:
   global:
