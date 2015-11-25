@@ -2,16 +2,37 @@
 @import "sass/chartist_styles";
 @import 'chartist@0.9.4/dist/scss/chartist';
 
+%label-element {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: #333;
+  font-size: 11px;
+  line-height: 16px;
+  @media screen and (min-width: 414px) {
+    font-size: 13px;
+    line-height: 19px;
+  }
+}
+
 .q-chart {
 
 }
 
 .q-chart__title {
-
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #333;
+  font-size: 15px;
+  line-height: 22px;
+  margin: 0 0 8px 0;
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+    line-height: 26px;
+  }
 }
 
 .q-chart__legend {
-  
+  @extend %label-element;
 }
 
 .q-chart__chartist-container {
@@ -19,13 +40,23 @@
 }
 
 .q-chart__label-x-axis {
-
+  @extend %label-element;
+  text-align: right;
 }
 
 .q-chart__label-y-axis {
-
+  
+  @extend %label-element;
 }
 
 .q-chart__notes {
-  
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: #787878;
+  font-size: 11px;
+  line-height: 16px;
+  @media screen and (min-width: 414px) {
+    font-size: 13px;
+    line-height: 19px;
+  }
 }
