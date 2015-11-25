@@ -1,6 +1,7 @@
 import env from 'env';
 
 var chart1 = {
+  _id: '_1',
   title: 'My Chart 1',
   tool: 'chart',
   toolVersion: env.TOOL_VERSION,
@@ -22,6 +23,9 @@ var chart1 = {
         '2000-11-01',
         '2000-12-01'
       ]
+    },
+    y: {
+      label: 'y label'
     },
     series: [
       {
@@ -67,6 +71,7 @@ var chart1 = {
 }
 
 var chart2 = {
+  id: '_2',
   title: 'My Chart 2',
   tool: 'chart',
   toolVersion: env.TOOL_VERSION,
@@ -93,7 +98,7 @@ var chart2 = {
       {
         label: 'Juice',
         data: [
-          106.3,
+          10.3,
           106.0,
           105.4,
           101.8,

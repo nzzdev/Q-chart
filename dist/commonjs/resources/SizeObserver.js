@@ -25,7 +25,12 @@ var SizeObserver = (function () {
   _createClass(SizeObserver, [{
     key: 'onResize',
     value: function onResize(callback) {
-      this.resizeCallbacks.push(callback);
+      var element = arguments.length <= 1 || arguments[1] === undefined ? undefined : arguments[1];
+
+      this.resizeCallbacks.push({
+        func: callback,
+        element: element
+      });
       if (!this.resizeListener) {
         this.setupResizeListener();
         return (function () {
@@ -57,7 +62,6 @@ var SizeObserver = (function () {
       var _this = this;
 
       (0, _raf2['default'])((function () {
-        var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -66,7 +70,11 @@ var SizeObserver = (function () {
           for (var _iterator = _this.resizeCallbacks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var cb = _step.value;
 
-            cb(width);
+            if (cb.element && cb.element.getBoundingClientRect) {
+              cb.func(cb.element.getBoundingClientRect());
+            } else {
+              cb.func();
+            }
           }
         } catch (err) {
           _didIteratorError = true;

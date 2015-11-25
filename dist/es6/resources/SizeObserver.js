@@ -5,8 +5,11 @@ export default class SizeObserver {
   resizeCallbacks = [];
   resizeListenerInstalled = false;
 
-  onResize(callback) {
-    this.resizeCallbacks.push(callback);
+  onResize(callback, element = undefined) {
+    this.resizeCallbacks.push({
+      func: callback,
+      element: element
+    });
     if (!this.resizeListener) {
       this.setupResizeListener();
       return function() {
@@ -33,11 +36,12 @@ export default class SizeObserver {
 
   handleResizeOnTick() {
     raf(() => {
-      var width = window.innerWidth
-                  || document.documentElement.clientWidth
-                  || document.body.clientWidth;
       for (let cb of this.resizeCallbacks) {
-        cb(width);
+        if (cb.element && cb.element.getBoundingClientRect) {
+          cb.func(cb.element.getBoundingClientRect());
+        } else {
+          cb.func();
+        }
       }
     }.bind(this));
   }
