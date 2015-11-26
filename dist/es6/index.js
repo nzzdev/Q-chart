@@ -7,14 +7,13 @@ import './styles.css!'
 var sizeObserver = new SizeObserver();
 var dataStore = {};
 
+var chars = ['a','b','c','d','e','f'];
+
 function getChartDataForChartist(item) {
-  if (!dataStore[item._id]) {
-    dataStore[item._id] = {
-      labels: item.data.x.data,
-      series: item.data.series.map(serie => serie.data)
-    }
-  }
-  return dataStore[item._id];
+  return {
+    labels: item.data.x.data,
+    series: item.data.y.data.map(serie => serie.data)
+  };
 }
 
 function getCombinedChartistConfig(chartConfig, chartType, size, data) {
@@ -38,14 +37,21 @@ function renderChartist(item, element, drawSize) {
 }
 
 function getLegendHtml(item) {
-  return `
-    <div class="q-chart__legend">
-      <div class="q-chart__legend__item">
+  let html = `
+    <div class="q-chart__legend">`;
+
+  for (var i in item.data.y.data) {
+    let serie = item.data.y.data[i];
+    html += `
+      <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
         <div class="q-chart__legend__item__box"></div>
-        <div class="q-chart__legend__item__text">Legend</div>
-      </div>
+        <div class="q-chart__legend__item__text">${serie.label}</div>
+      </div>`;
+  }
+  html += `
     </div>
   `;
+  return html;
 }
 
 function getContextHtml(item) {
@@ -55,14 +61,14 @@ function getContextHtml(item) {
   if (!item.data.y) {
     item.data.y = {};
   }
-  // if (!item.data.y.label) {
-  //   item.data.y.label = '';
-  // }
   html += `
     <div class="q-chart__label-y-axis">${item.data.y.label || ''}</div>
     <div class="q-chart__chartist-container"></div>
     <div class="q-chart__label-x-axis">${item.data.x.label}</div>
-    <div class="q-chart__notes"></div>
+    <div class="q-chart__footer">
+      <div class="q-chart__footer__notes"></div>
+      <div class="q-chart__footer__sources"></div>
+    </div>
   `
   return html;
 }

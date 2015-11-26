@@ -1,20 +1,17 @@
 System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, sizeObserver, dataStore, cancelResize, drawSize;
+  var Chartist, getChartistConfig, SizeObserver, sizeObserver, dataStore, chars, cancelResize, drawSize;
 
   _export('display', display);
 
   function getChartDataForChartist(item) {
-    if (!dataStore[item._id]) {
-      dataStore[item._id] = {
-        labels: item.data.x.data,
-        series: item.data.series.map(function (serie) {
-          return serie.data;
-        })
-      };
-    }
-    return dataStore[item._id];
+    return {
+      labels: item.data.x.data,
+      series: item.data.y.data.map(function (serie) {
+        return serie.data;
+      })
+    };
   }
 
   function getCombinedChartistConfig(chartConfig, chartType, size, data) {
@@ -38,7 +35,14 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
   }
 
   function getLegendHtml(item) {
-    return '\n    <div class="q-chart__legend">\n      <div class="q-chart__legend__item">\n        <div class="q-chart__legend__item__box"></div>\n        <div class="q-chart__legend__item__text">Legend</div>\n      </div>\n    </div>\n  ';
+    var html = '\n    <div class="q-chart__legend">';
+
+    for (var i in item.data.y.data) {
+      var serie = item.data.y.data[i];
+      html += '\n      <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n        <div class="q-chart__legend__item__box"></div>\n        <div class="q-chart__legend__item__text">' + serie.label + '</div>\n      </div>';
+    }
+    html += '\n    </div>\n  ';
+    return html;
   }
 
   function getContextHtml(item) {
@@ -47,8 +51,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     if (!item.data.y) {
       item.data.y = {};
     }
-
-    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + item.data.x.label + '</div>\n    <div class="q-chart__notes"></div>\n  ';
+    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + item.data.x.label + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes"></div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
     return html;
   }
 
@@ -107,6 +110,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     execute: function () {
       sizeObserver = new SizeObserver();
       dataStore = {};
+      chars = ['a', 'b', 'c', 'd', 'e', 'f'];
     }
   };
 });

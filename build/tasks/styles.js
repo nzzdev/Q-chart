@@ -3,7 +3,14 @@ var gulp          = require('gulp'),
     sourcemaps    = require('gulp-sourcemaps'),
     postcss       = require('gulp-postcss'),
     autoprefixer  = require('autoprefixer'),
-    paths         = require('../paths');
+    paths         = require('../paths'),
+    Eyeglass      = require("eyeglass").Eyeglass;
+
+var options = {
+  includePaths: ['jspm_packages/github', 'jspm_packages/npm']
+}
+var eyeglass = new Eyeglass(options);
+eyeglass.enableImportOnce = false;
 
 module.exports = gulp.task('build-styles', function() {
 
@@ -11,15 +18,9 @@ module.exports = gulp.task('build-styles', function() {
         autoprefixer({browsers: ['last 3 version', 'chrome 30', 'ios_saf 7']}),
   ];
 
-  sassOptions = {
-    includePaths: ['jspm_packages/github', 'jspm_packages/npm']
-  }
-
   return gulp.src(paths.style)
-      .pipe(sourcemaps.init())
-        .pipe(sass(sassOptions).on('error', sass.logError))
-        .pipe(postcss(processors))
-      .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/'+paths.root}))
+      .pipe(sass(eyeglass.sassOptions()))
+      .pipe(postcss(processors))
 
       .pipe(gulp.dest(paths.output + 'amd'))
       .pipe(gulp.dest(paths.output + 'system'))

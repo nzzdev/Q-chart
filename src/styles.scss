@@ -1,3 +1,4 @@
+@import "storytelling-ui-kit/clearfix";
 @import "sass/chartist_settings";
 @import "sass/chartist_styles";
 @import 'chartist@0.9.4/dist/scss/chartist';
@@ -32,7 +33,27 @@
 }
 
 .q-chart__legend {
+  @include clearfix;
+}
+
+.q-chart__legend__item {
+  float: left;
+  @include clearfix;
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.q-chart__legend__item__box {
+  width: 16px;
+  height: 16px;
+  float: left;
+}
+
+.q-chart__legend__item__text {
   @extend %label-element;
+  float: left;
 }
 
 .q-chart__chartist-container {
@@ -49,7 +70,7 @@
   @extend %label-element;
 }
 
-.q-chart__notes {
+.q-chart__footer {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: normal;
   color: #787878;
@@ -58,5 +79,24 @@
   @media screen and (min-width: 414px) {
     font-size: 13px;
     line-height: 19px;
+  }
+
+  @include clearfix;
+
+  .q-chart__footer__notes, .q-chart__footer__sources {
+    float: left;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@for $i from 0 to length($ct-series-names) {
+  .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+    .q-chart__legend__item__box {
+      $color: nth($ct-series-colors, $i + 1);
+      background: $color;
+    }
   }
 }

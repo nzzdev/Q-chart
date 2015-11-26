@@ -1,3 +1,5 @@
+@import "storytelling-ui-kit/colors";
+
 // Text styles for labels
 $ct-text-color: inherit;
 $ct-text-size: inherit;
@@ -14,3 +16,13 @@ $ct-line-width: 3px;
 // Bar chart bar width
 $ct-bar-width: 10px;
 
+// Series names and colors. This can be extended or customized as desired. Just add more series and colors.
+$ct-series-names: (a, b, c, d, e, f);
+$ct-series-colors: (
+  $color-nzz-smaltblue,
+  $color-nzz-hokeypokey,
+  $color-nzz-fruitsalad,
+  $color-nzz-mojo,
+  $color-nzz-kelp,
+  $color-nzz-magenta,
+);
