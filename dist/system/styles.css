@@ -575,6 +575,9 @@
       font-size: 13px;
       line-height: 19px; } }
 
+.q-chart {
+  margin: 36px 0 36px 0; }
+
 .q-chart__title {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -587,14 +590,16 @@
       font-size: 20px;
       line-height: 26px; } }
 
-.q-chart__legend::after {
-  content: '';
-  display: table;
-  clear: both; }
+.q-chart__legend {
+  float: right; }
+  .q-chart__legend::after {
+    content: '';
+    display: table;
+    clear: both; }
 
 .q-chart__legend__item {
   float: left;
-  margin-right: 10px; }
+  margin: 0 10px 0 0; }
   .q-chart__legend__item::after {
     content: '';
     display: table;
@@ -603,15 +608,24 @@
     margin-right: 0; }
 
 .q-chart__legend__item__box {
-  width: 16px;
-  height: 16px;
+  position: relative;
+  bottom: -3px;
+  margin: 0 4px 0 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   float: left; }
 
 .q-chart__legend__item__text {
   float: left; }
 
 .q-chart__label-x-axis {
-  text-align: right; }
+  color: #787878;
+  text-align: right;
+  margin: 0 0 12px 0; }
+
+.q-chart__label-y-axis {
+  color: #787878; }
 
 .q-chart__footer {
   font-family: Arial, Helvetica, sans-serif;

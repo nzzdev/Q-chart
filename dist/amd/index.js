@@ -60,12 +60,12 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
   }
 
   function getContextHtml(item) {
-    var html = '\n    <h2 class="q-chart__title">' + item.title + '</h2>';
+    var html = '\n    <h3 class="q-chart__title">' + item.title + '</h3>';
     html += getLegendHtml(item);
     if (!item.data.y) {
       item.data.y = {};
     }
-    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + item.data.x.label + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes"></div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
+    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + item.data.x.label + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes">' + item.notes + '</div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
     return html;
   }
 

@@ -4,6 +4,8 @@ import SizeObserver from './resources/SizeObserver';
 
 import './styles.css!'
 
+// hier plugins importieren
+
 var sizeObserver = new SizeObserver();
 var dataStore = {};
 
@@ -56,7 +58,7 @@ function getLegendHtml(item) {
 
 function getContextHtml(item) {
   let html = `
-    <h2 class="q-chart__title">${item.title}</h2>`;
+    <h3 class="q-chart__title">${item.title}</h3>`;
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
@@ -66,7 +68,7 @@ function getContextHtml(item) {
     <div class="q-chart__chartist-container"></div>
     <div class="q-chart__label-x-axis">${item.data.x.label}</div>
     <div class="q-chart__footer">
-      <div class="q-chart__footer__notes"></div>
+      <div class="q-chart__footer__notes">${item.notes}</div>
       <div class="q-chart__footer__sources"></div>
     </div>
   `
