@@ -21,6 +21,10 @@ var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
 
 require('./styles.css!');
 
+require('./chartist-plugins/chartist-plugin-class-axis.js');
+
+require('./chartist-plugins/chartist-plugin-protrude-grid.js');
+
 var sizeObserver = new _resourcesSizeObserver2['default']();
 var dataStore = {};
 

@@ -1,4 +1,4 @@
-System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (_export) {
+System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!', './chartist-plugins/chartist-plugin-class-axis.js', './chartist-plugins/chartist-plugin-protrude-grid.js'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, sizeObserver, dataStore, chars, cancelResize, drawSize;
@@ -106,7 +106,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       getChartistConfig = _resourcesChartistConfig['default'];
     }, function (_resourcesSizeObserver) {
       SizeObserver = _resourcesSizeObserver['default'];
-    }, function (_stylesCss) {}],
+    }, function (_stylesCss) {}, function (_chartistPluginsChartistPluginClassAxisJs) {}, function (_chartistPluginsChartistPluginProtrudeGridJs) {}],
     execute: function () {
       sizeObserver = new SizeObserver();
       dataStore = {};

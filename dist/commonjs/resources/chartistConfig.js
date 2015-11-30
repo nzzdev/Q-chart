@@ -47,7 +47,9 @@ var chartistConfigs = {
       axisY: {
         showGrid: true
       }
-    }
+    },
+
+    plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
   },
 
@@ -85,7 +87,9 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       }
-    }
+    },
+
+    plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
   }
 

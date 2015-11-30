@@ -4,7 +4,16 @@ import SizeObserver from './resources/SizeObserver';
 
 import './styles.css!'
 
+/*
 // hier plugins importieren
+import ctExtendGridClassNames from './chartist-plugins/chartist-plugin-class-axis';
+import ctProtrudeGrid from './chartist-plugins/chartist-plugin-protrude-grid';
+*/
+
+// hier plugins importieren
+import './chartist-plugins/chartist-plugin-class-axis.js';
+import './chartist-plugins/chartist-plugin-protrude-grid.js';
+
 
 var sizeObserver = new SizeObserver();
 var dataStore = {};

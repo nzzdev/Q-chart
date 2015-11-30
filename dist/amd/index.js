@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!', './chartist-plugins/chartist-plugin-class-axis.js', './chartist-plugins/chartist-plugin-protrude-grid.js'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {

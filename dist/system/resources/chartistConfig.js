@@ -58,7 +58,9 @@ System.register([], function (_export) {
             axisY: {
               showGrid: true
             }
-          }
+          },
+
+          plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
         },
 
@@ -96,7 +98,9 @@ System.register([], function (_export) {
               position: 'start',
               scaleMinSpace: 40
             }
-          }
+          },
+
+          plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
         }
 

@@ -41,14 +41,14 @@ var chartistConfigs = {
       axisY: {
         showGrid: true
       }
-    }
+    },
 
-  /*	// plugin integration not finished yet
+  	// plugin integration not finished yet
       plugins: [
        Chartist.plugins.ctExtendGridClassNames(),
        Chartist.plugins.ctProtrudeGrid()
       ]
-  */
+  
   },
 
   line: {
@@ -85,14 +85,14 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       },
-    }
+    },
 
-/*  // plugin integration not finished yet
+  // plugin integration not finished yet
     plugins: [
      Chartist.plugins.ctExtendGridClassNames(),
      Chartist.plugins.ctProtrudeGrid()
     ]
-*/
+
   }
 
 }

@@ -45,7 +45,9 @@ define(['exports', 'module'], function (exports, module) {
         axisY: {
           showGrid: true
         }
-      }
+      },
+
+      plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
     },
 
@@ -83,7 +85,9 @@ define(['exports', 'module'], function (exports, module) {
           position: 'start',
           scaleMinSpace: 40
         }
-      }
+      },
+
+      plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
 
     }
 
