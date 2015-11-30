@@ -17,15 +17,15 @@ var chartistConfigs = {
   bar: {
     small: {
       height: 200,
+      seriesBarDistance: 11,
       chartPadding: {
         top: 0,
         right: 0,
         bottom: 0,
         left: 0
       },
-      reverseData: true,
+      reverseData: false,
       horizontalBars: true,
-      seriesBarDistance: 11,
       axisX: {
         showGrid: true,
         position: 'start'
@@ -38,6 +38,7 @@ var chartistConfigs = {
     large: {
       height: 200,
       fullWidth: true,
+      seriesBarDistance: 11,
       chartPadding: {
         top: 0,
         right: 0,
@@ -65,10 +66,7 @@ var chartistConfigs = {
       lineSmooth: false,
       axisX: {
         showGrid: true,
-        showLabel: true,
-        labelInterpolationFnc: function skipLabels(value, index) {
-          return index % 12 === 0 ? value : null;
-        }
+        showLabel: true
       },
       axisY: {
         position: 'start',
@@ -83,10 +81,7 @@ var chartistConfigs = {
       lineSmooth: false,
       axisX: {
         showGrid: true,
-        showLabel: true,
-        labelInterpolationFnc: function skipLabels(value, index) {
-          return index % 12 === 0 ? value : null;
-        }
+        showLabel: true
       },
       axisY: {
         position: 'start',
@@ -95,11 +90,15 @@ var chartistConfigs = {
       plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
     }
   }
-
 };
 
 function getConfig(type, size, data) {
   var config = chartistConfigs[type][size];
+
+  if (data.series.length * data.labels.length >= 30) {
+    console.log("+++ uh, more than 30 bars, better switch to mobile layout on desktop +++");
+  }
+
   if (type === 'bar' && size === 'small') {
     config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
   }

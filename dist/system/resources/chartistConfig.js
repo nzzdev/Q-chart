@@ -7,6 +7,11 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
 
   function getConfig(type, size, data) {
     var config = chartistConfigs[type][size];
+
+    if (data.series.length * data.labels.length >= 30) {
+      console.log("+++ uh, more than 30 bars, better switch to mobile layout on desktop +++");
+    }
+
     if (type === 'bar' && size === 'small') {
       config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
     }
@@ -27,15 +32,15 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
         bar: {
           small: {
             height: 200,
+            seriesBarDistance: 11,
             chartPadding: {
               top: 0,
               right: 0,
               bottom: 0,
               left: 0
             },
-            reverseData: true,
+            reverseData: false,
             horizontalBars: true,
-            seriesBarDistance: 11,
             axisX: {
               showGrid: true,
               position: 'start'
@@ -48,6 +53,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
           large: {
             height: 200,
             fullWidth: true,
+            seriesBarDistance: 11,
             chartPadding: {
               top: 0,
               right: 0,
@@ -75,10 +81,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             lineSmooth: false,
             axisX: {
               showGrid: true,
-              showLabel: true,
-              labelInterpolationFnc: function skipLabels(value, index) {
-                return index % 12 === 0 ? value : null;
-              }
+              showLabel: true
             },
             axisY: {
               position: 'start',
@@ -93,10 +96,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             lineSmooth: false,
             axisX: {
               showGrid: true,
-              showLabel: true,
-              labelInterpolationFnc: function skipLabels(value, index) {
-                return index % 12 === 0 ? value : null;
-              }
+              showLabel: true
             },
             axisY: {
               position: 'start',
@@ -105,7 +105,6 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
           }
         }
-
       };
     }
   };

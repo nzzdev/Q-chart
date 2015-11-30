@@ -7,12 +7,13 @@
 	[A] y ticks should overlap baseline / write plugin
 	[A] x ticks should overlap baseline / write plugin
 	[A] [DONE] define colors
-	[B][HELP] if date axis = smart labeling
+	[B] [HELP] if date axis = smart labeling
 	[B] retina switch for hairlines 
+	[B]	change order of drawing, draw grid over chart
 
 ## barcharts
 	[B] if series[0].length > XX recommend line chart
-	[B]if series.length + ?? > 6 mobile Layout on Desktop
+	[B] if number of bars > 30 = mobile Layout on Desktop
 	[B] barwidth & BarSeries relates to series.length % series
 
 

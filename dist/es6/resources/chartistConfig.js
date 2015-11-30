@@ -9,15 +9,15 @@ var chartistConfigs = {
   bar: {
     small: {
       height: 200, // default will get overwritten by getConfig function called with data
+      seriesBarDistance: 11,
       chartPadding: {
         top: 0,
         right: 0,
         bottom: 0,
         left: 0
       },   
-      reverseData: true,
+      reverseData: false,
       horizontalBars: true,
-      seriesBarDistance: 11,
       axisX: {   
         showGrid: true,
         position: 'start',
@@ -33,6 +33,7 @@ var chartistConfigs = {
     large: {
       height: 200,
       fullWidth: true,
+      seriesBarDistance: 11,
       chartPadding: {
         top: 0,
         right: 0,
@@ -64,9 +65,11 @@ var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
-        labelInterpolationFnc: function skipLabels(value, index) {
+        /*
+        labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
             return index % 12  === 0 ? value : null;
         }
+        */
       },
       axisY: {
         position: 'start',
@@ -85,10 +88,11 @@ var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
-        labelInterpolationFnc: function skipLabels(value, index) {
+        /*
+        labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
             return index % 12  === 0 ? value : null;
         }
-      },
+        */      },
       axisY: {
         position: 'start',
         scaleMinSpace: 40
@@ -99,11 +103,16 @@ var chartistConfigs = {
       ]
     }
   }
-
 }
 
 export default function getConfig(type, size, data) {
   let config = chartistConfigs[type][size];
+
+  // check the number of bars and switch to mobile layout if > 30 bars (not implemented)
+  if ((data.series.length*data.labels.length) >= 30){
+    console.log("+++ uh, more than 30 bars, better switch to mobile layout on desktop +++");
+  }
+
   if (type === 'bar' && size === 'small') {
     config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
   }
