@@ -1,7 +1,7 @@
-System.register([], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js'], function (_export) {
   'use strict';
 
-  var vertBarHeight, vertBarSetPadding, chartistConfigs;
+  var ctExtendGridClassNames, ctProtrudeGrid, vertBarHeight, vertBarSetPadding, chartistConfigs;
 
   _export('default', getConfig);
 
@@ -14,7 +14,11 @@ System.register([], function (_export) {
   }
 
   return {
-    setters: [],
+    setters: [function (_chartistPluginsChartistPluginClassAxisJs) {
+      ctExtendGridClassNames = _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames;
+    }, function (_chartistPluginsChartistPluginProtrudeGridJs) {
+      ctProtrudeGrid = _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid;
+    }],
     execute: function () {
       vertBarHeight = 10;
       vertBarSetPadding = 22;
@@ -38,7 +42,8 @@ System.register([], function (_export) {
             },
             axisY: {
               showGrid: false
-            }
+            },
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
           },
           large: {
             height: 200,
@@ -57,11 +62,9 @@ System.register([], function (_export) {
             },
             axisY: {
               showGrid: true
-            }
-          },
-
-          plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+            },
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+          }
         },
 
         line: {
@@ -80,7 +83,8 @@ System.register([], function (_export) {
             axisY: {
               position: 'start',
               scaleMinSpace: 40
-            }
+            },
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
           },
           large: {
             height: 200,
@@ -97,11 +101,9 @@ System.register([], function (_export) {
             axisY: {
               position: 'start',
               scaleMinSpace: 40
-            }
-          },
-
-          plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+            },
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+          }
         }
 
       };

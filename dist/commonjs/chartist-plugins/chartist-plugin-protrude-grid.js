@@ -1,42 +1,50 @@
 'use strict';
 
-(function (window, document, Chartist) {
-    'use strict';
+Object.defineProperty(exports, '__esModule', {
+              value: true
+});
+exports.ctProtrudeGrid = ctProtrudeGrid;
 
-    var protrude = 8;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-    var gridOffsetVert;
-    var gridOffsetHorz;
+var _chartist = require('chartist');
 
-    var defaultOptions = {};
+var _chartist2 = _interopRequireDefault(_chartist);
 
-    Chartist.plugins = Chartist.plugins || {};
-    Chartist.plugins.ctProtrudeGrid = function (options) {
+var protrude = 8;
 
-        options = Chartist.extend({}, defaultOptions, options);
+var gridOffsetVert;
+var gridOffsetHorz;
 
-        return function ctProtrudeGrid(chart) {
-            if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+var defaultOptions = {};
 
-                console.log(chart);
+function ctProtrudeGrid(options) {
 
-                chart.on('draw', function (data) {
+              options = Object.assign(defaultOptions, options);
 
-                    if (data.type === 'grid') {
-                        console.log(data);
+              return function ctProtrudeGrid(chart) {
+                            if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
 
-                        var lineDirection = data.axis.units.dir;
+                                          console.log(chart);
 
-                        if (lineDirection == 'vertical') {
-                            console.log("--vert--");
-                            data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
-                        } else if (lineDirection == 'horizontal') {
-                                console.log("--horz--");
-                                data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
-                            }
-                    }
-                });
-            };
-        };
-    };
-})(window, document, Chartist);
+                                          chart.on('draw', function (data) {
+
+                                                        if (data.type === 'grid') {
+                                                                      console.log(data);
+
+                                                                      var lineDirection = data.axis.units.dir;
+
+                                                                      if (lineDirection == 'vertical') {
+                                                                                    console.log("--vert--");
+                                                                                    data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                      } else if (lineDirection == 'horizontal') {
+                                                                                                  console.log("--horz--");
+                                                                                                  data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                    }
+                                                        }
+                                          });
+                            };
+              };
+}
+
+;

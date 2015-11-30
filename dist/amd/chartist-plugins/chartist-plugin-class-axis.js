@@ -1,38 +1,44 @@
-define(['exports'], function (exports) {
+define(['exports', 'chartist'], function (exports, _chartist) {
     'use strict';
 
-    (function (window, document, Chartist) {
-        'use strict';
+    Object.defineProperty(exports, '__esModule', {
+        value: true
+    });
+    exports.ctExtendGridClassNames = ctExtendGridClassNames;
 
-        var defaultOptions = {
-            first: 'first',
-            last: 'last'
-        };
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-        Chartist.plugins = Chartist.plugins || {};
-        Chartist.plugins.ctExtendGridClassNames = function (options) {
+    var _Chartist = _interopRequireDefault(_chartist);
 
-            options = Chartist.extend({}, defaultOptions, options);
+    var defaultOptions = {
+        first: 'first',
+        last: 'last'
+    };
 
-            return function ctExtendGridClassNames(chart) {
-                if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
-                    chart.on('draw', function (data) {
-                        if (data.type === 'grid') {
-                            var lineIndex = data.index;
-                            var lineClassList = data.element._node.classList;
-                            var lineDirection = data.axis.units.dir;
+    function ctExtendGridClassNames(options) {
 
-                            if (lineIndex === 0) {
-                                lineClassList.add('ct-' + lineDirection + '-' + options.first);
-                            }
+        options = Object.assign(defaultOptions, options);
 
-                            if (lineIndex === data.axis.ticks.length - 1) {
-                                lineClassList.add('ct-' + lineDirection + '-' + options.last);
-                            }
+        return function ctExtendGridClassNames(chart) {
+            if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
+                chart.on('draw', function (data) {
+                    if (data.type === 'grid') {
+                        var lineIndex = data.index;
+                        var lineClassList = data.element._node.classList;
+                        var lineDirection = data.axis.units.dir;
+
+                        if (lineIndex === 0) {
+                            lineClassList.add('ct-' + lineDirection + '-' + options.first);
                         }
-                    });
-                }
-            };
+
+                        if (lineIndex === data.axis.ticks.length - 1) {
+                            lineClassList.add('ct-' + lineDirection + '-' + options.last);
+                        }
+                    }
+                });
+            }
         };
-    })(window, document, Chartist);
+    }
+
+    ;
 });

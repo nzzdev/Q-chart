@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!', './chartist-plugins/chartist-plugin-class-axis.js', './chartist-plugins/chartist-plugin-protrude-grid.js'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -86,6 +86,8 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   function display(item, element) {
     var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+    if (!element) throw 'Element is not defined';
 
     if (!_Chartist['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
 

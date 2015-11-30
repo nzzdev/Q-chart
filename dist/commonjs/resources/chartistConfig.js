@@ -4,6 +4,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports['default'] = getConfig;
+
+var _chartistPluginsChartistPluginClassAxisJs = require('../chartist-plugins/chartist-plugin-class-axis.js');
+
+var _chartistPluginsChartistPluginProtrudeGridJs = require('../chartist-plugins/chartist-plugin-protrude-grid.js');
+
 var vertBarHeight = 10;
 var vertBarSetPadding = 22;
 
@@ -27,7 +32,8 @@ var chartistConfigs = {
       },
       axisY: {
         showGrid: false
-      }
+      },
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
     },
     large: {
       height: 200,
@@ -46,11 +52,9 @@ var chartistConfigs = {
       },
       axisY: {
         showGrid: true
-      }
-    },
-
-    plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+      },
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
+    }
   },
 
   line: {
@@ -69,7 +73,8 @@ var chartistConfigs = {
       axisY: {
         position: 'start',
         scaleMinSpace: 40
-      }
+      },
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
     },
     large: {
       height: 200,
@@ -86,11 +91,9 @@ var chartistConfigs = {
       axisY: {
         position: 'start',
         scaleMinSpace: 40
-      }
-    },
-
-    plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+      },
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
+    }
   }
 
 };

@@ -21,10 +21,6 @@ var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
 
 require('./styles.css!');
 
-require('./chartist-plugins/chartist-plugin-class-axis.js');
-
-require('./chartist-plugins/chartist-plugin-protrude-grid.js');
-
 var sizeObserver = new _resourcesSizeObserver2['default']();
 var dataStore = {};
 
@@ -97,6 +93,8 @@ var drawSize;
 
 function display(item, element) {
   var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+  if (!element) throw 'Element is not defined';
 
   if (!_chartist2['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
 

@@ -1,50 +1,47 @@
-System.register([], function (_export) {
-    'use strict';
+System.register(['chartist'], function (_export) {
+              'use strict';
 
-    return {
-        setters: [],
-        execute: function () {
+              var Chartist, protrude, gridOffsetVert, gridOffsetHorz, defaultOptions;
 
-            (function (window, document, Chartist) {
-                'use strict';
+              _export('ctProtrudeGrid', ctProtrudeGrid);
 
-                var protrude = 8;
+              function ctProtrudeGrid(options) {
 
-                var gridOffsetVert;
-                var gridOffsetHorz;
+                            options = Object.assign(defaultOptions, options);
 
-                var defaultOptions = {};
+                            return function ctProtrudeGrid(chart) {
+                                          if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
-                Chartist.plugins = Chartist.plugins || {};
-                Chartist.plugins.ctProtrudeGrid = function (options) {
+                                                        console.log(chart);
 
-                    options = Chartist.extend({}, defaultOptions, options);
+                                                        chart.on('draw', function (data) {
 
-                    return function ctProtrudeGrid(chart) {
-                        if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+                                                                      if (data.type === 'grid') {
+                                                                                    console.log(data);
 
-                            console.log(chart);
+                                                                                    var lineDirection = data.axis.units.dir;
 
-                            chart.on('draw', function (data) {
+                                                                                    if (lineDirection == 'vertical') {
+                                                                                                  console.log("--vert--");
+                                                                                                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                                    } else if (lineDirection == 'horizontal') {
+                                                                                                                console.log("--horz--");
+                                                                                                                data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                                  }
+                                                                      }
+                                                        });
+                                          };
+                            };
+              }
 
-                                if (data.type === 'grid') {
-                                    console.log(data);
-
-                                    var lineDirection = data.axis.units.dir;
-
-                                    if (lineDirection == 'vertical') {
-                                        console.log("--vert--");
-                                        data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
-                                    } else if (lineDirection == 'horizontal') {
-                                            console.log("--horz--");
-                                            data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
-                                        }
-                                }
-                            });
-                        };
-                    };
-                };
-            })(window, document, Chartist);
-        }
-    };
+              return {
+                            setters: [function (_chartist) {
+                                          Chartist = _chartist['default'];
+                            }],
+                            execute: function () {
+                                          protrude = 8;
+                                          defaultOptions = {};
+                                          ;
+                            }
+              };
 });

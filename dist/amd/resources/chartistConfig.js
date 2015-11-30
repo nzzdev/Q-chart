@@ -1,4 +1,4 @@
-define(['exports', 'module'], function (exports, module) {
+define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js'], function (exports, module, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs) {
   'use strict';
 
   module.exports = getConfig;
@@ -25,7 +25,8 @@ define(['exports', 'module'], function (exports, module) {
         },
         axisY: {
           showGrid: false
-        }
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
       },
       large: {
         height: 200,
@@ -44,11 +45,9 @@ define(['exports', 'module'], function (exports, module) {
         },
         axisY: {
           showGrid: true
-        }
-      },
-
-      plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
+      }
     },
 
     line: {
@@ -67,7 +66,8 @@ define(['exports', 'module'], function (exports, module) {
         axisY: {
           position: 'start',
           scaleMinSpace: 40
-        }
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
       },
       large: {
         height: 200,
@@ -84,11 +84,9 @@ define(['exports', 'module'], function (exports, module) {
         axisY: {
           position: 'start',
           scaleMinSpace: 40
-        }
-      },
-
-      plugins: [Chartist.plugins.ctExtendGridClassNames(), Chartist.plugins.ctProtrudeGrid()]
-
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)()]
+      }
     }
 
   };

@@ -4,15 +4,10 @@ import SizeObserver from './resources/SizeObserver';
 
 import './styles.css!'
 
-/*
-// hier plugins importieren
-import ctExtendGridClassNames from './chartist-plugins/chartist-plugin-class-axis';
-import ctProtrudeGrid from './chartist-plugins/chartist-plugin-protrude-grid';
-*/
 
-// hier plugins importieren
-import './chartist-plugins/chartist-plugin-class-axis.js';
-import './chartist-plugins/chartist-plugin-protrude-grid.js';
+// import {ctExtendGridClassNames} from './chartist-plugins/chartist-plugin-class-axis.js';
+// Chartist.plugins['ctExtendGridClassNames'] = ctExtendGridClassNames;
+// import './chartist-plugins/chartist-plugin-protrude-grid.js';
 
 
 var sizeObserver = new SizeObserver();
@@ -100,6 +95,8 @@ var cancelResize;
 var drawSize;
 
 export function display(item, element, withoutContext = false) {
+  if (!element) throw 'Element is not defined';
+  
   if (!Chartist.hasOwnProperty(item.chartType)) throw `chartType (${item.chartType}) not available`;
 
   drawSize = getElementSize(element.getBoundingClientRect());

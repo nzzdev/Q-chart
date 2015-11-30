@@ -1,6 +1,9 @@
 var vertBarHeight = 10;
 var vertBarSetPadding = 22;
 
+import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
+import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
+
 var chartistConfigs = {
 
   bar: {
@@ -22,6 +25,10 @@ var chartistConfigs = {
       axisY: {
         showGrid: false,
       },
+      plugins: [
+       ctExtendGridClassNames(),
+       ctProtrudeGrid()
+      ]
     },
     large: {
       height: 200,
@@ -40,15 +47,12 @@ var chartistConfigs = {
       },
       axisY: {
         showGrid: true
-      }
-    },
-
-  	// plugin integration not finished yet
+      },
       plugins: [
-       Chartist.plugins.ctExtendGridClassNames(),
-       Chartist.plugins.ctProtrudeGrid()
+       ctExtendGridClassNames(),
+       ctProtrudeGrid()
       ]
-  
+    },
   },
 
   line: {
@@ -68,6 +72,10 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       },
+      plugins: [
+       ctExtendGridClassNames(),
+       ctProtrudeGrid()
+      ]
     },
     large: {
       height: 200,
@@ -85,14 +93,11 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       },
-    },
-
-  // plugin integration not finished yet
-    plugins: [
-     Chartist.plugins.ctExtendGridClassNames(),
-     Chartist.plugins.ctProtrudeGrid()
-    ]
-
+      plugins: [
+       ctExtendGridClassNames(),
+       ctProtrudeGrid()
+      ]
+    }
   }
 
 }

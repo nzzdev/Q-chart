@@ -1,44 +1,50 @@
-define(['exports'], function (exports) {
-    'use strict';
+define(['exports', 'chartist'], function (exports, _chartist) {
+              'use strict';
 
-    (function (window, document, Chartist) {
-        'use strict';
+              Object.defineProperty(exports, '__esModule', {
+                            value: true
+              });
+              exports.ctProtrudeGrid = ctProtrudeGrid;
 
-        var protrude = 8;
+              function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-        var gridOffsetVert;
-        var gridOffsetHorz;
+              var _Chartist = _interopRequireDefault(_chartist);
 
-        var defaultOptions = {};
+              var protrude = 8;
 
-        Chartist.plugins = Chartist.plugins || {};
-        Chartist.plugins.ctProtrudeGrid = function (options) {
+              var gridOffsetVert;
+              var gridOffsetHorz;
 
-            options = Chartist.extend({}, defaultOptions, options);
+              var defaultOptions = {};
 
-            return function ctProtrudeGrid(chart) {
-                if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+              function ctProtrudeGrid(options) {
 
-                    console.log(chart);
+                            options = Object.assign(defaultOptions, options);
 
-                    chart.on('draw', function (data) {
+                            return function ctProtrudeGrid(chart) {
+                                          if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
 
-                        if (data.type === 'grid') {
-                            console.log(data);
+                                                        console.log(chart);
 
-                            var lineDirection = data.axis.units.dir;
+                                                        chart.on('draw', function (data) {
 
-                            if (lineDirection == 'vertical') {
-                                console.log("--vert--");
-                                data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
-                            } else if (lineDirection == 'horizontal') {
-                                    console.log("--horz--");
-                                    data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
-                                }
-                        }
-                    });
-                };
-            };
-        };
-    })(window, document, Chartist);
+                                                                      if (data.type === 'grid') {
+                                                                                    console.log(data);
+
+                                                                                    var lineDirection = data.axis.units.dir;
+
+                                                                                    if (lineDirection == 'vertical') {
+                                                                                                  console.log("--vert--");
+                                                                                                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                                    } else if (lineDirection == 'horizontal') {
+                                                                                                                console.log("--horz--");
+                                                                                                                data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                                  }
+                                                                      }
+                                                        });
+                                          };
+                            };
+              }
+
+              ;
 });

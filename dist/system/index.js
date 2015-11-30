@@ -1,4 +1,4 @@
-System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!', './chartist-plugins/chartist-plugin-class-axis.js', './chartist-plugins/chartist-plugin-protrude-grid.js'], function (_export) {
+System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, sizeObserver, dataStore, chars, cancelResize, drawSize;
@@ -70,6 +70,8 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
   function display(item, element) {
     var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
+    if (!element) throw 'Element is not defined';
+
     if (!Chartist.hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
 
     drawSize = getElementSize(element.getBoundingClientRect());
@@ -106,7 +108,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       getChartistConfig = _resourcesChartistConfig['default'];
     }, function (_resourcesSizeObserver) {
       SizeObserver = _resourcesSizeObserver['default'];
-    }, function (_stylesCss) {}, function (_chartistPluginsChartistPluginClassAxisJs) {}, function (_chartistPluginsChartistPluginProtrudeGridJs) {}],
+    }, function (_stylesCss) {}],
     execute: function () {
       sizeObserver = new SizeObserver();
       dataStore = {};
