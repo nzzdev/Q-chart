@@ -139,7 +139,7 @@ var chart2 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  chartType: 'Line'
 }
 
 import 'styles.css!';

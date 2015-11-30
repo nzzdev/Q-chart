@@ -113,3 +113,26 @@ margin: 36px 0 36px 0;
     }
   }
 }
+
+// centers labes when barchart is horizontal 
+
+.ct-horizontal-bars .ct-label .ct-vertical {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// line chart baseline
+
+.ct-vertical-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+
+.ct-horizontal-bars .ct-horizontal-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+

@@ -33,7 +33,7 @@ export function ctProtrudeGrid(options) {
           if(data.type === 'grid') {
 
 //                    data.axis.gridOffset = protrude;
-          console.log(data);
+//          console.log(data);
 //                    debugger;
 
           /*
@@ -66,7 +66,7 @@ export function ctProtrudeGrid(options) {
               var lineDirection = data.axis.units.dir;
 
               if (lineDirection == 'vertical'){
-                  console.log("--vert--");   
+//                  console.log("--vert--");   
                   data.axis.gridOffset = data.axis.chartRect.x1 - protrude;  
 // -->                           data.axis.chartRect.x2 = data.axis.chartRect.x2 + protrude*2;
 //                            data.x2 = data.axis.chartRect.x2 + protrude*2;
@@ -76,7 +76,7 @@ export function ctProtrudeGrid(options) {
 //                            data.x2 = 625;
 //                          console.log("");  
               } else if (lineDirection == 'horizontal'){
-                  console.log("--horz--");    
+//                  console.log("--horz--");    
                  data.axis.gridOffset = data.axis.chartRect.y2 - protrude; 
 // -->                          data.axis.chartRect.y2 = data.axis.chartRect.y2 + protrude*2;
 //                           data.axis.axisLength = data.axis.chartRect.x2 - data.axis.chartRect.x1 + (protrude*2);

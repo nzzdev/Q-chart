@@ -664,3 +664,24 @@
 
 .q-chart__legend__item--f .q-chart__legend__item__box {
   background: #b2577e; }
+
+.ct-horizontal-bars .ct-label .ct-vertical {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
+
+.ct-vertical-first {
+  stroke: #333;
+  opacity: 1;
+  stroke-width: 1px; }
+
+.ct-horizontal-bars .ct-horizontal-first {
+  stroke: #333;
+  opacity: 1;
+  stroke-width: 1px; }

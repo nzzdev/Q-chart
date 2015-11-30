@@ -29,15 +29,12 @@ define(['exports', 'chartist'], function (exports, _chartist) {
                                                         chart.on('draw', function (data) {
 
                                                                       if (data.type === 'grid') {
-                                                                                    console.log(data);
 
                                                                                     var lineDirection = data.axis.units.dir;
 
                                                                                     if (lineDirection == 'vertical') {
-                                                                                                  console.log("--vert--");
                                                                                                   data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
                                                                                     } else if (lineDirection == 'horizontal') {
-                                                                                                                console.log("--horz--");
                                                                                                                 data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
                                                                                                   }
                                                                       }
