@@ -83,6 +83,9 @@ function displayWithContext(item, element, drawSize) {
   let el = document.createElement('section');
   el.setAttribute('class','q-chart');
   el.innerHTML = getContextHtml(item);
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
   element.appendChild(el);
   renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize);
 }
@@ -96,7 +99,7 @@ var drawSize;
 
 export function display(item, element, withoutContext = false) {
   if (!element) throw 'Element is not defined';
-  
+
   if (!Chartist.hasOwnProperty(item.chartType)) throw `chartType (${item.chartType}) not available`;
 
   drawSize = getElementSize(element.getBoundingClientRect());
