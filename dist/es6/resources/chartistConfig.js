@@ -105,7 +105,7 @@ var chartistConfigs = {
 export default function getConfig(type, size, data) {
   let config = chartistConfigs[type][size];
   if (type === 'bar' && size === 'small') {
-    config.height = (((vertBarHeight) * data.y.data.length) + vertBarSetPadding) * (data.labels.length);
+    config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
   }
   return config;
 }
