@@ -24,8 +24,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
                             return function ctProtrudeGrid(chart) {
                                           if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
 
-                                                        console.log(chart);
-
                                                         chart.on('draw', function (data) {
 
                                                                       if (data.type === 'grid') {

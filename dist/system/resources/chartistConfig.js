@@ -1,7 +1,7 @@
-System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctProtrudeGrid, vertBarHeight, vertBarSetPadding, chartistConfigs;
+  var ctExtendGridClassNames, ctProtrudeGrid, ctGridOnTop, vertBarHeight, vertBarSetPadding, chartistConfigs;
 
   _export('default', getConfig);
 
@@ -23,6 +23,8 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
       ctExtendGridClassNames = _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames;
     }, function (_chartistPluginsChartistPluginProtrudeGridJs) {
       ctProtrudeGrid = _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid;
+    }, function (_chartistPluginsChartistPluginGridOnTopJs) {
+      ctGridOnTop = _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop;
     }],
     execute: function () {
       vertBarHeight = 10;
@@ -48,7 +50,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: false
             },
-            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -69,7 +71,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: true
             },
-            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           }
         },
 
@@ -87,7 +89,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -102,7 +104,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctProtrudeGrid()]
+            plugins: [ctExtendGridClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           }
         }
       };

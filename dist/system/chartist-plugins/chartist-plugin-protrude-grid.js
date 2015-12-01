@@ -12,8 +12,6 @@ System.register(['chartist'], function (_export) {
                             return function ctProtrudeGrid(chart) {
                                           if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
-                                                        console.log(chart);
-
                                                         chart.on('draw', function (data) {
 
                                                                       if (data.type === 'grid') {

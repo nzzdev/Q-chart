@@ -6,17 +6,17 @@
 	[B] chart padding left related to longest number on y-axis
 	[A] y ticks should overlap baseline / write plugin
 	[A] x ticks should overlap baseline / write plugin
-	[A] [DONE] define colors
-	[B] [HELP] if date axis = smart labeling
+	[A][DONE] define colors
+	[B][HELP] if date axis = smart labeling
 	[B] retina switch for hairlines 
 	[B]	change order of drawing, draw grid over chart
 
 ## barcharts
 	[B] if series[0].length > XX recommend line chart
 	[B] if number of bars > 30 = mobile Layout on Desktop
-	[B] barwidth & BarSeries relates to series.length % series
+	[B][DONE] barwidth & BarSeries relates to series.length % series
 
 
 ## linecharts
-	[A] [DONE] black (METAL) baseline
-	[A] [DONE] make it beautiful
+	[A][DONE] black (METAL) baseline
+	[A][DONE] make it beautiful

@@ -1,5 +1,5 @@
 // plugin to protrude gridlines lap over baselines
-// inspired by this on https://github.com/gionkunz/chartist-js/issues/493
+// inspired by this one https://github.com/gionkunz/chartist-js/issues/493
 
 import Chartist from 'chartist';
 
@@ -19,16 +19,11 @@ export function ctProtrudeGrid(options) {
   return function ctProtrudeGrid(chart) {
     if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
-      console.log(chart);
+//      console.log(chart);
 //                debugger;
 
       chart.on('draw', function(data) {
 
-
-
-          /*
-
-          */
 
           if(data.type === 'grid') {
 

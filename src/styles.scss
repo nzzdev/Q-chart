@@ -6,7 +6,7 @@
 // --- COLORS
 $primary-color: #333;           //for headline, description and relevant elements of chart, inherited from nzz.ch
 $secondary-color: #787878;      //for less important info like notes
-$grid-color: #8E8E8E;              //light grey for grid in …_settings.scss
+$grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
 
 %label-element {
   font-family: Arial, Helvetica, sans-serif;
@@ -68,7 +68,7 @@ margin: 36px 0 36px 0;
 }
 
 .q-chart__chartist-container {
-
+  
 }
 
 .q-chart__label-x-axis {

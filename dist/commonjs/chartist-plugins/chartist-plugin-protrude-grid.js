@@ -25,8 +25,6 @@ function ctProtrudeGrid(options) {
               return function ctProtrudeGrid(chart) {
                             if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
 
-                                          console.log(chart);
-
                                           chart.on('draw', function (data) {
 
                                                         if (data.type === 'grid') {
