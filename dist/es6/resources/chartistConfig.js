@@ -7,7 +7,7 @@ import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 
 var chartistConfigs = {
 
-  bar: {
+  Bar: {
     small: {
       height: 200, // default will get overwritten by getConfig function called with data
       seriesBarDistance: 11,
@@ -59,7 +59,61 @@ var chartistConfigs = {
     },
   },
 
-  line: {
+  StackedBar: {
+    small: {
+      height: 200, // default will get overwritten by getConfig function called with data
+      seriesBarDistance: 11,
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },   
+      reverseData: false,
+      horizontalBars: true,
+      stackBars: true,
+      axisX: {   
+        showGrid: true,
+        position: 'start',
+      },
+      axisY: {
+        showGrid: false,
+      },
+      plugins: [
+       ctExtendGridClassNames(),
+       ctProtrudeGrid(),
+       ctGridOnTop()
+      ]
+    },
+    large: {
+      height: 200,
+      fullWidth: true,
+      seriesBarDistance: 11,
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },    
+      reverseData: false,
+      horizontalBars: false,
+      stackBars: true,
+      axisX: {
+        showGrid: false,
+        position: 'end',
+      },
+      axisY: {
+        showGrid: true
+      },
+      plugins: [
+       ctExtendGridClassNames(),
+       ctProtrudeGrid(),
+       ctGridOnTop()
+      ]
+    },
+  },
+
+  Line: {
     small: {
       height: 200,
 

@@ -7,7 +7,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
 
   var chartistConfigs = {
 
-    bar: {
+    Bar: {
       small: {
         height: 200,
         seriesBarDistance: 11,
@@ -51,7 +51,53 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
       }
     },
 
-    line: {
+    StackedBar: {
+      small: {
+        height: 200,
+        seriesBarDistance: 11,
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        reverseData: false,
+        horizontalBars: true,
+        stackBars: true,
+        axisX: {
+          showGrid: true,
+          position: 'start'
+        },
+        axisY: {
+          showGrid: false
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      },
+      large: {
+        height: 200,
+        fullWidth: true,
+        seriesBarDistance: 11,
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        reverseData: false,
+        horizontalBars: false,
+        stackBars: true,
+        axisX: {
+          showGrid: false,
+          position: 'end'
+        },
+        axisY: {
+          showGrid: true
+        },
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      }
+    },
+
+    Line: {
       small: {
         height: 200,
 

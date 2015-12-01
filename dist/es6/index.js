@@ -1,14 +1,11 @@
 import Chartist from 'chartist';
 import getChartistConfig from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
+import {types as chartTypes} from './resources/types';
 
 import './styles.css!'
 
-
-// import {ctExtendGridClassNames} from './chartist-plugins/chartist-plugin-class-axis.js';
-// Chartist.plugins['ctExtendGridClassNames'] = ctExtendGridClassNames;
-// import './chartist-plugins/chartist-plugin-protrude-grid.js';
-
+export var types = chartTypes;
 
 var sizeObserver = new SizeObserver();
 var dataStore = {};
@@ -22,8 +19,18 @@ function getChartDataForChartist(item) {
   };
 }
 
-function getCombinedChartistConfig(chartConfig, chartType, size, data) {
-  return Object.assign(getChartistConfig(chartType.toLowerCase(), size, data), chartConfig);
+function getCombinedChartistConfig(item, size, data) {
+  let config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
+  for (let option of chartTypes[item.type].options) {
+    switch (option.type) {
+      case 'oneOf':
+        if (typeof item.options[option.name] !== undefined) {
+          option.modifyConfig(config, item.options[option.name], size);
+        }
+        break;
+    }
+  }
+  return config;
 }
 
 function getElementSize(rect) {
@@ -38,8 +45,8 @@ function getElementSize(rect) {
 
 function renderChartist(item, element, drawSize) {
   let data = getChartDataForChartist(item);
-  let config = getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data);
-  new Chartist[item.chartType](element, data, config);
+  let config = getCombinedChartistConfig(item, drawSize, data);
+  new Chartist[chartTypes[item.type].chartistType](element, data, config);
 }
 
 function getLegendHtml(item) {
@@ -100,7 +107,7 @@ var drawSize;
 export function display(item, element, withoutContext = false) {
   if (!element) throw 'Element is not defined';
 
-  if (!Chartist.hasOwnProperty(item.chartType)) throw `chartType (${item.chartType}) not available`;
+  if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
   drawSize = getElementSize(element.getBoundingClientRect());
 

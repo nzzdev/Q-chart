@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _stylesCss) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -14,6 +14,9 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   var _SizeObserver = _interopRequireDefault(_resourcesSizeObserver);
 
+  var types = _resourcesTypes.types;
+
+  exports.types = types;
   var sizeObserver = new _SizeObserver['default']();
   var dataStore = {};
 
@@ -28,8 +31,40 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
     };
   }
 
-  function getCombinedChartistConfig(chartConfig, chartType, size, data) {
-    return Object.assign((0, _getChartistConfig['default'])(chartType.toLowerCase(), size, data), chartConfig);
+  function getCombinedChartistConfig(item, size, data) {
+    var config = Object.assign((0, _getChartistConfig['default'])(item.type, size, data), item.chartConfig);
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = _resourcesTypes.types[item.type].options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var option = _step.value;
+
+        switch (option.type) {
+          case 'oneOf':
+            if (typeof item.options[option.name] !== undefined) {
+              option.modifyConfig(config, item.options[option.name], size);
+            }
+            break;
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    return config;
   }
 
   function getElementSize(rect) {
@@ -44,8 +79,8 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   function renderChartist(item, element, drawSize) {
     var data = getChartDataForChartist(item);
-    var config = getCombinedChartistConfig(item.chartConfig, item.chartType, drawSize, data);
-    new _Chartist['default'][item.chartType](element, data, config);
+    var config = getCombinedChartistConfig(item, drawSize, data);
+    new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
   }
 
   function getLegendHtml(item) {
@@ -92,7 +127,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
     if (!element) throw 'Element is not defined';
 
-    if (!_Chartist['default'].hasOwnProperty(item.chartType)) throw 'chartType (' + item.chartType + ') not available';
+    if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
     drawSize = getElementSize(element.getBoundingClientRect());
 
