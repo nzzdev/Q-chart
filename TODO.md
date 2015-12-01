@@ -9,14 +9,15 @@
 	[A][DONE] define colors
 	[B][HELP] if date axis = smart labeling
 	[B] retina switch for hairlines 
-	[B]	change order of drawing, draw grid over chart
+	[B][DONE]change order of drawing, draw grid over chart
 
 ## barcharts
-	[B] if series[0].length > XX recommend line chart
-	[B] if number of bars > 30 = mobile Layout on Desktop
+	[B][DONE] if series[0].length >= 12 recommend linechart (halfway, just logs)
+	[B][DONE] if number of bars > 30 = mobile Layout on Desktop (halfway, just logs)
 	[B][DONE] barwidth & BarSeries relates to series.length % series
 
 
 ## linecharts
 	[A][DONE] black (METAL) baseline
 	[A][DONE] make it beautiful
+	[B][DONE] if series[0].length < 12 recommend barchart (halfway, just logs)

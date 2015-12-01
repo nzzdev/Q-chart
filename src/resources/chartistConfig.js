@@ -113,9 +113,19 @@ var chartistConfigs = {
 export default function getConfig(type, size, data) {
   let config = chartistConfigs[type][size];
 
-  // check the number of bars and switch to mobile layout if > 30 bars (not implemented)
-  if ((data.series.length*data.labels.length) >= 30){
-    console.log("+++ uh, more than 30 bars, better switch to mobile layout on desktop +++");
+  // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
+  if (type === 'bar' && (data.series.length*data.labels.length >= 30)){
+    console.log('+++ uh, barchart and more than 30 bars, better switch to mobile layout on desktop +++');
+  }
+
+  // if BAR: check the number of datapoints and recommend LINE if number of datapoints > 12   (not implemented, just log)
+  if (type === 'bar' && data.series[0].length >= 12){
+    console.log('+++ uh, barchart and more than 12 datapoints in first series. so many bars, what about a nice linechart instead +++');
+  }
+
+  // if LINE: check the number of datapoints and recommend BAR if number of datapoints <= 12  (not implemented, just log)
+  if (type === 'line' && data.series[0].length < 12){
+    console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
   }
 
   if (type === 'bar' && size === 'small') {

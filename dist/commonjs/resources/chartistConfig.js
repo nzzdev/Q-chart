@@ -97,8 +97,16 @@ var chartistConfigs = {
 function getConfig(type, size, data) {
   var config = chartistConfigs[type][size];
 
-  if (data.series.length * data.labels.length >= 30) {
-    console.log("+++ uh, more than 30 bars, better switch to mobile layout on desktop +++");
+  if (type === 'bar' && data.series.length * data.labels.length >= 30) {
+    console.log('+++ uh, barchart and more than 30 bars, better switch to mobile layout on desktop +++');
+  }
+
+  if (type === 'bar' && data.series[0].length >= 12) {
+    console.log('+++ uh, barchart and more than 12 datapoints in first series. so many bars, what about a nice linechart instead +++');
+  }
+
+  if (type === 'line' && data.series[0].length < 12) {
+    console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
   }
 
   if (type === 'bar' && size === 'small') {
