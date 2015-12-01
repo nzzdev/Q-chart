@@ -59,7 +59,12 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         lineSmooth: false,
         axisX: {
           showGrid: true,
-          showLabel: true
+          showLabel: true,
+
+          labelInterpolationFnc: function skipLabels(value, index) {
+            return index % 12 === 0 ? value : null;
+          }
+
         },
         axisY: {
           position: 'start',
@@ -74,7 +79,11 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         lineSmooth: false,
         axisX: {
           showGrid: true,
-          showLabel: true
+          showLabel: true,
+
+          labelInterpolationFnc: function skipLabels(value, index) {
+            return index % 12 === 0 ? value : null;
+          }
         },
         axisY: {
           position: 'start',

@@ -17,8 +17,6 @@ function ctGridOnTop() {
             chart.on('created', function () {
                 var layerGrid = chart.svg._node.children[0];
                 var lastChild = chart.svg._node.children[1];
-                console.log(lastChild);
-
                 lastChild.parentNode.insertBefore(layerGrid, lastChild.nextSibling);
             });
         }

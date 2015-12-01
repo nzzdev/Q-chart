@@ -10,6 +10,7 @@
 	[B][HELP] if date axis = smart labeling
 	[B] retina switch for hairlines 
 	[B][DONE]change order of drawing, draw grid over chart
+	[A] time series detection (check this http://blog.datawrapper.de/2013/time-series-detection/)
 
 ## barcharts
 	[B][DONE] if series[0].length >= 12 recommend linechart (halfway, just logs)

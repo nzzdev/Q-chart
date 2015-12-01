@@ -147,8 +147,8 @@
   text-anchor: end; }
 
 .ct-grid {
-  stroke: rgba(142, 142, 142, 0.15);
-  stroke-width: 0.5px;
+  stroke: rgba(0, 0, 0, 0.05);
+  stroke-width: 1px;
   stroke-dasharray: 0px; }
 
 .ct-point {
@@ -157,7 +157,7 @@
 
 .ct-line {
   fill: none;
-  stroke-width: 3px; }
+  stroke-width: 2px; }
 
 .ct-area {
   stroke: none;
