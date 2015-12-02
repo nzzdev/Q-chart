@@ -21,13 +21,15 @@ function getChartDataForChartist(item) {
 
 function getCombinedChartistConfig(item, size, data) {
   let config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
-  for (let option of chartTypes[item.type].options) {
-    switch (option.type) {
-      case 'oneOf':
-        if (typeof item.options[option.name] !== undefined) {
-          option.modifyConfig(config, item.options[option.name], size);
-        }
-        break;
+  if (item.options) {
+    for (let option of chartTypes[item.type].options) {
+      switch (option.type) {
+        case 'oneOf':
+          if (typeof item.options[option.name] !== undefined) {
+            option.modifyConfig(config, item.options[option.name], size);
+          }
+          break;
+      }
     }
   }
   return config;

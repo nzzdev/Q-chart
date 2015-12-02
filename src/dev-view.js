@@ -41,7 +41,7 @@ var chart1 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 var chart2 = {
@@ -133,7 +133,7 @@ var chart2 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ var chart3 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //--------
@@ -237,7 +237,7 @@ var chart4 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //--------
@@ -307,7 +307,7 @@ var chart5 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //--------
@@ -389,7 +389,7 @@ var chart6 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //--------
@@ -483,7 +483,7 @@ var chart7 = {
   chartConfig: {
 
   },
-  chartType: 'Bar'
+  type: 'Bar'
 }
 
 //--------
@@ -513,7 +513,7 @@ var chart8 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 //--------
@@ -547,7 +547,7 @@ var chart9 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 //--------
@@ -585,7 +585,7 @@ var chart10 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 //--------
@@ -627,7 +627,7 @@ var chart11 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 //--------
@@ -673,7 +673,7 @@ var chart12 = {
   chartConfig: {
 
   },
-  chartType: 'Line'
+  type: 'Line'
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
