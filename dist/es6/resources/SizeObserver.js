@@ -1,5 +1,3 @@
-import raf from 'raf';
-
 export default class SizeObserver {
 
   resizeCallbacks = [];
@@ -35,15 +33,20 @@ export default class SizeObserver {
   }
 
   handleResizeOnTick() {
-    raf(() => {
-      for (let cb of this.resizeCallbacks) {
-        if (cb.element && cb.element.getBoundingClientRect) {
-          cb.func(cb.element.getBoundingClientRect());
-        } else {
-          cb.func();
-        }
-      }
-    }.bind(this));
+    if (window.requestAnimationFrame) {
+      requestAnimationFrame(this.invokeCallbacks.bind(this));
+    } else {
+      this.invokeCallbacks();
+    }
   }
 
+  invokeCallbacks() {
+    for (let cb of this.resizeCallbacks) {
+      if (cb.element && cb.element.getBoundingClientRect) {
+        cb.func(cb.element.getBoundingClientRect());
+      } else {
+        cb.func();
+      }
+    }
+  }
 }

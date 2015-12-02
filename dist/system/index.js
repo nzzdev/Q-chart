@@ -1,7 +1,7 @@
 System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './styles.css!'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, types, sizeObserver, dataStore, chars, cancelResize, drawSize;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, types, sizeObserver, dataStore, chars;
 
   _export('display', display);
 
@@ -107,10 +107,9 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
     if (!element) throw 'Element is not defined';
-
     if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
-    drawSize = getElementSize(element.getBoundingClientRect());
+    var drawSize = getElementSize(element.getBoundingClientRect());
 
     if (withoutContext) {
       displayWithoutContext(item, element, drawSize);
@@ -118,11 +117,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       displayWithContext(item, element, drawSize);
     }
 
-    if (cancelResize) {
-      cancelResize();
-    }
-
-    cancelResize = sizeObserver.onResize(function (rect) {
+    sizeObserver.onResize(function (rect) {
       var newSize = getElementSize(rect);
       if (drawSize !== newSize) {
         drawSize = newSize;

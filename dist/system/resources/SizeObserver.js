@@ -1,16 +1,14 @@
-System.register(['raf'], function (_export) {
+System.register([], function (_export) {
   'use strict';
 
-  var raf, SizeObserver;
+  var SizeObserver;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
-    setters: [function (_raf) {
-      raf = _raf['default'];
-    }],
+    setters: [],
     execute: function () {
       SizeObserver = (function () {
         function SizeObserver() {
@@ -57,38 +55,43 @@ System.register(['raf'], function (_export) {
         }, {
           key: 'handleResizeOnTick',
           value: function handleResizeOnTick() {
-            var _this = this;
+            if (window.requestAnimationFrame) {
+              requestAnimationFrame(this.invokeCallbacks.bind(this));
+            } else {
+              this.invokeCallbacks();
+            }
+          }
+        }, {
+          key: 'invokeCallbacks',
+          value: function invokeCallbacks() {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-            raf((function () {
-              var _iteratorNormalCompletion = true;
-              var _didIteratorError = false;
-              var _iteratorError = undefined;
+            try {
+              for (var _iterator = this.resizeCallbacks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var cb = _step.value;
 
-              try {
-                for (var _iterator = _this.resizeCallbacks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                  var cb = _step.value;
-
-                  if (cb.element && cb.element.getBoundingClientRect) {
-                    cb.func(cb.element.getBoundingClientRect());
-                  } else {
-                    cb.func();
-                  }
-                }
-              } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion && _iterator['return']) {
-                    _iterator['return']();
-                  }
-                } finally {
-                  if (_didIteratorError) {
-                    throw _iteratorError;
-                  }
+                if (cb.element && cb.element.getBoundingClientRect) {
+                  cb.func(cb.element.getBoundingClientRect());
+                } else {
+                  cb.func();
                 }
               }
-            }).bind(this));
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator['return']) {
+                  _iterator['return']();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
           }
         }]);
 

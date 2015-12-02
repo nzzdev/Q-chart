@@ -120,17 +120,13 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
     renderChartist(item, element, drawSize);
   }
 
-  var cancelResize;
-  var drawSize;
-
   function display(item, element) {
     var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
     if (!element) throw 'Element is not defined';
-
     if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
-    drawSize = getElementSize(element.getBoundingClientRect());
+    var drawSize = getElementSize(element.getBoundingClientRect());
 
     if (withoutContext) {
       displayWithoutContext(item, element, drawSize);
@@ -138,11 +134,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
       displayWithContext(item, element, drawSize);
     }
 
-    if (cancelResize) {
-      cancelResize();
-    }
-
-    cancelResize = sizeObserver.onResize(function (rect) {
+    sizeObserver.onResize(function (rect) {
       var newSize = getElementSize(rect);
       if (drawSize !== newSize) {
         drawSize = newSize;

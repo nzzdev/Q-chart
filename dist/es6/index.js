@@ -103,15 +103,13 @@ function displayWithoutContext(item, element, drawSize) {
   renderChartist(item, element, drawSize);
 }
 
-var cancelResize;
-var drawSize;
+
 
 export function display(item, element, withoutContext = false) {
   if (!element) throw 'Element is not defined';
-
   if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
-  drawSize = getElementSize(element.getBoundingClientRect());
+  let drawSize = getElementSize(element.getBoundingClientRect());
 
   if (withoutContext) {
     displayWithoutContext(item, element, drawSize);
@@ -119,11 +117,7 @@ export function display(item, element, withoutContext = false) {
     displayWithContext(item, element, drawSize);
   }
 
-  if (cancelResize) {
-    cancelResize();
-  }
-
-  cancelResize = sizeObserver.onResize((rect) => {
+  sizeObserver.onResize((rect) => {
     let newSize = getElementSize(rect);
     if (drawSize !== newSize) {
       drawSize = newSize;
