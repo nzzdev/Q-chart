@@ -1,3 +1,6 @@
+var vertBarHeight = 10;
+var vertBarSetPadding = 22;
+
 export var types = {
   Bar: {
     label: 'Bar',
@@ -8,18 +11,22 @@ export var types = {
         type: 'oneOf',
         labels: ['columns', 'bars'],
         defaultValue: true,
-        modifyConfig: (config, value, size) => {
+        modifyConfig: (config, value, size, data) => {
           config.horizontalBars = !value;
+          if (config.horizontalBars) {
+            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+          }
         }
       },
       {
         name: 'forceBarsOnSmall',
-        type: 'oneOf',
-        labels: ['columns', 'bars'],
+        type: 'boolean',
+        label: 'forceBarsOnSmall',
         defaultValue: true,
-        modifyConfig: (config, value, size) => {
+        modifyConfig: (config, value, size, data) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
+            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
           }
         }
       }
@@ -34,18 +41,22 @@ export var types = {
         type: 'oneOf',
         labels: ['columns', 'bars'],
         defaultValue: true,
-        modifyConfig: (config, value, size) => {
+        modifyConfig: (config, value, size, data) => {
           config.horizontalBars = !value;
+          if (config.horizontalBars) {
+            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+          }
         }
       },
       {
         name: 'forceBarsOnSmall',
-        type: 'oneOf',
-        labels: ['columns', 'bars'],
+        type: 'boolean',
+        label: 'forceBarsOnSmall',
         defaultValue: true,
-        modifyConfig: (config, value, size) => {
+        modifyConfig: (config, value, size, data) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
+            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
           }
         }
       }

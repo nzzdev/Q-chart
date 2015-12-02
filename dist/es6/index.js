@@ -26,7 +26,7 @@ function getCombinedChartistConfig(item, size, data) {
       switch (option.type) {
         case 'oneOf':
           if (typeof item.options[option.name] !== undefined) {
-            option.modifyConfig(config, item.options[option.name], size);
+            option.modifyConfig(config, item.options[option.name], size, data);
           }
           break;
       }

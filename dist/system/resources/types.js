@@ -1,10 +1,12 @@
 System.register([], function (_export) {
   'use strict';
 
-  var types;
+  var vertBarHeight, vertBarSetPadding, types;
   return {
     setters: [],
     execute: function () {
+      vertBarHeight = 10;
+      vertBarSetPadding = 22;
       types = {
         Bar: {
           label: 'Bar',
@@ -14,17 +16,21 @@ System.register([], function (_export) {
             type: 'oneOf',
             labels: ['columns', 'bars'],
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size) {
+            modifyConfig: function modifyConfig(config, value, size, data) {
               config.horizontalBars = !value;
+              if (config.horizontalBars) {
+                config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+              }
             }
           }, {
             name: 'forceBarsOnSmall',
-            type: 'oneOf',
-            labels: ['columns', 'bars'],
+            type: 'boolean',
+            label: 'forceBarsOnSmall',
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size) {
+            modifyConfig: function modifyConfig(config, value, size, data) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
+                config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
               }
             }
           }]
@@ -37,17 +43,21 @@ System.register([], function (_export) {
             type: 'oneOf',
             labels: ['columns', 'bars'],
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size) {
+            modifyConfig: function modifyConfig(config, value, size, data) {
               config.horizontalBars = !value;
+              if (config.horizontalBars) {
+                config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+              }
             }
           }, {
             name: 'forceBarsOnSmall',
-            type: 'oneOf',
-            labels: ['columns', 'bars'],
+            type: 'boolean',
+            label: 'forceBarsOnSmall',
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size) {
+            modifyConfig: function modifyConfig(config, value, size, data) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
+                config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
               }
             }
           }]

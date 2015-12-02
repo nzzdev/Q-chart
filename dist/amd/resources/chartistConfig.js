@@ -155,9 +155,6 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
       console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
     }
 
-    if (type === 'Bar' && size === 'small') {
-      config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
-    }
     return config;
   }
 });
