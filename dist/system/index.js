@@ -72,10 +72,11 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
   function getLegendHtml(item) {
     var html = '\n    <div class="q-chart__legend">';
-
-    for (var i in item.data.y.data) {
-      var serie = item.data.y.data[i];
-      html += '\n      <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n        <div class="q-chart__legend__item__box"></div>\n        <div class="q-chart__legend__item__text">' + serie.label + '</div>\n      </div>';
+    if (item.data && item.data.y && item.data.y.data) {
+      for (var i in item.data.y.data) {
+        var serie = item.data.y.data[i];
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+      }
     }
     html += '\n    </div>\n  ';
     return html;
@@ -87,7 +88,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     if (!item.data.y) {
       item.data.y = {};
     }
-    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + item.data.x.label + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes">' + item.notes + '</div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
+    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + (item.data.x.label || '') + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes">' + item.notes + '</div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
     return html;
   }
 
@@ -111,6 +112,10 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
     if (!element) throw 'Element is not defined';
     if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
+
+    if (!item.data || !item.data.x) {
+      return false;
+    }
 
     var drawSize = getElementSize(element.getBoundingClientRect());
 

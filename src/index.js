@@ -57,14 +57,15 @@ function renderChartist(item, element, drawSize) {
 function getLegendHtml(item) {
   let html = `
     <div class="q-chart__legend">`;
-
-  for (var i in item.data.y.data) {
-    let serie = item.data.y.data[i];
-    html += `
-      <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
-        <div class="q-chart__legend__item__box"></div>
-        <div class="q-chart__legend__item__text">${serie.label}</div>
-      </div>`;
+  if (item.data && item.data.y && item.data.y.data) {
+    for (var i in item.data.y.data) {
+      let serie = item.data.y.data[i];
+      html += `
+        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
+          <div class="q-chart__legend__item__box"></div>
+          <div class="q-chart__legend__item__text">${serie.label}</div>
+        </div>`;
+    }
   }
   html += `
     </div>
@@ -82,7 +83,7 @@ function getContextHtml(item) {
   html += `
     <div class="q-chart__label-y-axis">${item.data.y.label || ''}</div>
     <div class="q-chart__chartist-container"></div>
-    <div class="q-chart__label-x-axis">${item.data.x.label}</div>
+    <div class="q-chart__label-x-axis">${item.data.x.label || ''}</div>
     <div class="q-chart__footer">
       <div class="q-chart__footer__notes">${item.notes}</div>
       <div class="q-chart__footer__sources"></div>
@@ -111,6 +112,10 @@ function displayWithoutContext(item, element, drawSize) {
 export function display(item, element, withoutContext = false) {
   if (!element) throw 'Element is not defined';
   if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
+
+  if (!item.data || !item.data.x) {
+    return false;
+  }
 
   let drawSize = getElementSize(element.getBoundingClientRect());
 
