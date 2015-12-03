@@ -13,6 +13,7 @@ var dataStore = {};
 var chars = ['a','b','c','d','e','f'];
 
 function getChartDataForChartist(item) {
+  if (!item.data || !item.data.x || !item.data.y) return null;
   return {
     labels: item.data.x.data,
     series: item.data.y.data.map(serie => serie.data)
@@ -47,8 +48,10 @@ function getElementSize(rect) {
 
 function renderChartist(item, element, drawSize) {
   let data = getChartDataForChartist(item);
-  let config = getCombinedChartistConfig(item, drawSize, data);
-  new Chartist[chartTypes[item.type].chartistType](element, data, config);
+  if (data && data !== null) {
+    let config = getCombinedChartistConfig(item, drawSize, data);
+    new Chartist[chartTypes[item.type].chartistType](element, data, config);
+  }
 }
 
 function getLegendHtml(item) {

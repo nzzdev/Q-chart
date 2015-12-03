@@ -6,6 +6,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
   _export('display', display);
 
   function getChartDataForChartist(item) {
+    if (!item.data || !item.data.x || !item.data.y) return null;
     return {
       labels: item.data.x.data,
       series: item.data.y.data.map(function (serie) {
@@ -63,8 +64,10 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
   function renderChartist(item, element, drawSize) {
     var data = getChartDataForChartist(item);
-    var config = getCombinedChartistConfig(item, drawSize, data);
-    new Chartist[chartTypes[item.type].chartistType](element, data, config);
+    if (data && data !== null) {
+      var config = getCombinedChartistConfig(item, drawSize, data);
+      new Chartist[chartTypes[item.type].chartistType](element, data, config);
+    }
   }
 
   function getLegendHtml(item) {

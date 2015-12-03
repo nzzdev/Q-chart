@@ -23,6 +23,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
   var chars = ['a', 'b', 'c', 'd', 'e', 'f'];
 
   function getChartDataForChartist(item) {
+    if (!item.data || !item.data.x || !item.data.y) return null;
     return {
       labels: item.data.x.data,
       series: item.data.y.data.map(function (serie) {
@@ -80,8 +81,10 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   function renderChartist(item, element, drawSize) {
     var data = getChartDataForChartist(item);
-    var config = getCombinedChartistConfig(item, drawSize, data);
-    new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
+    if (data && data !== null) {
+      var config = getCombinedChartistConfig(item, drawSize, data);
+      new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
+    }
   }
 
   function getLegendHtml(item) {
