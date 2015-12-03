@@ -172,40 +172,40 @@
   stroke-width: 60px; }
 
 .ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
-  stroke: #568493; }
+  stroke: #4997be; }
 
 .ct-series-a .ct-slice-pie, .ct-series-a .ct-area {
-  fill: #568493; }
+  fill: #4997be; }
 
 .ct-series-b .ct-point, .ct-series-b .ct-line, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
-  stroke: #D79A32; }
+  stroke: #da9b1c; }
 
 .ct-series-b .ct-slice-pie, .ct-series-b .ct-area {
-  fill: #D79A32; }
+  fill: #da9b1c; }
 
 .ct-series-c .ct-point, .ct-series-c .ct-line, .ct-series-c .ct-bar, .ct-series-c .ct-slice-donut {
-  stroke: #619D48; }
+  stroke: #6fa433; }
 
 .ct-series-c .ct-slice-pie, .ct-series-c .ct-area {
-  fill: #619D48; }
+  fill: #6fa433; }
 
 .ct-series-d .ct-point, .ct-series-d .ct-line, .ct-series-d .ct-bar, .ct-series-d .ct-slice-donut {
-  stroke: #424A2D; }
+  stroke: #424a2d; }
 
 .ct-series-d .ct-slice-pie, .ct-series-d .ct-area {
-  fill: #424A2D; }
+  fill: #424a2d; }
 
 .ct-series-e .ct-point, .ct-series-e .ct-line, .ct-series-e .ct-bar, .ct-series-e .ct-slice-donut {
-  stroke: #b2577e; }
+  stroke: #b65680; }
 
 .ct-series-e .ct-slice-pie, .ct-series-e .ct-area {
-  fill: #b2577e; }
+  fill: #b65680; }
 
 .ct-series-f .ct-point, .ct-series-f .ct-line, .ct-series-f .ct-bar, .ct-series-f .ct-slice-donut {
-  stroke: #C14D3B; }
+  stroke: #bf4a3a; }
 
 .ct-series-f .ct-slice-pie, .ct-series-f .ct-area {
-  fill: #C14D3B; }
+  fill: #bf4a3a; }
 
 .ct-square {
   display: block;
@@ -648,22 +648,22 @@
       margin-right: 0; }
 
 .q-chart__legend__item--a .q-chart__legend__item__box {
-  background: #568493; }
+  background: #4997be; }
 
 .q-chart__legend__item--b .q-chart__legend__item__box {
-  background: #D79A32; }
+  background: #da9b1c; }
 
 .q-chart__legend__item--c .q-chart__legend__item__box {
-  background: #619D48; }
+  background: #6fa433; }
 
 .q-chart__legend__item--d .q-chart__legend__item__box {
-  background: #424A2D; }
+  background: #424a2d; }
 
 .q-chart__legend__item--e .q-chart__legend__item__box {
-  background: #b2577e; }
+  background: #b65680; }
 
 .q-chart__legend__item--f .q-chart__legend__item__box {
-  background: #C14D3B; }
+  background: #bf4a3a; }
 
 .ct-horizontal-bars .ct-label .ct-vertical {
   display: -webkit-flex;
