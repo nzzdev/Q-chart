@@ -20,4 +20,4 @@ function bundleCommands() {
   return bundleCommands;
 }
 
-gulp.task('bundle', shell.task(bundleCommands()));
+gulp.task('bundle', ['build'], shell.task(bundleCommands()));
