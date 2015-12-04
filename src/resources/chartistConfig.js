@@ -2,19 +2,20 @@ var vertBarHeight = 10;
 var vertBarSetPadding = 22;
 
 import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
-//import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
+import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
 
 var chartistConfigs = {
 
   Bar: {
+
     small: {
       height: 200, // default will get overwritten by getConfig function called with data
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
-        right: 0,
+        right: 1,
         bottom: 0,
         left: 0
       },   
@@ -30,7 +31,7 @@ var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
+       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -40,7 +41,7 @@ var chartistConfigs = {
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
-        right: 0,
+        right: 1,
         bottom: 0,
         left: 0
       },    
@@ -56,7 +57,7 @@ var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
+       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -85,7 +86,7 @@ var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
+       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -141,7 +142,7 @@ var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
+       ctProtrudeGrid(),
        ctGridOnTop(),
       ]
     },
@@ -174,7 +175,7 @@ var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
+       ctProtrudeGrid(),
        ctGridOnTop(),
       ]
     }

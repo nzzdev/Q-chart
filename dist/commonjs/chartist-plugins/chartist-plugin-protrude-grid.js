@@ -11,7 +11,7 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-var protrude = 8;
+var protrude = 80;
 
 var gridOffsetVert;
 var gridOffsetHorz;
@@ -32,9 +32,11 @@ function ctProtrudeGrid(options) {
                                                                       var lineDirection = data.axis.units.dir;
 
                                                                       if (lineDirection == 'vertical') {
-                                                                                    data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                                    data.x1 -= protrude;
+                                                                                    data.x2 += protrude;
                                                                       } else if (lineDirection == 'horizontal') {
-                                                                                                  data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                                  data.y1 -= protrude;
+                                                                                                  data.y2 += protrude;
                                                                                     }
                                                         }
                                           });

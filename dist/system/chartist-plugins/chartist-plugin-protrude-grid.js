@@ -19,9 +19,11 @@ System.register(['chartist'], function (_export) {
                                                                                     var lineDirection = data.axis.units.dir;
 
                                                                                     if (lineDirection == 'vertical') {
-                                                                                                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                                                  data.x1 -= protrude;
+                                                                                                  data.x2 += protrude;
                                                                                     } else if (lineDirection == 'horizontal') {
-                                                                                                                data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                                                data.y1 -= protrude;
+                                                                                                                data.y2 += protrude;
                                                                                                   }
                                                                       }
                                                         });
@@ -34,7 +36,7 @@ System.register(['chartist'], function (_export) {
                                           Chartist = _chartist['default'];
                             }],
                             execute: function () {
-                                          protrude = 8;
+                                          protrude = 80;
                                           defaultOptions = {};
                                           ;
                             }

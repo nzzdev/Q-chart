@@ -1,4 +1,4 @@
-define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (exports, module, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs) {
+define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (exports, module, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs) {
   'use strict';
 
   module.exports = getConfig;
@@ -8,12 +8,13 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
   var chartistConfigs = {
 
     Bar: {
+
       small: {
         height: 200,
         seriesBarDistance: 11,
         chartPadding: {
           top: 0,
-          right: 0,
+          right: 1,
           bottom: 0,
           left: 0
         },
@@ -26,7 +27,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         axisY: {
           showGrid: false
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
       },
       large: {
         height: 200,
@@ -34,7 +35,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         seriesBarDistance: 11,
         chartPadding: {
           top: 0,
-          right: 0,
+          right: 1,
           bottom: 0,
           left: 0
         },
@@ -47,7 +48,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         axisY: {
           showGrid: true
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
       }
     },
 
@@ -71,7 +72,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
         axisY: {
           showGrid: false
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
       },
       large: {
         height: 200,
@@ -116,7 +117,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
           position: 'start',
           scaleMinSpace: 40
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
       },
       large: {
         height: 200,
@@ -136,7 +137,7 @@ define(['exports', 'module', '../chartist-plugins/chartist-plugin-class-axis.js'
           position: 'start',
           scaleMinSpace: 40
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
       }
     }
   };

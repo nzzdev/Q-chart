@@ -10,7 +10,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
               var _Chartist = _interopRequireDefault(_chartist);
 
-              var protrude = 8;
+              var protrude = 80;
 
               var gridOffsetVert;
               var gridOffsetHorz;
@@ -31,9 +31,11 @@ define(['exports', 'chartist'], function (exports, _chartist) {
                                                                                     var lineDirection = data.axis.units.dir;
 
                                                                                     if (lineDirection == 'vertical') {
-                                                                                                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;
+                                                                                                  data.x1 -= protrude;
+                                                                                                  data.x2 += protrude;
                                                                                     } else if (lineDirection == 'horizontal') {
-                                                                                                                data.axis.gridOffset = data.axis.chartRect.y2 - protrude;
+                                                                                                                data.y1 -= protrude;
+                                                                                                                data.y2 += protrude;
                                                                                                   }
                                                                       }
                                                         });

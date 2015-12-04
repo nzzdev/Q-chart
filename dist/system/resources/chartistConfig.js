@@ -1,7 +1,7 @@
-System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctGridOnTop, ctExtendTickmmarksClassNames, vertBarHeight, vertBarSetPadding, chartistConfigs;
+  var ctExtendGridClassNames, ctProtrudeGrid, ctGridOnTop, ctExtendTickmmarksClassNames, vertBarHeight, vertBarSetPadding, chartistConfigs;
 
   _export('default', getConfig);
 
@@ -31,6 +31,8 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
   return {
     setters: [function (_chartistPluginsChartistPluginClassAxisJs) {
       ctExtendGridClassNames = _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames;
+    }, function (_chartistPluginsChartistPluginProtrudeGridJs) {
+      ctProtrudeGrid = _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid;
     }, function (_chartistPluginsChartistPluginGridOnTopJs) {
       ctGridOnTop = _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop;
     }, function (_chartistPluginsChartistPluginClassTickmarksJs) {
@@ -42,12 +44,13 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
       chartistConfigs = {
 
         Bar: {
+
           small: {
             height: 200,
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
-              right: 0,
+              right: 1,
               bottom: 0,
               left: 0
             },
@@ -60,7 +63,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: false
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -68,7 +71,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
-              right: 0,
+              right: 1,
               bottom: 0,
               left: 0
             },
@@ -81,7 +84,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: true
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           }
         },
 
@@ -105,7 +108,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: false
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -150,7 +153,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -170,7 +173,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           }
         }
       };

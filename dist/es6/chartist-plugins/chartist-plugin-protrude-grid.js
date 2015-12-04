@@ -3,7 +3,7 @@
 
 import Chartist from 'chartist';
 
-var protrude = 8;
+var protrude = 80;
 
 var gridOffsetVert;
 var gridOffsetHorz;
@@ -62,22 +62,22 @@ export function ctProtrudeGrid(options) {
 
               if (lineDirection == 'vertical'){
 //                  console.log("--vert--");   
-                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;  
+//                  data.axis.gridOffset = data.axis.chartRect.x1 - protrude;  
 // -->                           data.axis.chartRect.x2 = data.axis.chartRect.x2 + protrude*2;
 //                            data.x2 = data.axis.chartRect.x2 + protrude*2;
 //                            data.axis.axisLength = data.axis.chartRect.y1 - data.axis.chartRect.y2 + (protrude*2);
 //                            data.axis.axisLength = 595;                 
-//                            data.x1 -= protrude;
-//                            data.x2 = 625;
+                            data.x1 -= protrude;
+                            data.x2 += protrude;
 //                          console.log("");  
               } else if (lineDirection == 'horizontal'){
 //                  console.log("--horz--");    
-                 data.axis.gridOffset = data.axis.chartRect.y2 - protrude; 
+//                 data.axis.gridOffset = data.axis.chartRect.y2 - protrude; 
 // -->                          data.axis.chartRect.y2 = data.axis.chartRect.y2 + protrude*2;
 //                           data.axis.axisLength = data.axis.chartRect.x2 - data.axis.chartRect.x1 + (protrude*2);
 //                            data.axis.axisLength = 190;                 
-//                            data.y1 -= protrude;
-//                            data.y2 = 185;
+                            data.y1 -= protrude;
+                            data.y2 += protrude;
 //                          console.log(""); 
               }
 

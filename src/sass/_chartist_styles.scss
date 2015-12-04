@@ -34,9 +34,6 @@ $break-large: 768px;
   .ct-label.ct-vertical{
     transform: translate(0, 0);
   }
-  .ct-label.ct-horizontal-first {
-    transform: translate(0, 0);
-  }
 }
 
 // line chart
@@ -47,9 +44,11 @@ $break-large: 768px;
     min-width: 50px;
     transform: translate(-50%, 0);
   }
-  .ct-label.ct-horizontal-first {
-    transform: translate(0, 0);
-  }
+}
+
+// intend bzw. unindent first label
+.ct-label.ct-horizontal-first {
+  transform: translate(0, 0);
 }
 
 // solid chart baseline
