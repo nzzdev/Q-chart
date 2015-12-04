@@ -1,12 +1,9 @@
-define(['exports'], function (exports) {
+define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
-  var vertBarHeight = 10;
-  var vertBarSetPadding = 22;
-
   var types = {
     Bar: {
       label: 'Bar',
@@ -14,23 +11,25 @@ define(['exports'], function (exports) {
       options: [{
         name: 'isColumnChart',
         type: 'oneOf',
-        labels: ['columns', 'bars'],
+        labels: ['Säulen', 'Balken'],
         defaultValue: true,
         modifyConfig: function modifyConfig(config, value, size, data) {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+          } else {
+            config.height = _chartistConfig.chartHeight;
           }
         }
       }, {
         name: 'forceBarsOnSmall',
         type: 'boolean',
-        label: 'forceBarsOnSmall',
+        label: 'Balken für Mobile',
         defaultValue: true,
         modifyConfig: function modifyConfig(config, value, size, data) {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
           }
         }
       }]
@@ -41,23 +40,25 @@ define(['exports'], function (exports) {
       options: [{
         name: 'isColumnChart',
         type: 'oneOf',
-        labels: ['columns', 'bars'],
+        labels: ['Säulen', 'Balken'],
         defaultValue: true,
         modifyConfig: function modifyConfig(config, value, size, data) {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+          } else {
+            config.height = _chartistConfig.chartHeight;
           }
         }
       }, {
         name: 'forceBarsOnSmall',
         type: 'boolean',
-        label: 'forceBarsOnSmall',
+        label: 'Balken für Mobile',
         defaultValue: true,
         modifyConfig: function modifyConfig(config, value, size, data) {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
           }
         }
       }]

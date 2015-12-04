@@ -10,8 +10,6 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   var _Chartist = _interopRequireDefault(_chartist);
 
-  var _getChartistConfig = _interopRequireDefault(_resourcesChartistConfig);
-
   var _SizeObserver = _interopRequireDefault(_resourcesSizeObserver);
 
   var types = _resourcesTypes.types;
@@ -20,7 +18,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
   var sizeObserver = new _SizeObserver['default']();
   var dataStore = {};
 
-  var chars = ['a', 'b', 'c', 'd', 'e', 'f'];
+  var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
   function getChartDataForChartist(item) {
     if (!item.data || !item.data.x || !item.data.y) return null;
@@ -33,7 +31,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
   }
 
   function getCombinedChartistConfig(item, size, data) {
-    var config = Object.assign((0, _getChartistConfig['default'])(item.type, size, data), item.chartConfig);
+    var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
     if (item.options) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -45,6 +43,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
           switch (option.type) {
             case 'oneOf':
+            case 'boolean':
               if (typeof item.options[option.name] !== undefined) {
                 option.modifyConfig(config, item.options[option.name], size, data);
               }

@@ -13,8 +13,6 @@ var _chartist2 = _interopRequireDefault(_chartist);
 
 var _resourcesChartistConfig = require('./resources/chartistConfig');
 
-var _resourcesChartistConfig2 = _interopRequireDefault(_resourcesChartistConfig);
-
 var _resourcesSizeObserver = require('./resources/SizeObserver');
 
 var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
@@ -29,7 +27,7 @@ exports.types = types;
 var sizeObserver = new _resourcesSizeObserver2['default']();
 var dataStore = {};
 
-var chars = ['a', 'b', 'c', 'd', 'e', 'f'];
+var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
@@ -42,7 +40,7 @@ function getChartDataForChartist(item) {
 }
 
 function getCombinedChartistConfig(item, size, data) {
-  var config = Object.assign((0, _resourcesChartistConfig2['default'])(item.type, size, data), item.chartConfig);
+  var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
   if (item.options) {
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -54,6 +52,7 @@ function getCombinedChartistConfig(item, size, data) {
 
         switch (option.type) {
           case 'oneOf':
+          case 'boolean':
             if (typeof item.options[option.name] !== undefined) {
               option.modifyConfig(config, item.options[option.name], size, data);
             }

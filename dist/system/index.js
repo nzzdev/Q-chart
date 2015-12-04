@@ -28,6 +28,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
           switch (option.type) {
             case 'oneOf':
+            case 'boolean':
               if (typeof item.options[option.name] !== undefined) {
                 option.modifyConfig(config, item.options[option.name], size, data);
               }
@@ -144,7 +145,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     setters: [function (_chartist) {
       Chartist = _chartist['default'];
     }, function (_resourcesChartistConfig) {
-      getChartistConfig = _resourcesChartistConfig['default'];
+      getChartistConfig = _resourcesChartistConfig.getConfig;
     }, function (_resourcesSizeObserver) {
       SizeObserver = _resourcesSizeObserver['default'];
     }, function (_resourcesTypes) {
@@ -157,7 +158,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
       sizeObserver = new SizeObserver();
       dataStore = {};
-      chars = ['a', 'b', 'c', 'd', 'e', 'f'];
+      chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
     }
   };
 });

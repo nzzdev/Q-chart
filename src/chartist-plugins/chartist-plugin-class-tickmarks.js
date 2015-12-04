@@ -26,7 +26,7 @@ export function ctExtendTickmmarksClassNames(options) {
                     var labelDirection = data.axis.units.dir;
 
                     //console.log(data.axis.ticks.length);
-                    console.log(data);
+                    // console.log(data);
 
                     // Add classname to first label in an axis
                     if(labelIndex === 0) {

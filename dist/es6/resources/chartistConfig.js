@@ -1,17 +1,17 @@
-var vertBarHeight = 10;
-var vertBarSetPadding = 22;
-
 import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
 
-var chartistConfigs = {
+export var vertBarHeight = 10;
+export var vertBarSetPadding = 22;
+export var chartHeight = 200;
+
+export var chartistConfigs = {
 
   Bar: {
-
     small: {
-      height: 200, // default will get overwritten by getConfig function called with data
+      height: chartHeight,
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
@@ -36,7 +36,7 @@ var chartistConfigs = {
       ]
     },
     large: {
-      height: 200,
+      height: chartHeight,
       fullWidth: true,
       seriesBarDistance: 11,
       chartPadding: {
@@ -65,7 +65,7 @@ var chartistConfigs = {
 
   StackedBar: {
     small: {
-      height: 200, // default will get overwritten by getConfig function called with data
+      height: chartHeight,
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
@@ -91,7 +91,7 @@ var chartistConfigs = {
       ]
     },
     large: {
-      height: 200,
+      height: chartHeight,
       fullWidth: true,
       seriesBarDistance: 11,
       chartPadding: {
@@ -121,7 +121,7 @@ var chartistConfigs = {
 
   Line: {
     small: {
-      height: 200,
+      height: chartHeight,
 
       showPoint: false,
       lineSmooth: false,
@@ -147,7 +147,7 @@ var chartistConfigs = {
       ]
     },
     large: {
-      height: 200,
+      height: chartHeight,
 
       showPoint: false,
       lineSmooth: false,
@@ -182,7 +182,7 @@ var chartistConfigs = {
   }
 }
 
-export default function getConfig(type, size, data) {
+export function getConfig(type, size, data) {
   let config = chartistConfigs[type][size];
 
   // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
@@ -198,12 +198,6 @@ export default function getConfig(type, size, data) {
   // if LINE: check the number of datapoints and recommend BAR if number of datapoints <= 12  (not implemented, just log)
   if (type === 'Line' && data.series[0].length < 12){
     console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
-  }
-
-  // when barchart = small calculated height automaticly
-  if (type === 'Bar' && size === 'small'){
-    console.log('+++');
-    config.height = ((vertBarHeight*data.series.length)+vertBarSetPadding)*(data.labels.length);
   }
 
   return config;

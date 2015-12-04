@@ -1,5 +1,4 @@
-var vertBarHeight = 10;
-var vertBarSetPadding = 22;
+import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
 
 export var types = {
   Bar: {
@@ -9,19 +8,21 @@ export var types = {
       {
         name: 'isColumnChart',      // the opposite would produce a bar chart (aka horizontal bar chart)
         type: 'oneOf',
-        labels: ['columns', 'bars'],
+        labels: ['Säulen', 'Balken'],
         defaultValue: true,
         modifyConfig: (config, value, size, data) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+          } else {
+            config.height = chartHeight;
           }
         }
       },
       {
         name: 'forceBarsOnSmall',
         type: 'boolean',
-        label: 'forceBarsOnSmall',
+        label: 'Balken für Mobile',
         defaultValue: true,
         modifyConfig: (config, value, size, data) => {
           if (value && size === 'small') {
@@ -39,19 +40,21 @@ export var types = {
       {
         name: 'isColumnChart',      // the opposite would produce a bar chart (aka horizontal bar chart)
         type: 'oneOf',
-        labels: ['columns', 'bars'],
+        labels: ['Säulen', 'Balken'],
         defaultValue: true,
         modifyConfig: (config, value, size, data) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+          } else {
+            config.height = chartHeight;
           }
         }
       },
       {
         name: 'forceBarsOnSmall',
         type: 'boolean',
-        label: 'forceBarsOnSmall',
+        label: 'Balken für Mobile',
         defaultValue: true,
         modifyConfig: (config, value, size, data) => {
           if (value && size === 'small') {

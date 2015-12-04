@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports['default'] = getConfig;
+exports.getConfig = getConfig;
 
 var _chartistPluginsChartistPluginClassAxisJs = require('../chartist-plugins/chartist-plugin-class-axis.js');
 
@@ -14,14 +14,17 @@ var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/cha
 var _chartistPluginsChartistPluginClassTickmarksJs = require('../chartist-plugins/chartist-plugin-class-tickmarks.js');
 
 var vertBarHeight = 10;
+exports.vertBarHeight = vertBarHeight;
 var vertBarSetPadding = 22;
+exports.vertBarSetPadding = vertBarSetPadding;
+var chartHeight = 200;
 
+exports.chartHeight = chartHeight;
 var chartistConfigs = {
 
   Bar: {
-
     small: {
-      height: 200,
+      height: chartHeight,
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
@@ -41,7 +44,7 @@ var chartistConfigs = {
       plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
-      height: 200,
+      height: chartHeight,
       fullWidth: true,
       seriesBarDistance: 11,
       chartPadding: {
@@ -65,7 +68,7 @@ var chartistConfigs = {
 
   StackedBar: {
     small: {
-      height: 200,
+      height: chartHeight,
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
@@ -86,7 +89,7 @@ var chartistConfigs = {
       plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
-      height: 200,
+      height: chartHeight,
       fullWidth: true,
       seriesBarDistance: 11,
       chartPadding: {
@@ -111,7 +114,7 @@ var chartistConfigs = {
 
   Line: {
     small: {
-      height: 200,
+      height: chartHeight,
 
       showPoint: false,
       lineSmooth: false,
@@ -131,7 +134,7 @@ var chartistConfigs = {
       plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
-      height: 200,
+      height: chartHeight,
 
       showPoint: false,
       lineSmooth: false,
@@ -153,6 +156,8 @@ var chartistConfigs = {
   }
 };
 
+exports.chartistConfigs = chartistConfigs;
+
 function getConfig(type, size, data) {
   var config = chartistConfigs[type][size];
 
@@ -168,12 +173,5 @@ function getConfig(type, size, data) {
     console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
   }
 
-  if (type === 'Bar' && size === 'small') {
-    console.log('+++');
-    config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
-  }
-
   return config;
 }
-
-module.exports = exports['default'];

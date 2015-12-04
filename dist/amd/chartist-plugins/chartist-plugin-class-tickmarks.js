@@ -28,8 +28,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
                         var labelClassList = data.element._node.lastChild.classList;
                         var labelDirection = data.axis.units.dir;
 
-                        console.log(data);
-
                         if (labelIndex === 0) {
                             labelClassList.add('ct-' + labelDirection + '-' + options.first);
                         }

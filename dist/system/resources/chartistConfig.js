@@ -1,9 +1,9 @@
 System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctProtrudeGrid, ctGridOnTop, ctExtendTickmmarksClassNames, vertBarHeight, vertBarSetPadding, chartistConfigs;
+  var ctExtendGridClassNames, ctProtrudeGrid, ctGridOnTop, ctExtendTickmmarksClassNames, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
 
-  _export('default', getConfig);
+  _export('getConfig', getConfig);
 
   function getConfig(type, size, data) {
     var config = chartistConfigs[type][size];
@@ -18,11 +18,6 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
 
     if (type === 'Line' && data.series[0].length < 12) {
       console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
-    }
-
-    if (type === 'Bar' && size === 'small') {
-      console.log('+++');
-      config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
     }
 
     return config;
@@ -40,13 +35,22 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
     }],
     execute: function () {
       vertBarHeight = 10;
+
+      _export('vertBarHeight', vertBarHeight);
+
       vertBarSetPadding = 22;
+
+      _export('vertBarSetPadding', vertBarSetPadding);
+
+      chartHeight = 200;
+
+      _export('chartHeight', chartHeight);
+
       chartistConfigs = {
 
         Bar: {
-
           small: {
-            height: 200,
+            height: chartHeight,
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
@@ -66,7 +70,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
-            height: 200,
+            height: chartHeight,
             fullWidth: true,
             seriesBarDistance: 11,
             chartPadding: {
@@ -90,7 +94,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
 
         StackedBar: {
           small: {
-            height: 200,
+            height: chartHeight,
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
@@ -111,7 +115,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
-            height: 200,
+            height: chartHeight,
             fullWidth: true,
             seriesBarDistance: 11,
             chartPadding: {
@@ -136,7 +140,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
 
         Line: {
           small: {
-            height: 200,
+            height: chartHeight,
 
             showPoint: false,
             lineSmooth: false,
@@ -156,7 +160,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
-            height: 200,
+            height: chartHeight,
 
             showPoint: false,
             lineSmooth: false,
@@ -177,6 +181,8 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
           }
         }
       };
+
+      _export('chartistConfigs', chartistConfigs);
     }
   };
 });

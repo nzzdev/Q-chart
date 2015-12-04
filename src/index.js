@@ -1,5 +1,5 @@
 import Chartist from 'chartist';
-import getChartistConfig from './resources/chartistConfig';
+import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 
@@ -10,7 +10,7 @@ export var types = chartTypes;
 var sizeObserver = new SizeObserver();
 var dataStore = {};
 
-var chars = ['a','b','c','d','e','f'];
+var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
@@ -26,6 +26,7 @@ function getCombinedChartistConfig(item, size, data) {
     for (let option of chartTypes[item.type].options) {
       switch (option.type) {
         case 'oneOf':
+        case 'boolean':
           if (typeof item.options[option.name] !== undefined) {
             option.modifyConfig(config, item.options[option.name], size, data);
           }
