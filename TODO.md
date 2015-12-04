@@ -3,7 +3,7 @@
 	[C] = low pro / [B] = med prio / [A] = high prio / [HELP] = needs bb / [DONE]
 
 ## generic thingis
-	[B] chart padding left related to longest number on y-axis
+	[B][HELP] chart padding left related to longest number on y-axis
 	[A] y ticks should overlap baseline / write plugin
 	[A] x ticks should overlap baseline / write plugin
 	[A][DONE] define colors
@@ -21,3 +21,9 @@
 	[A][DONE] black (METAL) baseline
 	[A][DONE] make it beautiful
 	[B][DONE] if series[0].length < 12 recommend barchart (halfway, just logs)
+
+
+## i need help for …
+	[B][HELP] chart padding left related to longest number on y-axis
+	[B][HELP] if date axis = smart labeling
+	[B][HELP?] vert bars variable width
