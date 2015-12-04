@@ -4,6 +4,9 @@
 $break-small: 414px;
 $break-large: 768px;
 
+.q-chart__chartist-container {
+  margin: 14px 0 0 0;
+}
 
 .ct-grids, line.ct-bar{
  shape-rendering: crispEdges;
@@ -16,28 +19,54 @@ $break-large: 768px;
   }
 }
 
-.ct-horizontal-bars .ct-label.ct-vertical {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+// special styles for horz bar
+.ct-horizontal-bars {
+  // vertical labels centering
+  .ct-label.ct-vertical {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  // horz labels centering
+  .ct-label.ct-horizontal {
+    text-align: center;
+    display: inline-block;
+    transform: translate(-10%, 0);
+  }
 }
 
-.ct-chart .ct-label.ct-horizontal {
-  color: red;
-  display: inline-block;
-  text-align: center;
+// special styles for line chart
+.ct-chart-line {
+  .ct-label.ct-horizontal {
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    min-width: 50px;
+    transform: translate(-50%, 0);
+  }
+  .ct-label.ct-vertical {
+    text-align: right;
+    transform: translate(0, 12%);
+  }
+}
+
+// special styles for bar chart
+.ct-chart-bar {
+  .ct-label.ct-vertical {
+    text-align: right;
+    transform: translate(0, 17%);
+  }
 }
 
 // line chart baseline
-
 .ct-vertical-first {
   stroke: $primary-color;
   opacity: 1;
   stroke-width: 1px;
 }
-
 .ct-horizontal-bars .ct-horizontal-first {
   stroke: $primary-color;
   opacity: 1;
   stroke-width: 1px;
 }
+

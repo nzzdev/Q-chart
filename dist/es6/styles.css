@@ -1,3 +1,6 @@
+.q-chart__chartist-container {
+  margin: 14px 0 0 0; }
+
 .ct-grids, line.ct-bar {
   shape-rendering: crispEdges; }
 
@@ -26,10 +29,33 @@
       -ms-flex-pack: end;
           justify-content: flex-end; }
 
-.ct-chart .ct-label.ct-horizontal {
-  color: red;
+.ct-horizontal-bars .ct-label.ct-horizontal {
+  text-align: center;
   display: inline-block;
-  text-align: center; }
+  -webkit-transform: translate(-10%, 0);
+      -ms-transform: translate(-10%, 0);
+          transform: translate(-10%, 0); }
+
+.ct-chart-line .ct-label.ct-horizontal {
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  min-width: 50px;
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0); }
+
+.ct-chart-line .ct-label.ct-vertical {
+  text-align: right;
+  -webkit-transform: translate(0, 12%);
+      -ms-transform: translate(0, 12%);
+          transform: translate(0, 12%); }
+
+.ct-chart-bar .ct-label.ct-vertical {
+  text-align: right;
+  -webkit-transform: translate(0, 17%);
+      -ms-transform: translate(0, 17%);
+          transform: translate(0, 17%); }
 
 .ct-vertical-first {
   stroke: #333;

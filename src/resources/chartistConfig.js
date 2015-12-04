@@ -2,7 +2,7 @@ var vertBarHeight = 10;
 var vertBarSetPadding = 22;
 
 import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
-import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
+//import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 
 var chartistConfigs = {
@@ -28,7 +28,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -53,7 +53,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -81,7 +81,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -107,7 +107,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -123,7 +123,6 @@ var chartistConfigs = {
         showGrid: true,
         showLabel: true,
         
-        
         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
             return index % 12  === 0 ? value : null;
         }
@@ -136,8 +135,8 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
-       ctGridOnTop()
+//       ctProtrudeGrid(),
+       ctGridOnTop(),
       ]
     },
     large: {
@@ -148,6 +147,13 @@ var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
+
+        /*
+        labelOffset: {
+          x:-25,
+          y:0
+        },
+        */
         
         
         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
@@ -161,8 +167,8 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
-       ctProtrudeGrid(),
-       ctGridOnTop()
+//       ctProtrudeGrid(),
+       ctGridOnTop(),
       ]
     }
   }
