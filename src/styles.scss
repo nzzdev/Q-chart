@@ -21,7 +21,10 @@ $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
 }
 
 .q-chart {
-margin: 36px 0 36px 0;
+margin: 22px 0 22px 0;
+  @media screen and (min-width: 768px) {
+    margin: 32px 0 32px 0;
+  }
 }
 
 .q-chart__title {
@@ -40,12 +43,13 @@ margin: 36px 0 36px 0;
 .q-chart__legend {
   @include clearfix;
   float: right;
+  margin: 0 0 6px 0;
 }
 
 .q-chart__legend__item {
   @include clearfix;
   float: left;
-  margin: 0 10px 0 0;
+  margin: 0 8px 0 0;
 
   &:last-child {
     margin-right: 0;
@@ -68,14 +72,17 @@ margin: 36px 0 36px 0;
 }
 
 .q-chart__chartist-container {
-  
+  margin: 2px 0 0 0;
+  @media screen and (min-width: ($break-small)) {
+    margin: 10px 0 0 0;
+  }
 }
 
 .q-chart__label-x-axis {
   @extend %label-element;
   color: $secondary-color;
   text-align: right;
-  margin: 0 0 12px 0;
+  margin: 0 0 6px 0;
 }
 
 .q-chart__label-y-axis { 
@@ -114,25 +121,5 @@ margin: 36px 0 36px 0;
   }
 }
 
-// centers labes when barchart is horizontal 
 
-.ct-horizontal-bars .ct-label .ct-vertical {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-// line chart baseline
-
-.ct-vertical-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-
-.ct-horizontal-bars .ct-horizontal-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
 
