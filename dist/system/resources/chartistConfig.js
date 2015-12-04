@@ -20,6 +20,11 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
       console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
     }
 
+    if (type === 'Bar' && size === 'small') {
+      console.log('+++');
+      config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+    }
+
     return config;
   }
 
@@ -159,6 +164,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               labelInterpolationFnc: function skipLabels(value, index) {
                 return index % 12 === 0 ? value : null;
               }
+
             },
             axisY: {
               position: 'start',

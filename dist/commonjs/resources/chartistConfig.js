@@ -139,6 +139,7 @@ var chartistConfigs = {
         labelInterpolationFnc: function skipLabels(value, index) {
           return index % 12 === 0 ? value : null;
         }
+
       },
       axisY: {
         position: 'start',
@@ -162,6 +163,11 @@ function getConfig(type, size, data) {
 
   if (type === 'Line' && data.series[0].length < 12) {
     console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
+  }
+
+  if (type === 'Bar' && size === 'small') {
+    console.log('+++');
+    config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
   }
 
   return config;

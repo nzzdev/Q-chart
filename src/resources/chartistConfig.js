@@ -123,9 +123,11 @@ var chartistConfigs = {
         showGrid: true,
         showLabel: true,
         
+        
         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
             return index % 12  === 0 ? value : null;
         }
+        
         
       },
       axisY: {
@@ -147,9 +149,11 @@ var chartistConfigs = {
         showGrid: true,
         showLabel: true,
         
+        
         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
             return index % 12  === 0 ? value : null;
         }
+        
               },
       axisY: {
         position: 'start',
@@ -180,6 +184,12 @@ export default function getConfig(type, size, data) {
   // if LINE: check the number of datapoints and recommend BAR if number of datapoints <= 12  (not implemented, just log)
   if (type === 'Line' && data.series[0].length < 12){
     console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
+  }
+
+  // when barchart = small calculated height automaticly
+  if (type === 'Bar' && size === 'small'){
+    console.log('+++');
+    config.height = ((vertBarHeight*data.series.length)+vertBarSetPadding)*(data.labels.length);
   }
 
   return config;

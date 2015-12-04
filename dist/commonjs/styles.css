@@ -1,3 +1,6 @@
+.ct-grids, line.ct-bar {
+  shape-rendering: crispEdges; }
+
 .ct-chart-bar, .ct-chart-line {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: normal;
@@ -12,7 +15,7 @@
       font-size: 13px;
       line-height: 19px; } }
 
-.ct-horizontal-bars .ct-label .ct-vertical {
+.ct-horizontal-bars .ct-label.ct-vertical {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -22,6 +25,11 @@
   -webkit-justify-content: flex-end;
       -ms-flex-pack: end;
           justify-content: flex-end; }
+
+.ct-chart .ct-label.ct-horizontal {
+  color: red;
+  display: inline-block;
+  text-align: center; }
 
 .ct-vertical-first {
   stroke: #333;

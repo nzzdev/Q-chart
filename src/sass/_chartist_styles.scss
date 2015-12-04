@@ -4,6 +4,11 @@
 $break-small: 414px;
 $break-large: 768px;
 
+
+.ct-grids, line.ct-bar{
+ shape-rendering: crispEdges;
+}
+
 .ct-chart-bar, .ct-chart-line {
   @include font-labeling("small");
   @media screen and (min-width: ($break-small)) {
@@ -11,10 +16,16 @@ $break-large: 768px;
   }
 }
 
-.ct-horizontal-bars .ct-label .ct-vertical {
+.ct-horizontal-bars .ct-label.ct-vertical {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.ct-chart .ct-label.ct-horizontal {
+  color: red;
+  display: inline-block;
+  text-align: center;
 }
 
 // line chart baseline
