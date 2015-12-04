@@ -1,7 +1,7 @@
-System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctGridOnTop, vertBarHeight, vertBarSetPadding, chartistConfigs;
+  var ctExtendGridClassNames, ctGridOnTop, ctExtendTickmmarksClassNames, vertBarHeight, vertBarSetPadding, chartistConfigs;
 
   _export('default', getConfig);
 
@@ -33,6 +33,8 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
       ctExtendGridClassNames = _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames;
     }, function (_chartistPluginsChartistPluginGridOnTopJs) {
       ctGridOnTop = _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop;
+    }, function (_chartistPluginsChartistPluginClassTickmarksJs) {
+      ctExtendTickmmarksClassNames = _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames;
     }],
     execute: function () {
       vertBarHeight = 10;
@@ -58,7 +60,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: false
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -79,7 +81,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: true
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           }
         },
 
@@ -103,7 +105,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: false
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -125,7 +127,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: true
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           }
         },
 
@@ -148,7 +150,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           },
           large: {
             height: 200,
@@ -168,7 +170,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctGridOnTop()]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctGridOnTop()]
           }
         }
       };

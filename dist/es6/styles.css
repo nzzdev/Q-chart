@@ -45,6 +45,11 @@
       -ms-transform: translate(-50%, 0);
           transform: translate(-50%, 0); }
 
+.ct-chart-line .ct-label.ct-horizontal-first {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0); }
+
 .ct-chart-line .ct-label.ct-vertical {
   text-align: right;
   -webkit-transform: translate(0, 12%);

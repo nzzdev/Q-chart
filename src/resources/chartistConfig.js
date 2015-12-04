@@ -4,6 +4,7 @@ var vertBarSetPadding = 22;
 import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
 //import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
+import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
 
 var chartistConfigs = {
 
@@ -28,6 +29,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -53,6 +55,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -81,6 +84,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -107,6 +111,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -135,6 +140,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop(),
       ]
@@ -167,6 +173,7 @@ var chartistConfigs = {
       },
       plugins: [
        ctExtendGridClassNames(),
+       ctExtendTickmmarksClassNames(),
 //       ctProtrudeGrid(),
        ctGridOnTop(),
       ]

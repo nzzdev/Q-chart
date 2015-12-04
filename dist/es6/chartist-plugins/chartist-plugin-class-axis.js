@@ -1,6 +1,6 @@
 // plugin to class gridlines for highlighting baseline
 // found it here https://github.com/gionkunz/chartist-js/issues/493
-// ATTENTION! does not work on IE because oc lineClassList, chech the link
+// ATTENTION! does not work on IE because oc lineClassList, check the link
 
 import Chartist from 'chartist';
 
