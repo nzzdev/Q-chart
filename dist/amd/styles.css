@@ -33,18 +33,21 @@
       -ms-transform: translate(0, 0);
           transform: translate(0, 0); }
 
-.ct-chart-line .ct-label.ct-horizontal {
-  text-align: center;
-  display: inline-block;
-  min-width: 50px;
+.ct-chart-line .ct-label.ct-horizontal, .ct-chart-line .ct-label.ct-horizontal.ct-end {
   -webkit-transform: translate(-50%, 0);
       -ms-transform: translate(-50%, 0);
-          transform: translate(-50%, 0); }
+          transform: translate(-50%, 0);
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
 
-.ct-label.ct-horizontal-first {
+.ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
-          transform: translate(0, 0); }
+          transform: translate(0, 0);
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start; }
 
 /*
 // solid chart baseline

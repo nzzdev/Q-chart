@@ -38,17 +38,16 @@ $break-large: 768px;
 
 // line chart
 .ct-chart-line {
-  .ct-label.ct-horizontal {
-    text-align: center;
-    display: inline-block;
-    min-width: 50px;
+  .ct-label.ct-horizontal, .ct-label.ct-horizontal.ct-end {
     transform: translate(-50%, 0);
+    justify-content: center;
   }
 }
 
 // intend bzw. unindent first label
-.ct-label.ct-horizontal-first {
+.ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
   transform: translate(0, 0);
+  justify-content: flex-start;
 }
 
 /*
