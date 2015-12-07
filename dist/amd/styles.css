@@ -46,17 +46,32 @@
       -ms-transform: translate(0, 0);
           transform: translate(0, 0); }
 
+/*
+// solid chart baseline
 .ct-chart-bar .ct-vertical-first {
-  stroke: #333;
+  stroke: $primary-color;
   opacity: 1;
-  stroke-width: 1px; }
+  stroke-width: 1px;
+}
 
 .ct-chart-line .ct-vertical-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+
+.ct-horizontal-bars .ct-horizontal-first {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+*/
+.ct-chart-line .ct-baseline {
   stroke: #333;
   opacity: 1;
   stroke-width: 1px; }
 
-.ct-horizontal-bars .ct-horizontal-first {
+.ct-chart-bar .ct-baseline {
   stroke: #333;
   opacity: 1;
   stroke-width: 1px; }
@@ -234,6 +249,42 @@
 
 .ct-series-f .ct-slice-pie, .ct-series-f .ct-area {
   fill: #bf4a3a; }
+
+.ct-series-g .ct-point, .ct-series-g .ct-line, .ct-series-g .ct-bar, .ct-series-g .ct-slice-donut {
+  stroke: #80b6d2; }
+
+.ct-series-g .ct-slice-pie, .ct-series-g .ct-area {
+  fill: #80b6d2; }
+
+.ct-series-h .ct-point, .ct-series-h .ct-line, .ct-series-h .ct-bar, .ct-series-h .ct-slice-donut {
+  stroke: #e5b960; }
+
+.ct-series-h .ct-slice-pie, .ct-series-h .ct-area {
+  fill: #e5b960; }
+
+.ct-series-i .ct-point, .ct-series-i .ct-line, .ct-series-i .ct-bar, .ct-series-i .ct-slice-donut {
+  stroke: #9abf70; }
+
+.ct-series-i .ct-slice-pie, .ct-series-i .ct-area {
+  fill: #9abf70; }
+
+.ct-series-j .ct-point, .ct-series-j .ct-line, .ct-series-j .ct-bar, .ct-series-j .ct-slice-donut {
+  stroke: #80b6d2; }
+
+.ct-series-j .ct-slice-pie, .ct-series-j .ct-area {
+  fill: #80b6d2; }
+
+.ct-series-k .ct-point, .ct-series-k .ct-line, .ct-series-k .ct-bar, .ct-series-k .ct-slice-donut {
+  stroke: #827768; }
+
+.ct-series-k .ct-slice-pie, .ct-series-k .ct-area {
+  fill: #827768; }
+
+.ct-series-l .ct-point, .ct-series-l .ct-line, .ct-series-l .ct-bar, .ct-series-l .ct-slice-donut {
+  stroke: #cc89a6; }
+
+.ct-series-l .ct-slice-pie, .ct-series-l .ct-area {
+  fill: #cc89a6; }
 
 .ct-square {
   display: block;
@@ -702,3 +753,21 @@
 
 .q-chart__legend__item--f .q-chart__legend__item__box {
   background: #bf4a3a; }
+
+.q-chart__legend__item--g .q-chart__legend__item__box {
+  background: #80b6d2; }
+
+.q-chart__legend__item--h .q-chart__legend__item__box {
+  background: #e5b960; }
+
+.q-chart__legend__item--i .q-chart__legend__item__box {
+  background: #9abf70; }
+
+.q-chart__legend__item--j .q-chart__legend__item__box {
+  background: #80b6d2; }
+
+.q-chart__legend__item--k .q-chart__legend__item__box {
+  background: #827768; }
+
+.q-chart__legend__item--l .q-chart__legend__item__box {
+  background: #cc89a6; }

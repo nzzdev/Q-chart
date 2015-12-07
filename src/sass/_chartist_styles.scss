@@ -51,6 +51,7 @@ $break-large: 768px;
   transform: translate(0, 0);
 }
 
+/*
 // solid chart baseline
 .ct-chart-bar .ct-vertical-first {
   stroke: $primary-color;
@@ -69,4 +70,16 @@ $break-large: 768px;
   opacity: 1;
   stroke-width: 1px;
 }
+*/
 
+.ct-chart-line .ct-baseline {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}
+
+.ct-chart-bar .ct-baseline {
+  stroke: $primary-color;
+  opacity: 1;
+  stroke-width: 1px;
+}

@@ -4,34 +4,22 @@
 
 import Chartist from 'chartist';
 
-var defaultOptions = {
-    first: 'first',
-    last: 'last'
-};
-
-// Chartist.plugins = Chartist.plugins || {};
-
 export function ctExtendGridClassNames(options) {
-
-    options = Object.assign(defaultOptions, options);
 
     return function ctExtendGridClassNames(chart) {
         if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
             chart.on('draw', function(data) {
+
                 if(data.type === 'grid') {
                     var lineIndex = data.index;
                     var lineClassList = data.element._node.classList;
-                    var lineDirection = data.axis.units.dir;
 
-                    // Add classname to first line in an axis
-                    if(lineIndex === 0) {
-                        lineClassList.add('ct-' + lineDirection + '-' + options.first);
+                    // Add classname to baseline
+                    if(data.axis.ticks[lineIndex] === 0) {
+                        console.log(data);
+                        lineClassList.add('ct-baseline');
                     }
 
-                    // Add classname to last line in an axis
-                    if(lineIndex === data.axis.ticks.length - 1) {
-                        lineClassList.add('ct-' + lineDirection + '-' + options.last);
-                    }
                 }
             });
         }
