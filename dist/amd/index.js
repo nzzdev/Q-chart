@@ -32,36 +32,36 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
   function getCombinedChartistConfig(item, data, size, rect) {
     var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
 
-    if (item.options) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = _resourcesTypes.types[item.type].options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var option = _step.value;
+    try {
+      for (var _iterator = _resourcesTypes.types[item.type].options[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var option = _step.value;
 
-          switch (option.type) {
-            case 'oneOf':
-            case 'boolean':
-              if (typeof item.options[option.name] !== undefined) {
-                option.modifyConfig(config, item.options[option.name], data, size, rect);
-              }
-              break;
-          }
+        switch (option.type) {
+          case 'oneOf':
+          case 'boolean':
+            if (item.options && typeof item.options[option.name] !== undefined) {
+              option.modifyConfig(config, item.options[option.name], data, size, rect);
+            } else {
+              option.modifyConfig(config, option.defaultValue, data, size, rect);
+            }
+            break;
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator['return']) {
-            _iterator['return']();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
+        if (_didIteratorError) {
+          throw _iteratorError;
         }
       }
     }
