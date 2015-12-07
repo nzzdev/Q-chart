@@ -1,6 +1,6 @@
 #TODO
 
-	[C] = low pro / [B] = med prio / [A] = high prio / [HELP] = needs bb / [DONE]
+	[C] = low pro / [B] = med prio / [A] = high prio / [HELP] = needs bb / [DONE] / [bb] = beni machts
 
 ## generic thingis
 
@@ -17,7 +17,6 @@
 	[A][DONE] expand colorsarray to 12 with lighten()
 	[A][DONE] emphasize baseline & not first & last line of chart
 	[A][DONE] define colors
-	[B][HELP] if date axis = smart labeling
 	[B][DONE]change order of drawing, draw grid over chart
 
 
@@ -39,7 +38,7 @@
 
 ## i need help for …
 
-	[B][HELP] chart padding left related to longest number on y-axis
-	[B][HELP] if date axis = smart labeling
+	[B][HELP][bb] chart padding left related to longest number on y-axis
+	[B][HELP][bb] if date axis = smart labeling
 	[B][HELP?] vert bars variable width
 
