@@ -27,7 +27,6 @@ var types = _resourcesTypes.types;
 
 exports.types = types;
 var sizeObserver = new _resourcesSizeObserver2['default']();
-var currentRect;
 
 var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
@@ -41,7 +40,7 @@ function getChartDataForChartist(item) {
   };
 }
 
-function getCombinedChartistConfig(item, size, data) {
+function getCombinedChartistConfig(item, data, size, rect) {
   var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
 
   if (item.options) {
@@ -57,7 +56,7 @@ function getCombinedChartistConfig(item, size, data) {
           case 'oneOf':
           case 'boolean':
             if (typeof item.options[option.name] !== undefined) {
-              option.modifyConfig(config, item.options[option.name], data, size, currentRect);
+              option.modifyConfig(config, item.options[option.name], data, size, rect);
             }
             break;
         }
@@ -80,7 +79,7 @@ function getCombinedChartistConfig(item, size, data) {
 
   if (item.data.x && item.data.x.type) {
     if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-      _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, data, size, currentRect);
+      _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
     }
   }
 
@@ -97,10 +96,10 @@ function getElementSize(rect) {
   return size;
 }
 
-function renderChartist(item, element, drawSize) {
+function renderChartist(item, element, drawSize, rect) {
   var data = getChartDataForChartist(item);
   if (data && data !== null) {
-    var config = getCombinedChartistConfig(item, drawSize, data);
+    var config = getCombinedChartistConfig(item, data, drawSize, rect);
     new _chartist2['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
   }
 }
@@ -127,7 +126,7 @@ function getContextHtml(item) {
   return html;
 }
 
-function displayWithContext(item, element, drawSize) {
+function displayWithContext(item, element, drawSize, rect) {
   var el = document.createElement('section');
   el.setAttribute('class', 'q-chart');
   el.innerHTML = getContextHtml(item);
@@ -135,11 +134,11 @@ function displayWithContext(item, element, drawSize) {
     element.removeChild(element.firstChild);
   }
   element.appendChild(el);
-  renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize);
+  renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize, rect);
 }
 
-function displayWithoutContext(item, element, drawSize) {
-  renderChartist(item, element, drawSize);
+function displayWithoutContext(item, element, drawSize, rect) {
+  renderChartist(item, element, drawSize, rect);
 }
 
 function display(item, element) {
@@ -155,15 +154,13 @@ function display(item, element) {
   var drawSize = undefined;
 
   sizeObserver.onResize(function (rect) {
-    currentRect = rect;
     var newSize = getElementSize(rect);
-    if (drawSize !== newSize) {
-      drawSize = newSize;
-      if (withoutContext) {
-        displayWithoutContext(item, element, drawSize);
-      } else {
-        displayWithContext(item, element, drawSize);
-      }
+
+    drawSize = newSize;
+    if (withoutContext) {
+      displayWithoutContext(item, element, drawSize, rect);
+    } else {
+      displayWithContext(item, element, drawSize, rect);
     }
   }, element, true);
 

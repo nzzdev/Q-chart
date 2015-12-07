@@ -155,12 +155,12 @@ export var chartistConfigs = {
         showGrid: true,
         showLabel: true,
 
-        /*
-        labelOffset: {
-          x:-25,
-          y:0
-        },
-        */
+        
+        // labelOffset: {
+        //   x:-25,
+        //   y:0
+        // },
+        
         
         
         // labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
