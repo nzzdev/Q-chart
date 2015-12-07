@@ -128,18 +128,13 @@ export function display(item, element, withoutContext = false) {
     return false;
   }
 
-  let drawSize;
-
   sizeObserver.onResize((rect) => {
-    let newSize = getElementSize(rect);
-    // if (drawSize !== newSize) {
-      drawSize = newSize;
-      if (withoutContext) {
-        displayWithoutContext(item, element, drawSize, rect);
-      } else {
-        displayWithContext(item, element, drawSize, rect);
-      }
-    // }
+    let drawSize = getElementSize(rect);
+    if (withoutContext) {
+      displayWithoutContext(item, element, drawSize, rect);
+    } else {
+      displayWithContext(item, element, drawSize, rect);
+    }
   }, element, true);
 
   return true;

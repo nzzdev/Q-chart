@@ -1,7 +1,26 @@
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
 export default class SizeObserver {
 
   resizeCallbacks = [];
   resizeListenerInstalled = false;
+
+  constructor() {
+    this.resizeHandler = debounce(this.handleResizeOnTick.bind(this), 250);
+  }
 
   onResize(callback, element = undefined, runOnceImmediately = false) {
     let newLength = this.resizeCallbacks.push({
@@ -28,12 +47,12 @@ export default class SizeObserver {
   }
 
   setupResizeListener() {
-    window.addEventListener('resize', this.handleResizeOnTick.bind(this));
+    window.addEventListener('resize', this.resizeHandler);
     this.resizeListenerInstalled = true;
   }
 
   cancelResizeListener() {
-    window.removeEventListener('resize', this.handleResizeOnTick.bind(this));
+    window.removeEventListener('resize', this.resizeHandler);
     this.resizeListenerInstalled = false;
   }
 

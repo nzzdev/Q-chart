@@ -5,12 +5,30 @@ define(['exports', 'module'], function (exports, module) {
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function () {
+      var context = this,
+          args = arguments;
+      var later = function later() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+
   var SizeObserver = (function () {
     function SizeObserver() {
       _classCallCheck(this, SizeObserver);
 
       this.resizeCallbacks = [];
       this.resizeListenerInstalled = false;
+
+      this.resizeHandler = debounce(this.handleResizeOnTick.bind(this), 250);
     }
 
     _createClass(SizeObserver, [{
@@ -44,13 +62,13 @@ define(['exports', 'module'], function (exports, module) {
     }, {
       key: 'setupResizeListener',
       value: function setupResizeListener() {
-        window.addEventListener('resize', this.handleResizeOnTick.bind(this));
+        window.addEventListener('resize', this.resizeHandler);
         this.resizeListenerInstalled = true;
       }
     }, {
       key: 'cancelResizeListener',
       value: function cancelResizeListener() {
-        window.removeEventListener('resize', this.handleResizeOnTick.bind(this));
+        window.removeEventListener('resize', this.resizeHandler);
         this.resizeListenerInstalled = false;
       }
     }, {

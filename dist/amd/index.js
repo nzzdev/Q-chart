@@ -140,12 +140,8 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
       return false;
     }
 
-    var drawSize = undefined;
-
     sizeObserver.onResize(function (rect) {
-      var newSize = getElementSize(rect);
-
-      drawSize = newSize;
+      var drawSize = getElementSize(rect);
       if (withoutContext) {
         displayWithoutContext(item, element, drawSize, rect);
       } else {
