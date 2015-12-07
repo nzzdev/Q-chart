@@ -16,7 +16,6 @@ export function ctExtendGridClassNames(options) {
 
                     // Add classname to baseline
                     if(data.axis.ticks[lineIndex] === 0) {
-                        console.log(data);
                         lineClassList.add('ct-baseline');
                     }
 

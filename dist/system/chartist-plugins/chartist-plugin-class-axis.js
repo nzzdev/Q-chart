@@ -16,7 +16,6 @@ System.register(['chartist'], function (_export) {
                         var lineClassList = data.element._node.classList;
 
                         if (data.axis.ticks[lineIndex] === 0) {
-                            console.log(data);
                             lineClassList.add('ct-baseline');
                         }
                     }
