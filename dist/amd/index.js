@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _stylesCss) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -16,7 +16,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   exports.types = types;
   var sizeObserver = new _SizeObserver['default']();
-  var dataStore = {};
+  var currentRect;
 
   var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
@@ -32,6 +32,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
 
   function getCombinedChartistConfig(item, size, data) {
     var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
+
     if (item.options) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -45,7 +46,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
             case 'oneOf':
             case 'boolean':
               if (typeof item.options[option.name] !== undefined) {
-                option.modifyConfig(config, item.options[option.name], size, data);
+                option.modifyConfig(config, item.options[option.name], data, size, currentRect);
               }
               break;
           }
@@ -65,6 +66,13 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
         }
       }
     }
+
+    if (item.data.x && item.data.x.type) {
+      if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, data, size, currentRect);
+      }
+    }
+
     return config;
   }
 
@@ -133,15 +141,10 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
       return false;
     }
 
-    var drawSize = getElementSize(element.getBoundingClientRect());
-
-    if (withoutContext) {
-      displayWithoutContext(item, element, drawSize);
-    } else {
-      displayWithContext(item, element, drawSize);
-    }
+    var drawSize = undefined;
 
     sizeObserver.onResize(function (rect) {
+      currentRect = rect;
       var newSize = getElementSize(rect);
       if (drawSize !== newSize) {
         drawSize = newSize;
@@ -151,7 +154,7 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
           displayWithContext(item, element, drawSize);
         }
       }
-    }, element);
+    }, element, true);
 
     return true;
   }

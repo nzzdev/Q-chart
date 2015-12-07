@@ -19,13 +19,15 @@ var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
 
 var _resourcesTypes = require('./resources/types');
 
+var _resourcesSeriesTypes = require('./resources/seriesTypes');
+
 require('./styles.css!');
 
 var types = _resourcesTypes.types;
 
 exports.types = types;
 var sizeObserver = new _resourcesSizeObserver2['default']();
-var dataStore = {};
+var currentRect;
 
 var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
@@ -41,6 +43,7 @@ function getChartDataForChartist(item) {
 
 function getCombinedChartistConfig(item, size, data) {
   var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
+
   if (item.options) {
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -54,7 +57,7 @@ function getCombinedChartistConfig(item, size, data) {
           case 'oneOf':
           case 'boolean':
             if (typeof item.options[option.name] !== undefined) {
-              option.modifyConfig(config, item.options[option.name], size, data);
+              option.modifyConfig(config, item.options[option.name], data, size, currentRect);
             }
             break;
         }
@@ -74,6 +77,13 @@ function getCombinedChartistConfig(item, size, data) {
       }
     }
   }
+
+  if (item.data.x && item.data.x.type) {
+    if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+      _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, data, size, currentRect);
+    }
+  }
+
   return config;
 }
 
@@ -142,15 +152,10 @@ function display(item, element) {
     return false;
   }
 
-  var drawSize = getElementSize(element.getBoundingClientRect());
-
-  if (withoutContext) {
-    displayWithoutContext(item, element, drawSize);
-  } else {
-    displayWithContext(item, element, drawSize);
-  }
+  var drawSize = undefined;
 
   sizeObserver.onResize(function (rect) {
+    currentRect = rect;
     var newSize = getElementSize(rect);
     if (drawSize !== newSize) {
       drawSize = newSize;
@@ -160,7 +165,7 @@ function display(item, element) {
         displayWithContext(item, element, drawSize);
       }
     }
-  }, element);
+  }, element, true);
 
   return true;
 }

@@ -10,7 +10,7 @@ export var types = {
         type: 'oneOf',
         labels: ['Säulen', 'Balken'],
         defaultValue: true,
-        modifyConfig: (config, value, size, data) => {
+        modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
@@ -24,7 +24,7 @@ export var types = {
         type: 'boolean',
         label: 'Balken für Mobile',
         defaultValue: true,
-        modifyConfig: (config, value, size, data) => {
+        modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
@@ -42,7 +42,7 @@ export var types = {
         type: 'oneOf',
         labels: ['Säulen', 'Balken'],
         defaultValue: true,
-        modifyConfig: (config, value, size, data) => {
+        modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
@@ -56,7 +56,7 @@ export var types = {
         type: 'boolean',
         label: 'Balken für Mobile',
         defaultValue: true,
-        modifyConfig: (config, value, size, data) => {
+        modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);

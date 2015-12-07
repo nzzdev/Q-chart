@@ -2,13 +2,14 @@ import Chartist from 'chartist';
 import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
+import {seriesTypes} from './resources/seriesTypes';
 
 import './styles.css!'
 
 export var types = chartTypes;
 
 var sizeObserver = new SizeObserver();
-var dataStore = {};
+var currentRect;
 
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
@@ -22,18 +23,30 @@ function getChartDataForChartist(item) {
 
 function getCombinedChartistConfig(item, size, data) {
   let config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
+  
+  // if there are options
+  // we need to let them modify the config
   if (item.options) {
     for (let option of chartTypes[item.type].options) {
       switch (option.type) {
         case 'oneOf':
         case 'boolean':
           if (typeof item.options[option.name] !== undefined) {
-            option.modifyConfig(config, item.options[option.name], size, data);
+            option.modifyConfig(config, item.options[option.name], data, size, currentRect);
           }
           break;
       }
     }
   }
+
+  // if there are detected series types
+  // we need to let them modify the config
+  if (item.data.x && item.data.x.type) {
+    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+      seriesTypes[item.data.x.type.id].x.modifyConfig(config, data, size, currentRect);
+    }
+  }
+
   return config;
 }
 
@@ -108,9 +121,8 @@ function displayWithoutContext(item, element, drawSize) {
   renderChartist(item, element, drawSize);
 }
 
-
-
 export function display(item, element, withoutContext = false) {
+
   if (!element) throw 'Element is not defined';
   if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
@@ -118,15 +130,18 @@ export function display(item, element, withoutContext = false) {
     return false;
   }
 
-  let drawSize = getElementSize(element.getBoundingClientRect());
+  // let drawSize = getElementSize(element.getBoundingClientRect());
 
-  if (withoutContext) {
-    displayWithoutContext(item, element, drawSize);
-  } else {
-    displayWithContext(item, element, drawSize);
-  }
+  // if (withoutContext) {
+  //   displayWithoutContext(item, element, drawSize);
+  // } else {
+  //   displayWithContext(item, element, drawSize);
+  // }
+
+  let drawSize;
 
   sizeObserver.onResize((rect) => {
+    currentRect = rect;
     let newSize = getElementSize(rect);
     if (drawSize !== newSize) {
       drawSize = newSize;
@@ -136,7 +151,7 @@ export function display(item, element, withoutContext = false) {
         displayWithContext(item, element, drawSize);
       }
     }
-  }, element);
+  }, element, true);
 
   return true;
 }

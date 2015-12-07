@@ -1,7 +1,7 @@
-System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './styles.css!'], function (_export) {
+System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './styles.css!'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, types, sizeObserver, dataStore, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, types, sizeObserver, currentRect, chars;
 
   _export('display', display);
 
@@ -17,6 +17,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
 
   function getCombinedChartistConfig(item, size, data) {
     var config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
+
     if (item.options) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -30,7 +31,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
             case 'oneOf':
             case 'boolean':
               if (typeof item.options[option.name] !== undefined) {
-                option.modifyConfig(config, item.options[option.name], size, data);
+                option.modifyConfig(config, item.options[option.name], data, size, currentRect);
               }
               break;
           }
@@ -50,6 +51,13 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
         }
       }
     }
+
+    if (item.data.x && item.data.x.type) {
+      if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+        seriesTypes[item.data.x.type.id].x.modifyConfig(config, data, size, currentRect);
+      }
+    }
+
     return config;
   }
 
@@ -118,15 +126,10 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       return false;
     }
 
-    var drawSize = getElementSize(element.getBoundingClientRect());
-
-    if (withoutContext) {
-      displayWithoutContext(item, element, drawSize);
-    } else {
-      displayWithContext(item, element, drawSize);
-    }
+    var drawSize = undefined;
 
     sizeObserver.onResize(function (rect) {
+      currentRect = rect;
       var newSize = getElementSize(rect);
       if (drawSize !== newSize) {
         drawSize = newSize;
@@ -136,7 +139,7 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
           displayWithContext(item, element, drawSize);
         }
       }
-    }, element);
+    }, element, true);
 
     return true;
   }
@@ -150,6 +153,8 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       SizeObserver = _resourcesSizeObserver['default'];
     }, function (_resourcesTypes) {
       chartTypes = _resourcesTypes.types;
+    }, function (_resourcesSeriesTypes) {
+      seriesTypes = _resourcesSeriesTypes.seriesTypes;
     }, function (_stylesCss) {}],
     execute: function () {
       types = chartTypes;
@@ -157,7 +162,6 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       _export('types', types);
 
       sizeObserver = new SizeObserver();
-      dataStore = {};
       chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
     }
   };

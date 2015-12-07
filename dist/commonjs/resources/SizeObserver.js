@@ -20,11 +20,17 @@ var SizeObserver = (function () {
     key: 'onResize',
     value: function onResize(callback) {
       var element = arguments.length <= 1 || arguments[1] === undefined ? undefined : arguments[1];
+      var runOnceImmediately = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
-      this.resizeCallbacks.push({
+      var newLength = this.resizeCallbacks.push({
         func: callback,
         element: element
       });
+
+      if (runOnceImmediately) {
+        this.invokeCallback(this.resizeCallbacks[newLength - 1]);
+      }
+
       if (!this.resizeListener) {
         this.setupResizeListener();
         return (function () {
@@ -70,11 +76,7 @@ var SizeObserver = (function () {
         for (var _iterator = this.resizeCallbacks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var cb = _step.value;
 
-          if (cb.element && cb.element.getBoundingClientRect) {
-            cb.func(cb.element.getBoundingClientRect());
-          } else {
-            cb.func();
-          }
+          this.invokeCallback(cb);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -89,6 +91,15 @@ var SizeObserver = (function () {
             throw _iteratorError;
           }
         }
+      }
+    }
+  }, {
+    key: 'invokeCallback',
+    value: function invokeCallback(cb) {
+      if (cb.element && cb.element.getBoundingClientRect) {
+        cb.func(cb.element.getBoundingClientRect());
+      } else {
+        cb.func();
       }
     }
   }]);

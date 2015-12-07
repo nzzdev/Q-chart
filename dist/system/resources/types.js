@@ -18,7 +18,7 @@ System.register(['./chartistConfig'], function (_export) {
             type: 'oneOf',
             labels: ['Säulen', 'Balken'],
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size, data) {
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
               config.horizontalBars = !value;
               if (config.horizontalBars) {
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
@@ -31,7 +31,7 @@ System.register(['./chartistConfig'], function (_export) {
             type: 'boolean',
             label: 'Balken für Mobile',
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size, data) {
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
@@ -47,7 +47,7 @@ System.register(['./chartistConfig'], function (_export) {
             type: 'oneOf',
             labels: ['Säulen', 'Balken'],
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size, data) {
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
               config.horizontalBars = !value;
               if (config.horizontalBars) {
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
@@ -60,7 +60,7 @@ System.register(['./chartistConfig'], function (_export) {
             type: 'boolean',
             label: 'Balken für Mobile',
             defaultValue: true,
-            modifyConfig: function modifyConfig(config, value, size, data) {
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;

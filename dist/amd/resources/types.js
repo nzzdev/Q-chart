@@ -13,7 +13,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         type: 'oneOf',
         labels: ['Säulen', 'Balken'],
         defaultValue: true,
-        modifyConfig: function modifyConfig(config, value, size, data) {
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
@@ -26,7 +26,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         type: 'boolean',
         label: 'Balken für Mobile',
         defaultValue: true,
-        modifyConfig: function modifyConfig(config, value, size, data) {
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
@@ -42,7 +42,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         type: 'oneOf',
         labels: ['Säulen', 'Balken'],
         defaultValue: true,
-        modifyConfig: function modifyConfig(config, value, size, data) {
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
@@ -55,7 +55,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         type: 'boolean',
         label: 'Balken für Mobile',
         defaultValue: true,
-        modifyConfig: function modifyConfig(config, value, size, data) {
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;

@@ -163,9 +163,9 @@ export var chartistConfigs = {
         */
         
         
-        labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
-            return index % 12  === 0 ? value : null;
-        }
+        // labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
+        //     return index % 12  === 0 ? value : null;
+        // }
         
               },
       axisY: {

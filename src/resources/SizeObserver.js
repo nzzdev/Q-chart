@@ -3,11 +3,16 @@ export default class SizeObserver {
   resizeCallbacks = [];
   resizeListenerInstalled = false;
 
-  onResize(callback, element = undefined) {
-    this.resizeCallbacks.push({
+  onResize(callback, element = undefined, runOnceImmediately = false) {
+    let newLength = this.resizeCallbacks.push({
       func: callback,
       element: element
     });
+
+    if (runOnceImmediately) {
+      this.invokeCallback(this.resizeCallbacks[newLength-1]);
+    }
+
     if (!this.resizeListener) {
       this.setupResizeListener();
       return function() {
@@ -42,11 +47,15 @@ export default class SizeObserver {
 
   invokeCallbacks() {
     for (let cb of this.resizeCallbacks) {
-      if (cb.element && cb.element.getBoundingClientRect) {
-        cb.func(cb.element.getBoundingClientRect());
-      } else {
-        cb.func();
-      }
+      this.invokeCallback(cb);
+    }
+  }
+
+  invokeCallback(cb) {
+    if (cb.element && cb.element.getBoundingClientRect) {
+      cb.func(cb.element.getBoundingClientRect());
+    } else {
+      cb.func();
     }
   }
 }
