@@ -59,15 +59,13 @@ var chart2 = {
   data: {
     x: {
       label: '',
-      data: [
-          'Apex',
-          'Bheta',
-          'Budh',
-          'Meto',
-          'Notu',
-          'Ming',
-          'Dris'
-      ]
+      data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11'],
+      type: {
+        id: 'date',
+        options: {
+          precision: 'month'
+        }
+      }
     },
     y: {
       label: 'gemessen in Spacepunkten',
