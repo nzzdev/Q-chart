@@ -110,6 +110,7 @@ define(['exports'], function (exports) {
       if (labels[index].show) {
         return value;
       }
+      return ' ';
     };
   }
 

@@ -61,6 +61,7 @@ System.register([], function (_export) {
       if (labels[index].show) {
         return value;
       }
+      return ' ';
     };
   }
 

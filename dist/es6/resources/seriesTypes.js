@@ -104,6 +104,7 @@ function modifyConfigDateX(config, typeOptions, data, size, rect) {
     if (labels[index].show) {
       return value;
     }
+    return ' ';
   }
 }
 
