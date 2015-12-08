@@ -42,13 +42,15 @@ $break-large: 768px;
     transform: translate(-50%, 0);
     justify-content: center;
   }
+
+  // intend bzw. unindent first label
+  .ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
+    transform: translate(0, 0);
+    justify-content: flex-start;
+  }
 }
 
-// intend bzw. unindent first label
-.ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
-  transform: translate(0, 0);
-  justify-content: flex-start;
-}
+
 
 /*
 // solid chart baseline

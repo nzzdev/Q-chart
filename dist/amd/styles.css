@@ -41,7 +41,7 @@
       -ms-flex-pack: center;
           justify-content: center; }
 
-.ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
+.ct-chart-line .ct-label.ct-horizontal.ct-horizontal-first, .ct-chart-line .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
           transform: translate(0, 0);
