@@ -7,6 +7,6 @@ exports.modifyChartistConfigBeforeRender = modifyChartistConfigBeforeRender;
 
 function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
   if (type === 'Bar' && size === 'large') {
-    config.seriesBarDistance = 100;
+    config.seriesBarDistance = 20;
   }
 }

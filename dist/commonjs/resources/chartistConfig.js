@@ -137,12 +137,7 @@ var chartistConfigs = {
       lineSmooth: false,
       axisX: {
         showGrid: true,
-        showLabel: true,
-
-        labelInterpolationFnc: function skipLabels(value, index) {
-          return index % 24 === 0 ? value : null;
-        }
-
+        showLabel: true
       },
       axisY: {
         position: 'start',

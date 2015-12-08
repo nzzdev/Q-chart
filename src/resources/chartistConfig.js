@@ -151,20 +151,11 @@ export var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
-
-        
         // labelOffset: {
         //   x:-25,
         //   y:0
         // },
-        
-        
-        
-         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
-             return index % 24  === 0 ? value : null;
-         }
-        
-              },
+      },
       axisY: {
         position: 'start',
         scaleMinSpace: 40
