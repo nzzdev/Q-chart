@@ -14,11 +14,12 @@ var _chartist2 = _interopRequireDefault(_chartist);
 function ctExtendFitBarsToData() {
 
     return function ctExtendFitBarsToData(chart) {
-        chart.update(null, { seriesBarDistance: 46 }, true);
 
         if (chart instanceof _chartist2['default'].Bar) {
             chart.on('draw', function (data) {
-                if (data.type === 'bar') {}
+                if (data.type === 'bar') {
+                    data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
+                }
             });
         }
     };

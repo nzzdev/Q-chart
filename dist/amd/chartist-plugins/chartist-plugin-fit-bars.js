@@ -13,11 +13,12 @@ define(['exports', 'chartist'], function (exports, _chartist) {
     function ctExtendFitBarsToData() {
 
         return function ctExtendFitBarsToData(chart) {
-            chart.update(null, { seriesBarDistance: 46 }, true);
 
             if (chart instanceof _Chartist['default'].Bar) {
                 chart.on('draw', function (data) {
-                    if (data.type === 'bar') {}
+                    if (data.type === 'bar') {
+                        data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
+                    }
                 });
             }
         };

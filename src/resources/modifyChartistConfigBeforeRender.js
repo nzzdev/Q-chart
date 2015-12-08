@@ -1,3 +1,8 @@
+// ressource for setting bar width which corresponds to current SeriesBarDistance which corresponds to current number of bars
+// last thing that happens before chart gets rendered
+// this ressource needs ../plugins/chartist-plugin-fit-bars.js to work properly
+
+
 export function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
 
   // config is the chartist config
@@ -8,8 +13,39 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
   // do any hacks with chartist config here.
 
-  // example
   if (type === 'Bar' && size === 'large') {
-    // config.seriesBarDistance = 20;
+
+    var noOfBars = data.labels.length * data.series.length;
+    console.log(noOfBars);
+  // debugger;
+
+    // set seriesBarDistance and corresponding bar width
+
+    var theBarWidth = 10;
+    var theSeriesBarDistance = 10; 
+
+    if (noOfBars <= 8){
+      theBarWidth = 28;
+      theSeriesBarDistance = 29; 
+    }
+    else if (noOfBars > 8 && noOfBars <= 16){
+      theBarWidth = 20;
+      theSeriesBarDistance = 21; 
+    } 
+    else if (noOfBars > 16 && noOfBars <= 24){
+      theBarWidth = 14;
+      theSeriesBarDistance = 15; 
+    } 
+    else {
+      theBarWidth = 10;
+      theSeriesBarDistance = 11; 
+    }
+
+    // add calcBarWidth object + value to config - this will be used in chartist-plugin-fit-bars.js to set the width of bars 
+    config.barWidth = theBarWidth;
+
+    // set seriesBarDistance
+    config.seriesBarDistance = theSeriesBarDistance;
+
   }
 }
