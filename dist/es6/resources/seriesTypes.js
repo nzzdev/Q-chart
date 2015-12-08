@@ -15,20 +15,37 @@ var dateSettingsForPrecisions = {
         return date.getFullYear().toString().slice(2);
       }
     },
-    getLabelLength: (index) => {
-      return index === 0 ? 100 : 20;
+    getLabelLength: (index, length, data, config) => {
+      return index === 0 ? 40 : 23;
+    },
+    getPositionFactor: (index, length, data, config) => {
+      return index === 0 ? 1 : 0.5;
+    },
+    getForceShow: (index, length, data, config) => {
+      return index === 0 || index === length - 1;
     }
   },
   month: {
     format: (index, date) => {
-      if (index === 0) {
+      if (index === 0 || date.getMonth() === 0) {
         return `${pad(date.getMonth()+1,2)}.${date.getFullYear()}`;
       } else {
         return `${pad(date.getMonth()+1,2)}`;
       }
     },
-    getLabelLength: (index) => {
-      return index === 0 ? 100 : 20;
+    getLabelLength: (index, length, data, config) => {
+      let date = new Date(data.labels[index]);
+      if (index === 0 || date.getMonth() === 0) {
+        return 60;
+      }
+      return 23;
+    },
+    getPositionFactor: (index, length, data, config) => {
+      return (index === 0 || index === length -1) ? 1 : 0.5;
+    },
+    getForceShow: (index, length, data, config) => {
+      let date = new Date(data.labels[index]);
+      return (index === 0 || index === length - 1 || date.getMonth() === 0);
     }
   },
   day: {
@@ -39,30 +56,48 @@ var dateSettingsForPrecisions = {
         return `${pad(date.getDate(),2)}`;
       }
     },
-    getLabelLength: (index) => {
-      return index === 0 ? 100 : 20;
+    getLabelLength: (index, length, data, config) => {
+      return index === 0 ? 100 : 23;
+    },
+    getPositionFactor: (index, length, data, config) => {
+      return index === 0 ? 1 : 0.5;
+    },
+    getForceShow: (index, length, data, config) => {
+      return index === 0 || index === length - 1;
     }
   },
   hour: {
     format: (index, date) => {
       return `${pad(date.getHours()+1,2)}:${pad(date.getMinutes(),2)}`;
     },
-    getLabelLength: (index) => {
+    getLabelLength: (index, length, data, config) => {
       return 40;
+    },
+    getPositionFactor: (index, length, data, config) => {
+      return index === 0 ? 1 : 0.5;
+    },
+    getForceShow: (index, length, data, config) => {
+      return index === 0 || index === length - 1;
     }
   }
 }
 
 function modifyConfigDateX(config, typeOptions, data, size, rect) {
+  // the ticks model
+  var ticks = new Array(data.labels.length);
+
   config.axisX = config.axisX || {};
 
+  // get all the information for the labels
   var labels = data.labels.map((label, index) => {
     return {
-      space: dateSettingsForPrecisions[typeOptions.precision].getLabelLength(index)
+      space: dateSettingsForPrecisions[typeOptions.precision].getLabelLength(index, data.labels.length, data, config),
+      positionFactor: dateSettingsForPrecisions[typeOptions.precision].getPositionFactor(index, data.labels.length, data, config),
+      forceShow: dateSettingsForPrecisions[typeOptions.precision].getForceShow(index, data.labels.length, data, config),
     }
   });
 
-  let xAxisWidth = rect.width - ((config.axisY.offset || 0) + 10);
+  let xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
 
   // do we have space for all the labels?
   let enoughSpace = labels.reduce((sum, label) => { return sum + label.space; }, 0) < xAxisWidth;
@@ -74,26 +109,46 @@ function modifyConfigDateX(config, typeOptions, data, size, rect) {
   } else {
 
     let numberOfLabels = data.labels.length;
-    let spacePerLabel = xAxisWidth/labels.length;
+    let tickDistance = xAxisWidth/labels.length;
 
-    // drop labels if they would overlap the label before.
-    // better solution would be: calculate the interval to know in what interval we can drop labels
-    // then do this recursively by multiplying the interval until we have enough space
+    // first set the forced labels
     labels.map((label, index) => {
-      let spaceNeededBefore = 0;
-      let i = index;
-      while(i--) {
-        if (labels[i]) {
-          spaceNeededBefore = spaceNeededBefore + (labels[i].show ? labels[i].space : 0);
-        }
-      }
-      if (spaceNeededBefore < (index + 1) * spacePerLabel) {
-        label.show = true;
-      } else {
-        label.show = false;
+      if (label.forceShow) {
+        ticks[index] = label;
       }
     })
 
+    // then fill up with labels, if we have enough space before and after the forced ones
+    labels.map((label, index) => {
+      if (!label.forceShow) {
+        // check if our space is free
+        let spaceIsFree = true;
+        let spaceToTickStart = ((index+1) * tickDistance) - (label.positionFactor * label.space);
+        let i = index;
+        while(i--) {
+          let endOfLastTick = 0;
+          if (ticks[i]) {
+            let endOfLastTick = (i * tickDistance) + (ticks[i].positionFactor * ticks[i].space);
+            if (endOfLastTick > spaceToTickStart) {
+              spaceIsFree = false;
+            }
+          }
+        }
+        i = index;
+        while(i++ <= labels.length) {
+          let startOfNextTick = labels.length * tickDistance; // init to the end
+          if (ticks[i]) {
+            let startOfNextTick = (i * tickDistance) - (ticks[i].positionFactor * ticks[i].space);
+            if (startOfNextTick < spaceToTickStart + (label.positionFactor * label.space)) {
+              spaceIsFree = false;
+            }
+          }
+        }
+        if (spaceIsFree) {
+          ticks[index] = label;
+        }
+      }
+    });
   }
 
   config.axisX.labelInterpolationFnc = (value, index) => {
@@ -101,10 +156,11 @@ function modifyConfigDateX(config, typeOptions, data, size, rect) {
       value = dateSettingsForPrecisions[typeOptions.precision].format(index, new Date(value));
     }
 
-    if (labels[index].show) {
+    if (ticks[index]) {
       return value;
     }
-    return ' ';
+    // uncomment this to force grid lines on every tick
+    // return ' ';
   }
 }
 
