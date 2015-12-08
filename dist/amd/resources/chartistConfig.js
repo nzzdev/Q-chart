@@ -143,18 +143,6 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
   function getConfig(type, size, data) {
     var config = chartistConfigs[type][size];
 
-    if (type === 'Bar' && data.series.length * data.labels.length >= 30) {
-      console.log('+++ uh, barchart and more than 30 bars, better switch to mobile layout on desktop +++');
-    }
-
-    if (type === 'Bar' && data.series[0].length >= 12) {
-      console.log('+++ uh, barchart and more than 12 datapoints in first series. so many bars, what about a nice linechart instead +++');
-    }
-
-    if (type === 'Line' && data.series[0].length < 12) {
-      console.log('+++ uh, linechart and less than 12 datapoints in first series. might look chunky, what about a nice bar chart instead +++');
-    }
-
     return config;
   }
 });

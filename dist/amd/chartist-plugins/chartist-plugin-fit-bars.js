@@ -15,8 +15,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
         return function ctExtendFitBarsToData(chart) {
             chart.update(null, { seriesBarDistance: 46 }, true);
 
-            console.log(chart.options);
-
             if (chart instanceof _Chartist['default'].Bar) {
                 chart.on('draw', function (data) {
                     if (data.type === 'bar') {}

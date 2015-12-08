@@ -17,7 +17,9 @@ function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
   return {
     labels: item.data.x.data,
-    series: item.data.y.data.map(serie => serie.data)
+    series: item.data.y.data
+      .filter(serie => serie.data)
+      .map(serie => serie.data)
   };
 }
 

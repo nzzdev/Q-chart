@@ -7,7 +7,7 @@ export function ctExtendFitBarsToData() {
         // set seriesBarDistance
         chart.update(null, {seriesBarDistance: 46}, true);
 
-        console.log(chart.options);
+        // console.log(chart.options);
 
         if(chart instanceof Chartist.Bar) { 
             chart.on('draw', function(data) {

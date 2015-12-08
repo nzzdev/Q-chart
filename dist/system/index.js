@@ -9,7 +9,9 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
     if (!item.data || !item.data.x || !item.data.y) return null;
     return {
       labels: item.data.x.data,
-      series: item.data.y.data.map(function (serie) {
+      series: item.data.y.data.filter(function (serie) {
+        return serie.data;
+      }).map(function (serie) {
         return serie.data;
       })
     };
