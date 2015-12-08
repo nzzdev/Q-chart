@@ -53,6 +53,7 @@ $break-large: 768px;
 
 // line chart
 .ct-chart-line {
+
   .ct-label.ct-horizontal, .ct-label.ct-horizontal.ct-end {
     transform: translate(-50%, 0);
     justify-content: center;
@@ -69,7 +70,9 @@ $break-large: 768px;
     transform: translate(-100%, 0);
     justify-content: flex-end;
   }
+
 }
+
 
 .ct-chart-line .ct-baseline {
   stroke: $primary-color;

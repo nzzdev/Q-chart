@@ -16,8 +16,7 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
   if (type === 'Bar' && size === 'large') {
 
     var noOfBars = data.labels.length * data.series.length;
-    console.log(noOfBars);
-  // debugger;
+    //console.log(noOfBars);
 
     // set seriesBarDistance and corresponding bar width
 

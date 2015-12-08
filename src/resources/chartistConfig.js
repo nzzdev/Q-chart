@@ -2,7 +2,7 @@ import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
-import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
+//import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
 export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
@@ -60,7 +60,7 @@ export var chartistConfigs = {
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
        ctGridOnTop(),
-       ctExtendFitBarsToData()
+  //     ctExtendFitBarsToData()
       ]
     },
   },
@@ -117,7 +117,7 @@ export var chartistConfigs = {
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
        ctGridOnTop(),
-       ctExtendFitBarsToData
+//       ctExtendFitBarsToData
       ]
     },
   },
