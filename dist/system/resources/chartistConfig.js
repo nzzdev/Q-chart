@@ -146,12 +146,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             lineSmooth: false,
             axisX: {
               showGrid: true,
-              showLabel: true,
-
-              labelInterpolationFnc: function skipLabels(value, index) {
-                return index % 12 === 0 ? value : null;
-              }
-
+              showLabel: true
             },
             axisY: {
               position: 'start',

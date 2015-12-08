@@ -128,12 +128,6 @@ export var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
-        
-        labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
-            return index % 12  === 0 ? value : null;
-        }
-        
-        
       },
       axisY: {
         position: 'start',
