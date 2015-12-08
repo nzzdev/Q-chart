@@ -11,7 +11,7 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-function ctExtendGridClassNames(options) {
+function ctExtendGridClassNames() {
 
     return function ctExtendGridClassNames(chart) {
         if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {

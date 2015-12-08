@@ -5,7 +5,7 @@ System.register(['chartist'], function (_export) {
 
     _export('ctExtendGridClassNames', ctExtendGridClassNames);
 
-    function ctExtendGridClassNames(options) {
+    function ctExtendGridClassNames() {
 
         return function ctExtendGridClassNames(chart) {
             if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {

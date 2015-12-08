@@ -1,4 +1,4 @@
-define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js'], function (exports, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs) {
+define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js'], function (exports, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginProtrudeGridJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs, _chartistPluginsChartistPluginFitBarsJs) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -54,7 +54,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
         axisY: {
           showGrid: true
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
       }
     },
 
@@ -100,7 +100,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
         axisY: {
           showGrid: true
         },
-        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+        plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData]
       }
     },
 
@@ -127,7 +127,11 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
         lineSmooth: false,
         axisX: {
           showGrid: true,
-          showLabel: true
+          showLabel: true,
+
+          labelInterpolationFnc: function skipLabels(value, index) {
+            return index % 24 === 0 ? value : null;
+          }
 
         },
         axisY: {

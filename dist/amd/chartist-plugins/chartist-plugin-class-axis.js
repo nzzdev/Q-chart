@@ -10,7 +10,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
     var _Chartist = _interopRequireDefault(_chartist);
 
-    function ctExtendGridClassNames(options) {
+    function ctExtendGridClassNames() {
 
         return function ctExtendGridClassNames(chart) {
             if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {

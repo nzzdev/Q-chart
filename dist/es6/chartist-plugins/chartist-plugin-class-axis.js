@@ -4,7 +4,7 @@
 
 import Chartist from 'chartist';
 
-export function ctExtendGridClassNames(options) {
+export function ctExtendGridClassNames() {
 
     return function ctExtendGridClassNames(chart) {
         if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {

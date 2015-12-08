@@ -2,6 +2,7 @@ import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
+import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
 export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
@@ -58,7 +59,8 @@ export var chartistConfigs = {
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
-       ctGridOnTop()
+       ctGridOnTop(),
+       ctExtendFitBarsToData()
       ]
     },
   },
@@ -113,8 +115,9 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-//       ctProtrudeGrid(),
-       ctGridOnTop()
+       ctProtrudeGrid(),
+       ctGridOnTop(),
+       ctExtendFitBarsToData
       ]
     },
   },
@@ -157,9 +160,9 @@ export var chartistConfigs = {
         
         
         
-        // labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
-        //     return index % 12  === 0 ? value : null;
-        // }
+         labelInterpolationFnc: function skipLabels(value, index) {          // skips Labels, needs to be dynamic
+             return index % 24  === 0 ? value : null;
+         }
         
               },
       axisY: {

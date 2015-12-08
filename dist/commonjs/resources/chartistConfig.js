@@ -13,6 +13,8 @@ var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/cha
 
 var _chartistPluginsChartistPluginClassTickmarksJs = require('../chartist-plugins/chartist-plugin-class-tickmarks.js');
 
+var _chartistPluginsChartistPluginFitBarsJs = require('../chartist-plugins/chartist-plugin-fit-bars.js');
+
 var vertBarHeight = 10;
 exports.vertBarHeight = vertBarHeight;
 var vertBarSetPadding = 22;
@@ -62,7 +64,7 @@ var chartistConfigs = {
       axisY: {
         showGrid: true
       },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
     }
   },
 
@@ -108,7 +110,7 @@ var chartistConfigs = {
       axisY: {
         showGrid: true
       },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData]
     }
   },
 
@@ -135,7 +137,11 @@ var chartistConfigs = {
       lineSmooth: false,
       axisX: {
         showGrid: true,
-        showLabel: true
+        showLabel: true,
+
+        labelInterpolationFnc: function skipLabels(value, index) {
+          return index % 24 === 0 ? value : null;
+        }
 
       },
       axisY: {
