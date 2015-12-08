@@ -21,20 +21,35 @@ $break-large: 768px;
 // generic label placement on vertical axis, gets overwritten
 .ct-label.ct-vertical {
   text-align: right;
-  transform: translate(0, 16%);
+  transform: translate(0, 15%);
 }
 
-// horz bar chart
+// horz chart
 .ct-chart-bar.ct-horizontal-bars {
-  .ct-label.ct-horizontal {
-    display: inline-block;
-    min-width: 30px;
-    transform: translate(-12%, 0);
-  }
+
   .ct-label.ct-vertical{
     transform: translate(0, 0);
   }
+
+  .ct-label.ct-horizontal, .ct-label.ct-horizontal.ct-start {
+    transform: translate(-10%, 0);
+    justify-content: center;
+  }
+
+  // intend bzw. unindent first label
+  .ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-start.ct-horizontal.ct-horizontal-first {
+    transform: translate(0, 0);
+    justify-content: flex-start;
+  }
+
+  // intend bzw. unindent first label
+  .ct-label.ct-horizontal.ct-horizontal-last, .ct-label.ct-start.ct-horizontal.ct-horizontal-last {
+    transform: translate(-100%, 0);
+    justify-content: flex-end;
+  }
+
 }
+
 
 // line chart
 .ct-chart-line {
@@ -48,30 +63,13 @@ $break-large: 768px;
     transform: translate(0, 0);
     justify-content: flex-start;
   }
+
+  // intend bzw. unindent first label
+  .ct-label.ct-horizontal.ct-horizontal-last, .ct-label.ct-end.ct-horizontal.ct-horizontal-last {
+    transform: translate(-100%, 0);
+    justify-content: flex-end;
+  }
 }
-
-
-
-/*
-// solid chart baseline
-.ct-chart-bar .ct-vertical-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-
-.ct-chart-line .ct-vertical-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-
-.ct-horizontal-bars .ct-horizontal-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-*/
 
 .ct-chart-line .ct-baseline {
   stroke: $primary-color;

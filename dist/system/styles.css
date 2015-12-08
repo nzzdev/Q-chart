@@ -17,21 +17,38 @@
 
 .ct-label.ct-vertical {
   text-align: right;
-  -webkit-transform: translate(0, 16%);
-      -ms-transform: translate(0, 16%);
-          transform: translate(0, 16%); }
-
-.ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal {
-  display: inline-block;
-  min-width: 30px;
-  -webkit-transform: translate(-12%, 0);
-      -ms-transform: translate(-12%, 0);
-          transform: translate(-12%, 0); }
+  -webkit-transform: translate(0, 15%);
+      -ms-transform: translate(0, 15%);
+          transform: translate(0, 15%); }
 
 .ct-chart-bar.ct-horizontal-bars .ct-label.ct-vertical {
   -webkit-transform: translate(0, 0);
       -ms-transform: translate(0, 0);
           transform: translate(0, 0); }
+
+.ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal, .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start {
+  -webkit-transform: translate(-10%, 0);
+      -ms-transform: translate(-10%, 0);
+          transform: translate(-10%, 0);
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-horizontal-first, .ct-chart-bar.ct-horizontal-bars .ct-label.ct-start.ct-horizontal.ct-horizontal-first {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0);
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start; }
+
+.ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-horizontal-last, .ct-chart-bar.ct-horizontal-bars .ct-label.ct-start.ct-horizontal.ct-horizontal-last {
+  -webkit-transform: translate(-100%, 0);
+      -ms-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
 
 .ct-chart-line .ct-label.ct-horizontal, .ct-chart-line .ct-label.ct-horizontal.ct-end {
   -webkit-transform: translate(-50%, 0);
@@ -49,26 +66,14 @@
       -ms-flex-pack: start;
           justify-content: flex-start; }
 
-/*
-// solid chart baseline
-.ct-chart-bar .ct-vertical-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
+.ct-chart-line .ct-label.ct-horizontal.ct-horizontal-last, .ct-chart-line .ct-label.ct-end.ct-horizontal.ct-horizontal-last {
+  -webkit-transform: translate(-100%, 0);
+      -ms-transform: translate(-100%, 0);
+          transform: translate(-100%, 0);
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end; }
 
-.ct-chart-line .ct-vertical-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-
-.ct-horizontal-bars .ct-horizontal-first {
-  stroke: $primary-color;
-  opacity: 1;
-  stroke-width: 1px;
-}
-*/
 .ct-chart-line .ct-baseline {
   stroke: #333;
   opacity: 1;
