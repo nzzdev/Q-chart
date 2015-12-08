@@ -3,6 +3,7 @@ import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes} from './resources/seriesTypes';
+import {modifyChartistConfigBeforeRender} from './resources/modifyChartistConfigBeforeRender';
 
 import './styles.css!'
 
@@ -44,6 +45,8 @@ function getCombinedChartistConfig(item, data, size, rect) {
       seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
     }
   }
+
+  modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 
   return config;
 }

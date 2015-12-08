@@ -1,4 +1,4 @@
-define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _stylesCss) {
+define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (exports, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesModifyChartistConfigBeforeRender, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -71,6 +71,8 @@ define(['exports', 'chartist', './resources/chartistConfig', './resources/SizeOb
         _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
       }
     }
+
+    (0, _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender)(config, item.type, data, size, rect);
 
     return config;
   }

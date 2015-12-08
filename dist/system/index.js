@@ -1,7 +1,7 @@
-System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './styles.css!'], function (_export) {
+System.register(['chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, modifyChartistConfigBeforeRender, types, sizeObserver, chars;
 
   _export('display', display);
 
@@ -57,6 +57,8 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
         seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
       }
     }
+
+    modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 
     return config;
   }
@@ -149,6 +151,8 @@ System.register(['chartist', './resources/chartistConfig', './resources/SizeObse
       chartTypes = _resourcesTypes.types;
     }, function (_resourcesSeriesTypes) {
       seriesTypes = _resourcesSeriesTypes.seriesTypes;
+    }, function (_resourcesModifyChartistConfigBeforeRender) {
+      modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender;
     }, function (_stylesCss) {}],
     execute: function () {
       types = chartTypes;

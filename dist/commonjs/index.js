@@ -21,6 +21,8 @@ var _resourcesTypes = require('./resources/types');
 
 var _resourcesSeriesTypes = require('./resources/seriesTypes');
 
+var _resourcesModifyChartistConfigBeforeRender = require('./resources/modifyChartistConfigBeforeRender');
+
 require('./styles.css!');
 
 var types = _resourcesTypes.types;
@@ -82,6 +84,8 @@ function getCombinedChartistConfig(item, data, size, rect) {
       _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
     }
   }
+
+  (0, _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender)(config, item.type, data, size, rect);
 
   return config;
 }
