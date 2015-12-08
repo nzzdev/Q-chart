@@ -4,9 +4,7 @@ System.register([], function (_export) {
   _export('modifyChartistConfigBeforeRender', modifyChartistConfigBeforeRender);
 
   function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
-    if (type === 'Bar' && size === 'large') {
-      config.seriesBarDistance = 20;
-    }
+    if (type === 'Bar' && size === 'large') {}
   }
 
   return {

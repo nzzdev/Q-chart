@@ -14,9 +14,7 @@ System.register(['chartist'], function (_export) {
 
             if (chart instanceof Chartist.Bar) {
                 chart.on('draw', function (data) {
-                    if (data.type === 'bar') {
-                        data.element.attr({ style: 'stroke-width: 20px' });
-                    }
+                    if (data.type === 'bar') {}
                 });
             }
         };

@@ -19,9 +19,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
             if (chart instanceof _Chartist['default'].Bar) {
                 chart.on('draw', function (data) {
-                    if (data.type === 'bar') {
-                        data.element.attr({ style: 'stroke-width: 20px' });
-                    }
+                    if (data.type === 'bar') {}
                 });
             }
         };

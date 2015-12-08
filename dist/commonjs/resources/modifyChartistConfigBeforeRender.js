@@ -6,7 +6,5 @@ Object.defineProperty(exports, '__esModule', {
 exports.modifyChartistConfigBeforeRender = modifyChartistConfigBeforeRender;
 
 function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
-  if (type === 'Bar' && size === 'large') {
-    config.seriesBarDistance = 20;
-  }
+  if (type === 'Bar' && size === 'large') {}
 }

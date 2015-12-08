@@ -13,7 +13,7 @@ export function ctExtendFitBarsToData() {
             chart.on('draw', function(data) {
                 if(data.type === 'bar') {
                     // set width of bars
-                    data.element.attr({style: 'stroke-width: 20px'});
+                    // data.element.attr({style: 'stroke-width: 20px'});
                 }
             }); 
         }

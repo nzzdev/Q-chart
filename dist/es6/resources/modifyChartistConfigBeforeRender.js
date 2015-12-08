@@ -10,6 +10,6 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
   // example
   if (type === 'Bar' && size === 'large') {
-    config.seriesBarDistance = 20;
+    // config.seriesBarDistance = 20;
   }
 }
