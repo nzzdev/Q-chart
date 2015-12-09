@@ -117,7 +117,7 @@ export var chartistConfigs = {
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
        ctGridOnTop(),
-       ctExtendFitBarsToData
+       ctExtendFitBarsToData()
       ]
     },
   },

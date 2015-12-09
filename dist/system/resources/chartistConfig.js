@@ -124,7 +124,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             axisY: {
               showGrid: true
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData]
+            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
           }
         },
 
