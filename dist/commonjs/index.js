@@ -7,6 +7,8 @@ exports.display = display;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+require('core-js/es6/object');
+
 var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
@@ -133,7 +135,44 @@ function getContextHtml(item) {
   if (!item.data.y) {
     item.data.y = {};
   }
-  html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + (item.data.x.label || '') + '</div>\n    <div class="q-chart__footer">\n      <div class="q-chart__footer__notes">' + item.notes + '</div>\n      <div class="q-chart__footer__sources"></div>\n    </div>\n  ';
+  html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + (item.data.x.label || '') + '</div>\n    <div class="q-chart__footer">';
+  if (item.notes) {
+    html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
+  }
+  if (item.sources && item.sources.length && item.sources.length > 0) {
+    html += '<div class="q-chart__footer__sources">Quellen: ';
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = sources[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var source = _step2.value;
+
+        if (source.href && source.href.length > 0) {
+          html += '<a href="' + source.href + '">' + source.text + '</a> ';
+        } else {
+          html += source.text + ' ';
+        }
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+          _iterator2['return']();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+
+    html += '</div>';
+  }
+  html += '</div>';
   return html;
 }
 

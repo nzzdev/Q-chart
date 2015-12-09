@@ -1,3 +1,5 @@
+import 'core-js/es6/object';
+
 import Chartist from 'chartist';
 import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
@@ -25,7 +27,6 @@ function getChartDataForChartist(item) {
 
 function getCombinedChartistConfig(item, data, size, rect) {
   let config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
-
 
   for (let option of chartTypes[item.type].options) {
     switch (option.type) {
@@ -106,11 +107,22 @@ function getContextHtml(item) {
     <div class="q-chart__label-y-axis">${item.data.y.label || ''}</div>
     <div class="q-chart__chartist-container"></div>
     <div class="q-chart__label-x-axis">${item.data.x.label || ''}</div>
-    <div class="q-chart__footer">
-      <div class="q-chart__footer__notes">${item.notes}</div>
-      <div class="q-chart__footer__sources"></div>
-    </div>
-  `
+    <div class="q-chart__footer">`;
+  if (item.notes) {
+    html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
+  }
+  if (item.sources && item.sources.length && item.sources.length > 0) {
+    html += '<div class="q-chart__footer__sources">Quellen: ';
+    for (let source of sources) {
+      if (source.href && source.href.length > 0) {
+        html += `<a href="${source.href}">${source.text}</a> `;
+      } else {
+        html += `${source.text} `;
+      }
+    }
+    html += '</div>';
+  }
+  html += '</div>';
   return html;
 }
 
@@ -130,7 +142,6 @@ function displayWithoutContext(item, element, drawSize, rect) {
 }
 
 export function display(item, element, withoutContext = false) {
-
   if (!element) throw 'Element is not defined';
   if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
