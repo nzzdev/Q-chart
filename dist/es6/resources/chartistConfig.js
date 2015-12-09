@@ -140,7 +140,7 @@ export var chartistConfigs = {
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
-       ctGridOnTop(),
+       ctGridOnTop()
       ]
     },
     large: {
@@ -164,7 +164,7 @@ export var chartistConfigs = {
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
        ctProtrudeGrid(),
-       ctGridOnTop(),
+       ctGridOnTop()
       ]
     }
   }
