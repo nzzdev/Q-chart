@@ -12,7 +12,10 @@ System.register([], function (_export) {
       var theBarWidth = 10;
       var theSeriesBarDistance = 11;
 
-      if (noOfBars <= 8) {
+      if (noOfBars <= 4) {
+        theBarWidth = 36;
+        theSeriesBarDistance = 37;
+      } else if (noOfBars > 4 && noOfBars <= 8) {
         theBarWidth = 28;
         theSeriesBarDistance = 29;
       } else if (noOfBars > 8 && noOfBars <= 16) {

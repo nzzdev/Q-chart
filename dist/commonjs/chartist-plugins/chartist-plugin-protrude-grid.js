@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-              value: true
+  value: true
 });
 exports.ctProtrudeGrid = ctProtrudeGrid;
 
@@ -20,28 +20,37 @@ var defaultOptions = {};
 
 function ctProtrudeGrid(options) {
 
-              options = Object.assign(defaultOptions, options);
+  options = Object.assign(defaultOptions, options);
 
-              return function ctProtrudeGrid(chart) {
-                            if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
+  return function ctProtrudeGrid(chart) {
+    if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
 
-                                          chart.on('draw', function (data) {
+      chart.on('draw', function (data) {
 
-                                                        if (data.type === 'grid') {
+        if (data.type === 'grid') {
 
-                                                                      var lineDirection = data.axis.units.dir;
+          console.log("test");
+          debugger;
 
-                                                                      if (lineDirection == 'vertical') {
-                                                                                    data.x1 -= protrude;
-                                                                                    data.x2 += protrude;
-                                                                      } else if (lineDirection == 'horizontal') {
-                                                                                                  data.y1 -= protrude;
-                                                                                                  data.y2 += protrude;
-                                                                                    }
-                                                        }
-                                          });
-                            };
-              };
+          var lineDirection = data.axis.units.dir;
+
+          if (lineDirection == 'vertical') {
+
+            data.x1 -= protrude;
+            data.x2 += protrude;
+
+            debugger;
+          } else if (lineDirection == 'horizontal') {
+
+            data.y1 -= protrude;
+            data.y2 += protrude;
+
+            debugger;
+          }
+        }
+      });
+    };
+  };
 }
 
 ;

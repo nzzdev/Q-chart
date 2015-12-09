@@ -14,7 +14,7 @@ export function ctExtendFitBarsToData() {
             chart.on('draw', function(data) {
                 if(data.type === 'bar') {
                     // set width of bars
-                    console.log(chart.options);
+//                    console.log(chart.options);
                     data.element.attr({style: 'stroke-width:' + chart.options.barWidth + 'px'});
                 }
             }); 
