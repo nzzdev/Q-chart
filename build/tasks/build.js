@@ -13,11 +13,11 @@ env({
 
 gulp.task('setup-env', function(cb) {
   var env = {
-    TOOL_VERSION: process.env.TOOL_VERSION,
+    VERSION: process.env.VERSION,
   }
 
   if (process.env.TRAVIS_TAG) {
-    env.TOOL_VERSION = process.env.TRAVIS_TAG;
+    env.VERSION = process.env.TRAVIS_TAG;
   }
 
   fs.mkdir(paths.output, function() {
