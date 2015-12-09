@@ -24,7 +24,7 @@ export function ctProtrudeGrid(options) {
           if(data.type === 'grid') {
 
             console.log("test");
-            debugger;
+            //debugger;
 
               var lineDirection = data.axis.units.dir;
 
@@ -33,14 +33,14 @@ export function ctProtrudeGrid(options) {
                             data.x1 -= protrude;
                             data.x2 += protrude;
 
-                            debugger;
+                            //debugger;
 
               } else if (lineDirection == 'horizontal'){
                
                             data.y1 -= protrude;
                             data.y2 += protrude;
 
-                            debugger;
+                            //debugger;
 
               }
           }

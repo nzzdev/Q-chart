@@ -30,7 +30,6 @@ function ctProtrudeGrid(options) {
         if (data.type === 'grid') {
 
           console.log("test");
-          debugger;
 
           var lineDirection = data.axis.units.dir;
 
@@ -38,15 +37,11 @@ function ctProtrudeGrid(options) {
 
             data.x1 -= protrude;
             data.x2 += protrude;
-
-            debugger;
           } else if (lineDirection == 'horizontal') {
 
-            data.y1 -= protrude;
-            data.y2 += protrude;
-
-            debugger;
-          }
+              data.y1 -= protrude;
+              data.y2 += protrude;
+            }
         }
       });
     };
