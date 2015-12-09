@@ -6,7 +6,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
   _export('getConfig', getConfig);
 
   function getConfig(type, size, data) {
-    var config = chartistConfigs[type][size];
+    var config = Object.assign({}, Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
 
     return config;
   }

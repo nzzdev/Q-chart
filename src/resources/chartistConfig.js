@@ -171,7 +171,7 @@ export var chartistConfigs = {
 }
 
 export function getConfig(type, size, data) {
-  let config = chartistConfigs[type][size];
+  let config = Object.assign({},Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
 
   // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
   // if (type === 'Bar' && (data.series.length*data.labels.length >= 30)){

@@ -141,7 +141,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
   exports.chartistConfigs = chartistConfigs;
 
   function getConfig(type, size, data) {
-    var config = chartistConfigs[type][size];
+    var config = Object.assign({}, Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
 
     return config;
   }
