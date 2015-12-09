@@ -31,8 +31,8 @@ System.register([], function (_export) {
 
     if (enoughSpace) {
 
-      labels.map(function (label) {
-        return label.show = true;
+      labels.map(function (label, index) {
+        return ticks[index] = label;
       });
     } else {
       (function () {

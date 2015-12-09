@@ -108,8 +108,8 @@ function modifyConfigDateX(config, typeOptions, data, size, rect) {
 
   if (enoughSpace) {
 
-    labels.map(function (label) {
-      return label.show = true;
+    labels.map(function (label, index) {
+      return ticks[index] = label;
     });
   } else {
     (function () {

@@ -109,8 +109,8 @@ define(['exports'], function (exports) {
 
     if (enoughSpace) {
 
-      labels.map(function (label) {
-        return label.show = true;
+      labels.map(function (label, index) {
+        return ticks[index] = label;
       });
     } else {
       (function () {
