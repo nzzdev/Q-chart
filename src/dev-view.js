@@ -4,7 +4,7 @@ var chart1 = {
   _id: '_1',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -54,7 +54,7 @@ var chart2 = {
   id: '_2',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -146,7 +146,7 @@ var chart3 = {
   id: '_3',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -192,7 +192,7 @@ var chart4 = {
   id: '_4',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -250,7 +250,7 @@ var chart5 = {
   id: '_5',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -320,7 +320,7 @@ var chart6 = {
   id: '_6',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -402,7 +402,7 @@ var chart7 = {
   id: '_2',
   title: 'Ein Kampf zwischen Ahnen',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -496,7 +496,7 @@ var chart8 = {
   _id: '_8',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -532,7 +532,7 @@ var chart9 = {
   _id: '_9',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -572,7 +572,7 @@ var chart10 = {
   _id: '_10',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -616,7 +616,7 @@ var chart11 = {
   _id: '_11',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -664,7 +664,7 @@ var chart12 = {
   _id: '_12',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -716,7 +716,7 @@ var chart13 = {
   _id: '_13',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -756,7 +756,7 @@ var chart14 = {
   _id: '_14',
   title: 'Hummeln fliegen besser als gedacht',
   tool: 'chart',
-  toolVersion: env.TOOL_VERSION,
+  rendererVersion: env.VERSION,
   sources: [],
   data: {
     x: {
@@ -797,7 +797,7 @@ import 'styles.css!';
 import 'dev-styles.css!';
 import {display as displayChart} from 'index';
 
-displayChart(chart1, document.getElementById('chart1'));
+// displayChart(chart1, document.getElementById('chart1'));
 displayChart(chart2, document.getElementById('chart2'));
 
 // -- colors bars
