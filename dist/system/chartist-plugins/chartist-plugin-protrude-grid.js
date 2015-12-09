@@ -23,21 +23,11 @@ System.register(['chartist'], function (_export) {
 
             if (gridline.getAttribute('class') === 'ct-grid ct-horizontal' || gridline.getAttribute('class') === 'ct-grid ct-horizontal ct-baseline') {
 
-              console.log(gridline);
-
-              console.log("horz");
-              console.log(JSON.stringify(gridline.getAttribute('y1')));
-              console.log(JSON.stringify(gridline.getAttribute('y2')));
-
               var tempY1 = gridline.getAttribute('y1') - protrude;
               var tempY2 = gridline.getAttribute('y2') + protrude;
 
               gridline.setAttribute('y1', tempY1);
               gridline.setAttribute('y2', tempY2);
-
-              console.log("----");
-              console.log(JSON.stringify(gridline.getAttribute('y1')));
-              console.log(JSON.stringify(gridline.getAttribute('y2')));
             } else if (gridline.getAttribute('class') === 'ct-grid ct-vertical' || gridline.getAttribute('class') === 'ct-grid ct-vertical ct-baseline') {
 
                 console.log(gridline);
