@@ -19,7 +19,7 @@ function ctProtrudeGrid(options) {
 
   options = Object.assign(defaultOptions, options);
 
-  return function ctProtrudeGrid(chart) {
+  return function ctProtruderid(chart) {
     if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
 
       var theGrid = [];

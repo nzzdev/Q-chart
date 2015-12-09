@@ -18,7 +18,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
     options = Object.assign(defaultOptions, options);
 
-    return function ctProtrudeGrid(chart) {
+    return function ctProtruderid(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
 
         var theGrid = [];

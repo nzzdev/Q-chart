@@ -1,5 +1,5 @@
 import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
-import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
+//import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
@@ -32,7 +32,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -58,7 +58,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop(),
        ctExtendFitBarsToData()
       ]
@@ -88,7 +88,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -115,7 +115,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop(),
        ctExtendFitBarsToData()
       ]
@@ -139,7 +139,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     },
@@ -163,7 +163,7 @@ export var chartistConfigs = {
       plugins: [
        ctExtendGridClassNames(),
        ctExtendTickmmarksClassNames(),
-       ctProtrudeGrid(),
+//       ctProtrudeGrid(),
        ctGridOnTop()
       ]
     }

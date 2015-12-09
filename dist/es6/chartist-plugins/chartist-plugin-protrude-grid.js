@@ -12,7 +12,7 @@ export function ctProtrudeGrid(options) {
 
   options = Object.assign(defaultOptions, options);
 
-  return function ctProtrudeGrid(chart) {
+  return function ctProtruderid(chart) {
     if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
       var theGrid = [];
