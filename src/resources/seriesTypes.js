@@ -82,7 +82,13 @@ var dateSettingsForPrecisions = {
   }
 }
 
-function modifyConfigDateX(config, typeOptions, data, size, rect) {
+function modifyConfigDateXLarge(config, typeOptions, data, size, rect) {
+  // this should only run if we don't have horizontalBars
+  if (config.horizontalBars) {
+    delete config.axisX.labelInterpolationFnc;
+    return;
+  }
+
   // the ticks model
   var ticks = new Array(data.labels.length);
 
@@ -167,7 +173,9 @@ function modifyConfigDateX(config, typeOptions, data, size, rect) {
 export var seriesTypes = {
   'date': {
     'x': {
-      modifyConfig: modifyConfigDateX
+      'large': {
+        modifyConfig: modifyConfigDateXLarge
+      }
     }
   }
 }

@@ -10,7 +10,12 @@ System.register([], function (_export) {
     return value;
   }
 
-  function modifyConfigDateX(config, typeOptions, data, size, rect) {
+  function modifyConfigDateXLarge(config, typeOptions, data, size, rect) {
+    if (config.horizontalBars) {
+      delete config.axisX.labelInterpolationFnc;
+      return;
+    }
+
     var ticks = new Array(data.labels.length);
 
     config.axisX = config.axisX || {};
@@ -170,7 +175,9 @@ System.register([], function (_export) {
       seriesTypes = {
         'date': {
           'x': {
-            modifyConfig: modifyConfigDateX
+            'large': {
+              modifyConfig: modifyConfigDateXLarge
+            }
           }
         }
       };
