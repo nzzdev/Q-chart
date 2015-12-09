@@ -16,8 +16,6 @@ System.register(['chartist'], function (_export) {
 
           if (data.type === 'grid') {
 
-            console.log("test");
-
             var lineDirection = data.axis.units.dir;
 
             if (lineDirection == 'vertical') {

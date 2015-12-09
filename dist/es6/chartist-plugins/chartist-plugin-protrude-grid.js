@@ -23,7 +23,7 @@ export function ctProtrudeGrid(options) {
 
           if(data.type === 'grid') {
 
-            console.log("test");
+            //console.log("test");
             //debugger;
 
               var lineDirection = data.axis.units.dir;
