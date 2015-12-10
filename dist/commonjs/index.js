@@ -113,8 +113,9 @@ function renderChartist(item, element, drawSize, rect) {
   var data = getChartDataForChartist(item);
   if (data && data !== null) {
     var config = getCombinedChartistConfig(item, data, drawSize, rect);
-    new _chartist2['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
+    return new _chartist2['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
   }
+  return undefined;
 }
 
 function getLegendHtml(item) {
@@ -184,31 +185,39 @@ function displayWithContext(item, element, drawSize, rect) {
     element.removeChild(element.firstChild);
   }
   element.appendChild(el);
-  renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize, rect);
+  return renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize, rect);
 }
 
 function displayWithoutContext(item, element, drawSize, rect) {
-  renderChartist(item, element, drawSize, rect);
+  return renderChartist(item, element, drawSize, rect);
 }
 
 function display(item, element) {
   var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
-  if (!element) throw 'Element is not defined';
-  if (!_chartist2['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
+  return new Promise(function (resolve, reject) {
+    if (!element) throw 'Element is not defined';
+    if (!_chartist2['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
-  if (!item.data || !item.data.x) {
-    return false;
-  }
-
-  sizeObserver.onResize(function (rect) {
-    var drawSize = getElementSize(rect);
-    if (withoutContext) {
-      displayWithoutContext(item, element, drawSize, rect);
-    } else {
-      displayWithContext(item, element, drawSize, rect);
+    if (!item.data || !item.data.x) {
+      return false;
     }
-  }, element, true);
 
-  return true;
+    sizeObserver.onResize(function (rect) {
+      var drawSize = getElementSize(rect);
+      var chart = undefined;
+      if (withoutContext) {
+        chart = displayWithoutContext(item, element, drawSize, rect);
+      } else {
+        chart = displayWithContext(item, element, drawSize, rect);
+      }
+      if (chart && chart.on) {
+        chart.on('created', function () {
+          resolve(chart);
+        });
+      } else {
+        reject(chart);
+      }
+    }, element, true);
+  });
 }
