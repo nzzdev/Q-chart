@@ -19,7 +19,6 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "chartist": "npm:chartist@0.9.4",
     "clean-css": "npm:clean-css@3.4.8",
-    "clone": "npm:clone@1.0.2",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.19",
@@ -103,10 +102,6 @@ System.config({
       "source-map": "npm:source-map@0.4.4",
       "url": "github:jspm/nodelibs-url@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0"
-    },
-    "npm:clone@1.0.2": {
-      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
-      "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
     "npm:commander@2.8.1": {
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
