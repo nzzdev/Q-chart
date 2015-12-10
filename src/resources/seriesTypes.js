@@ -1,4 +1,3 @@
-import {modifyConfigDateXLarge} from './seriesTypes/dateXLarge';
 import {dateHandlers} from './seriesTypes/dateHandlers';
 
 export var seriesTypes = {

@@ -1,11 +1,9 @@
-System.register(['./seriesTypes/dateXLarge', './seriesTypes/dateHandlers'], function (_export) {
+System.register(['./seriesTypes/dateHandlers'], function (_export) {
   'use strict';
 
-  var modifyConfigDateXLarge, dateHandlers, seriesTypes;
+  var dateHandlers, seriesTypes;
   return {
-    setters: [function (_seriesTypesDateXLarge) {
-      modifyConfigDateXLarge = _seriesTypesDateXLarge.modifyConfigDateXLarge;
-    }, function (_seriesTypesDateHandlers) {
+    setters: [function (_seriesTypesDateHandlers) {
       dateHandlers = _seriesTypesDateHandlers.dateHandlers;
     }],
     execute: function () {

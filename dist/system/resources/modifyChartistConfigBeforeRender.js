@@ -9,29 +9,46 @@ System.register([], function (_export) {
 
       var noOfBars = data.labels.length * data.series.length;
 
-      var theBarWidth = 10;
-      var theSeriesBarDistance = 11;
+      var barWidth = 10;
+      var seriesBarDistance = 11;
 
       if (noOfBars <= 4) {
-        theBarWidth = 36;
-        theSeriesBarDistance = 37;
+        barWidth = 36;
+        seriesBarDistance = 37;
       } else if (noOfBars > 4 && noOfBars <= 8) {
-        theBarWidth = 28;
-        theSeriesBarDistance = 29;
+        barWidth = 28;
+        seriesBarDistance = 29;
       } else if (noOfBars > 8 && noOfBars <= 16) {
-        theBarWidth = 20;
-        theSeriesBarDistance = 21;
+        barWidth = 20;
+        seriesBarDistance = 21;
       } else if (noOfBars > 16 && noOfBars <= 24) {
-        theBarWidth = 14;
-        theSeriesBarDistance = 15;
+        barWidth = 14;
+        seriesBarDistance = 15;
       } else {
-        theBarWidth = 10;
-        theSeriesBarDistance = 11;
+        barWidth = 10;
+        seriesBarDistance = 11;
       }
 
-      config.barWidth = theBarWidth;
+      config.barWidth = barWidth;
 
-      config.seriesBarDistance = theSeriesBarDistance;
+      config.seriesBarDistance = seriesBarDistance;
+    }
+
+    if (config.horizontalBars) {
+      var maxLength = 0;
+      for (var i = 0; i < data.labels.length; i++) {
+
+        if (data.currentLabels && data.currentLabels[i]) {
+          if (data.currentLabels[i].length > maxLength) {
+            maxLength = data.currentLabels[i].length;
+          }
+        } else {
+          if (data.labels[i].length > maxLength) {
+            maxLength = data.labels[i].length;
+          }
+        }
+      }
+      config.axisY.offset = maxLength * 8;
     }
   }
 

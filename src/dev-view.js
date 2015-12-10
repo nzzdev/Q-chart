@@ -153,7 +153,7 @@ var chart3 = {
       label: '',
       data: [
           'Apex',
-          'Bheta',
+          'BhetaBheta',
           'Budh',
           'Meto',
           'Notu',
@@ -199,7 +199,7 @@ var chart4 = {
       label: '',
       data: [
           'Apex',
-          'Bheta',
+          'BhetaBheta',
           'Budh',
           'Meto',
           'Notu',
@@ -257,7 +257,7 @@ var chart5 = {
       label: '',
       data: [
           'Apex',
-          'Bheta',
+          'BhetaBheta',
           'Budh',
           'Meto',
           'Notu',
@@ -327,7 +327,7 @@ var chart6 = {
       label: '',
       data: [
           'Apex',
-          'Bheta',
+          'BhetaBheta',
           'Budh',
           'Meto',
           'Notu',
@@ -409,7 +409,7 @@ var chart7 = {
       label: '',
       data: [
           'Apex',
-          'Bheta',
+          'BhetaBheta',
           'Budh',
           'Meto',
           'Notu',

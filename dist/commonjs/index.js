@@ -85,6 +85,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   if (item.data.x && item.data.x.type) {
     if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+      data.currentLabels = [];
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
         _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);

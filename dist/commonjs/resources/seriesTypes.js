@@ -4,8 +4,6 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _seriesTypesDateXLarge = require('./seriesTypes/dateXLarge');
-
 var _seriesTypesDateHandlers = require('./seriesTypes/dateHandlers');
 
 var seriesTypes = {

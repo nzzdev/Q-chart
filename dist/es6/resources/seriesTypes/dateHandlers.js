@@ -22,11 +22,17 @@ export var dateHandlers = {
 
     // fill the ticks model
     if (enoughSpace) {
-      labels.map((label, index) => ticks[index] = label);
+      data.labels.map((label, index) => {
+        ticks[index] = label;
+        data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+      });
     } else {
-      labels.map((label, index) => {
+      data.labels.map((label, index) => {
         if (seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
           ticks[index] = label;
+          data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+        } else {
+          data.currentLabels[index] = ' ';
         }
       });
     }
@@ -43,9 +49,11 @@ export var dateHandlers = {
     }
   },
 
-
   basedOnPrecision: (config, typeOptions, data, size, rect) => {
     if (!config.horizontalBars) {
+      for (let i = 0; i < data.labels.length; i++) {
+        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, new Date(data.labels[i]));
+      }
       config.axisX.labelInterpolationFnc = (value, index) => {
         if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
           value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
@@ -53,6 +61,9 @@ export var dateHandlers = {
         return value;
       }
     } else {
+      for (let i = 0; i < data.labels.length; i++) {
+        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i]));
+      }
       config.axisY.labelInterpolationFnc = (value, index) => {
         value = seriesTypeConfig[typeOptions.precision].format(new Date(value));
         return value;

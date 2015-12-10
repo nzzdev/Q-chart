@@ -24,13 +24,17 @@ define(['exports', './dateConfigPerPrecision'], function (exports, _dateConfigPe
       }, 0) < xAxisWidth;
 
       if (enoughSpace) {
-        labels.map(function (label, index) {
-          return ticks[index] = label;
+        data.labels.map(function (label, index) {
+          ticks[index] = label;
+          data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
         });
       } else {
-        labels.map(function (label, index) {
+        data.labels.map(function (label, index) {
           if (_dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
             ticks[index] = label;
+            data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+          } else {
+            data.currentLabels[index] = ' ';
           }
         });
       }
@@ -49,6 +53,9 @@ define(['exports', './dateConfigPerPrecision'], function (exports, _dateConfigPe
 
     basedOnPrecision: function basedOnPrecision(config, typeOptions, data, size, rect) {
       if (!config.horizontalBars) {
+        for (var i = 0; i < data.labels.length; i++) {
+          data.currentLabels[i] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, new Date(data.labels[i]));
+        }
         config.axisX.labelInterpolationFnc = function (value, index) {
           if (_dateConfigPerPrecision.seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
             value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
@@ -56,6 +63,9 @@ define(['exports', './dateConfigPerPrecision'], function (exports, _dateConfigPe
           return value;
         };
       } else {
+        for (var i = 0; i < data.labels.length; i++) {
+          data.currentLabels[i] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i]));
+        }
         config.axisY.labelInterpolationFnc = function (value, index) {
           value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].format(new Date(value));
           return value;

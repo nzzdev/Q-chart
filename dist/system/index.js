@@ -56,6 +56,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+        data.currentLabels = [];
 
         if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
           seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);

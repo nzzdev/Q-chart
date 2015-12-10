@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateXLarge', './seriesTypes/dateHandlers'], function (exports, _seriesTypesDateXLarge, _seriesTypesDateHandlers) {
+define(['exports', './seriesTypes/dateHandlers'], function (exports, _seriesTypesDateHandlers) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {

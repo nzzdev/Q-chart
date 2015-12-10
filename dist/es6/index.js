@@ -45,6 +45,9 @@ function getCombinedChartistConfig(item, data, size, rect) {
   // we need to let them modify the config
   if (item.data.x && item.data.x.type) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+
+      // reset the current labels on data, we are going to use them to calculate the offset to have enough space for the labels
+      data.currentLabels = [];
       
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
         seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
