@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateXLarge'], function (exports, _seriesTypesDateXLarge) {
+define(['exports', './seriesTypes/dateXLarge', './seriesTypes/dateHandlers'], function (exports, _seriesTypesDateXLarge, _seriesTypesDateHandlers) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -7,10 +7,14 @@ define(['exports', './seriesTypes/dateXLarge'], function (exports, _seriesTypesD
   var seriesTypes = {
     'date': {
       'x': {
-        'large': {
-          'Line': {
-            modifyConfig: _seriesTypesDateXLarge.modifyConfigDateXLarge
-          }
+        'Line': {
+          modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecisionAndAvailableSpace
+        },
+        'Bar': {
+          modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
+        },
+        'StackedBar': {
+          modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
         }
       }
     }

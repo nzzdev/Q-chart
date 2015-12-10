@@ -6,13 +6,19 @@ Object.defineProperty(exports, '__esModule', {
 
 var _seriesTypesDateXLarge = require('./seriesTypes/dateXLarge');
 
+var _seriesTypesDateHandlers = require('./seriesTypes/dateHandlers');
+
 var seriesTypes = {
   'date': {
     'x': {
-      'large': {
-        'Line': {
-          modifyConfig: _seriesTypesDateXLarge.modifyConfigDateXLarge
-        }
+      'Line': {
+        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecisionAndAvailableSpace
+      },
+      'Bar': {
+        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
+      },
+      'StackedBar': {
+        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
       }
     }
   }

@@ -137,7 +137,7 @@ var chart2 = {
   chartConfig: {
 
   },
-  type: 'Bar'
+  type: 'StackedBar'
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -746,6 +746,10 @@ var chart13 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  "options": {
+    "isColumnChart": false,
+    "forceBarsOnSmall": true
   },
   type: 'Bar'
 }

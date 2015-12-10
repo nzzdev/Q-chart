@@ -1,12 +1,17 @@
 import {modifyConfigDateXLarge} from './seriesTypes/dateXLarge';
+import {dateHandlers} from './seriesTypes/dateHandlers';
 
 export var seriesTypes = {
   'date': {
     'x': {
-      'large': {
-        'Line': {
-          modifyConfig: modifyConfigDateXLarge
-        }
+      'Line': {
+        modifyConfig: dateHandlers.basedOnPrecisionAndAvailableSpace
+      },
+      'Bar': {
+        modifyConfig: dateHandlers.basedOnPrecision
+      },
+      'StackedBar': {
+        modifyConfig: dateHandlers.basedOnPrecision
       }
     }
   }
