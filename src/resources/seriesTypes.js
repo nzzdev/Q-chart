@@ -85,7 +85,9 @@ var dateSettingsForPrecisions = {
 function modifyConfigDateXLarge(config, typeOptions, data, size, rect) {
   // this should only run if we don't have horizontalBars
   if (config.horizontalBars) {
-    delete config.axisX.labelInterpolationFnc;
+    if (config.axisX && config.axisX.labelInterpolationFnc) {
+      delete config.axisX.labelInterpolationFnc;
+    }
     return;
   }
 

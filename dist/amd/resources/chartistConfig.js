@@ -1,10 +1,15 @@
-define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js'], function (exports, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs, _chartistPluginsChartistPluginFitBarsJs) {
+define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (exports, _chartistPluginsChartistPluginClassAxisJs, _chartistPluginsChartistPluginGridOnTopJs, _chartistPluginsChartistPluginClassTickmarksJs, _chartistPluginsChartistPluginFitBarsJs, _clone) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
   exports.getConfig = getConfig;
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _clone2 = _interopRequireDefault(_clone);
+
   var vertBarHeight = 10;
   exports.vertBarHeight = vertBarHeight;
   var vertBarSetPadding = 22;
@@ -141,7 +146,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
   exports.chartistConfigs = chartistConfigs;
 
   function getConfig(type, size, data) {
-    var config = Object.assign({}, Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
+    var config = (0, _clone2['default'])(chartistConfigs[type][size]);
 
     return config;
   }

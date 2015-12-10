@@ -1,12 +1,12 @@
-System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctGridOnTop, ctExtendTickmmarksClassNames, ctExtendFitBarsToData, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
+  var ctExtendGridClassNames, ctGridOnTop, ctExtendTickmmarksClassNames, ctExtendFitBarsToData, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
 
   _export('getConfig', getConfig);
 
   function getConfig(type, size, data) {
-    var config = Object.assign({}, Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
+    var config = clone(chartistConfigs[type][size]);
 
     return config;
   }
@@ -20,6 +20,8 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
       ctExtendTickmmarksClassNames = _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames;
     }, function (_chartistPluginsChartistPluginFitBarsJs) {
       ctExtendFitBarsToData = _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData;
+    }, function (_clone) {
+      clone = _clone['default'];
     }],
     execute: function () {
       vertBarHeight = 10;

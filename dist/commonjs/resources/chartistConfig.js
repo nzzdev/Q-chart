@@ -5,6 +5,8 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.getConfig = getConfig;
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 var _chartistPluginsChartistPluginClassAxisJs = require('../chartist-plugins/chartist-plugin-class-axis.js');
 
 var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/chartist-plugin-grid-on-top.js');
@@ -12,6 +14,10 @@ var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/cha
 var _chartistPluginsChartistPluginClassTickmarksJs = require('../chartist-plugins/chartist-plugin-class-tickmarks.js');
 
 var _chartistPluginsChartistPluginFitBarsJs = require('../chartist-plugins/chartist-plugin-fit-bars.js');
+
+var _clone = require('./clone');
+
+var _clone2 = _interopRequireDefault(_clone);
 
 var vertBarHeight = 10;
 exports.vertBarHeight = vertBarHeight;
@@ -149,7 +155,7 @@ var chartistConfigs = {
 exports.chartistConfigs = chartistConfigs;
 
 function getConfig(type, size, data) {
-  var config = Object.assign({}, Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
+  var config = (0, _clone2['default'])(chartistConfigs[type][size]);
 
   return config;
 }

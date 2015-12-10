@@ -90,7 +90,9 @@ define(['exports'], function (exports) {
 
   function modifyConfigDateXLarge(config, typeOptions, data, size, rect) {
     if (config.horizontalBars) {
-      delete config.axisX.labelInterpolationFnc;
+      if (config.axisX && config.axisX.labelInterpolationFnc) {
+        delete config.axisX.labelInterpolationFnc;
+      }
       return;
     }
 

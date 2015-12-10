@@ -4,6 +4,8 @@ import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
 import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
+import clone from './clone';
+
 export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
 export var chartHeight = 200;
@@ -171,7 +173,7 @@ export var chartistConfigs = {
 }
 
 export function getConfig(type, size, data) {
-  let config = Object.assign({},Object.create(Object.getPrototypeOf(chartistConfigs[type][size])));
+  let config = clone(chartistConfigs[type][size]);
 
   // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
   // if (type === 'Bar' && (data.series.length*data.labels.length >= 30)){

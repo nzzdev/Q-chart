@@ -19,6 +19,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "chartist": "npm:chartist@0.9.4",
     "clean-css": "npm:clean-css@3.4.8",
+    "clone": "npm:clone@1.0.2",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.19",
@@ -29,7 +30,7 @@ System.config({
       "assert": "npm:assert@1.3.0"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
-      "buffer": "npm:buffer@3.5.1"
+      "buffer": "npm:buffer@3.5.4"
     },
     "github:jspm/nodelibs-events@0.1.1": {
       "events": "npm:events@1.0.2"
@@ -63,6 +64,9 @@ System.config({
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
     },
+    "github:jspm/nodelibs-vm@0.1.0": {
+      "vm-browserify": "npm:vm-browserify@0.0.4"
+    },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "module": "github:jspm/nodelibs-module@0.1.0",
@@ -79,10 +83,13 @@ System.config({
     "npm:babel-runtime@5.8.34": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:buffer@3.5.1": {
+    "npm:buffer@3.5.4": {
       "base64-js": "npm:base64-js@0.0.8",
+      "child_process": "github:jspm/nodelibs-child_process@0.1.0",
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
       "ieee754": "npm:ieee754@1.1.6",
-      "is-array": "npm:is-array@1.0.1"
+      "isarray": "npm:isarray@0.0.1",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:clean-css@3.4.8": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -96,6 +103,10 @@ System.config({
       "source-map": "npm:source-map@0.4.4",
       "url": "github:jspm/nodelibs-url@0.1.0",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:clone@1.0.2": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
     "npm:commander@2.8.1": {
       "child_process": "github:jspm/nodelibs-child_process@0.1.0",
@@ -169,6 +180,9 @@ System.config({
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:vm-browserify@0.0.4": {
+      "indexof": "npm:indexof@0.0.1"
     }
   }
 });

@@ -797,7 +797,7 @@ import 'styles.css!';
 import 'dev-styles.css!';
 import {display as displayChart} from 'index';
 
-// displayChart(chart1, document.getElementById('chart1'));
+displayChart(chart1, document.getElementById('chart1'));
 displayChart(chart2, document.getElementById('chart2'));
 
 // -- colors bars
