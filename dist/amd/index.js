@@ -192,29 +192,33 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
     return new Promise(function (resolve, reject) {
-      if (!element) throw 'Element is not defined';
-      if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
+      try {
+        if (!element) throw 'Element is not defined';
+        if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
-      if (!item.data || !item.data.x) {
-        return false;
+        if (!item.data || !item.data.x) {
+          return false;
+        }
+
+        sizeObserver.onResize(function (rect) {
+          var drawSize = getElementSize(rect);
+          var chart = undefined;
+          if (withoutContext) {
+            chart = displayWithoutContext(item, element, drawSize, rect);
+          } else {
+            chart = displayWithContext(item, element, drawSize, rect);
+          }
+          if (chart && chart.on) {
+            chart.on('created', function () {
+              resolve(chart);
+            });
+          } else {
+            reject(chart);
+          }
+        }, element, true);
+      } catch (e) {
+        reject(e);
       }
-
-      sizeObserver.onResize(function (rect) {
-        var drawSize = getElementSize(rect);
-        var chart = undefined;
-        if (withoutContext) {
-          chart = displayWithoutContext(item, element, drawSize, rect);
-        } else {
-          chart = displayWithContext(item, element, drawSize, rect);
-        }
-        if (chart && chart.on) {
-          chart.on('created', function () {
-            resolve(chart);
-          });
-        } else {
-          reject(chart);
-        }
-      }, element, true);
     });
   }
 });
