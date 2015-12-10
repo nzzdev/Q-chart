@@ -1,3 +1,9 @@
+Number.isInteger = Number.isInteger || function(value) {
+  return typeof value === "number" && 
+   isFinite(value) && 
+   Math.floor(value) === value;
+};
+
 // ressource for setting bar width which corresponds to current SeriesBarDistance which corresponds to current number of bars
 // last thing that happens before chart gets rendered
 // this ressource needs ../plugins/chartist-plugin-fit-bars.js to work properly
@@ -48,20 +54,46 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     config.seriesBarDistance = seriesBarDistance;
   }
 
-  if (config.horizontalBars) {
-    let maxLength = 0;
+  let maxLength = 0;
+  let isNumber = false;
+  if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
     for (let i = 0; i < data.labels.length; i++) {
-      
+      let length = 0;
       if (data.currentLabels && data.currentLabels[i]) {
-        if (data.currentLabels[i].length > maxLength) {
-          maxLength = data.currentLabels[i].length;
+        if (Number.isInteger(data.currentLabels[i])) {
+          isNumber = true;
+          length = Math.floor(data.currentLabels[i]).toString().length;
+        } else {
+          length = data.currentLabels[i].length;
         }
       } else {
-        if (data.labels[i].length > maxLength) {
-          maxLength = data.labels[i].length;
+        if (Number.isInteger(data.labels[i])) {
+          isNumber = true;
+          length = Math.floor(data.labels[i]).toString().length;
+        } else {
+          length = data.labels[i].length;
         }
       }
+      if (length > maxLength) {
+        maxLength = length;
+      }
     }
-    config.axisY.offset = maxLength * 8;
+  } else {
+    data.series.map(serie => {
+      serie.map(datapoint => {
+        let length = 0;
+        if (Number.isInteger(datapoint)) {
+          isNumber = true;
+          length = Math.floor(datapoint).toString().length;
+        } else {
+          length = datapoint.length;
+        }
+        if (length > maxLength) {
+          maxLength = length;
+        }
+      })
+    })
   }
+  let averageCharLength = isNumber ? 10 : 9;
+  config.axisY.offset = maxLength * averageCharLength;
 }
