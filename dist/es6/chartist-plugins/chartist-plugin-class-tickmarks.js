@@ -6,42 +6,40 @@
 import Chartist from 'chartist';
 
 var defaultOptions = {
-    first: 'first',
-    last: 'last'
+  first: 'first',
+  last: 'last'
 };
 
 // Chartist.plugins = Chartist.plugins || {};
 
 export function ctExtendTickmmarksClassNames(options) {
 
-    options = Object.assign(defaultOptions, options);
+  options = Object.assign(defaultOptions, options);
 
-    return function ctExtendTickmmarksClassNames(chart) {
-        if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
-            chart.on('draw', function(data) {   
-                if(data.type === 'label') {
+  return function ctExtendTickmmarksClassNames(chart) {
+    if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+      chart.on('draw', function(data) {   
+        if(data.type === 'label') {
 
-                    var labelIndex = data.index;
-                    var labelClassList = data.element._node.lastChild.classList;
-                    var labelDirection = data.axis.units.dir;
+          var labelIndex = data.index;
+          var labelClassList = data.element._node.lastChild.classList;
+          var labelDirection = data.axis.units.dir;
 
-                    //console.log(data.axis.ticks.length);
-                    // console.log(data);
+          //console.log(data.axis.ticks.length);
+          // console.log(data);
 
-                    // Add classname to first label in an axis
-                    if(labelIndex === 0) {
-                        labelClassList.add('ct-' + labelDirection + '-' + options.first);
-                    }
+          // Add classname to first label in an axis
+          if (labelIndex === 0) {
+            labelClassList.add('ct-' + labelDirection + '-' + options.first);
+          }
 
-                    
-                    // Add classname to last label in an axis
-                    if(labelIndex === data.axis.ticks.length - 1) {
-                        labelClassList.add('ct-' + labelDirection + '-' + options.last);
-                    }
-                    
-
-                }
-            });
+          
+          // Add classname to last label in an axis
+          if (labelIndex === data.axis.ticks.length - 1) {
+            labelClassList.add('ct-' + labelDirection + '-' + options.last);
+          }
         }
-    };
+      });
+    }
+  };
 };

@@ -10,9 +10,14 @@ Number.isInteger = Number.isInteger || function (value) {
 
 function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
 
-  if (type === 'Bar' && size === 'large') {
+  if ((type === 'Bar' || type === 'StackedBar') && size === 'large') {
 
-    var noOfBars = data.labels.length * data.series.length;
+    var noOfBars = undefined;
+    if (type === 'Bar') {
+      noOfBars = data.labels.length * data.series.length;
+    } else {
+      noOfBars = data.labels.length;
+    }
 
     var barWidth = 10;
     var seriesBarDistance = 11;

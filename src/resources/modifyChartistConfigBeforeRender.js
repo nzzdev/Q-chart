@@ -18,13 +18,18 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
   // do any hacks with chartist config here.
 
-  if (type === 'Bar' && size === 'large') {
+  if ((type === 'Bar' || type === 'StackedBar') && size === 'large') {
 
-    var noOfBars = data.labels.length * data.series.length;
+    let noOfBars;
+    if (type === 'Bar') {
+      noOfBars = data.labels.length * data.series.length;
+    } else {
+      noOfBars = data.labels.length;
+    }
 
     // set seriesBarDistance and corresponding bar width
-    var barWidth = 10;
-    var seriesBarDistance = 11; 
+    let barWidth = 10;
+    let seriesBarDistance = 11; 
     
     if (noOfBars <= 4){
       barWidth = 36;

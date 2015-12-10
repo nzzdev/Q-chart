@@ -1,35 +1,34 @@
 System.register(['chartist'], function (_export) {
-    'use strict';
+  'use strict';
 
-    var Chartist;
+  var Chartist;
 
-    _export('ctExtendGridClassNames', ctExtendGridClassNames);
+  _export('ctExtendGridClassNames', ctExtendGridClassNames);
 
-    function ctExtendGridClassNames() {
+  function ctExtendGridClassNames() {
 
-        return function ctExtendGridClassNames(chart) {
-            if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
-                chart.on('draw', function (data) {
+    return function ctExtendGridClassNames(chart) {
+      if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+        chart.on('draw', function (data) {
 
-                    if (data.type === 'grid') {
-                        var lineIndex = data.index;
-                        var lineClassList = data.element._node.classList;
+          if (data.type === 'grid') {
+            var lineIndex = data.index;
 
-                        if (data.axis.ticks[lineIndex] === 0) {
-                            lineClassList.add('ct-baseline');
-                        }
-                    }
-                });
+            if (data.axis.ticks[lineIndex] === 0) {
+              data.element.addClass('ct-baseline');
             }
-        };
-    }
-
-    return {
-        setters: [function (_chartist) {
-            Chartist = _chartist['default'];
-        }],
-        execute: function () {
-            ;
-        }
+          }
+        });
+      }
     };
+  }
+
+  return {
+    setters: [function (_chartist) {
+      Chartist = _chartist['default'];
+    }],
+    execute: function () {
+      ;
+    }
+  };
 });
