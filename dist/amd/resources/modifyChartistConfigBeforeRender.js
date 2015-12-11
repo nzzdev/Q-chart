@@ -86,6 +86,10 @@ define(['exports'], function (exports) {
       });
     }
     var averageCharLength = isNumber ? 10 : 9;
-    config.axisY.offset = maxLength * averageCharLength;
+    var offset = maxLength * averageCharLength;
+    if (offset < 25) {
+      offset = 25;
+    }
+    config.axisY.offset = offset;
   }
 });

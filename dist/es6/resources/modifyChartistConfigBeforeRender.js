@@ -100,5 +100,9 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     })
   }
   let averageCharLength = isNumber ? 10 : 9;
-  config.axisY.offset = maxLength * averageCharLength;
+  let offset = maxLength * averageCharLength;
+  if (offset < 25) {
+    offset = 25;
+  }
+  config.axisY.offset = offset;
 }
