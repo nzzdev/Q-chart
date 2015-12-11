@@ -17,7 +17,7 @@ System.config({
     "array2d": "npm:array2d@0.0.5",
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
-    "chartist": "npm:chartist@0.9.4",
+    "chartist": "npm:chartist@0.9.5",
     "clean-css": "npm:clean-css@3.4.8",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
@@ -62,9 +62,6 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
-    },
-    "github:jspm/nodelibs-vm@0.1.0": {
-      "vm-browserify": "npm:vm-browserify@0.0.4"
     },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
@@ -175,9 +172,6 @@ System.config({
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:vm-browserify@0.0.4": {
-      "indexof": "npm:indexof@0.0.1"
     }
   }
 });
