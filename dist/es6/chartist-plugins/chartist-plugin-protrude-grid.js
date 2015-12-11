@@ -19,7 +19,7 @@ export function ctProtrudeGrid(options) {
 
       chart.on('created', function(data) {
 
-        console.log(data);
+        //console.log(data);
 
         /*
         var svg = document.getElementsByTagName('svg');
