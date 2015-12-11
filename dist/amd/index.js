@@ -136,14 +136,14 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
     }
-    if (item.sources && item.sources.length && item.sources.length > 0) {
+    if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text.length > 0) {
       html += '<div class="q-chart__footer__sources">Quellen: ';
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = sources[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (var _iterator2 = item.sources[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var source = _step2.value;
 
           if (source.href && source.href.length > 0) {

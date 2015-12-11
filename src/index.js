@@ -126,9 +126,9 @@ function getContextHtml(item) {
   if (item.notes) {
     html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
   }
-  if (item.sources && item.sources.length && item.sources.length > 0) {
+  if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text.length > 0) {
     html += '<div class="q-chart__footer__sources">Quellen: ';
-    for (let source of sources) {
+    for (let source of item.sources) {
       if (source.href && source.href.length > 0) {
         html += `<a href="${source.href}">${source.text}</a> `;
       } else {
