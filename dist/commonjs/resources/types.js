@@ -18,6 +18,7 @@ var types = {
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
         config.horizontalBars = !value;
         if (config.horizontalBars) {
+          config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
         } else {
           config.height = _chartistConfig.chartHeight;
@@ -31,6 +32,7 @@ var types = {
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
         if (value && size === 'small') {
           config.horizontalBars = true;
+          config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
         }
       }
@@ -47,6 +49,7 @@ var types = {
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
         config.horizontalBars = !value;
         if (config.horizontalBars) {
+          config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
         } else {
           config.height = _chartistConfig.chartHeight;
@@ -60,6 +63,7 @@ var types = {
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
         if (value && size === 'small') {
           config.horizontalBars = true;
+          config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
         }
       }
