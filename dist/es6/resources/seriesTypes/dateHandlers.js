@@ -24,13 +24,13 @@ export var dateHandlers = {
     if (enoughSpace) {
       data.labels.map((label, index) => {
         ticks[index] = label;
-        data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+        data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
       });
     } else {
       data.labels.map((label, index) => {
         if (seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
           ticks[index] = label;
-          data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+          data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
         } else {
           data.currentLabels[index] = ' ';
         }
@@ -40,7 +40,7 @@ export var dateHandlers = {
     config.axisX.labelInterpolationFnc = (value, index) => {
       if (ticks[index]) {
         if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
+          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
         }
       } else {
         value = ' ';
@@ -52,11 +52,11 @@ export var dateHandlers = {
   basedOnPrecision: (config, typeOptions, data, size, rect) => {
     if (!config.horizontalBars) {
       for (let i = 0; i < data.labels.length; i++) {
-        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, new Date(data.labels[i]));
+        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i]));
       }
       config.axisX.labelInterpolationFnc = (value, index) => {
         if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
+          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
         }
         return value;
       }

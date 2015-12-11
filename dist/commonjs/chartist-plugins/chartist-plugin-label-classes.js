@@ -26,13 +26,22 @@ function ctLabelClasses(options) {
         if (data.type === 'label') {
 
           var labelDirection = data.axis.units.dir;
+          var additionalClass;
 
           if (data.index === 0) {
-            data.element.querySelector('.ct-label:last-child').addClass('ct-' + labelDirection + '-' + options.first);
+            additionalClass = 'ct-' + labelDirection + '-' + options.first;
           }
 
           if (data.index === data.axis.ticks.length - 1) {
-            data.element.querySelector('.ct-label:last-child').addClass('ct-' + labelDirection + '-' + options.last);
+            additionalClass = 'ct-' + labelDirection + '-' + options.last;
+          }
+
+          if (additionalClass) {
+            if (data.element._node.nodeName === 'text') {
+              data.element.addClass(additionalClass);
+            } else {
+              data.element.querySelector('.ct-label:last-child').addClass(additionalClass);
+            }
           }
         }
       });

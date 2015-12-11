@@ -28,13 +28,13 @@ var dateHandlers = {
     if (enoughSpace) {
       data.labels.map(function (label, index) {
         ticks[index] = label;
-        data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+        data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
       });
     } else {
       data.labels.map(function (label, index) {
         if (_dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
           ticks[index] = label;
-          data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(label));
+          data.currentLabels[index] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
         } else {
           data.currentLabels[index] = ' ';
         }
@@ -44,7 +44,7 @@ var dateHandlers = {
     config.axisX.labelInterpolationFnc = function (value, index) {
       if (ticks[index]) {
         if (_dateConfigPerPrecision.seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
+          value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
         }
       } else {
         value = ' ';
@@ -56,11 +56,11 @@ var dateHandlers = {
   basedOnPrecision: function basedOnPrecision(config, typeOptions, data, size, rect) {
     if (!config.horizontalBars) {
       for (var i = 0; i < data.labels.length; i++) {
-        data.currentLabels[i] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, new Date(data.labels[i]));
+        data.currentLabels[i] = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i]));
       }
       config.axisX.labelInterpolationFnc = function (value, index) {
         if (_dateConfigPerPrecision.seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, new Date(value));
+          value = _dateConfigPerPrecision.seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
         }
         return value;
       };

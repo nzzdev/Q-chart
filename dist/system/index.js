@@ -195,6 +195,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
           } else {
             chart = displayWithContext(item, element, drawSize, rect);
           }
+
           if (chart && chart.on) {
             chart.on('created', function () {
               resolve(chart);

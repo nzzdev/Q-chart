@@ -224,6 +224,7 @@ function display(item, element) {
         } else {
           chart = displayWithContext(item, element, drawSize, rect);
         }
+
         if (chart && chart.on) {
           chart.on('created', function () {
             resolve(chart);

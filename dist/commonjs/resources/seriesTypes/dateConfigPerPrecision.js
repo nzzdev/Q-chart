@@ -13,7 +13,7 @@ function pad(value, toLength) {
 
 var seriesTypeConfig = {
   year: {
-    formatBasedOnIndex: function formatBasedOnIndex(index, date) {
+    formatBasedOnIndex: function formatBasedOnIndex(index, length, date) {
       if (index === 0) {
         return date.getFullYear();
       } else {
@@ -31,8 +31,8 @@ var seriesTypeConfig = {
     }
   },
   month: {
-    formatBasedOnIndex: function formatBasedOnIndex(index, date) {
-      if (index === 0 || date.getMonth() === 0) {
+    formatBasedOnIndex: function formatBasedOnIndex(index, length, date) {
+      if (index === 0 || index === length - 1 || date.getMonth() === 0) {
         return pad(date.getMonth() + 1, 2) + '.' + date.getFullYear();
       } else {
         return '' + pad(date.getMonth() + 1, 2);
@@ -40,7 +40,7 @@ var seriesTypeConfig = {
     },
     getLabelLengthBasedOnIndex: function getLabelLengthBasedOnIndex(index, length, data, config) {
       var date = new Date(data.labels[index]);
-      if (index === 0 || date.getMonth() === 0) {
+      if (index === 0 || index === length - 1 || date.getMonth() === 0) {
         return 60;
       }
       return 23;
@@ -58,7 +58,7 @@ var seriesTypeConfig = {
     }
   },
   day: {
-    formatBasedOnIndex: function formatBasedOnIndex(index, date) {
+    formatBasedOnIndex: function formatBasedOnIndex(index, length, date) {
       if (index === 0) {
         return pad(date.getDate(), 2) + '.' + pad(date.getMonth() + 1, 2) + '.' + date.getFullYear();
       } else {
@@ -76,7 +76,7 @@ var seriesTypeConfig = {
     }
   },
   hour: {
-    formatBasedOnIndex: function formatBasedOnIndex(index, date) {
+    formatBasedOnIndex: function formatBasedOnIndex(index, length, date) {
       return pad(date.getHours() + 1, 2) + ':' + pad(date.getMinutes(), 2);
     },
     getLabelLengthBasedOnIndex: function getLabelLengthBasedOnIndex(index, length, data, config) {

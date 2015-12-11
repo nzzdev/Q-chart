@@ -177,6 +177,7 @@ export function display(item, element, withoutContext = false) {
         } else {
           chart = displayWithContext(item, element, drawSize, rect);
         }
+        // chart.supportsForeignObject = false;
         if (chart && chart.on) {
           chart.on('created', () => {
             resolve(chart);

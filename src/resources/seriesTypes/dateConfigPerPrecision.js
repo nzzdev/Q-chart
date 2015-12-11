@@ -8,7 +8,7 @@ function pad(value, toLength) {
 
 export var seriesTypeConfig = {
   year: {
-    formatBasedOnIndex: (index, date) => {
+    formatBasedOnIndex: (index, length, date) => {
       if (index === 0) {
         return date.getFullYear();
       } else {
@@ -26,8 +26,8 @@ export var seriesTypeConfig = {
     }
   },
   month: {
-    formatBasedOnIndex: (index, date) => {
-      if (index === 0 || date.getMonth() === 0) {
+    formatBasedOnIndex: (index, length, date) => {
+      if (index === 0 || index === length - 1 || date.getMonth() === 0) {
         return `${pad(date.getMonth()+1,2)}.${date.getFullYear()}`;
       } else {
         return `${pad(date.getMonth()+1,2)}`;
@@ -35,7 +35,7 @@ export var seriesTypeConfig = {
     },
     getLabelLengthBasedOnIndex: (index, length, data, config) => {
       let date = new Date(data.labels[index]);
-      if (index === 0 || date.getMonth() === 0) {
+      if (index === 0 || index === length - 1 || date.getMonth() === 0) {
         return 60;
       }
       return 23;
@@ -53,7 +53,7 @@ export var seriesTypeConfig = {
     }
   },
   day: {
-    formatBasedOnIndex: (index, date) => {
+    formatBasedOnIndex: (index, length, date) => {
       if (index === 0) {
         return `${pad(date.getDate(),2)}.${pad(date.getMonth()+1,2)}.${date.getFullYear()}`;
       } else {
@@ -71,7 +71,7 @@ export var seriesTypeConfig = {
     }
   },
   hour: {
-    formatBasedOnIndex: (index, date) => {
+    formatBasedOnIndex: (index, length, date) => {
       return `${pad(date.getHours()+1,2)}:${pad(date.getMinutes(),2)}`;
     },
     getLabelLengthBasedOnIndex: (index, length, data, config) => {
