@@ -4,7 +4,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
-  exports.ctExtendTickmmarksClassNames = ctExtendTickmmarksClassNames;
+  exports.ctLabelClasses = ctLabelClasses;
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -15,25 +15,23 @@ define(['exports', 'chartist'], function (exports, _chartist) {
     last: 'last'
   };
 
-  function ctExtendTickmmarksClassNames(options) {
+  function ctLabelClasses(options) {
 
     options = Object.assign(defaultOptions, options);
 
-    return function ctExtendTickmmarksClassNames(chart) {
+    return function ctLabelClasses(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
         chart.on('draw', function (data) {
           if (data.type === 'label') {
 
-            var labelIndex = data.index;
-            var labelClassList = data.element._node.lastChild.classList;
             var labelDirection = data.axis.units.dir;
 
-            if (labelIndex === 0) {
-              labelClassList.add('ct-' + labelDirection + '-' + options.first);
+            if (data.index === 0) {
+              data.element.querySelector('.ct-label:last-child').addClass('ct-' + labelDirection + '-' + options.first);
             }
 
-            if (labelIndex === data.axis.ticks.length - 1) {
-              labelClassList.add('ct-' + labelDirection + '-' + options.last);
+            if (data.index === data.axis.ticks.length - 1) {
+              data.element.querySelector('.ct-label:last-child').addClass('ct-' + labelDirection + '-' + options.last);
             }
           }
         });

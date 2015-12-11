@@ -1,7 +1,7 @@
-System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-class-tickmarks.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (_export) {
   'use strict';
 
-  var ctExtendGridClassNames, ctProtrudeGrid, ctGridOnTop, ctExtendTickmmarksClassNames, ctExtendFitBarsToData, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
+  var ctGridClasses, ctProtrudeGrid, ctGridOnTop, ctLabelClasses, ctExtendFitBarsToData, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
 
   _export('getConfig', getConfig);
 
@@ -12,14 +12,14 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
   }
 
   return {
-    setters: [function (_chartistPluginsChartistPluginClassAxisJs) {
-      ctExtendGridClassNames = _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames;
+    setters: [function (_chartistPluginsChartistPluginGridClassesJs) {
+      ctGridClasses = _chartistPluginsChartistPluginGridClassesJs.ctGridClasses;
     }, function (_chartistPluginsChartistPluginProtrudeGridJs) {
       ctProtrudeGrid = _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid;
     }, function (_chartistPluginsChartistPluginGridOnTopJs) {
       ctGridOnTop = _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop;
-    }, function (_chartistPluginsChartistPluginClassTickmarksJs) {
-      ctExtendTickmmarksClassNames = _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames;
+    }, function (_chartistPluginsChartistPluginLabelClassesJs) {
+      ctLabelClasses = _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses;
     }, function (_chartistPluginsChartistPluginFitBarsJs) {
       ctExtendFitBarsToData = _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData;
     }, function (_clone) {
@@ -52,14 +52,9 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             },
             reverseData: false,
             horizontalBars: true,
-            axisX: {
-              showGrid: true,
-              position: 'start'
-            },
-            axisY: {
-              showGrid: false
-            },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
+            axisX: {},
+            axisY: {},
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: chartHeight,
@@ -73,14 +68,9 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             },
             reverseData: false,
             horizontalBars: false,
-            axisX: {
-              showGrid: false,
-              position: 'end'
-            },
-            axisY: {
-              showGrid: true
-            },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
+            axisX: {},
+            axisY: {},
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
           }
         },
 
@@ -97,14 +87,9 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             reverseData: false,
             horizontalBars: true,
             stackBars: true,
-            axisX: {
-              showGrid: true,
-              position: 'start'
-            },
-            axisY: {
-              showGrid: false
-            },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
+            axisX: {},
+            axisY: {},
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: chartHeight,
@@ -119,14 +104,9 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             reverseData: false,
             horizontalBars: false,
             stackBars: true,
-            axisX: {
-              showGrid: false,
-              position: 'end'
-            },
-            axisY: {
-              showGrid: true
-            },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
+            axisX: {},
+            axisY: {},
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
           }
         },
 
@@ -146,10 +126,11 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               showLabel: true
             },
             axisY: {
+              showGrid: true,
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
           },
           large: {
             height: chartHeight,
@@ -166,10 +147,11 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
               showLabel: true
             },
             axisY: {
+              showGrid: true,
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctExtendGridClassNames(), ctExtendTickmmarksClassNames(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
           }
         }
       };

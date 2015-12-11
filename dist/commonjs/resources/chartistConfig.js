@@ -7,13 +7,13 @@ exports.getConfig = getConfig;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _chartistPluginsChartistPluginClassAxisJs = require('../chartist-plugins/chartist-plugin-class-axis.js');
+var _chartistPluginsChartistPluginGridClassesJs = require('../chartist-plugins/chartist-plugin-grid-classes.js');
 
 var _chartistPluginsChartistPluginProtrudeGridJs = require('../chartist-plugins/chartist-plugin-protrude-grid.js');
 
 var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/chartist-plugin-grid-on-top.js');
 
-var _chartistPluginsChartistPluginClassTickmarksJs = require('../chartist-plugins/chartist-plugin-class-tickmarks.js');
+var _chartistPluginsChartistPluginLabelClassesJs = require('../chartist-plugins/chartist-plugin-label-classes.js');
 
 var _chartistPluginsChartistPluginFitBarsJs = require('../chartist-plugins/chartist-plugin-fit-bars.js');
 
@@ -42,14 +42,9 @@ var chartistConfigs = {
       },
       reverseData: false,
       horizontalBars: true,
-      axisX: {
-        showGrid: true,
-        position: 'start'
-      },
-      axisY: {
-        showGrid: false
-      },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      axisX: {},
+      axisY: {},
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
       height: chartHeight,
@@ -63,14 +58,9 @@ var chartistConfigs = {
       },
       reverseData: false,
       horizontalBars: false,
-      axisX: {
-        showGrid: false,
-        position: 'end'
-      },
-      axisY: {
-        showGrid: true
-      },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      axisX: {},
+      axisY: {},
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
     }
   },
 
@@ -87,14 +77,9 @@ var chartistConfigs = {
       reverseData: false,
       horizontalBars: true,
       stackBars: true,
-      axisX: {
-        showGrid: true,
-        position: 'start'
-      },
-      axisY: {
-        showGrid: false
-      },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      axisX: {},
+      axisY: {},
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
       height: chartHeight,
@@ -109,14 +94,9 @@ var chartistConfigs = {
       reverseData: false,
       horizontalBars: false,
       stackBars: true,
-      axisX: {
-        showGrid: false,
-        position: 'end'
-      },
-      axisY: {
-        showGrid: true
-      },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      axisX: {},
+      axisY: {},
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
     }
   },
 
@@ -136,10 +116,11 @@ var chartistConfigs = {
         showLabel: true
       },
       axisY: {
+        showGrid: true,
         position: 'start',
         scaleMinSpace: 40
       },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     },
     large: {
       height: chartHeight,
@@ -156,10 +137,11 @@ var chartistConfigs = {
         showLabel: true
       },
       axisY: {
+        showGrid: true,
         position: 'start',
         scaleMinSpace: 40
       },
-      plugins: [(0, _chartistPluginsChartistPluginClassAxisJs.ctExtendGridClassNames)(), (0, _chartistPluginsChartistPluginClassTickmarksJs.ctExtendTickmmarksClassNames)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
     }
   }
 };

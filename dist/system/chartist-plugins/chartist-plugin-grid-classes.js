@@ -3,11 +3,11 @@ System.register(['chartist'], function (_export) {
 
   var Chartist;
 
-  _export('ctExtendGridClassNames', ctExtendGridClassNames);
+  _export('ctGridClasses', ctGridClasses);
 
-  function ctExtendGridClassNames() {
+  function ctGridClasses() {
 
-    return function ctExtendGridClassNames(chart) {
+    return function ctGridClasses(chart) {
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
         chart.on('draw', function (data) {
 

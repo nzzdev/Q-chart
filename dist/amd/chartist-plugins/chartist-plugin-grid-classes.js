@@ -4,15 +4,15 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
-  exports.ctExtendGridClassNames = ctExtendGridClassNames;
+  exports.ctGridClasses = ctGridClasses;
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
   var _Chartist = _interopRequireDefault(_chartist);
 
-  function ctExtendGridClassNames() {
+  function ctGridClasses() {
 
-    return function ctExtendGridClassNames(chart) {
+    return function ctGridClasses(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
         chart.on('draw', function (data) {
 

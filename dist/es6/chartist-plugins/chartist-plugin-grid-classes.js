@@ -1,11 +1,8 @@
-// plugin to class gridlines for highlighting baseline
-// found it here https://github.com/gionkunz/chartist-js/issues/493
-
 import Chartist from 'chartist';
 
-export function ctExtendGridClassNames() {
+export function ctGridClasses() {
 
-  return function ctExtendGridClassNames(chart) {
+  return function ctGridClasses(chart) {
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
       chart.on('draw', function(data) {
 

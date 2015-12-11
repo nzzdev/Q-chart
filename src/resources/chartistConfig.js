@@ -1,7 +1,7 @@
-import {ctExtendGridClassNames} from '../chartist-plugins/chartist-plugin-class-axis.js';
+import {ctGridClasses} from '../chartist-plugins/chartist-plugin-grid-classes.js';
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
-import {ctExtendTickmmarksClassNames} from '../chartist-plugins/chartist-plugin-class-tickmarks.js';
+import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
 import clone from './clone';
@@ -24,16 +24,13 @@ export var chartistConfigs = {
       },   
       reverseData: false,
       horizontalBars: true,
-      axisX: {   
-        showGrid: true,
-        position: 'start',
+      axisX: {
       },
       axisY: {
-        showGrid: false,
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -51,15 +48,12 @@ export var chartistConfigs = {
       reverseData: false,
       horizontalBars: false,
       axisX: {
-        showGrid: false,
-        position: 'end',
       },
       axisY: {
-        showGrid: true
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop(),
        ctExtendFitBarsToData()
@@ -80,16 +74,13 @@ export var chartistConfigs = {
       reverseData: false,
       horizontalBars: true,
       stackBars: true,
-      axisX: {   
-        showGrid: true,
-        position: 'start',
+      axisX: {
       },
       axisY: {
-        showGrid: false,
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -108,15 +99,12 @@ export var chartistConfigs = {
       horizontalBars: false,
       stackBars: true,
       axisX: {
-        showGrid: false,
-        position: 'end',
       },
       axisY: {
-        showGrid: true
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop(),
        ctExtendFitBarsToData()
@@ -140,12 +128,13 @@ export var chartistConfigs = {
         showLabel: true,
       },
       axisY: {
+        showGrid: true,
         position: 'start',
         scaleMinSpace: 40
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop()
       ]
@@ -169,12 +158,13 @@ export var chartistConfigs = {
         // },
       },
       axisY: {
+        showGrid: true,
         position: 'start',
         scaleMinSpace: 40
       },
       plugins: [
-       ctExtendGridClassNames(),
-       ctExtendTickmmarksClassNames(),
+       ctGridClasses(),
+       ctLabelClasses(),
        ctProtrudeGrid(),
        ctGridOnTop()
       ]
