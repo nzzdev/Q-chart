@@ -16,6 +16,8 @@ System.register(['chartist'], function (_export) {
 
         chart.on('created', function (data) {
 
+          console.log(data);
+
           theGrid = document.getElementsByClassName('ct-grid');
 
           for (var i = 0; i < theGrid.length; i++) {

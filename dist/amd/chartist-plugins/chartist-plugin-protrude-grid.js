@@ -25,6 +25,8 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
         chart.on('created', function (data) {
 
+          console.log(data);
+
           theGrid = document.getElementsByClassName('ct-grid');
 
           for (var i = 0; i < theGrid.length; i++) {
