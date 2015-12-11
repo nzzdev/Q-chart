@@ -9,38 +9,30 @@ System.register(['chartist'], function (_export) {
 
     options = Object.assign(defaultOptions, options);
 
-    return function ctProtruderid(chart) {
+    return function ctProtrudeGrid(chart) {
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+        chart.on('draw', function (data) {
+          if (data.type === 'grid') {
+            if (data.axis.counterUnits.dir === "vertical") {
 
-        var theGrid = [];
+              console.log(data);
 
-        chart.on('created', function (data) {
-
-          theGrid = document.getElementsByClassName('ct-grid');
-
-          for (var i = 0; i < theGrid.length; i++) {
-            var gridline = theGrid[i];
-
-            if (gridline.getAttribute('class') === 'ct-grid ct-horizontal' || gridline.getAttribute('class') === 'ct-grid ct-horizontal ct-baseline') {
-
-              var tempY1 = gridline.getAttribute('y1') - protrude;
-              var tempY2 = gridline.getAttribute('y2') + protrude;
-
-              gridline.setAttribute('y1', tempY1);
-              gridline.setAttribute('y2', tempY2);
-            } else if (gridline.getAttribute('class') === 'ct-grid ct-vertical' || gridline.getAttribute('class') === 'ct-grid ct-vertical ct-baseline') {
-
-                var tempX1 = gridline.getAttribute('x1') - protrude;
-                var tempX2 = gridline.getAttribute('x2') + protrude;
-
-                gridline.setAttribute('x1', tempX1);
-                gridline.setAttribute('x2', tempX2);
+              var tempY1 = data.y1;
+              var tempY2 = data.y2;
+              data.y1 = tempY1 - protrude;
+              data.y2 = tempY2 + protrude;
+            } else if (data.axis.counterUnits.dir === "horizontal") {
+                var tempX1 = data.x1;
+                var tempX2 = data.x2;
+                data.x1 = tempX1 - protrude;
+                data.x2 = tempX2 + protrude;
               }
           }
         });
-        theGrid.length = 0;
       };
     };
+
+    debugger;
   }
 
   return {
@@ -48,7 +40,7 @@ System.register(['chartist'], function (_export) {
       Chartist = _chartist['default'];
     }],
     execute: function () {
-      protrude = 4;
+      protrude = 14;
       defaultOptions = {};
       ;
     }
