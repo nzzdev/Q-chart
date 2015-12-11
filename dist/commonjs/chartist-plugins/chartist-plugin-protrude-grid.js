@@ -21,7 +21,10 @@ function ctProtrudeGrid(options) {
 
   return function ctProtrudeGrid(chart) {
     if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
-      chart.on('draw', function (data) {
+      chart.on('data', function (data) {
+
+        console.log(data);
+
         if (data.type === 'grid') {
           if (data.axis.counterUnits.dir === "vertical") {
 

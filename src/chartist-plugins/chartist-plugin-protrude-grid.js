@@ -18,13 +18,15 @@ export function ctProtrudeGrid(options) {
     if(chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
       // when element gets? drawn
-      chart.on('draw', function(data) {
+      chart.on('data', function(data) {
+
+        console.log(data);
 
         // check for gridlines
-        if (data.type === 'grid'){
+        if (data.type === 'grid') {
 
           // get vertical gridlines
-          if(data.axis.counterUnits.dir === "vertical"){
+          if (data.axis.counterUnits.dir === "vertical") {
 
             console.log(data);
 
@@ -35,7 +37,7 @@ export function ctProtrudeGrid(options) {
             data.y2 = tempY2 + protrude;
 
           // get horizontal gridlines
-          } else if (data.axis.counterUnits.dir === "horizontal"){
+          } else if (data.axis.counterUnits.dir === "horizontal") {
 
           // offset horizontal gridlines and set new values
             var tempX1 = data.x1;

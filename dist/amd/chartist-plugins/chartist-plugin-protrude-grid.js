@@ -20,7 +20,10 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
     return function ctProtrudeGrid(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
-        chart.on('draw', function (data) {
+        chart.on('data', function (data) {
+
+          console.log(data);
+
           if (data.type === 'grid') {
             if (data.axis.counterUnits.dir === "vertical") {
 

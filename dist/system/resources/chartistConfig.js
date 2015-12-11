@@ -90,7 +90,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
-              right: 0,
+              right: 1,
               bottom: 0,
               left: 0
             },
@@ -112,7 +112,7 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
             seriesBarDistance: 11,
             chartPadding: {
               top: 0,
-              right: 0,
+              right: 1,
               bottom: 0,
               left: 0
             },
@@ -133,7 +133,12 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
         Line: {
           small: {
             height: chartHeight,
-
+            chartPadding: {
+              top: 0,
+              right: 1,
+              bottom: 0,
+              left: 0
+            },
             showPoint: false,
             lineSmooth: false,
             axisX: {
@@ -148,7 +153,12 @@ System.register(['../chartist-plugins/chartist-plugin-class-axis.js', '../charti
           },
           large: {
             height: chartHeight,
-
+            chartPadding: {
+              top: 0,
+              right: 1,
+              bottom: 0,
+              left: 0
+            },
             showPoint: false,
             lineSmooth: false,
             axisX: {

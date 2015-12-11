@@ -69,7 +69,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
         seriesBarDistance: 11,
         chartPadding: {
           top: 0,
-          right: 0,
+          right: 1,
           bottom: 0,
           left: 0
         },
@@ -91,7 +91,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
         seriesBarDistance: 11,
         chartPadding: {
           top: 0,
-          right: 0,
+          right: 1,
           bottom: 0,
           left: 0
         },
@@ -112,7 +112,12 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
     Line: {
       small: {
         height: chartHeight,
-
+        chartPadding: {
+          top: 0,
+          right: 1,
+          bottom: 0,
+          left: 0
+        },
         showPoint: false,
         lineSmooth: false,
         axisX: {
@@ -127,7 +132,12 @@ define(['exports', '../chartist-plugins/chartist-plugin-class-axis.js', '../char
       },
       large: {
         height: chartHeight,
-
+        chartPadding: {
+          top: 0,
+          right: 1,
+          bottom: 0,
+          left: 0
+        },
         showPoint: false,
         lineSmooth: false,
         axisX: {

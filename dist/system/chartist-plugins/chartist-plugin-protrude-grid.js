@@ -11,7 +11,10 @@ System.register(['chartist'], function (_export) {
 
     return function ctProtrudeGrid(chart) {
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
-        chart.on('draw', function (data) {
+        chart.on('data', function (data) {
+
+          console.log(data);
+
           if (data.type === 'grid') {
             if (data.axis.counterUnits.dir === "vertical") {
 

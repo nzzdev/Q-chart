@@ -80,7 +80,7 @@ var chartistConfigs = {
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
-        right: 0,
+        right: 1,
         bottom: 0,
         left: 0
       },
@@ -102,7 +102,7 @@ var chartistConfigs = {
       seriesBarDistance: 11,
       chartPadding: {
         top: 0,
-        right: 0,
+        right: 1,
         bottom: 0,
         left: 0
       },
@@ -123,7 +123,12 @@ var chartistConfigs = {
   Line: {
     small: {
       height: chartHeight,
-
+      chartPadding: {
+        top: 0,
+        right: 1,
+        bottom: 0,
+        left: 0
+      },
       showPoint: false,
       lineSmooth: false,
       axisX: {
@@ -138,7 +143,12 @@ var chartistConfigs = {
     },
     large: {
       height: chartHeight,
-
+      chartPadding: {
+        top: 0,
+        right: 1,
+        bottom: 0,
+        left: 0
+      },
       showPoint: false,
       lineSmooth: false,
       axisX: {
