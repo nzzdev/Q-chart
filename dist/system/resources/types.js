@@ -24,6 +24,7 @@ System.register(['./chartistConfig'], function (_export) {
                 config.reverseData = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
               } else {
+                config.reverseData = false;
                 config.height = chartHeight;
               }
             }
@@ -37,6 +38,8 @@ System.register(['./chartistConfig'], function (_export) {
                 config.horizontalBars = true;
                 config.reverseData = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
+              } else {
+                config.reverseData = false;
               }
             }
           }]
@@ -55,6 +58,7 @@ System.register(['./chartistConfig'], function (_export) {
                 config.reverseData = true;
                 config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
               } else {
+                config.reverseData = false;
                 config.height = chartHeight;
               }
             }
@@ -68,6 +72,8 @@ System.register(['./chartistConfig'], function (_export) {
                 config.horizontalBars = true;
                 config.reverseData = true;
                 config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
+              } else {
+                config.reverseData = true;
               }
             }
           }]

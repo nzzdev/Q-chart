@@ -21,6 +21,7 @@ var types = {
           config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
         } else {
+          config.reverseData = false;
           config.height = _chartistConfig.chartHeight;
         }
       }
@@ -34,6 +35,8 @@ var types = {
           config.horizontalBars = true;
           config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+        } else {
+          config.reverseData = false;
         }
       }
     }]
@@ -52,6 +55,7 @@ var types = {
           config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
         } else {
+          config.reverseData = false;
           config.height = _chartistConfig.chartHeight;
         }
       }
@@ -65,6 +69,8 @@ var types = {
           config.horizontalBars = true;
           config.reverseData = true;
           config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
+        } else {
+          config.reverseData = true;
         }
       }
     }]

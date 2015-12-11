@@ -16,6 +16,7 @@ export var types = {
             config.reverseData = true;
             config.height = ((vertBarHeight * data.series.length) + vertBarSetPadding) * data.labels.length;
           } else {
+            config.reverseData = false;
             config.height = chartHeight;
           }
         }
@@ -30,6 +31,8 @@ export var types = {
             config.horizontalBars = true;
             config.reverseData = true;
             config.height = ((vertBarHeight * data.series.length) + vertBarSetPadding) * data.labels.length;
+          } else {
+            config.reverseData = false;
           }
         }
       }
@@ -50,6 +53,7 @@ export var types = {
             config.reverseData = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
           } else {
+            config.reverseData = false;
             config.height = chartHeight;
           }
         }
@@ -64,6 +68,8 @@ export var types = {
             config.horizontalBars = true;
             config.reverseData = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
+          } else {
+            config.reverseData = true;
           }
         }
       }

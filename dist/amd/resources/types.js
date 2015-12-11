@@ -19,6 +19,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
             config.reverseData = true;
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
           } else {
+            config.reverseData = false;
             config.height = _chartistConfig.chartHeight;
           }
         }
@@ -32,6 +33,8 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
             config.horizontalBars = true;
             config.reverseData = true;
             config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+          } else {
+            config.reverseData = false;
           }
         }
       }]
@@ -50,6 +53,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
             config.reverseData = true;
             config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
           } else {
+            config.reverseData = false;
             config.height = _chartistConfig.chartHeight;
           }
         }
@@ -63,6 +67,8 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
             config.horizontalBars = true;
             config.reverseData = true;
             config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
+          } else {
+            config.reverseData = true;
           }
         }
       }]

@@ -7,12 +7,13 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
   function getChartDataForChartist(item) {
     if (!item.data || !item.data.x || !item.data.y) return null;
+
     return {
-      labels: item.data.x.data,
-      series: item.data.y.data.filter(function (serie) {
-        return serie.data;
+      labels: item.data.x.data.slice(0),
+      series: item.data.y.data.slice(0).filter(function (serie) {
+        return serie.data.slice(0);
       }).map(function (serie) {
-        return serie.data;
+        return serie.data.slice(0);
       })
     };
   }
