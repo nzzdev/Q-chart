@@ -59,7 +59,7 @@ export function ctProtrudeGrid(options) {
 
           } else if (gridline.getAttribute('class') === 'ct-grid ct-vertical' || gridline.getAttribute('class') === 'ct-grid ct-vertical ct-baseline'){
 
-            console.log(gridline);
+            //console.log(gridline);
 
             //console.log("vert");   
             //console.log(gridline);

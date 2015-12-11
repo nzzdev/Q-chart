@@ -40,8 +40,6 @@ function ctProtrudeGrid(options) {
             gridline.setAttribute('y2', tempY2);
           } else if (gridline.getAttribute('class') === 'ct-grid ct-vertical' || gridline.getAttribute('class') === 'ct-grid ct-vertical ct-baseline') {
 
-              console.log(gridline);
-
               var tempX1 = gridline.getAttribute('x1') - protrude;
               var tempX2 = gridline.getAttribute('x2') + protrude;
 
