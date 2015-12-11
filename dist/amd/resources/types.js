@@ -45,7 +45,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
           } else {
             config.height = _chartistConfig.chartHeight;
           }
@@ -58,7 +58,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.height = (_chartistConfig.vertBarHeight * data.series.length + _chartistConfig.vertBarSetPadding) * data.labels.length;
+            config.height = (_chartistConfig.vertBarHeight + _chartistConfig.vertBarSetPadding) * data.labels.length;
           }
         }
       }]

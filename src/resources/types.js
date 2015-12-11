@@ -13,7 +13,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+            config.height = ((vertBarHeight * data.series.length) + vertBarSetPadding) * data.labels.length;
           } else {
             config.height = chartHeight;
           }
@@ -27,7 +27,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+            config.height = ((vertBarHeight * data.series.length) + vertBarSetPadding) * data.labels.length;
           }
         }
       }
@@ -45,7 +45,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+            config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
           } else {
             config.height = chartHeight;
           }
@@ -59,7 +59,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.height = (((vertBarHeight) * data.series.length) + vertBarSetPadding) * (data.labels.length);
+            config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
           }
         }
       }
