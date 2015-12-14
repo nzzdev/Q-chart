@@ -152,9 +152,12 @@ function getContextHtml(item) {
     html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
   }
   if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text.length > 0) {
-    html += '<div class="q-chart__footer__sources">Quellen: ';
-    for (let source of item.sources) {
-      if (source.href && source.href.length > 0) {
+    let sources = item.sources
+      .filter(source => source.text && source.text.length > 0);
+
+    html += `<div class="q-chart__footer__sources">Quelle${sources.length > 1 ? 'n' : ''}: `;
+    for (let source of sources) {
+      if (source.href && source.href.length > 0 && source.validHref) {
         html += `<a href="${source.href}">${source.text}</a> `;
       } else {
         html += `${source.text} `;
