@@ -37,7 +37,7 @@ var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
 
-  return {
+  var data = {
     labels: item.data.x.data.slice(0),
     series: item.data.y.data.slice(0).filter(function (serie) {
       return serie.data.slice(0);
@@ -45,6 +45,7 @@ function getChartDataForChartist(item) {
       return serie.data.slice(0);
     })
   };
+  return data;
 }
 
 function getCombinedChartistConfig(item, data, size, rect) {
@@ -86,7 +87,27 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   if (item.data.x && item.data.x.type) {
     if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-      data.currentLabels = [];
+
+      if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+    }
+  }
+
+  if (item.data.x && item.data.x.type) {
+    if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
         _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);

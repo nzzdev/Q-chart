@@ -2,7 +2,7 @@ import {seriesTypeConfig} from './dateConfigPerPrecision';
 
 export var dateHandlers = {
 
-  basedOnPrecisionAndAvailableSpace: (config, typeOptions, data, size, rect) => {
+  modifyDataBasedOnPrecisionAndAvailableSpace: (config, typeOptions, data, size, rect) => {
     // the ticks model
     var ticks = new Array(data.labels.length);
 
@@ -24,49 +24,28 @@ export var dateHandlers = {
     if (enoughSpace) {
       data.labels.map((label, index) => {
         ticks[index] = label;
-        data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
+        data.labels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label.toString()));
       });
     } else {
       data.labels.map((label, index) => {
         if (seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
           ticks[index] = label;
-          data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
+          data.labels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label.toString()));
         } else {
-          data.currentLabels[index] = ' ';
+          data.labels[index] = ' '; // return false/empty string to make chartist not render a gridline here.
         }
       });
     }
-
-    config.axisX.labelInterpolationFnc = (value, index) => {
-      if (ticks[index]) {
-        if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
-        }
-      } else {
-        value = ' ';
-      }
-      return value;
-    }
   },
 
-  basedOnPrecision: (config, typeOptions, data, size, rect) => {
+  modifyDataBasedOnPrecision: (config, typeOptions, data, size, rect) => {
     if (!config.horizontalBars) {
       for (let i = 0; i < data.labels.length; i++) {
-        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i]));
-      }
-      config.axisX.labelInterpolationFnc = (value, index) => {
-        if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-          value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
-        }
-        return value;
+        data.labels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i].toString()));
       }
     } else {
       for (let i = 0; i < data.labels.length; i++) {
-        data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i]));
-      }
-      config.axisY.labelInterpolationFnc = (value, index) => {
-        value = seriesTypeConfig[typeOptions.precision].format(new Date(value));
-        return value;
+        data.labels[i] = seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i].toString()));
       }
     }
   },

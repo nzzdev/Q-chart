@@ -20,12 +20,13 @@ function getChartDataForChartist(item) {
 
   // we need to clone the arrays (with slice(0)) because chartist fumbles with the data
   // if reverseData is true, which we need for horizontal bars
-  return {
+  let data = {
     labels: item.data.x.data.slice(0),
     series: item.data.y.data.slice(0)
       .filter(serie => serie.data.slice(0))
       .map(serie => serie.data.slice(0))
   };
+  return data;
 }
 
 function getCombinedChartistConfig(item, data, size, rect) {
@@ -45,12 +46,33 @@ function getCombinedChartistConfig(item, data, size, rect) {
   }
 
   // if there are detected series types
+  // we need to let them modify the data
+  if (item.data.x && item.data.x.type) {
+    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+      
+      if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
+        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+      
+      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
+        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+    
+    }
+  }
+
+  // if there are detected series types
   // we need to let them modify the config
   if (item.data.x && item.data.x.type) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-
-      // reset the current labels on data, we are going to use them to calculate the offset to have enough space for the labels
-      data.currentLabels = [];
       
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
         seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);

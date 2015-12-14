@@ -10,13 +10,13 @@ var seriesTypes = {
   'date': {
     'x': {
       'Line': {
-        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecisionAndAvailableSpace
+        modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecisionAndAvailableSpace
       },
       'Bar': {
-        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
+        modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecision
       },
       'StackedBar': {
-        modifyConfig: _seriesTypesDateHandlers.dateHandlers.basedOnPrecision
+        modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecision
       }
     }
   }

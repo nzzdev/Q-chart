@@ -90,7 +90,7 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
           } else {
-            config.reverseData = true;
+            config.reverseData = false;
           }
         }
       }]
