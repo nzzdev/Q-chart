@@ -59,6 +59,8 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     config.seriesBarDistance = seriesBarDistance;
   }
 
+
+  // Calculate the X Axis offset dependending on label length
   let maxLength = 0;
   let isNumber = false;
   if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
@@ -105,4 +107,5 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     offset = 25;
   }
   config.axisY.offset = offset;
+
 }

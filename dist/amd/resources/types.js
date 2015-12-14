@@ -1,9 +1,14 @@
-define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
+define(['exports', './chartistConfig', 'd3-array/src/min'], function (exports, _chartistConfig, _d3ArraySrcMin) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  var _min = _interopRequireDefault(_d3ArraySrcMin);
+
   var types = {
     Bar: {
       label: 'Bar',
@@ -98,7 +103,29 @@ define(['exports', './chartistConfig'], function (exports, _chartistConfig) {
     Line: {
       label: 'Line',
       chartistType: 'Line',
-      options: []
+      options: [],
+      modifyConfig: function modifyConfig(config, data, size, rect) {
+        config.low = 0;
+
+        var minValue = (0, _min['default'])(data.series.map(function (serie) {
+          return (0, _min['default'])(serie);
+        }));
+
+        if (minValue < 0) {
+          config.low = minValue;
+          return;
+        }
+
+        var allFirstHundered = data.series.map(function (serie) {
+          return serie[0];
+        }).reduce(function (prev, current) {
+          return parseInt(current) === 100;
+        }, false);
+        if (allFirstHundered && minValue >= 100) {
+          config.low = 100;
+        }
+        return;
+      }
     }
   };
   exports.types = types;

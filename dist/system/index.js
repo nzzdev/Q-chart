@@ -56,6 +56,10 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       }
     }
 
+    if (chartTypes[item.type].modifyConfig) {
+      chartTypes[item.type].modifyConfig(config, data, size, rect);
+    }
+
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
@@ -145,16 +149,20 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
     }
     if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text.length > 0) {
-      html += '<div class="q-chart__footer__sources">Quellen: ';
+      var sources = item.sources.filter(function (source) {
+        return source.text && source.text.length > 0;
+      });
+
+      html += '<div class="q-chart__footer__sources">Quelle' + (sources.length > 1 ? 'n' : '') + ': ';
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = item.sources[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (var _iterator2 = sources[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var source = _step2.value;
 
-          if (source.href && source.href.length > 0) {
+          if (source.href && source.href.length > 0 && source.validHref) {
             html += '<a href="' + source.href + '">' + source.text + '</a> ';
           } else {
             html += source.text + ' ';
@@ -205,7 +213,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
         if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
         if (!item.data || !item.data.x) {
-          return false;
+          reject('no data');
         }
 
         sizeObserver.onResize(function (rect) {
@@ -216,7 +224,6 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
           } else {
             chart = displayWithContext(item, element, drawSize, rect);
           }
-
           if (chart && chart.on) {
             chart.on('created', function () {
               resolve(chart);
@@ -225,6 +232,15 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
             reject(chart);
           }
         }, element, true);
+
+        sizeObserver.onElementRectChange(function (rect) {
+          var drawSize = getElementSize(rect);
+          if (withoutContext) {
+            displayWithoutContext(item, element, drawSize, rect);
+          } else {
+            displayWithContext(item, element, drawSize, rect);
+          }
+        }, element);
       } catch (e) {
         reject(e);
       }

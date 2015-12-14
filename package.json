@@ -62,11 +62,11 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "array2d": "npm:array2d@^0.0.5",
       "chartist": "npm:chartist@^0.9.5",
       "clone": "npm:clone@^1.0.2",
       "computed-style-to-inline-style": "npm:computed-style-to-inline-style@^1.0.2",
       "css": "github:systemjs/plugin-css@^0.1.19",
+      "d3-array": "npm:d3-array@^0.5.2",
       "papaparse": "npm:papaparse@^4.1.2",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
@@ -75,6 +75,11 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "clean-css": "npm:clean-css@^3.4.8",
       "core-js": "npm:core-js@^1.1.4"
+    },
+    "overrides": {
+      "npm:d3-array@0.5.2": {
+        "format": "es6"
+      }
     }
   }
 }
