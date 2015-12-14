@@ -117,7 +117,7 @@ export var types = {
 
       // check if we have 100 as first value on every serie (indexed data)
       let allFirstHundered = data.series.map(serie => serie[0]).reduce((prev, current) => {return parseInt(current) === 100},false);
-      if (allFirstHundered) {
+      if (allFirstHundered && minValue >= 100) {
         config.low = 100;
       }
       return;

@@ -121,7 +121,7 @@ define(['exports', './chartistConfig', 'd3-array/src/min'], function (exports, _
         }).reduce(function (prev, current) {
           return parseInt(current) === 100;
         }, false);
-        if (allFirstHundered) {
+        if (allFirstHundered && minValue >= 100) {
           config.low = 100;
         }
         return;
