@@ -1,7 +1,7 @@
-System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-grid-on-top.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (_export) {
+System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-baseline.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (_export) {
   'use strict';
 
-  var ctGridClasses, ctProtrudeGrid, ctGridOnTop, ctLabelClasses, ctExtendFitBarsToData, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
+  var ctProtrudeGrid, ctBaseline, ctLabelClasses, ctExtendFitBarsToData, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
 
   _export('getConfig', getConfig);
 
@@ -12,12 +12,10 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
   }
 
   return {
-    setters: [function (_chartistPluginsChartistPluginGridClassesJs) {
-      ctGridClasses = _chartistPluginsChartistPluginGridClassesJs.ctGridClasses;
-    }, function (_chartistPluginsChartistPluginProtrudeGridJs) {
+    setters: [function (_chartistPluginsChartistPluginProtrudeGridJs) {
       ctProtrudeGrid = _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid;
-    }, function (_chartistPluginsChartistPluginGridOnTopJs) {
-      ctGridOnTop = _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop;
+    }, function (_chartistPluginsChartistPluginBaselineJs) {
+      ctBaseline = _chartistPluginsChartistPluginBaselineJs.ctBaseline;
     }, function (_chartistPluginsChartistPluginLabelClassesJs) {
       ctLabelClasses = _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses;
     }, function (_chartistPluginsChartistPluginFitBarsJs) {
@@ -54,7 +52,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
             horizontalBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline()]
           },
           large: {
             height: chartHeight,
@@ -70,7 +68,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
             horizontalBars: false,
             axisX: {},
             axisY: {},
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData()]
           }
         },
 
@@ -89,7 +87,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline()]
           },
           large: {
             height: chartHeight,
@@ -106,7 +104,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop(), ctExtendFitBarsToData()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData()]
           }
         },
 
@@ -130,7 +128,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline()]
           },
           large: {
             height: chartHeight,
@@ -151,7 +149,7 @@ System.register(['../chartist-plugins/chartist-plugin-grid-classes.js', '../char
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctGridClasses(), ctLabelClasses(), ctProtrudeGrid(), ctGridOnTop()]
+            plugins: [ctLabelClasses(), ctProtrudeGrid(), ctBaseline()]
           }
         }
       };

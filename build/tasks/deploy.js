@@ -3,6 +3,7 @@ var gutil = require('gulp-util');
 var AWS   = require('aws-sdk');
 var env   = require('gulp-env');
 var fs    = require('fs');
+var makeSlug = require('slug');
 var config = new AWS.Config({
   region: 'eu-west-1'
 });
@@ -57,23 +58,37 @@ var fastlyPurgeCallback = function(err, result) {
   }
 }
 
-gulp.task('deploy', function() {
-  for (var target of deployTargets) {
-    console.log('deploying to ' + process.env.S3_BUCKET + '/' + target + '/')
-    gulp.src("./deployable-build/**")
+function createDeployTask(name, target) {
+  gulp.task(name, function() {
+     return gulp.src("./deployable-build/**")
       .pipe(s3({
-          Bucket: process.env.S3_BUCKET, //  Required
-          ACL:    'public-read',         //  Needs to be user-defined
-          keyTransform: function(relative_filename) {
-            var new_name = target + '/' + relative_filename;
-            return new_name;
-          },
-          onChange: function(keyname) {
-            fastlyPurge.url('http://' + process.env.S3_BUCKET + '/' + keyname, fastlyPurgeCallback);
+        Bucket: process.env.S3_BUCKET, //  Required
+        ACL:    'public-read',         //  Needs to be user-defined
+        maps: {
+          CacheControl: function(keyname) {
+            return 'public, max-age=360';
           }
-      }))
-    ;
-  }
+        },
+        keyTransform: function(relative_filename) {
+          var new_name = target + '/' + relative_filename;
+          return new_name;
+        },
+        onChange: function(keyname) {
+          fastlyPurge.url('http://' + process.env.S3_BUCKET + '/' + keyname, fastlyPurgeCallback);
+        },
+        onNew: function(keyname) {
+          fastlyPurge.url('http://' + process.env.S3_BUCKET + '/' + keyname, fastlyPurgeCallback);
+        }
+    }));
+  });
+}
 
-});
+var deployTasks = [];
 
+for (var target of deployTargets) {
+  var taskName = makeSlug('deploy-'+target);
+  createDeployTask(taskName, target);
+  deployTasks.push(taskName);
+}
+
+gulp.task('deploy', deployTasks);

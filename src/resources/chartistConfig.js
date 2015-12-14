@@ -1,6 +1,5 @@
-import {ctGridClasses} from '../chartist-plugins/chartist-plugin-grid-classes.js';
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
-import {ctGridOnTop} from '../chartist-plugins/chartist-plugin-grid-on-top.js';
+import {ctBaseline} from '../chartist-plugins/chartist-plugin-baseline.js';
 import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
@@ -29,10 +28,9 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop()
+       ctBaseline()
       ]
     },
     large: {
@@ -52,10 +50,9 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop(),
+       ctBaseline(),
        ctExtendFitBarsToData()
       ]
     },
@@ -79,10 +76,9 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop()
+       ctBaseline()
       ]
     },
     large: {
@@ -103,10 +99,9 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop(),
+       ctBaseline(),
        ctExtendFitBarsToData()
       ]
     },
@@ -133,10 +128,9 @@ export var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop()
+       ctBaseline()
       ]
     },
     large: {
@@ -163,10 +157,9 @@ export var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [
-       ctGridClasses(),
        ctLabelClasses(),
        ctProtrudeGrid(),
-       ctGridOnTop()
+       ctBaseline()
       ]
     }
   }

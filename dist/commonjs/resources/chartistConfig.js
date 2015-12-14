@@ -7,11 +7,9 @@ exports.getConfig = getConfig;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _chartistPluginsChartistPluginGridClassesJs = require('../chartist-plugins/chartist-plugin-grid-classes.js');
-
 var _chartistPluginsChartistPluginProtrudeGridJs = require('../chartist-plugins/chartist-plugin-protrude-grid.js');
 
-var _chartistPluginsChartistPluginGridOnTopJs = require('../chartist-plugins/chartist-plugin-grid-on-top.js');
+var _chartistPluginsChartistPluginBaselineJs = require('../chartist-plugins/chartist-plugin-baseline.js');
 
 var _chartistPluginsChartistPluginLabelClassesJs = require('../chartist-plugins/chartist-plugin-label-classes.js');
 
@@ -44,7 +42,7 @@ var chartistConfigs = {
       horizontalBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
     },
     large: {
       height: chartHeight,
@@ -60,7 +58,7 @@ var chartistConfigs = {
       horizontalBars: false,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
     }
   },
 
@@ -79,7 +77,7 @@ var chartistConfigs = {
       stackBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
     },
     large: {
       height: chartHeight,
@@ -96,7 +94,7 @@ var chartistConfigs = {
       stackBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
     }
   },
 
@@ -120,7 +118,7 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       },
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
     },
     large: {
       height: chartHeight,
@@ -141,7 +139,7 @@ var chartistConfigs = {
         position: 'start',
         scaleMinSpace: 40
       },
-      plugins: [(0, _chartistPluginsChartistPluginGridClassesJs.ctGridClasses)(), (0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginGridOnTopJs.ctGridOnTop)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
     }
   }
 };
