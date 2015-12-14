@@ -9,7 +9,7 @@ System.register(['./dateConfigPerPrecision'], function (_export) {
     execute: function () {
       dateHandlers = {
 
-        basedOnPrecisionAndAvailableSpace: function basedOnPrecisionAndAvailableSpace(config, typeOptions, data, size, rect) {
+        modifyDataBasedOnPrecisionAndAvailableSpace: function modifyDataBasedOnPrecisionAndAvailableSpace(config, typeOptions, data, size, rect) {
           var ticks = new Array(data.labels.length);
 
           config.axisX = config.axisX || {};
@@ -29,50 +29,29 @@ System.register(['./dateConfigPerPrecision'], function (_export) {
           if (enoughSpace) {
             data.labels.map(function (label, index) {
               ticks[index] = label;
-              data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
+              data.labels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label.toString()));
             });
           } else {
             data.labels.map(function (label, index) {
               if (seriesTypeConfig[typeOptions.precision].getForceShow(index, data.labels.length, data, config, size)) {
                 ticks[index] = label;
-                data.currentLabels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label));
+                data.labels[index] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(label.toString()));
               } else {
-                data.currentLabels[index] = ' ';
+                data.labels[index] = ' ';
               }
             });
           }
-
-          config.axisX.labelInterpolationFnc = function (value, index) {
-            if (ticks[index]) {
-              if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-                value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
-              }
-            } else {
-              value = ' ';
-            }
-            return value;
-          };
         },
 
-        basedOnPrecision: function basedOnPrecision(config, typeOptions, data, size, rect) {
+        modifyDataBasedOnPrecision: function modifyDataBasedOnPrecision(config, typeOptions, data, size, rect) {
           if (!config.horizontalBars) {
             for (var i = 0; i < data.labels.length; i++) {
-              data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i]));
+              data.labels[i] = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(i, data.labels.length, new Date(data.labels[i].toString()));
             }
-            config.axisX.labelInterpolationFnc = function (value, index) {
-              if (seriesTypeConfig.hasOwnProperty(typeOptions.precision)) {
-                value = seriesTypeConfig[typeOptions.precision].formatBasedOnIndex(index, data.labels.length, new Date(value));
-              }
-              return value;
-            };
           } else {
             for (var i = 0; i < data.labels.length; i++) {
-              data.currentLabels[i] = seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i]));
+              data.labels[i] = seriesTypeConfig[typeOptions.precision].format(new Date(data.labels[i].toString()));
             }
-            config.axisY.labelInterpolationFnc = function (value, index) {
-              value = seriesTypeConfig[typeOptions.precision].format(new Date(value));
-              return value;
-            };
           }
         }
       };

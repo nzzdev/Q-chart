@@ -64,12 +64,12 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
   if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
     for (let i = 0; i < data.labels.length; i++) {
       let length = 0;
-      if (data.currentLabels && data.currentLabels[i]) {
-        if (Number.isInteger(data.currentLabels[i])) {
+      if (data.labels && data.labels[i]) {
+        if (Number.isInteger(data.labels[i])) {
           isNumber = true;
-          length = Math.floor(data.currentLabels[i]).toString().length;
+          length = Math.floor(data.labels[i]).toString().length;
         } else {
-          length = data.currentLabels[i].length;
+          length = data.labels[i].length;
         }
       } else {
         if (Number.isInteger(data.labels[i])) {

@@ -4,13 +4,13 @@ export var seriesTypes = {
   'date': {
     'x': {
       'Line': {
-        modifyConfig: dateHandlers.basedOnPrecisionAndAvailableSpace
+        modifyData: dateHandlers.modifyDataBasedOnPrecisionAndAvailableSpace
       },
       'Bar': {
-        modifyConfig: dateHandlers.basedOnPrecision
+        modifyData: dateHandlers.modifyDataBasedOnPrecision
       },
       'StackedBar': {
-        modifyConfig: dateHandlers.basedOnPrecision
+        modifyData: dateHandlers.modifyDataBasedOnPrecision
       }
     }
   }

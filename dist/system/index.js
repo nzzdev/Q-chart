@@ -8,7 +8,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
   function getChartDataForChartist(item) {
     if (!item.data || !item.data.x || !item.data.y) return null;
 
-    return {
+    var data = {
       labels: item.data.x.data.slice(0),
       series: item.data.y.data.slice(0).filter(function (serie) {
         return serie.data.slice(0);
@@ -16,6 +16,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
         return serie.data.slice(0);
       })
     };
+    return data;
   }
 
   function getCombinedChartistConfig(item, data, size, rect) {
@@ -57,7 +58,27 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-        data.currentLabels = [];
+
+        if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
+          seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
+          seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+          seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+          seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+      }
+    }
+
+    if (item.data.x && item.data.x.type) {
+      if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
           seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
@@ -76,6 +97,8 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
         }
       }
     }
+
+    console.log(data);
 
     modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 

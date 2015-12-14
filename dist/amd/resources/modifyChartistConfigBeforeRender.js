@@ -50,12 +50,12 @@ define(['exports'], function (exports) {
     if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
       for (var i = 0; i < data.labels.length; i++) {
         var _length = 0;
-        if (data.currentLabels && data.currentLabels[i]) {
-          if (Number.isInteger(data.currentLabels[i])) {
+        if (data.labels && data.labels[i]) {
+          if (Number.isInteger(data.labels[i])) {
             isNumber = true;
-            _length = Math.floor(data.currentLabels[i]).toString().length;
+            _length = Math.floor(data.labels[i]).toString().length;
           } else {
-            _length = data.currentLabels[i].length;
+            _length = data.labels[i].length;
           }
         } else {
           if (Number.isInteger(data.labels[i])) {
