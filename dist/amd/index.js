@@ -227,7 +227,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
         if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
         if (!item.data || !item.data.x) {
-          return false;
+          reject('no data');
         }
 
         sizeObserver.onResize(function (rect) {
@@ -238,7 +238,6 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
           } else {
             chart = displayWithContext(item, element, drawSize, rect);
           }
-
           if (chart && chart.on) {
             chart.on('created', function () {
               resolve(chart);
@@ -247,6 +246,15 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
             reject(chart);
           }
         }, element, true);
+
+        sizeObserver.onElementRectChange(function (rect) {
+          var drawSize = getElementSize(rect);
+          if (withoutContext) {
+            displayWithoutContext(item, element, drawSize, rect);
+          } else {
+            displayWithContext(item, element, drawSize, rect);
+          }
+        }, element);
       } catch (e) {
         reject(e);
       }

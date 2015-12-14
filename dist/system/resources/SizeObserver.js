@@ -32,6 +32,8 @@ System.register([], function (_export) {
 
           this.resizeCallbacks = [];
           this.resizeListenerInstalled = false;
+          this.elementRectCheckIntervals = {};
+          this.lastSeenElementRects = {};
 
           this.resizeHandler = debounce(this.handleResizeOnTick.bind(this), 250);
         }
@@ -63,6 +65,54 @@ System.register([], function (_export) {
                 }
               }).bind(this);
             }
+          }
+        }, {
+          key: 'onElementRectChange',
+          value: function onElementRectChange(callback, element) {
+            if (element && element.getBoundingClientRect) {
+              this.setupElementRectObserver(element, callback);
+            }
+            return function () {
+              if (this.elementRectCheckIntervals[element]) {
+                window.clearInterval(this.elementRectCheckIntervals[element]);
+              }
+            };
+          }
+        }, {
+          key: 'setupElementRectObserver',
+          value: function setupElementRectObserver(element, cb) {
+            var _this = this;
+
+            this.elementRectCheckIntervals[element] = window.setInterval(function () {
+              if (window.requestAnimationFrame) {
+                requestAnimationFrame(function () {
+                  var rect = _this.getRectIfNotTheSame(element);
+                  if (rect) {
+                    cb(rect);
+                  }
+                });
+              } else {
+                var rect = _this.getRectIfNotTheSame(element);
+                if (rect) {
+                  cb(rect);
+                }
+              }
+            }, 500);
+          }
+        }, {
+          key: 'getRectIfNotTheSame',
+          value: function getRectIfNotTheSame(element) {
+            var newRect = element.getBoundingClientRect();
+            if (this.lastSeenElementRects[element]) {
+              if (this.lastSeenElementRects[element].width !== newRect.width || this.lastSeenElementRects[element].height !== newRect.height) {
+                this.lastSeenElementRects[element] = newRect;
+                return newRect;
+              }
+            } else {
+              this.lastSeenElementRects[element] = newRect;
+              return newRect;
+            }
+            return undefined;
           }
         }, {
           key: 'setupResizeListener',

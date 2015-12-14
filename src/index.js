@@ -196,7 +196,7 @@ export function display(item, element, withoutContext = false) {
       if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
       if (!item.data || !item.data.x) {
-        return false;
+        reject('no data');
       }
 
       sizeObserver.onResize((rect) => {
@@ -207,7 +207,6 @@ export function display(item, element, withoutContext = false) {
         } else {
           chart = displayWithContext(item, element, drawSize, rect);
         }
-        // chart.supportsForeignObject = false;
         if (chart && chart.on) {
           chart.on('created', () => {
             resolve(chart);
@@ -216,6 +215,16 @@ export function display(item, element, withoutContext = false) {
           reject(chart);
         }
       }, element, true);
+
+      sizeObserver.onElementRectChange((rect) => {
+        let drawSize = getElementSize(rect);
+        if (withoutContext) {
+          displayWithoutContext(item, element, drawSize, rect);
+        } else {
+          displayWithContext(item, element, drawSize, rect);
+        }
+      }, element);
+
     } catch (e) {
       reject(e);
     } 
