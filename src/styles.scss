@@ -76,6 +76,10 @@ margin: 22px 0 22px 0;
   @media screen and (min-width: ($break-small)) {
     margin: 10px 0 0 0;
   }
+
+  svg {
+    shape-rendering: crispEdges;
+  }
 }
 
 .q-chart__label-x-axis {
