@@ -1,12 +1,14 @@
-System.register(['./chartistConfig'], function (_export) {
+System.register(['./chartistConfig', 'd3-array/src/min'], function (_export) {
   'use strict';
 
-  var vertBarHeight, vertBarSetPadding, chartHeight, types;
+  var vertBarHeight, vertBarSetPadding, chartHeight, min, types;
   return {
     setters: [function (_chartistConfig) {
       vertBarHeight = _chartistConfig.vertBarHeight;
       vertBarSetPadding = _chartistConfig.vertBarSetPadding;
       chartHeight = _chartistConfig.chartHeight;
+    }, function (_d3ArraySrcMin) {
+      min = _d3ArraySrcMin['default'];
     }],
     execute: function () {
       types = {
@@ -103,7 +105,29 @@ System.register(['./chartistConfig'], function (_export) {
         Line: {
           label: 'Line',
           chartistType: 'Line',
-          options: []
+          options: [],
+          modifyConfig: function modifyConfig(config, data, size, rect) {
+            config.low = 0;
+
+            var minValue = min(data.series.map(function (serie) {
+              return min(serie);
+            }));
+
+            if (minValue < 0) {
+              config.low = minValue;
+              return;
+            }
+
+            var allFirstHundered = data.series.map(function (serie) {
+              return serie[0];
+            }).reduce(function (prev, current) {
+              return parseInt(current) === 100;
+            }, false);
+            if (allFirstHundered) {
+              config.low = 100;
+            }
+            return;
+          }
         }
       };
 

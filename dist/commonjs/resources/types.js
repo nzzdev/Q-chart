@@ -4,7 +4,13 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 var _chartistConfig = require('./chartistConfig');
+
+var _d3ArraySrcMin = require('d3-array/src/min');
+
+var _d3ArraySrcMin2 = _interopRequireDefault(_d3ArraySrcMin);
 
 var types = {
   Bar: {
@@ -100,7 +106,29 @@ var types = {
   Line: {
     label: 'Line',
     chartistType: 'Line',
-    options: []
+    options: [],
+    modifyConfig: function modifyConfig(config, data, size, rect) {
+      config.low = 0;
+
+      var minValue = (0, _d3ArraySrcMin2['default'])(data.series.map(function (serie) {
+        return (0, _d3ArraySrcMin2['default'])(serie);
+      }));
+
+      if (minValue < 0) {
+        config.low = minValue;
+        return;
+      }
+
+      var allFirstHundered = data.series.map(function (serie) {
+        return serie[0];
+      }).reduce(function (prev, current) {
+        return parseInt(current) === 100;
+      }, false);
+      if (allFirstHundered) {
+        config.low = 100;
+      }
+      return;
+    }
   }
 };
 exports.types = types;

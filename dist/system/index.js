@@ -56,6 +56,10 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       }
     }
 
+    if (chartTypes[item.type].modifyConfig) {
+      chartTypes[item.type].modifyConfig(config, data, size, rect);
+    }
+
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 

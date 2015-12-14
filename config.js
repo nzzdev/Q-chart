@@ -14,7 +14,6 @@ System.config({
   },
 
   map: {
-    "array2d": "npm:array2d@0.0.5",
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "chartist": "npm:chartist@0.9.5",
@@ -22,6 +21,7 @@ System.config({
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.19",
+    "d3-array": "npm:d3-array@0.5.2",
     "papaparse": "npm:papaparse@4.1.2",
     "raf": "npm:raf@3.1.0",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -68,10 +68,6 @@ System.config({
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:array2d@0.0.5": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"

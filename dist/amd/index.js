@@ -70,6 +70,10 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       }
     }
 
+    if (_resourcesTypes.types[item.type].modifyConfig) {
+      _resourcesTypes.types[item.type].modifyConfig(config, data, size, rect);
+    }
+
     if (item.data.x && item.data.x.type) {
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 

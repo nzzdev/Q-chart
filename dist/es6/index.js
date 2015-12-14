@@ -45,6 +45,11 @@ function getCombinedChartistConfig(item, data, size, rect) {
     }
   }
 
+  // if the chart type wants to modify the config
+  if (chartTypes[item.type].modifyConfig) {
+    chartTypes[item.type].modifyConfig(config, data, size, rect);
+  }
+
   // if there are detected series types
   // we need to let them modify the data
   if (item.data.x && item.data.x.type) {

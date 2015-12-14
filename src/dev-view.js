@@ -73,61 +73,37 @@ var chart2 = {
         {
           label: 'Stärke',
           data: [
-            10.3,
+            100,
             106.0,
             105.4,
             101.8,
-            95.9,
-            94.1,
-            102.0
+            102,
+            200,
+            178
           ]
         },
         {
           label: 'Intelligenz',
           data: [
-            49.843099,
-            49.931931,
-            61.478163,
-            58.981617,
-            61.223861,
-            65.601574,
-            67.89832
+            100,
+            300,
+            104,
+            202,
+            107,
+            108,
+            180
           ]
         },
         {
           label: 'Love',
           data: [
-            56, 
-            21, 
-            41, 
-            22, 
-            15, 
-            12, 
-            34
-          ]
-        },
-        {
-          label: 'Wahrheit',
-          data: [
-            30, 
-            20, 
-            40, 
-            50, 
-            60, 
-            71, 
-            10
-          ]
-        },
-        {
-          label: 'Führerschein',
-          data: [
-            51, 
-            31, 
-            22, 
-            71, 
-            41, 
-            34, 
-            15
+            100, 
+            102, 
+            104, 
+            105, 
+            102, 
+            102, 
+            105
           ]
         }
       ]
@@ -137,7 +113,7 @@ var chart2 = {
   chartConfig: {
 
   },
-  type: 'StackedBar'
+  type: 'Line'
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -798,9 +774,7 @@ import 'dev-styles.css!';
 import {display as displayChart} from 'index';
 
 displayChart(chart1, document.getElementById('chart1'));
-
-// stacked bars
-// displayChart(chart2, document.getElementById('chart2'));
+displayChart(chart2, document.getElementById('chart2'));
 
 // -- colors bars
 
