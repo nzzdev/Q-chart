@@ -93,8 +93,6 @@ function getCombinedChartistConfig(item, data, size, rect) {
     }
   }
 
-  console.log(data);
-
   modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 
   return config;

@@ -98,8 +98,6 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       }
     }
 
-    console.log(data);
-
     modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 
     return config;

@@ -112,8 +112,6 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       }
     }
 
-    console.log(data);
-
     (0, _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender)(config, item.type, data, size, rect);
 
     return config;
