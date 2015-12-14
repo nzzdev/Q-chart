@@ -1,32 +1,35 @@
 System.register(['chartist'], function (_export) {
-	'use strict';
+  'use strict';
 
-	var Chartist;
+  var Chartist;
 
-	_export('ctExtendFitBarsToData', ctExtendFitBarsToData);
+  _export('ctExtendFitBarsToData', ctExtendFitBarsToData);
 
-	function ctExtendFitBarsToData() {
+  function ctExtendFitBarsToData() {
 
-		return function ctExtendFitBarsToData(chart) {
+    return function ctExtendFitBarsToData(chart) {
 
-			if (chart instanceof Chartist.Bar) {
-				chart.on('draw', function (data) {
-					if (data.type === 'bar') {
-						if (chart.options.barWidth) {
-							data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
-						}
-					}
-				});
-			}
-		};
-	}
+      if (chart instanceof Chartist.Bar) {
+        chart.on('draw', function (data) {
 
-	return {
-		setters: [function (_chartist) {
-			Chartist = _chartist['default'];
-		}],
-		execute: function () {
-			;
-		}
-	};
+          try {
+            if (data.type === 'bar') {
+              if (chart.options.barWidth) {
+                data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
+              }
+            }
+          } catch (e) {}
+        });
+      }
+    };
+  }
+
+  return {
+    setters: [function (_chartist) {
+      Chartist = _chartist['default'];
+    }],
+    execute: function () {
+      ;
+    }
+  };
 });

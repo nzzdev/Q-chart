@@ -715,6 +715,8 @@
   @media screen and (min-width: 414px) {
     .q-chart__chartist-container {
       margin: 10px 0 0 0; } }
+  .q-chart__chartist-container svg {
+    shape-rendering: crispEdges; }
 
 .q-chart__label-x-axis {
   color: #787878;
