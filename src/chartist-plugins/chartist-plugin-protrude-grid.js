@@ -18,23 +18,28 @@ export function ctProtrudeGrid(options) {
 
       chart.on('draw', function(data) {
 
-        // check for gridlines
-        if (data.type === 'grid') {
+        try {
 
-          // get vertical gridlines
-          if (data.axis.counterUnits.dir === "vertical") {
+          // check for gridlines
+          if (data.type === 'grid' && data.element) {
 
-            data.element._node.setAttribute('y1', parseInt(data.element._node.getAttribute('y1')) - options.protrude);
-            data.element._node.setAttribute('y2', parseInt(data.element._node.getAttribute('y2')) + options.protrude);
+            // get vertical gridlines
+            if (data.axis.counterUnits.dir === "vertical") {
 
-          // get horizontal gridlines
-          } else if (data.axis.counterUnits.dir === "horizontal") {
+              data.element._node.setAttribute('y1', parseInt(data.element._node.getAttribute('y1')) - options.protrude);
+              data.element._node.setAttribute('y2', parseInt(data.element._node.getAttribute('y2')) + options.protrude);
 
-            // offset horizontal gridlines and set new values
-            data.element._node.setAttribute('x1', parseInt(data.element._node.getAttribute('x1')) - options.protrude);
-            data.element._node.setAttribute('x2', parseInt(data.element._node.getAttribute('x2')) + options.protrude);
+            // get horizontal gridlines
+            } else if (data.axis.counterUnits.dir === "horizontal") {
 
+              // offset horizontal gridlines and set new values
+              data.element._node.setAttribute('x1', parseInt(data.element._node.getAttribute('x1')) - options.protrude);
+              data.element._node.setAttribute('x2', parseInt(data.element._node.getAttribute('x2')) + options.protrude);
+
+            }
           }
+
+        } catch(e) {
 
         }
 

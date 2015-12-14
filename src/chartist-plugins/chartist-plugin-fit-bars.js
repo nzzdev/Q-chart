@@ -12,12 +12,17 @@ export function ctExtendFitBarsToData() {
 
 		if(chart instanceof Chartist.Bar) { 
 			chart.on('draw', function(data) {
-				if(data.type === 'bar') {
-					// set width of bars
-          if (chart.options.barWidth) {
-					 data.element.attr({style: 'stroke-width:' + chart.options.barWidth + 'px'});
-          }
-				}
+
+        try {
+  				if(data.type === 'bar') {
+  					// set width of bars
+            if (chart.options.barWidth) {
+  					 data.element.attr({style: 'stroke-width:' + chart.options.barWidth + 'px'});
+            }
+  				}
+        } catch(e) {
+          
+        }
 			});
 		}
 	};

@@ -15,20 +15,24 @@ define(['exports', 'chartist'], function (exports, _chartist) {
       if (chart instanceof _Chartist['default'].Line || _Chartist['default'].Bar) {
 
         chart.on('draw', function (data) {
-          if (data.type === 'grid') {
-            var lineIndex = data.index;
+          try {
+            if (data.type === 'grid') {
+              var lineIndex = data.index;
 
-            if (data.axis.ticks[lineIndex] === 0) {
-              data.element.addClass('ct-baseline');
+              if (data.axis.ticks[lineIndex] === 0) {
+                data.element.addClass('ct-baseline');
+              }
             }
-          }
+          } catch (e) {}
         });
 
         chart.on('created', function () {
-          var baselineGroup = chart.svg.elem('g').addClass('ct-baseline-group');
-          var baselineLine = chart.svg.querySelector('.ct-baseline');
-          baselineGroup.append(baselineLine);
-          chart.svg.append(baselineGroup);
+          try {
+            var baselineGroup = chart.svg.elem('g').addClass('ct-baseline-group');
+            var baselineLine = chart.svg.querySelector('.ct-baseline');
+            baselineGroup.append(baselineLine);
+            chart.svg.append(baselineGroup);
+          } catch (e) {}
         });
       }
     };

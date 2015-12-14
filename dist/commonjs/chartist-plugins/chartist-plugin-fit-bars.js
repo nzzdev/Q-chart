@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-	value: true
+  value: true
 });
 exports.ctExtendFitBarsToData = ctExtendFitBarsToData;
 
@@ -13,18 +13,21 @@ var _chartist2 = _interopRequireDefault(_chartist);
 
 function ctExtendFitBarsToData() {
 
-	return function ctExtendFitBarsToData(chart) {
+  return function ctExtendFitBarsToData(chart) {
 
-		if (chart instanceof _chartist2['default'].Bar) {
-			chart.on('draw', function (data) {
-				if (data.type === 'bar') {
-					if (chart.options.barWidth) {
-						data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
-					}
-				}
-			});
-		}
-	};
+    if (chart instanceof _chartist2['default'].Bar) {
+      chart.on('draw', function (data) {
+
+        try {
+          if (data.type === 'bar') {
+            if (chart.options.barWidth) {
+              data.element.attr({ style: 'stroke-width:' + chart.options.barWidth + 'px' });
+            }
+          }
+        } catch (e) {}
+      });
+    }
+  };
 }
 
 ;

@@ -13,16 +13,19 @@ System.register(['chartist'], function (_export) {
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
         chart.on('draw', function (data) {
-          if (data.type === 'grid') {
-            if (data.axis.counterUnits.dir === "vertical") {
 
-              data.element._node.setAttribute('y1', parseInt(data.element._node.getAttribute('y1')) - options.protrude);
-              data.element._node.setAttribute('y2', parseInt(data.element._node.getAttribute('y2')) + options.protrude);
-            } else if (data.axis.counterUnits.dir === "horizontal") {
-                data.element._node.setAttribute('x1', parseInt(data.element._node.getAttribute('x1')) - options.protrude);
-                data.element._node.setAttribute('x2', parseInt(data.element._node.getAttribute('x2')) + options.protrude);
-              }
-          }
+          try {
+            if (data.type === 'grid' && data.element) {
+              if (data.axis.counterUnits.dir === "vertical") {
+
+                data.element._node.setAttribute('y1', parseInt(data.element._node.getAttribute('y1')) - options.protrude);
+                data.element._node.setAttribute('y2', parseInt(data.element._node.getAttribute('y2')) + options.protrude);
+              } else if (data.axis.counterUnits.dir === "horizontal") {
+                  data.element._node.setAttribute('x1', parseInt(data.element._node.getAttribute('x1')) - options.protrude);
+                  data.element._node.setAttribute('x2', parseInt(data.element._node.getAttribute('x2')) + options.protrude);
+                }
+            }
+          } catch (e) {}
         });
       };
     };
