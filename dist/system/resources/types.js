@@ -1,4 +1,4 @@
-System.register(['./chartistConfig', 'd3-array/src/min'], function (_export) {
+System.register(['./chartistConfig', './min'], function (_export) {
   'use strict';
 
   var vertBarHeight, vertBarSetPadding, chartHeight, min, types;
@@ -7,8 +7,8 @@ System.register(['./chartistConfig', 'd3-array/src/min'], function (_export) {
       vertBarHeight = _chartistConfig.vertBarHeight;
       vertBarSetPadding = _chartistConfig.vertBarSetPadding;
       chartHeight = _chartistConfig.chartHeight;
-    }, function (_d3ArraySrcMin) {
-      min = _d3ArraySrcMin['default'];
+    }, function (_min) {
+      min = _min['default'];
     }],
     execute: function () {
       types = {
@@ -108,7 +108,6 @@ System.register(['./chartistConfig', 'd3-array/src/min'], function (_export) {
           options: [],
           modifyConfig: function modifyConfig(config, data, size, rect) {
             config.low = 0;
-
             var minValue = min(data.series.map(function (serie) {
               return min(serie);
             }));

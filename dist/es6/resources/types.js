@@ -1,5 +1,5 @@
 import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
-import min from 'd3-array/src/min';
+import min from './min';
 
 export var types = {
   Bar: {
@@ -105,8 +105,6 @@ export var types = {
     options: [],
     modifyConfig: (config, data, size, rect) => {
       config.low = 0;
-      // let allMinValuesEqual = (minValuesPerSeries !== false);
-
       let minValue = min(data.series.map(serie => min(serie)));
 
       // if we have a value below 0, this is our low

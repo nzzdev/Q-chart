@@ -102,7 +102,7 @@ var chart2 = {
             104, 
             105, 
             102, 
-            102, 
+            108, 
             105
           ]
         }
@@ -774,7 +774,7 @@ import 'dev-styles.css!';
 import {display as displayChart} from 'index';
 
 displayChart(chart1, document.getElementById('chart1'));
-// displayChart(chart2, document.getElementById('chart2'));
+displayChart(chart2, document.getElementById('chart2'));
 
 // -- colors bars
 

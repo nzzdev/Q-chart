@@ -1,4 +1,4 @@
-define(['exports', './chartistConfig', 'd3-array/src/min'], function (exports, _chartistConfig, _d3ArraySrcMin) {
+define(['exports', './chartistConfig', './min'], function (exports, _chartistConfig, _min) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -7,7 +7,7 @@ define(['exports', './chartistConfig', 'd3-array/src/min'], function (exports, _
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-  var _min = _interopRequireDefault(_d3ArraySrcMin);
+  var _min2 = _interopRequireDefault(_min);
 
   var types = {
     Bar: {
@@ -106,9 +106,8 @@ define(['exports', './chartistConfig', 'd3-array/src/min'], function (exports, _
       options: [],
       modifyConfig: function modifyConfig(config, data, size, rect) {
         config.low = 0;
-
-        var minValue = (0, _min['default'])(data.series.map(function (serie) {
-          return (0, _min['default'])(serie);
+        var minValue = (0, _min2['default'])(data.series.map(function (serie) {
+          return (0, _min2['default'])(serie);
         }));
 
         if (minValue < 0) {
