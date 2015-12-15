@@ -216,14 +216,14 @@ export function display(item, element, withoutContext = false) {
         }
       }, element, true);
 
-      sizeObserver.onElementRectChange((rect) => {
-        let drawSize = getElementSize(rect);
-        if (withoutContext) {
-          displayWithoutContext(item, element, drawSize, rect);
-        } else {
-          displayWithContext(item, element, drawSize, rect);
-        }
-      }, element);
+      // sizeObserver.onElementRectChange((rect) => {
+      //   let drawSize = getElementSize(rect);
+      //   if (withoutContext) {
+      //     displayWithoutContext(item, element, drawSize, rect);
+      //   } else {
+      //     displayWithContext(item, element, drawSize, rect);
+      //   }
+      // }, element);
 
     } catch (e) {
       reject(e);
