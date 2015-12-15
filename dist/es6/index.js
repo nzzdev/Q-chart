@@ -125,7 +125,7 @@ function renderChartist(item, element, drawSize, rect) {
 function getLegendHtml(item) {
   let html = `
     <div class="q-chart__legend">`;
-  if (item.data && item.data.y && item.data.y.data) {
+  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
     for (var i in item.data.y.data) {
       let serie = item.data.y.data[i];
       html += `

@@ -142,7 +142,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
 
   function getLegendHtml(item) {
     var html = '\n    <div class="q-chart__legend">';
-    if (item.data && item.data.y && item.data.y.data) {
+    if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
       for (var i in item.data.y.data) {
         var serie = item.data.y.data[i];
         html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';

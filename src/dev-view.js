@@ -778,19 +778,19 @@ displayChart(chart2, document.getElementById('chart2'));
 
 // -- colors bars
 
-// displayChart(chart3, document.getElementById('chart3'));
-// displayChart(chart4, document.getElementById('chart4'));
-// displayChart(chart5, document.getElementById('chart5'));
-// displayChart(chart6, document.getElementById('chart6'));
-// displayChart(chart7, document.getElementById('chart7'));
+displayChart(chart3, document.getElementById('chart3'));
+displayChart(chart4, document.getElementById('chart4'));
+displayChart(chart5, document.getElementById('chart5'));
+displayChart(chart6, document.getElementById('chart6'));
+displayChart(chart7, document.getElementById('chart7'));
 
 // -- colors lines
 
-// displayChart(chart8, document.getElementById('chart8'));
-// displayChart(chart9, document.getElementById('chart9'));
-// displayChart(chart10, document.getElementById('chart10'));
-// displayChart(chart11, document.getElementById('chart11'));
-// displayChart(chart12, document.getElementById('chart12'));
+displayChart(chart8, document.getElementById('chart8'));
+displayChart(chart9, document.getElementById('chart9'));
+displayChart(chart10, document.getElementById('chart10'));
+displayChart(chart11, document.getElementById('chart11'));
+displayChart(chart12, document.getElementById('chart12'));
 
-// displayChart(chart13, document.getElementById('chart13'));
-// displayChart(chart14, document.getElementById('chart14'));
+displayChart(chart13, document.getElementById('chart13'));
+displayChart(chart14, document.getElementById('chart14'));
