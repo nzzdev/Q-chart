@@ -18,7 +18,7 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
   // do any hacks with chartist config here.
 
-  if ((type === 'Bar' || type === 'StackedBar') && size === 'large') {
+  if ((type === 'Bar' || type === 'StackedBar') && size === 'large' && config.horizontalBars === false) {
 
     let noOfBars;
     if (type === 'Bar') {

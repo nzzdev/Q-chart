@@ -5,7 +5,7 @@ System.register([], function (_export) {
 
   function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
 
-    if ((type === 'Bar' || type === 'StackedBar') && size === 'large') {
+    if ((type === 'Bar' || type === 'StackedBar') && size === 'large' && config.horizontalBars === false) {
 
       var noOfBars = undefined;
       if (type === 'Bar') {

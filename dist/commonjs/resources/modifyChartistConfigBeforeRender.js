@@ -10,7 +10,7 @@ Number.isInteger = Number.isInteger || function (value) {
 
 function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
 
-  if ((type === 'Bar' || type === 'StackedBar') && size === 'large') {
+  if ((type === 'Bar' || type === 'StackedBar') && size === 'large' && config.horizontalBars === false) {
 
     var noOfBars = undefined;
     if (type === 'Bar') {
