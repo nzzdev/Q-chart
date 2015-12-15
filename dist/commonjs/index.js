@@ -261,15 +261,6 @@ function display(item, element) {
           reject(chart);
         }
       }, element, true);
-
-      sizeObserver.onElementRectChange(function (rect) {
-        var drawSize = getElementSize(rect);
-        if (withoutContext) {
-          displayWithoutContext(item, element, drawSize, rect);
-        } else {
-          displayWithContext(item, element, drawSize, rect);
-        }
-      }, element);
     } catch (e) {
       reject(e);
     }
