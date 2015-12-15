@@ -8,9 +8,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 var _chartistConfig = require('./chartistConfig');
 
-var _d3ArraySrcMin = require('d3-array/src/min');
+var _min = require('./min');
 
-var _d3ArraySrcMin2 = _interopRequireDefault(_d3ArraySrcMin);
+var _min2 = _interopRequireDefault(_min);
 
 var types = {
   Bar: {
@@ -109,9 +109,8 @@ var types = {
     options: [],
     modifyConfig: function modifyConfig(config, data, size, rect) {
       config.low = 0;
-
-      var minValue = (0, _d3ArraySrcMin2['default'])(data.series.map(function (serie) {
-        return (0, _d3ArraySrcMin2['default'])(serie);
+      var minValue = (0, _min2['default'])(data.series.map(function (serie) {
+        return (0, _min2['default'])(serie);
       }));
 
       if (minValue < 0) {

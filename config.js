@@ -21,9 +21,6 @@ System.config({
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.19",
-    "d3-array": "npm:d3-array@0.5.2",
-    "papaparse": "npm:papaparse@4.1.2",
-    "raf": "npm:raf@3.1.0",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
