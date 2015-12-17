@@ -1,16 +1,28 @@
-import {dateHandlers} from './seriesTypes/dateHandlers';
+import {setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval} from './seriesTypes/dateSeriesType';
 
 export var seriesTypes = {
   'date': {
     'x': {
       'Line': {
-        modifyData: dateHandlers.modifyDataBasedOnPrecisionAndAvailableSpace
+        modifyData: setLabelsBasedOnIntervalAndAvailableSpace
       },
       'Bar': {
-        modifyData: dateHandlers.modifyDataBasedOnPrecision
+        modifyData: (config, typeOptions, data, size, rect) => {
+          if (config.horizontalBars) {
+            setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+          } else {
+            setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect);
+          }
+        }
       },
       'StackedBar': {
-        modifyData: dateHandlers.modifyDataBasedOnPrecision
+        modifyData: (config, typeOptions, data, size, rect) => {
+          if (config.horizontalBars) {
+            setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+          } else {
+            setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect);
+          }
+        }
       }
     }
   }

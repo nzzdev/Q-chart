@@ -261,6 +261,8 @@ function display(item, element) {
           reject(chart);
         }
       }, element, true);
+
+      var a = b;
     } catch (e) {
       reject(e);
     }

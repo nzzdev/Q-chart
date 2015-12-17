@@ -1,23 +1,36 @@
-System.register(['./seriesTypes/dateHandlers'], function (_export) {
+System.register(['./seriesTypes/dateSeriesType'], function (_export) {
   'use strict';
 
-  var dateHandlers, seriesTypes;
+  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, seriesTypes;
   return {
-    setters: [function (_seriesTypesDateHandlers) {
-      dateHandlers = _seriesTypesDateHandlers.dateHandlers;
+    setters: [function (_seriesTypesDateSeriesType) {
+      setLabelsBasedOnIntervalAndAvailableSpace = _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace;
+      setLabelsBasedOnInterval = _seriesTypesDateSeriesType.setLabelsBasedOnInterval;
     }],
     execute: function () {
       seriesTypes = {
         'date': {
           'x': {
             'Line': {
-              modifyData: dateHandlers.modifyDataBasedOnPrecisionAndAvailableSpace
+              modifyData: setLabelsBasedOnIntervalAndAvailableSpace
             },
             'Bar': {
-              modifyData: dateHandlers.modifyDataBasedOnPrecision
+              modifyData: function modifyData(config, typeOptions, data, size, rect) {
+                if (config.horizontalBars) {
+                  setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+                } else {
+                  setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect);
+                }
+              }
             },
             'StackedBar': {
-              modifyData: dateHandlers.modifyDataBasedOnPrecision
+              modifyData: function modifyData(config, typeOptions, data, size, rect) {
+                if (config.horizontalBars) {
+                  setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+                } else {
+                  setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect);
+                }
+              }
             }
           }
         }

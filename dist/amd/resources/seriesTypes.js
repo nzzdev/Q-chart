@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateHandlers'], function (exports, _seriesTypesDateHandlers) {
+define(['exports', './seriesTypes/dateSeriesType'], function (exports, _seriesTypesDateSeriesType) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -8,13 +8,25 @@ define(['exports', './seriesTypes/dateHandlers'], function (exports, _seriesType
     'date': {
       'x': {
         'Line': {
-          modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecisionAndAvailableSpace
+          modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
         },
         'Bar': {
-          modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecision
+          modifyData: function modifyData(config, typeOptions, data, size, rect) {
+            if (config.horizontalBars) {
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+            } else {
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect);
+            }
+          }
         },
         'StackedBar': {
-          modifyData: _seriesTypesDateHandlers.dateHandlers.modifyDataBasedOnPrecision
+          modifyData: function modifyData(config, typeOptions, data, size, rect) {
+            if (config.horizontalBars) {
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+            } else {
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect);
+            }
+          }
         }
       }
     }

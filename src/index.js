@@ -225,6 +225,8 @@ export function display(item, element, withoutContext = false) {
       //   }
       // }, element);
 
+      let a = b;
+
     } catch (e) {
       reject(e);
     } 
