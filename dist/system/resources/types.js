@@ -45,14 +45,14 @@ System.register(['./chartistConfig', './min'], function (_export) {
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
-                config.reverseData = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
 
                 config.axisX.showGrid = true;
                 config.axisX.position = 'start';
                 config.axisY.showGrid = false;
-              } else {
-                config.reverseData = false;
+              }
+              if (config.horizontalBars) {
+                config.reverseData = true;
               }
             }
           }]

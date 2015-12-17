@@ -146,10 +146,6 @@ export var chartistConfigs = {
       axisX: {
         showGrid: true,
         showLabel: true,
-        // labelOffset: {
-        //   x:-25,
-        //   y:0
-        // },
       },
       axisY: {
         showGrid: true,
