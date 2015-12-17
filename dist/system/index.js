@@ -232,8 +232,6 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
             reject(chart);
           }
         }, element, true);
-
-        var a = b;
       } catch (e) {
         reject(e);
       }
