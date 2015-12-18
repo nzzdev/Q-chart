@@ -1,6 +1,10 @@
 @import "fonts";
 @import "colors";
 
+@import "sass/settings";
+
+@import "storytelling-ui-kit/font";
+
 $break-small: 414px;
 $break-large: 768px;
 
@@ -15,6 +19,12 @@ $break-large: 768px;
   }
 }
 
+.ct-label {
+  @include font(label);
+  &--type-number {
+    @include font(label-digits);
+  }
+}
 
 // label placement
 

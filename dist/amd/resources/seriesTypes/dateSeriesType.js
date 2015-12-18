@@ -1,4 +1,4 @@
-define(['exports', './dateConfigPerLabelInterval'], function (exports, _dateConfigPerLabelInterval) {
+define(['exports', './dateConfigPerLabelInterval', './helpers'], function (exports, _dateConfigPerLabelInterval, _helpers) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -29,25 +29,7 @@ define(['exports', './dateConfigPerLabelInterval'], function (exports, _dateConf
 
     config.axisX = config.axisX || {};
 
-    var labels = data.labels.map(function (label, index) {
-      var space = undefined;
-      if (labelsToDisplay[index]) {
-        space = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].getLabelLength(index, isLastVisibleLabel(labelsToDisplay, index), data, config);
-      } else {
-        space = 0;
-      }
-      return {
-        space: space
-      };
-    });
-
-    var xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
-
-    var enoughSpace = labels.reduce(function (sum, label) {
-      return sum + label.space;
-    }, 0) < xAxisWidth;
-
-    if (enoughSpace) {
+    if ((0, _helpers.isThereEnoughSpace)(labelsToDisplay, rect, config)) {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
           data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));

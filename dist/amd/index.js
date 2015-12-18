@@ -19,7 +19,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
 
   var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
-  function getChartDataForChartist(item) {
+  function getChartDataForChartist(item, size, rect) {
     if (!item.data || !item.data.x || !item.data.y) return null;
 
     var data = {
@@ -34,7 +34,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
   }
 
   function getCombinedChartistConfig(item, data, size, rect) {
-    var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item.type, size, data), item.chartConfig);
+    var config = Object.assign((0, _resourcesChartistConfig.getConfig)(item, size), item.chartConfig);
 
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -78,27 +78,6 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-      }
-    }
-
-    if (item.data.x && item.data.x.type) {
-      if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
           _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
         }
 
@@ -121,6 +100,29 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     return config;
   }
 
+  function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+    if (item.data.x && item.data.x.type) {
+      if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+      }
+    }
+  }
+
   function getElementSize(rect) {
     var size = 'small';
     if (rect.width && rect.width > 480) {
@@ -132,9 +134,10 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
   }
 
   function renderChartist(item, element, drawSize, rect) {
-    var data = getChartDataForChartist(item);
+    var data = getChartDataForChartist(item, drawSize, rect);
     if (data && data !== null) {
       var config = getCombinedChartistConfig(item, data, drawSize, rect);
+      modifyDataBasedOnSeriesType(config, item, data, drawSize, rect);
       return new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
     }
     return undefined;
@@ -238,6 +241,9 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
           } else {
             chart = displayWithContext(item, element, drawSize, rect);
           }
+
+          chart.supportsForeignObject = false;
+
           if (chart && chart.on) {
             chart.on('created', function () {
               resolve(chart);

@@ -137,8 +137,10 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
 
   exports.chartistConfigs = chartistConfigs;
 
-  function getConfig(type, size, data) {
-    var config = (0, _clone2['default'])(chartistConfigs[type][size]);
+  function getConfig(item, size) {
+    var config = (0, _clone2['default'])(chartistConfigs[item.type][size]);
+
+    config.qItem = item;
 
     return config;
   }

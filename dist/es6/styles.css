@@ -15,6 +15,26 @@
       font-size: 13px;
       line-height: 19px; } }
 
+.ct-label, .q-chart__legend__item__text, .q-chart__label-x-axis, .q-chart__label-y-axis {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: #333;
+  font-size: 11px;
+  line-height: 1.45; }
+  @media (min-width: 414px) {
+    .ct-label, .q-chart__legend__item__text, .q-chart__label-x-axis, .q-chart__label-y-axis {
+      font-size: 13px; } }
+
+.ct-label--type-number {
+  font-family: Lucida Sans Typewriter, monospace;
+  font-weight: normal;
+  color: #333;
+  font-size: 10px;
+  line-height: 1.45; }
+  @media (min-width: 414px) {
+    .ct-label--type-number {
+      font-size: 12px; } }
+
 .ct-label.ct-vertical {
   text-align: right;
   -webkit-transform: translate(0, 15%);
@@ -651,34 +671,24 @@
     top: 0;
     left: 0; }
 
-.q-chart__legend__item__text, .q-chart__label-x-axis, .q-chart__label-y-axis {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
-  color: #333;
-  font-size: 11px;
-  line-height: 16px; }
-  @media screen and (min-width: 414px) {
-    .q-chart__legend__item__text, .q-chart__label-x-axis, .q-chart__label-y-axis {
-      font-size: 13px;
-      line-height: 19px; } }
-
 .q-chart {
   margin: 22px 0 22px 0; }
-  @media screen and (min-width: 768px) {
+  @media (min-width: 768px) {
     .q-chart {
       margin: 32px 0 32px 0; } }
 
 .q-chart__title {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  color: #333;
-  font-size: 15px;
-  line-height: 22px;
   margin: 0 0 8px 0; }
-  @media screen and (min-width: 768px) {
-    .q-chart__title {
-      font-size: 20px;
-      line-height: 26px; } }
+  .q-chart__title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    text-align: left;
+    color: #333;
+    font-size: 15px;
+    line-height: 1.45; }
+    @media (min-width: 414px) {
+      .q-chart__title {
+        font-size: 20px; } }
 
 .q-chart__legend {
   float: right;
@@ -728,23 +738,25 @@
 
 .q-chart__footer {
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
+  font-weight: 400;
+  text-align: left;
   color: #787878;
   font-size: 11px;
-  line-height: 16px; }
-  @media screen and (min-width: 414px) {
+  line-height: 1.45; }
+  @media (min-width: 414px) {
     .q-chart__footer {
-      font-size: 13px;
-      line-height: 19px; } }
-  .q-chart__footer::after {
-    content: '';
-    display: table;
-    clear: both; }
-  .q-chart__footer .q-chart__footer__notes, .q-chart__footer .q-chart__footer__sources {
-    float: left;
-    margin-right: 10px; }
-    .q-chart__footer .q-chart__footer__notes:last-child, .q-chart__footer .q-chart__footer__sources:last-child {
-      margin-right: 0; }
+      font-size: 13px; } }
+
+.q-chart__footer::after {
+  content: '';
+  display: table;
+  clear: both; }
+
+.q-chart__footer .q-chart__footer__notes, .q-chart__footer .q-chart__footer__sources {
+  float: left;
+  margin-right: 10px; }
+  .q-chart__footer .q-chart__footer__notes:last-child, .q-chart__footer .q-chart__footer__sources:last-child {
+    margin-right: 0; }
 
 .q-chart__legend__item--a .q-chart__legend__item__box {
   background: #4997be; }

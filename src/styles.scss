@@ -1,4 +1,9 @@
+@import "sass/settings";
+
 @import "storytelling-ui-kit/clearfix";
+@import "storytelling-ui-kit/font";
+@import "storytelling-ui-kit/respond-to";
+
 @import "sass/chartist_settings";
 @import "sass/chartist_styles";
 @import 'chartist@0.9.5/dist/scss/chartist';
@@ -9,35 +14,22 @@ $secondary-color: #787878;      //for less important info like notes
 $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
 
 %label-element {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
-  color: $primary-color;
-  font-size: 11px;
-  line-height: 16px;
-  @media screen and (min-width: 414px) {
-    font-size: 13px;
-    line-height: 19px;
+  @include font(label);
+  &--type-number {
+    @include font(label-digits);
   }
 }
 
 .q-chart {
-margin: 22px 0 22px 0;
-  @media screen and (min-width: 768px) {
+  margin: 22px 0 22px 0;
+  @include respond-to(large-up) {
     margin: 32px 0 32px 0;
   }
 }
 
 .q-chart__title {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  color: #333;
-  font-size: 15px;
-  line-height: 22px;
+  @include font(title);
   margin: 0 0 8px 0;
-  @media screen and (min-width: 768px) {
-    font-size: 20px;
-    line-height: 26px;
-  }
 }
 
 .q-chart__legend {
@@ -95,18 +87,8 @@ margin: 22px 0 22px 0;
 }
 
 .q-chart__footer {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
-  color: #787878;
-  font-size: 11px;
-  line-height: 16px;
-  @media screen and (min-width: 414px) {
-    font-size: 13px;
-    line-height: 19px;
-  }
-
+  @include font(secondary-text);
   @include clearfix;
-
   .q-chart__footer__notes, .q-chart__footer__sources {
     float: left;
     margin-right: 10px;

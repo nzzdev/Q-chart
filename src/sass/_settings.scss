@@ -1,0 +1,61 @@
+@import "colors";
+
+$breakpoints: (
+  medium-up: (
+    min-width: 414px
+  ),
+  large-up: (
+    min-width: 768px
+  )
+);
+
+$fonts: (
+  title: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: 700,
+    text-align: left,
+    color: $primary-color,
+    font-size: 15px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 20px
+      )
+    )
+  ),
+  secondary-text: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: 400,
+    text-align: left,
+    color: $secondary-color,
+    font-size: 11px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 13px
+      )
+    )
+  ),
+  label: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: normal,
+    color: $primary-color,
+    font-size: 11px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 13px
+      )
+    )
+  ),
+  label-digits: (
+    inherit: label,
+    font-family: "Lucida Sans Typewriter, monospace",
+    font-size: 10px,
+    respond-to: (
+      medium-up: (
+        font-size: 12px
+      )
+    )
+  )
+);

@@ -1,4 +1,5 @@
 import {seriesTypeConfig} from './dateConfigPerLabelInterval';
+import {isThereEnoughSpace} from './helpers';
 
 // filters the labels and only shows the ones at the given interval in typeOptions
 function getLabelsToDisplay(typeOptions, data) {
@@ -23,25 +24,7 @@ export function setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, d
 
   config.axisX = config.axisX || {};
 
-  // get space information for the labels
-  var labels = data.labels.map((label, index) => {
-    let space;
-    if (labelsToDisplay[index]) {
-      space = seriesTypeConfig[typeOptions.labelInterval].getLabelLength(index, isLastVisibleLabel(labelsToDisplay, index), data, config);
-    } else {
-      space = 0;
-    }
-    return {
-      space: space
-    }
-  });
-
-  let xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
-
-  // do we have space for all the labels?
-  let enoughSpace = labels.reduce((sum, label) => { return sum + label.space; }, 0) < xAxisWidth;
-
-  if (enoughSpace) {
+  if (isThereEnoughSpace(labelsToDisplay, rect, config)) {
     data.labels.map((label, index) => {
       if (labelsToDisplay[index]) {
         data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));

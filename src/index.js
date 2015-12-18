@@ -15,7 +15,7 @@ var sizeObserver = new SizeObserver();
 
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
-function getChartDataForChartist(item) {
+function getChartDataForChartist(item, size, rect) {
   if (!item.data || !item.data.x || !item.data.y) return null;
 
   // we need to clone the arrays (with slice(0)) because chartist fumbles with the data
@@ -30,7 +30,7 @@ function getChartDataForChartist(item) {
 }
 
 function getCombinedChartistConfig(item, data, size, rect) {
-  let config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
+  let config = Object.assign(getChartistConfig(item, size), item.chartConfig);
 
   for (let option of chartTypes[item.type].options) {
     switch (option.type) {
@@ -48,30 +48,6 @@ function getCombinedChartistConfig(item, data, size, rect) {
   // if the chart type wants to modify the config
   if (chartTypes[item.type].modifyConfig) {
     chartTypes[item.type].modifyConfig(config, data, size, rect);
-  }
-
-  // if there are detected series types
-  // we need to let them modify the data
-  if (item.data.x && item.data.x.type) {
-    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-      
-      if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
-      }
-      
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
-      }
-
-      if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-      }
-
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-      }
-    
-    }
   }
 
   // if there are detected series types
@@ -103,6 +79,32 @@ function getCombinedChartistConfig(item, data, size, rect) {
   return config;
 }
 
+function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+  // if there are detected series types
+  // we need to let them modify the data
+  if (item.data.x && item.data.x.type) {
+    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+      
+      if (seriesTypes[item.data.x.type.id].x.modifyData) {
+        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+      
+      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
+        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+
+      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+      }
+    
+    }
+  }
+}
+
 function getElementSize(rect) {
   let size = 'small';
   if (rect.width && rect.width > 480) {
@@ -114,9 +116,10 @@ function getElementSize(rect) {
 }
 
 function renderChartist(item, element, drawSize, rect) {
-  let data = getChartDataForChartist(item);
+  let data = getChartDataForChartist(item, drawSize, rect);
   if (data && data !== null) {
     let config = getCombinedChartistConfig(item, data, drawSize, rect);
+    modifyDataBasedOnSeriesType(config, item, data, drawSize, rect);
     return new Chartist[chartTypes[item.type].chartistType](element, data, config);
   }
   return undefined;
@@ -207,6 +210,9 @@ export function display(item, element, withoutContext = false) {
         } else {
           chart = displayWithContext(item, element, drawSize, rect);
         }
+
+        chart.supportsForeignObject = false; // we do not want line breaking in labels
+        
         if (chart && chart.on) {
           chart.on('created', () => {
             resolve(chart);

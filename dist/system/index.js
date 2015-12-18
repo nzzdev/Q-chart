@@ -5,7 +5,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
   _export('display', display);
 
-  function getChartDataForChartist(item) {
+  function getChartDataForChartist(item, size, rect) {
     if (!item.data || !item.data.x || !item.data.y) return null;
 
     var data = {
@@ -20,7 +20,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
   }
 
   function getCombinedChartistConfig(item, data, size, rect) {
-    var config = Object.assign(getChartistConfig(item.type, size, data), item.chartConfig);
+    var config = Object.assign(getChartistConfig(item, size), item.chartConfig);
 
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -64,27 +64,6 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
-          seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-          seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-          seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-      }
-    }
-
-    if (item.data.x && item.data.x.type) {
-      if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-
-        if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
           seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
         }
 
@@ -107,6 +86,29 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
     return config;
   }
 
+  function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+    if (item.data.x && item.data.x.type) {
+      if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+
+        if (seriesTypes[item.data.x.type.id].x.modifyData) {
+          seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
+          seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+          seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+          seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+      }
+    }
+  }
+
   function getElementSize(rect) {
     var size = 'small';
     if (rect.width && rect.width > 480) {
@@ -118,9 +120,10 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
   }
 
   function renderChartist(item, element, drawSize, rect) {
-    var data = getChartDataForChartist(item);
+    var data = getChartDataForChartist(item, drawSize, rect);
     if (data && data !== null) {
       var config = getCombinedChartistConfig(item, data, drawSize, rect);
+      modifyDataBasedOnSeriesType(config, item, data, drawSize, rect);
       return new Chartist[chartTypes[item.type].chartistType](element, data, config);
     }
     return undefined;
@@ -224,6 +227,9 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
           } else {
             chart = displayWithContext(item, element, drawSize, rect);
           }
+
+          chart.supportsForeignObject = false;
+
           if (chart && chart.on) {
             chart.on('created', function () {
               resolve(chart);

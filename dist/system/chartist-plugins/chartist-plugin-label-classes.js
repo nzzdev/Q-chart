@@ -10,27 +10,37 @@ System.register(['chartist'], function (_export) {
     options = Object.assign(defaultOptions, options);
 
     return function ctLabelClasses(chart) {
+
+      console.log(chart.options.qItem.data.x.type.id);
+
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
         chart.on('draw', function (data) {
           if (data.type === 'label') {
 
             var labelDirection = data.axis.units.dir;
-            var additionalClass;
+            var indexClass = '';
 
             if (data.index === 0) {
-              additionalClass = 'ct-' + labelDirection + '-' + options.first;
+              indexClass = 'ct-' + labelDirection + '-' + options.first;
             }
 
             if (data.index === data.axis.ticks.length - 1) {
-              additionalClass = 'ct-' + labelDirection + '-' + options.last;
+              indexClass = 'ct-' + labelDirection + '-' + options.last;
             }
 
-            if (additionalClass) {
-              if (data.element._node.nodeName === 'text') {
-                data.element.addClass(additionalClass);
-              } else {
-                data.element.querySelector('.ct-label:last-child').addClass(additionalClass);
+            var typeClass = '';
+            if (data.axis.units.pos === 'x') {
+              if (chart.options.qItem && chart.options.qItem.data.x.type && chart.options.qItem.data.x.type.id) {
+                typeClass = 'ct-label--type-' + chart.options.qItem.data.x.type.id;
               }
+            }
+
+            if (data.element._node.nodeName === 'text') {
+              data.element.addClass(indexClass);
+              data.element.addClass(typeClass);
+            } else {
+              data.element.querySelector('.ct-label:last-child').addClass(indexClass);
+              data.element.querySelector('.ct-label:last-child').addClass(typeClass);
             }
           }
         });

@@ -5,8 +5,10 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
 
   _export('getConfig', getConfig);
 
-  function getConfig(type, size, data) {
-    var config = clone(chartistConfigs[type][size]);
+  function getConfig(item, size) {
+    var config = clone(chartistConfigs[item.type][size]);
+
+    config.qItem = item;
 
     return config;
   }

@@ -42,7 +42,7 @@ export var chartistConfigs = {
         right: 1,
         bottom: 0,
         left: 0
-      },    
+      },
       reverseData: false,
       horizontalBars: false,
       axisX: {
@@ -161,8 +161,10 @@ export var chartistConfigs = {
   }
 }
 
-export function getConfig(type, size, data) {
-  let config = clone(chartistConfigs[type][size]);
+export function getConfig(item, size) {
+  let config = clone(chartistConfigs[item.type][size]);
+
+  config.qItem = item;
 
   // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
   // if (type === 'Bar' && (data.series.length*data.labels.length >= 30)){
