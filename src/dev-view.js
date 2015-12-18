@@ -13,7 +13,7 @@ var chart1 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -63,7 +63,7 @@ var chart2 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -481,7 +481,7 @@ var chart8 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -517,7 +517,7 @@ var chart9 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -557,7 +557,7 @@ var chart10 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -601,7 +601,7 @@ var chart11 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -649,7 +649,7 @@ var chart12 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -701,7 +701,7 @@ var chart13 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
@@ -741,7 +741,7 @@ var chart14 = {
       type: {
         id: 'date',
         options: {
-          precision: 'month'
+          labelInterval: 'month'
         }
       }
     },
