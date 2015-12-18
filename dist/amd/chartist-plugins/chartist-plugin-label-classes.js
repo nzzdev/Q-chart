@@ -21,8 +21,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
     return function ctLabelClasses(chart) {
 
-      console.log(chart.options.qItem.data.x.type.id);
-
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
         chart.on('draw', function (data) {
           if (data.type === 'label') {

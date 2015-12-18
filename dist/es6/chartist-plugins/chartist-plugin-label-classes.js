@@ -11,8 +11,6 @@ export function ctLabelClasses(options) {
 
   return function ctLabelClasses(chart) {
 
-    console.log(chart.options.qItem.data.x.type.id);
-
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
       chart.on('draw', function(data) {   
         if(data.type === 'label') {
