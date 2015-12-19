@@ -1,72 +1,50 @@
-// --- TYPOGRAPHICS
-// title
-@mixin font-title($size) {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  color: $primary-color;
-  @if $size == "small" {
-//    font-size: 0.938em;
-//    line-height: 1.375em;
-    font-size: 15px;
-    line-height: 22px;
-  } @else if $size == "large" {
-//    font-size: 1.250em;
-//    line-height: 1.625em;
-    font-size: 20px;
-    line-height: 26px;
-  }
-};
-
-// text
-@mixin font-txt($size) {
-  font-family: Georgia, Times, serif;
-  font-weight: normal;
-  color: $primary-color;
-  @if $size == "small" {
-//    font-size: 1em;
-//    line-height: 1.625em;
-    font-size: 16px;
-    line-height: 26px;
-  } @else if $size == "large" {
-//    font-size: 1.125em;
-//    line-height: 1.875em;
-    font-size: 18px;
-    line-height: 30px;
-  }
-};
-
-// chart tick text (like chart legend)
-@mixin font-labeling($size) {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
-  color: $primary-color;
-  @if $size == "small" {
-//    font-size: 0.688em;
-//    line-height: 1em;
-    font-size: 11px;
-    line-height: 16px;
-  } @else if $size == "large" {
-//    font-size: 0.813em;
-//  line-height: 1.188em;
-    font-size: 13px;
-    line-height: 19px;
-  }
-};
-
-// notes
-@mixin font-notes($size) {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: normal;
-  color: $secondary-color;
-  @if $size == "small" {
-//    font-size: 0.688em;
-//    line-height: 1em;
-    font-size: 11px;
-    line-height: 16px;
-  } @else if $size == "large" {
-//    font-size: 0.813em;
-//  line-height: 1.188em;
-    font-size: 13px;
-    line-height: 19px;
-  }
-};
+$fonts: (
+  title: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: 700,
+    text-align: left,
+    color: $primary-color,
+    font-size: 15px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 20px
+      )
+    )
+  ),
+  secondary-text: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: 400,
+    text-align: left,
+    color: $secondary-color,
+    font-size: 11px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 13px
+      )
+    )
+  ),
+  label: (
+    font-family: "Arial, Helvetica, sans-serif",
+    font-weight: normal,
+    color: $primary-color,
+    font-size: 11px,
+    line-height: 1.45,
+    respond-to: (
+      medium-up: (
+        font-size: 13px
+      )
+    )
+  ),
+  label-digits: (
+    inherit: label,
+    font-family: "Lucida Sans Typewriter, monospace",
+    font-size: 10px,
+    respond-to: (
+      medium-up: (
+        font-size: 12px
+      )
+    )
+  )
+);

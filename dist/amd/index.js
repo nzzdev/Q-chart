@@ -1,9 +1,10 @@
-define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (exports, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesModifyChartistConfigBeforeRender, _stylesCss) {
+define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (exports, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
+  exports.getDivisorString = getDivisorString;
   exports.display = display;
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -19,7 +20,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
 
   var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
 
-  function getChartDataForChartist(item, size, rect) {
+  function getChartDataForChartist(item) {
     if (!item.data || !item.data.x || !item.data.y) return null;
 
     var data = {
@@ -31,6 +32,59 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       })
     };
     return data;
+  }
+
+  function shortenNumberLabels(config, data) {
+    var divisor = 1;
+    var flatDatapoints = data.series.reduce(function (a, b) {
+      return a.concat(b);
+    }).sort(function (a, b) {
+      return parseFloat(a) - parseFloat(b);
+    });
+
+    var medianValue = flatDatapoints.length % 2 === 0 ? flatDatapoints[flatDatapoints.length / 2 - 1] : flatDatapoints[flatDatapoints.length - 1 / 2];
+    var maxValue = flatDatapoints[flatDatapoints.length - 1];
+
+    if (medianValue >= Math.pow(10, 9)) {
+      divisor = Math.pow(10, 9);
+    } else if (medianValue >= Math.pow(10, 6)) {
+      divisor = Math.pow(10, 6);
+    } else if (medianValue >= Math.pow(10, 3)) {
+      divisor = Math.pow(10, 3);
+    }
+
+    var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
+
+    var axis = config.horizontalBars ? 'axisX' : 'axisY';
+
+    config[axis].scaleMinSpace = (0, _resourcesHelpers.getTextWidth)(maxLabel / divisor, (0, _resourcesSeriesTypes.getDigitLabelFontStyle)()) * 1.5;
+    config[axis].labelInterpolationFnc = function (value, index) {
+      return value / divisor;
+    };
+    return divisor;
+  }
+
+  function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+    if (item.data.x && item.data.x.type) {
+      if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+
+        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        }
+      }
+    }
   }
 
   function getCombinedChartistConfig(item, data, size, rect) {
@@ -100,29 +154,6 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     return config;
   }
 
-  function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
-    if (item.data.x && item.data.x.type) {
-      if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-
-        if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
-        }
-      }
-    }
-  }
-
   function getElementSize(rect) {
     var size = 'small';
     if (rect.width && rect.width > 480) {
@@ -133,14 +164,8 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     return size;
   }
 
-  function renderChartist(item, element, drawSize, rect) {
-    var data = getChartDataForChartist(item, drawSize, rect);
-    if (data && data !== null) {
-      var config = getCombinedChartistConfig(item, data, drawSize, rect);
-      modifyDataBasedOnSeriesType(config, item, data, drawSize, rect);
-      return new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, data, config);
-    }
-    return undefined;
+  function renderChartist(item, element, chartistConfig, dataForChartist) {
+    return new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, dataForChartist, chartistConfig);
   }
 
   function getLegendHtml(item) {
@@ -155,13 +180,46 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     return html;
   }
 
-  function getContextHtml(item) {
+  function getDivisorString(divisor) {
+    var divisorString = '';
+    switch (divisor) {
+      case Math.pow(10, 9):
+        divisorString = ' (mrd.)';
+        break;
+      case Math.pow(10, 6):
+        divisorString = ' (mil.)';
+        break;
+      case Math.pow(10, 3):
+        divisorString = ' (tsd.)';
+        break;
+      default:
+        divisorString = '';
+        break;
+    }
+    return divisorString;
+  }
+
+  function getContextHtml(item, chartistConfig) {
+    var axisExplanation = { x: '', y: '' };
+    axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
+
     var html = '\n    <h3 class="q-chart__title">' + item.title + '</h3>';
     html += getLegendHtml(item);
     if (!item.data.y) {
       item.data.y = {};
     }
-    html += '\n    <div class="q-chart__label-y-axis">' + (item.data.y.label || '') + '</div>\n    <div class="q-chart__chartist-container"></div>\n    <div class="q-chart__label-x-axis">' + (item.data.x.label || '') + '</div>\n    <div class="q-chart__footer">';
+    var axisNames = new Array('y', 'x');
+    if (chartistConfig.horizontalBars) {
+      axisNames.reverse();
+    }
+    html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
+
+    if (chartistConfig.horizontalBars) {
+      html += '\n      <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n      <div class="q-chart__chartist-container"></div>\n    ';
+    } else {
+      html += '\n      <div class="q-chart__chartist-container"></div>\n      <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n    ';
+    }
+    html += '  \n    <div class="q-chart__footer">';
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
     }
@@ -206,19 +264,19 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
     return html;
   }
 
-  function displayWithContext(item, element, drawSize, rect) {
+  function displayWithContext(item, element, chartistConfig, dataForChartist) {
     var el = document.createElement('section');
     el.setAttribute('class', 'q-chart');
-    el.innerHTML = getContextHtml(item);
+    el.innerHTML = getContextHtml(item, chartistConfig);
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
     element.appendChild(el);
-    return renderChartist(item, el.querySelector('.q-chart__chartist-container'), drawSize, rect);
+    return renderChartist(item, el.querySelector('.q-chart__chartist-container'), chartistConfig, dataForChartist);
   }
 
-  function displayWithoutContext(item, element, drawSize, rect) {
-    return renderChartist(item, element, drawSize, rect);
+  function displayWithoutContext(item, element, chartistConfig, dataForChartist) {
+    return renderChartist(item, element, chartistConfig, dataForChartist);
   }
 
   function display(item, element) {
@@ -226,32 +284,53 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
 
     return new Promise(function (resolve, reject) {
       try {
-        if (!element) throw 'Element is not defined';
-        if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
+        var _ret = (function () {
+          if (!element) throw 'Element is not defined';
+          if (!_Chartist['default'].hasOwnProperty(types[item.type].chartistType)) throw 'Chartist Type (' + types[item.type].chartistType + ') not available';
 
-        if (!item.data || !item.data.x) {
-          reject('no data');
-        }
+          if (!item.data || !item.data.x) {
+            reject('no data');
+            return {
+              v: undefined
+            };
+          }
 
-        sizeObserver.onResize(function (rect) {
-          var drawSize = getElementSize(rect);
+          var dataForChartist = getChartDataForChartist(item);
+          if (!dataForChartist || dataForChartist === null) {
+            reject('data could not be prepared for chartist');
+            return {
+              v: undefined
+            };
+          }
+
           var chart = undefined;
-          if (withoutContext) {
-            chart = displayWithoutContext(item, element, drawSize, rect);
-          } else {
-            chart = displayWithContext(item, element, drawSize, rect);
-          }
 
-          chart.supportsForeignObject = false;
+          sizeObserver.onResize(function (rect) {
+            var drawSize = getElementSize(rect);
 
-          if (chart && chart.on) {
-            chart.on('created', function () {
-              resolve(chart);
-            });
-          } else {
-            reject(chart);
-          }
-        }, element, true);
+            var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
+            chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+            modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
+
+            if (withoutContext) {
+              chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
+            } else {
+              chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+            }
+
+            chart.supportsForeignObject = false;
+
+            if (chart && chart.on) {
+              chart.on('created', function () {
+                resolve(chart);
+              });
+            } else {
+              reject(chart);
+            }
+          }, element, true);
+        })();
+
+        if (typeof _ret === 'object') return _ret.v;
       } catch (e) {
         reject(e);
       }

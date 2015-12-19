@@ -5,12 +5,15 @@ System.register(['chartist'], function (_export) {
 
   _export('ctLabelClasses', ctLabelClasses);
 
+  function isNumber(value) {
+    return typeof parseInt(value) === 'number' && !isNaN(parseInt(value)) || typeof parseFloat(value) === 'number' && !isNaN(parseFloat(value));
+  }
+
   function ctLabelClasses(options) {
 
     options = Object.assign(defaultOptions, options);
 
     return function ctLabelClasses(chart) {
-
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
         chart.on('draw', function (data) {
           if (data.type === 'label') {
@@ -27,9 +30,9 @@ System.register(['chartist'], function (_export) {
             }
 
             var typeClass = '';
-            if (data.axis.units.pos === 'x') {
-              if (chart.options.qItem && chart.options.qItem.data.x.type && chart.options.qItem.data.x.type.id) {
-                typeClass = 'ct-label--type-' + chart.options.qItem.data.x.type.id;
+            if (data.element._node.nodeName === 'text') {
+              if (isNumber(data.element._node.textContent)) {
+                typeClass = 'ct-label--number';
               }
             }
 

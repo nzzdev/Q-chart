@@ -1,5 +1,7 @@
-System.register([], function (_export) {
+System.register(['./helpers', './seriesTypes'], function (_export) {
   'use strict';
+
+  var getTextWidth, getLabelFontStyle, getDigitLabelFontStyle;
 
   _export('modifyChartistConfigBeforeRender', modifyChartistConfigBeforeRender);
 
@@ -39,57 +41,64 @@ System.register([], function (_export) {
       config.seriesBarDistance = seriesBarDistance;
     }
 
-    var maxLength = 0;
-    var isNumber = false;
+    var maxLabelWidth = 0;
     if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
-      for (var i = 0; i < data.labels.length; i++) {
-        var _length = 0;
-        if (data.labels && data.labels[i]) {
-          if (Number.isInteger(data.labels[i])) {
-            isNumber = true;
-            _length = Math.floor(data.labels[i]).toString().length;
-          } else {
-            _length = data.labels[i].length;
-          }
-        } else {
-          if (Number.isInteger(data.labels[i])) {
-            isNumber = true;
-            _length = Math.floor(data.labels[i]).toString().length;
-          } else {
-            _length = data.labels[i].length;
-          }
+      maxLabelWidth = data.labels.reduce(function (maxWidth, label) {
+        var width = getTextWidth(label, getLabelFontStyle());
+        if (maxWidth < width) {
+          return width;
         }
-        if (_length > maxLength) {
-          maxLength = _length;
+        return maxWidth;
+      }, 0);
+    } else if (type === 'StackedBar') {
+      var sums = [];
+      for (var i = 0; i < data.series[0].length; i++) {
+        if (!sums[i]) {
+          sums[i] = 0;
+        }
+        for (var ii = 0; ii < data.series.length; ii++) {
+          sums[i] = sums[i] + parseFloat(data.series[ii][i]);
         }
       }
+      maxLabelWidth = sums.reduce(function (maxWidth, label) {
+        var width = getTextWidth(label, getDigitLabelFontStyle());
+        if (maxWidth < width) {
+          return width;
+        }
+        return maxWidth;
+      }, 0);
     } else {
-      data.series.map(function (serie) {
-        serie.map(function (datapoint) {
-          var length = 0;
-          if (Number.isInteger(datapoint)) {
-            isNumber = true;
-            length = Math.floor(datapoint).toString().length;
-          } else {
-            length = datapoint.length;
+      maxLabelWidth = data.series.reduce(function (overallMaxWidth, serie) {
+        var serieMaxWidth = serie.reduce(function (maxWidth, datapoint) {
+          var width = getTextWidth(datapoint, getDigitLabelFontStyle());
+          if (maxWidth < width) {
+            return width;
           }
-          if (length > maxLength) {
-            maxLength = length;
-          }
-        });
-      });
+          return maxWidth;
+        }, 0);
+        if (overallMaxWidth < serieMaxWidth) {
+          return serieMaxWidth;
+        }
+        return overallMaxWidth;
+      }, 0);
     }
-    var averageCharLength = isNumber ? 10 : 9;
-    var offset = maxLength * averageCharLength;
-    if (offset < 25) {
-      offset = 25;
+
+    var offset = maxLabelWidth + 5;
+    if (offset < 30) {
+      offset = 30;
     }
     config.axisY.offset = offset;
   }
 
   return {
-    setters: [],
+    setters: [function (_helpers) {
+      getTextWidth = _helpers.getTextWidth;
+    }, function (_seriesTypes) {
+      getLabelFontStyle = _seriesTypes.getLabelFontStyle;
+      getDigitLabelFontStyle = _seriesTypes.getDigitLabelFontStyle;
+    }],
     execute: function () {
+
       Number.isInteger = Number.isInteger || function (value) {
         return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
       };

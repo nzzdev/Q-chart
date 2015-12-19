@@ -1,6 +1,7 @@
 import {ctProtrudeGrid} from '../chartist-plugins/chartist-plugin-protrude-grid.js';
 import {ctBaseline} from '../chartist-plugins/chartist-plugin-baseline.js';
 import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.js';
+import {ctLabelPosition} from '../chartist-plugins/chartist-plugin-label-position.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 
 import clone from './clone';
@@ -29,6 +30,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline()
       ]
@@ -51,6 +53,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline(),
        ctExtendFitBarsToData()
@@ -77,6 +80,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline()
       ]
@@ -100,6 +104,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline(),
        ctExtendFitBarsToData()
@@ -129,6 +134,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline()
       ]
@@ -154,6 +160,7 @@ export var chartistConfigs = {
       },
       plugins: [
        ctLabelClasses(),
+       ctLabelPosition(),
        ctProtrudeGrid(),
        ctBaseline()
       ]
@@ -163,8 +170,6 @@ export var chartistConfigs = {
 
 export function getConfig(item, size) {
   let config = clone(chartistConfigs[item.type][size]);
-
-  config.qItem = item;
 
   // if Bar: check the number of bars and recommend/switch to mobile layout if > 30 bars (not implemented yet, just log)
   // if (type === 'Bar' && (data.series.length*data.labels.length >= 30)){

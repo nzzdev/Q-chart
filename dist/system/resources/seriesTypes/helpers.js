@@ -1,38 +1,24 @@
-System.register([], function (_export) {
-  "use strict";
+System.register(['../helpers'], function (_export) {
+  'use strict';
 
-  var c, ctx;
+  var getTextWidth;
 
-  _export("getLabelWidth", getLabelWidth);
+  _export('isThereEnoughSpace', isThereEnoughSpace);
 
-  _export("isThereEnoughSpace", isThereEnoughSpace);
-
-  function getLabelWidth(label, getFontstyle) {
-    var length = undefined;
-    if (ctx) {
-      ctx.font = getFontstyle;
-      length = ctx.measureText(label).width;
-    } else {
-      length = label.length * 9;
-    }
-    return length;
-  }
-
-  function isThereEnoughSpace(labelsToDisplay, rect, config) {
+  function isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle) {
     var xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
 
     var totalSpace = labelsToDisplay.reduce(function (sum, label) {
-      return sum + getLabelWidth(label);
-    });
+      return sum + getTextWidth(label, fontstyle);
+    }, 0);
 
     return totalSpace < xAxisWidth;
   }
 
   return {
-    setters: [],
-    execute: function () {
-      c = document.createElement("canvas");
-      ctx = c.getContext("2d");
-    }
+    setters: [function (_helpers) {
+      getTextWidth = _helpers.getTextWidth;
+    }],
+    execute: function () {}
   };
 });

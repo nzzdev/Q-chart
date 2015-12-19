@@ -1,12 +1,15 @@
 @import "sass/settings";
-
 @import "storytelling-ui-kit/clearfix";
 @import "storytelling-ui-kit/font";
 @import "storytelling-ui-kit/respond-to";
 
+@import 'chartist@0.9.5/dist/scss/settings/chartist-settings';
+$ct-include-classes: false;
+@import 'chartist@0.9.5/dist/scss/chartist';
+
 @import "sass/chartist_settings";
 @import "sass/chartist_styles";
-@import 'chartist@0.9.5/dist/scss/chartist';
+
 
 // --- COLORS
 $primary-color: #333;           //for headline, description and relevant elements of chart, inherited from nzz.ch
@@ -65,17 +68,14 @@ $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
 
 .q-chart__chartist-container {
   margin: 2px 0 0 0;
-  @media screen and (min-width: ($break-small)) {
+  @include respond-to(medium-up) {
     margin: 10px 0 0 0;
-  }
-
-  .ct-grid {
-    shape-rendering: crispEdges;
   }
 }
 
 .q-chart__label-x-axis {
   @extend %label-element;
+  clear: both;
   color: $secondary-color;
   text-align: right;
   margin: 0 0 6px 0;

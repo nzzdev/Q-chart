@@ -1,3 +1,6 @@
+import {getTextWidth} from './helpers';
+import {getLabelFontStyle, getDigitLabelFontStyle} from './seriesTypes';
+
 Number.isInteger = Number.isInteger || function(value) {
   return typeof value === "number" && 
    isFinite(value) && 
@@ -61,51 +64,54 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
 
   // Calculate the X Axis offset dependending on label length
-  let maxLength = 0;
-  let isNumber = false;
+  let maxLabelWidth = 0;
   if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
-    for (let i = 0; i < data.labels.length; i++) {
-      let length = 0;
-      if (data.labels && data.labels[i]) {
-        if (Number.isInteger(data.labels[i])) {
-          isNumber = true;
-          length = Math.floor(data.labels[i]).toString().length;
-        } else {
-          length = data.labels[i].length;
+    maxLabelWidth = data.labels
+      .reduce((maxWidth, label) => {
+        let width = getTextWidth(label, getLabelFontStyle());
+        if (maxWidth < width) {
+          return width;
         }
-      } else {
-        if (Number.isInteger(data.labels[i])) {
-          isNumber = true;
-          length = Math.floor(data.labels[i]).toString().length;
-        } else {
-          length = data.labels[i].length;
-        }
+        return maxWidth;
+      },0);
+  } else if (type === 'StackedBar') {
+    let sums = [];
+    for (let i = 0; i < data.series[0].length; i++) {
+      if (!sums[i]) {
+        sums[i] = 0;
       }
-      if (length > maxLength) {
-        maxLength = length;
+      for (let ii = 0; ii < data.series.length; ii++) {
+        sums[i] = sums[i] + parseFloat(data.series[ii][i]);
       }
     }
+    maxLabelWidth = sums
+      .reduce((maxWidth, label) => {
+        let width = getTextWidth(label, getDigitLabelFontStyle());
+        if (maxWidth < width) {
+          return width;
+        }
+        return maxWidth;
+      },0);
   } else {
-    data.series.map(serie => {
-      serie.map(datapoint => {
-        let length = 0;
-        if (Number.isInteger(datapoint)) {
-          isNumber = true;
-          length = Math.floor(datapoint).toString().length;
-        } else {
-          length = datapoint.length;
+    maxLabelWidth = data.series
+      .reduce((overallMaxWidth, serie) => {
+        let serieMaxWidth = serie.reduce((maxWidth, datapoint) => {
+          let width = getTextWidth(datapoint, getDigitLabelFontStyle());
+          if (maxWidth < width) {
+            return width;
+          }
+          return maxWidth;
+        },0);
+        if (overallMaxWidth < serieMaxWidth) {
+          return serieMaxWidth;
         }
-        if (length > maxLength) {
-          maxLength = length;
-        }
-      })
-    })
+        return overallMaxWidth;
+      },0);
   }
-  let averageCharLength = isNumber ? 10 : 9;
-  let offset = maxLength * averageCharLength;
-  if (offset < 25) {
-    offset = 25;
+
+  let offset = maxLabelWidth + 5;
+  if (offset < 30) {
+    offset = 30;
   }
   config.axisY.offset = offset;
-
 }

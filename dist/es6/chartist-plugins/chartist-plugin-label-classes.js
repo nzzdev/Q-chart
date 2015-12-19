@@ -5,12 +5,16 @@ var defaultOptions = {
   last: 'last'
 };
 
+function isNumber(value) {
+  return ((typeof parseInt(value) === 'number' && !isNaN(parseInt(value)))
+          || (typeof parseFloat(value) === 'number' && !isNaN(parseFloat(value))));
+}
+
 export function ctLabelClasses(options) {
 
   options = Object.assign(defaultOptions, options);
 
   return function ctLabelClasses(chart) {
-
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
       chart.on('draw', function(data) {   
         if(data.type === 'label') {
@@ -30,15 +34,15 @@ export function ctLabelClasses(options) {
 
           // add classname with the type of data for x axis
           var typeClass = '';
-          if (data.axis.units.pos === 'x') {
-            if (chart.options.qItem && chart.options.qItem.data.x.type && chart.options.qItem.data.x.type.id) {
-              typeClass = `ct-label--type-${chart.options.qItem.data.x.type.id}`;
+          if (data.element._node.nodeName === 'text') {
+            if (isNumber(data.element._node.textContent)) {
+              typeClass = `ct-label--number`;
             }
           }
 
           if (data.element._node.nodeName === 'text') {
-            data.element.addClass(indexClass)
-            data.element.addClass(typeClass)
+            data.element.addClass(indexClass);
+            data.element.addClass(typeClass);
           } else {
             data.element.querySelector('.ct-label:last-child').addClass(indexClass);
             data.element.querySelector('.ct-label:last-child').addClass(typeClass);

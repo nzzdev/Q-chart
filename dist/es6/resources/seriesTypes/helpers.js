@@ -1,24 +1,12 @@
-var c = document.createElement("canvas");
-var ctx = c.getContext("2d");
+import {getTextWidth} from '../helpers';
 
-export function getLabelWidth(label, getFontstyle) {
-  let length;
-  if (ctx) {
-    ctx.font = getFontstyle;
-    length = ctx.measureText(label).width;
-  } else {
-    length = label.length * 9;
-  }
-  return length;
-}
-
-export function isThereEnoughSpace(labelsToDisplay, rect, config) {
+export function isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle) {
   let xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
 
   let totalSpace = labelsToDisplay
     .reduce((sum, label) => {
-      return sum + getLabelWidth(label);
-    });
+      return sum + getTextWidth(label, fontstyle);
+    },0);
 
   return totalSpace < xAxisWidth;
 }

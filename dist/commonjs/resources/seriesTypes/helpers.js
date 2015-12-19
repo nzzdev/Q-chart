@@ -1,30 +1,18 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports.getLabelWidth = getLabelWidth;
 exports.isThereEnoughSpace = isThereEnoughSpace;
-var c = document.createElement("canvas");
-var ctx = c.getContext("2d");
 
-function getLabelWidth(label, getFontstyle) {
-  var length = undefined;
-  if (ctx) {
-    ctx.font = getFontstyle;
-    length = ctx.measureText(label).width;
-  } else {
-    length = label.length * 9;
-  }
-  return length;
-}
+var _helpers = require('../helpers');
 
-function isThereEnoughSpace(labelsToDisplay, rect, config) {
+function isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle) {
   var xAxisWidth = rect.width - ((config.axisX.offset || 30) + 10);
 
   var totalSpace = labelsToDisplay.reduce(function (sum, label) {
-    return sum + getLabelWidth(label);
-  });
+    return sum + (0, _helpers.getTextWidth)(label, fontstyle);
+  }, 0);
 
   return totalSpace < xAxisWidth;
 }

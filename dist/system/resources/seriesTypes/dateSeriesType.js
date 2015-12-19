@@ -11,7 +11,10 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     var labelsToDisplay = [];
     var lastLabel = undefined;
     data.labels.map(function (label, index) {
-      var formattedLabel = seriesTypeConfig[typeOptions.labelInterval].format(index, data.labels.length, new Date(label.toString()), true);
+      var formattedLabel = label;
+      if (seriesTypeConfig[typeOptions.labelInterval] && seriesTypeConfig[typeOptions.labelInterval].format) {
+        formattedLabel = seriesTypeConfig[typeOptions.labelInterval].format(index, data.labels.length, new Date(label.toString()), true);
+      }
       if (formattedLabel !== lastLabel) {
         lastLabel = formattedLabel;
         labelsToDisplay[index] = label;
@@ -24,12 +27,12 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     return labelsToDisplay.length - 1 === labelIndex;
   }
 
-  function setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect) {
+  function setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect, fontstyle) {
     var labelsToDisplay = getLabelsToDisplay(typeOptions, data);
 
     config.axisX = config.axisX || {};
 
-    if (isThereEnoughSpace(labelsToDisplay, rect, config)) {
+    if (isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle)) {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
           data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
@@ -40,7 +43,7 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     } else {
         data.labels.map(function (label, index) {
           if (labelsToDisplay[index]) {
-            if (seriesTypeConfig[typeOptions.labelInterval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
+            if (seriesTypeConfig[typeOptions.labelInterval] && seriesTypeConfig[typeOptions.labelInterval].getForceShow && seriesTypeConfig[typeOptions.labelInterval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
               data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
             } else {
               data.labels[index] = ' ';

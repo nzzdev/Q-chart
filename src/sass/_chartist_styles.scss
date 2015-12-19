@@ -1,85 +1,119 @@
-@import "fonts";
-@import "colors";
-
 @import "sass/settings";
-
 @import "storytelling-ui-kit/font";
 
-$break-small: 414px;
-$break-large: 768px;
-
-.ct-grids, line.ct-bar{
+.ct-grid, line.ct-bar {
  shape-rendering: crispEdges;
 }
 
-.ct-chart-bar, .ct-chart-line {
-  @include font-labeling("small");
-  @media screen and (min-width: ($break-small)) {
-  	@include font-labeling("large");
-  }
-}
-
-.ct-label {
+.#{$ct-class-label} {
   @include font(label);
-  &--type-number {
+  &--number {
     @include font(label-digits);
   }
 }
 
-// label placement
-
-// generic label placement on vertical axis, gets overwritten
-.ct-label.ct-vertical {
-  text-align: right;
-  transform: translate(0, 15%);
+.#{$ct-class-chart-line} .#{$ct-class-label},
+.#{$ct-class-chart-bar} .#{$ct-class-label} {
+  // @include ct-flex();
 }
 
-// horz chart
-.ct-chart-bar.ct-horizontal-bars {
+// .#{$ct-class-label}.#{$ct-class-horizontal} {
+//   text-anchor: middle;
+//   &.ct-horizontal-first {
+//     text-anchor: start;
+//   }
+//   &.ct-horizontal-last {
+//     text-anchor: end;
+//   }
+// }
 
-  .ct-label.ct-vertical{
-    transform: translate(0, 0);
-  }
-
-  .ct-label.ct-horizontal, .ct-label.ct-horizontal.ct-start {
-    transform: translate(-10%, 0);
-    justify-content: center;
-  }
-
-  // intend bzw. unindent first label
-  .ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-start.ct-horizontal.ct-horizontal-first {
-    transform: translate(0, 0);
-    justify-content: flex-start;
-  }
-
-  // intend bzw. unindent first label
-  .ct-label.ct-horizontal.ct-horizontal-last, .ct-label.ct-start.ct-horizontal.ct-horizontal-last {
-    transform: translate(-100%, 0);
-    justify-content: flex-end;
-  }
-
+.#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
+  text-anchor: middle;
 }
 
+.#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
+  text-anchor: middle;
+}
+
+.#{$ct-class-label}.#{$ct-class-vertical}.#{$ct-class-start} {
+  text-anchor: end;
+}
+
+.#{$ct-class-label}.#{$ct-class-vertical}.#{$ct-class-end} {
+  text-anchor: start;
+}
+
+.#{$ct-class-chart-bar} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
+  text-anchor: start;
+}
+
+.#{$ct-class-chart-bar} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
+  text-anchor: start;
+}
+
+.#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
+  text-anchor: middle;
+  &.ct-horizontal-first {
+    text-anchor: start;
+  }
+  &.ct-horizontal-last {
+    text-anchor: end;
+  }
+}
+
+.#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
+  text-anchor: middle;
+  &.ct-horizontal-first {
+    text-anchor: start;
+  }
+  &.ct-horizontal-last {
+    text-anchor: end;
+  }
+}
+
+.#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-vertical}.#{$ct-class-start} {
+  text-anchor: end;
+}
+
+.#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-vertical}.#{$ct-class-end} {
+  text-anchor: end;
+}
+
+.#{$ct-class-grid} {
+  @include ct-chart-grid($ct-grid-color, $ct-grid-width, $ct-grid-dasharray);
+}
+
+.#{$ct-class-point} {
+  @include ct-chart-point($ct-point-size, $ct-point-shape);
+}
+
+.#{$ct-class-line} {
+  @include ct-chart-line($ct-line-width);
+}
+
+.#{$ct-class-area} {
+  @include ct-chart-area();
+}
+
+.#{$ct-class-bar} {
+  @include ct-chart-bar($ct-bar-width);
+}
+
+.#{$ct-class-slice-donut} {
+  @include ct-chart-donut($ct-donut-width);
+}
+
+@for $i from 0 to length($ct-series-names) {
+  .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+    $color: nth($ct-series-colors, $i + 1);
+
+    @include ct-chart-series-color($color);
+  }
+}
 
 // line chart
 .ct-chart-line {
 
-  .ct-label.ct-horizontal, .ct-label.ct-horizontal.ct-end {
-    transform: translate(-50%, 0);
-    justify-content: center;
-  }
-
-  // intend bzw. unindent first label
-  .ct-label.ct-horizontal.ct-horizontal-first, .ct-label.ct-end.ct-horizontal.ct-horizontal-first {
-    transform: translate(0, 0);
-    justify-content: flex-start;
-  }
-
-  // intend bzw. unindent first label
-  .ct-label.ct-horizontal.ct-horizontal-last, .ct-label.ct-end.ct-horizontal.ct-horizontal-last {
-    transform: translate(-100%, 0);
-    justify-content: flex-end;
-  }
 
 }
 

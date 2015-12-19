@@ -4,6 +4,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports.modifyChartistConfigBeforeRender = modifyChartistConfigBeforeRender;
+
+var _helpers = require('./helpers');
+
+var _seriesTypes = require('./seriesTypes');
+
 Number.isInteger = Number.isInteger || function (value) {
   return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
 };
@@ -44,50 +49,51 @@ function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
     config.seriesBarDistance = seriesBarDistance;
   }
 
-  var maxLength = 0;
-  var isNumber = false;
+  var maxLabelWidth = 0;
   if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
-    for (var i = 0; i < data.labels.length; i++) {
-      var _length = 0;
-      if (data.labels && data.labels[i]) {
-        if (Number.isInteger(data.labels[i])) {
-          isNumber = true;
-          _length = Math.floor(data.labels[i]).toString().length;
-        } else {
-          _length = data.labels[i].length;
-        }
-      } else {
-        if (Number.isInteger(data.labels[i])) {
-          isNumber = true;
-          _length = Math.floor(data.labels[i]).toString().length;
-        } else {
-          _length = data.labels[i].length;
-        }
+    maxLabelWidth = data.labels.reduce(function (maxWidth, label) {
+      var width = (0, _helpers.getTextWidth)(label, (0, _seriesTypes.getLabelFontStyle)());
+      if (maxWidth < width) {
+        return width;
       }
-      if (_length > maxLength) {
-        maxLength = _length;
+      return maxWidth;
+    }, 0);
+  } else if (type === 'StackedBar') {
+    var sums = [];
+    for (var i = 0; i < data.series[0].length; i++) {
+      if (!sums[i]) {
+        sums[i] = 0;
+      }
+      for (var ii = 0; ii < data.series.length; ii++) {
+        sums[i] = sums[i] + parseFloat(data.series[ii][i]);
       }
     }
+    maxLabelWidth = sums.reduce(function (maxWidth, label) {
+      var width = (0, _helpers.getTextWidth)(label, (0, _seriesTypes.getDigitLabelFontStyle)());
+      if (maxWidth < width) {
+        return width;
+      }
+      return maxWidth;
+    }, 0);
   } else {
-    data.series.map(function (serie) {
-      serie.map(function (datapoint) {
-        var length = 0;
-        if (Number.isInteger(datapoint)) {
-          isNumber = true;
-          length = Math.floor(datapoint).toString().length;
-        } else {
-          length = datapoint.length;
+    maxLabelWidth = data.series.reduce(function (overallMaxWidth, serie) {
+      var serieMaxWidth = serie.reduce(function (maxWidth, datapoint) {
+        var width = (0, _helpers.getTextWidth)(datapoint, (0, _seriesTypes.getDigitLabelFontStyle)());
+        if (maxWidth < width) {
+          return width;
         }
-        if (length > maxLength) {
-          maxLength = length;
-        }
-      });
-    });
+        return maxWidth;
+      }, 0);
+      if (overallMaxWidth < serieMaxWidth) {
+        return serieMaxWidth;
+      }
+      return overallMaxWidth;
+    }, 0);
   }
-  var averageCharLength = isNumber ? 10 : 9;
-  var offset = maxLength * averageCharLength;
-  if (offset < 25) {
-    offset = 25;
+
+  var offset = maxLabelWidth + 5;
+  if (offset < 30) {
+    offset = 30;
   }
   config.axisY.offset = offset;
 }
