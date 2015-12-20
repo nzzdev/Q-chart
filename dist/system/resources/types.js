@@ -109,7 +109,9 @@ System.register(['./chartistConfig', './min'], function (_export) {
           modifyConfig: function modifyConfig(config, data, size, rect) {
             config.low = 0;
             var minValue = min(data.series.map(function (serie) {
-              return min(serie);
+              return min(serie.map(function (datapoint) {
+                return parseFloat(datapoint);
+              }));
             }));
 
             if (minValue < 0) {
@@ -125,6 +127,7 @@ System.register(['./chartistConfig', './min'], function (_export) {
             if (allFirstHundered && minValue >= 100) {
               config.low = 100;
             }
+
             return;
           }
         }

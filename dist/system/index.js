@@ -302,7 +302,6 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
           sizeObserver.onResize(function (rect) {
             var drawSize = getElementSize(rect);
-
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
             modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);

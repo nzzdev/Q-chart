@@ -332,7 +332,6 @@ function display(item, element) {
 
         sizeObserver.onResize(function (rect) {
           var drawSize = getElementSize(rect);
-
           var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
           chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
           modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);

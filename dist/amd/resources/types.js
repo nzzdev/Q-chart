@@ -107,7 +107,9 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
       modifyConfig: function modifyConfig(config, data, size, rect) {
         config.low = 0;
         var minValue = (0, _min2['default'])(data.series.map(function (serie) {
-          return (0, _min2['default'])(serie);
+          return (0, _min2['default'])(serie.map(function (datapoint) {
+            return parseFloat(datapoint);
+          }));
         }));
 
         if (minValue < 0) {
@@ -123,6 +125,7 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
         if (allFirstHundered && minValue >= 100) {
           config.low = 100;
         }
+
         return;
       }
     }

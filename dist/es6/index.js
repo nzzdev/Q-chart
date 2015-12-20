@@ -284,7 +284,6 @@ export function display(item, element, withoutContext = false) {
 
       sizeObserver.onResize((rect) => {
         let drawSize = getElementSize(rect);
-
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
         modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);

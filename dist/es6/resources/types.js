@@ -105,7 +105,7 @@ export var types = {
     options: [],
     modifyConfig: (config, data, size, rect) => {
       config.low = 0;
-      let minValue = min(data.series.map(serie => min(serie)));
+      let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
 
       // if we have a value below 0, this is our low
       if (minValue < 0) {
@@ -118,6 +118,7 @@ export var types = {
       if (allFirstHundered && minValue >= 100) {
         config.low = 100;
       }
+
       return;
     }
   },
