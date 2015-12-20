@@ -26,7 +26,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
             }
 
             if (chart.options.horizontalBars && labelDirection === 'vertical') {
-              data.element._node.setAttribute('y', data.element._node.getAttribute('y') - data.element._node.getAttribute('height') / 2 + 15 / 4);
+              data.element._node.setAttribute('y', Math.floor(data.element._node.getAttribute('y') - data.element._node.getAttribute('height') / 2 + 15 / 4));
             }
           }
         });

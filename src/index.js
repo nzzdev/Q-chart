@@ -31,6 +31,9 @@ function getChartDataForChartist(item) {
 }
 
 function shortenNumberLabels(config, data) {
+  if (!data.series.length || data.series[0].length === 0) {
+    return 1;
+  }
   let divisor = 1;
   let flatDatapoints = data.series
     .reduce((a, b) => a.concat(b))

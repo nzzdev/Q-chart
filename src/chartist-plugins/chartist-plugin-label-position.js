@@ -24,9 +24,12 @@ export function ctLabelPosition() {
           
           if (chart.options.horizontalBars && labelDirection === 'vertical') {
             data.element._node.setAttribute('y', 
-              data.element._node.getAttribute('y')
-              - (data.element._node.getAttribute('height')/2)
-              + 15/4); // 15 is the height of the label
+              Math.floor(
+                data.element._node.getAttribute('y')
+                - (data.element._node.getAttribute('height')/2)
+                + 15/4  // 15 is the height of the label
+              )
+            );
           }
 
         }

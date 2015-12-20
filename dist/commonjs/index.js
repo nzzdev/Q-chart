@@ -52,6 +52,9 @@ function getChartDataForChartist(item) {
 }
 
 function shortenNumberLabels(config, data) {
+  if (!data.series.length || data.series[0].length === 0) {
+    return 1;
+  }
   var divisor = 1;
   var flatDatapoints = data.series.reduce(function (a, b) {
     return a.concat(b);
