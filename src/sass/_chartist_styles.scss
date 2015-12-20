@@ -29,10 +29,22 @@
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
   text-anchor: middle;
+  &.ct-horizontal-first {
+    text-anchor: start;
+  }
+  &.ct-horizontal-last {
+    text-anchor: end;
+  }
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
   text-anchor: middle;
+  &.ct-horizontal-first {
+    text-anchor: start;
+  }
+  &.ct-horizontal-last {
+    text-anchor: end;
+  }
 }
 
 .#{$ct-class-label}.#{$ct-class-vertical}.#{$ct-class-start} {

@@ -23,9 +23,17 @@
 
 .ct-label.ct-horizontal.ct-start {
   text-anchor: middle; }
+  .ct-label.ct-horizontal.ct-start.ct-horizontal-first {
+    text-anchor: start; }
+  .ct-label.ct-horizontal.ct-start.ct-horizontal-last {
+    text-anchor: end; }
 
 .ct-label.ct-horizontal.ct-end {
   text-anchor: middle; }
+  .ct-label.ct-horizontal.ct-end.ct-horizontal-first {
+    text-anchor: start; }
+  .ct-label.ct-horizontal.ct-end.ct-horizontal-last {
+    text-anchor: end; }
 
 .ct-label.ct-vertical.ct-start {
   text-anchor: end; }
