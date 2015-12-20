@@ -33,6 +33,9 @@ $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
 .q-chart__title {
   @include font(title);
   margin: 0 0 8px 0;
+  .emoji {
+    font-weight: normal;
+  }
 }
 
 .q-chart__legend {

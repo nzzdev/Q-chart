@@ -192,6 +192,8 @@
     @media (min-width: 414px) {
       .q-chart__title {
         font-size: 20px; } }
+  .q-chart__title .emoji {
+    font-weight: normal; }
 
 .q-chart__legend {
   float: right;

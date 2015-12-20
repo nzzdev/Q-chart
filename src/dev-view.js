@@ -2,7 +2,7 @@ import env from 'env';
 
 var chart1 = {
   _id: '_1',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'Hummeln fliegen besser als gedacht 💀👊',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],

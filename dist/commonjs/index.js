@@ -219,11 +219,16 @@ function getDivisorString(divisor) {
   return divisorString;
 }
 
+function wrapEmojisInSpan(text) {
+  text = text.replace(/([\ud800-\udbff])([\udc00-\udfff])/g, '<span class="emoji">$&</span>');
+  return text;
+}
+
 function getContextHtml(item, chartistConfig) {
   var axisExplanation = { x: '', y: '' };
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  var html = '\n    <h3 class="q-chart__title">' + item.title + '</h3>';
+  var html = '<h3 class="q-chart__title">' + wrapEmojisInSpan(item.title) + '</h3>';
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
