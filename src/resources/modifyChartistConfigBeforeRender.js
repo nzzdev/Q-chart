@@ -64,6 +64,7 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
 
 
   // Calculate the X Axis offset dependending on label length
+  // this is not very accurate, as we don't really know what labels chartist is going to produce
   let maxLabelWidth = 0;
   if ((type === 'Bar' || type === 'StackedBar') && config.horizontalBars) {
     maxLabelWidth = data.labels
@@ -96,7 +97,11 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     maxLabelWidth = data.series
       .reduce((overallMaxWidth, serie) => {
         let serieMaxWidth = serie.reduce((maxWidth, datapoint) => {
-          let width = getTextWidth(datapoint, getDigitLabelFontStyle());
+          let possibleLabel = datapoint;
+          if (!isNaN(parseFloat(datapoint))) {
+            possibleLabel = Math.round(datapoint * 10)/10;
+          }
+          let width = getTextWidth(possibleLabel, getDigitLabelFontStyle());
           if (maxWidth < width) {
             return width;
           }
@@ -109,9 +114,10 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
       },0);
   }
 
-  let offset = maxLabelWidth + 5;
+  let offset = Math.ceil(maxLabelWidth + 5);
   if (offset < 30) {
     offset = 30;
   }
+
   config.axisY.offset = offset;
 }

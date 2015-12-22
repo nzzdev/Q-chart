@@ -70,7 +70,11 @@ System.register(['./helpers', './seriesTypes'], function (_export) {
     } else {
       maxLabelWidth = data.series.reduce(function (overallMaxWidth, serie) {
         var serieMaxWidth = serie.reduce(function (maxWidth, datapoint) {
-          var width = getTextWidth(datapoint, getDigitLabelFontStyle());
+          var possibleLabel = datapoint;
+          if (!isNaN(parseFloat(datapoint))) {
+            possibleLabel = Math.round(datapoint * 10) / 10;
+          }
+          var width = getTextWidth(possibleLabel, getDigitLabelFontStyle());
           if (maxWidth < width) {
             return width;
           }
@@ -83,10 +87,11 @@ System.register(['./helpers', './seriesTypes'], function (_export) {
       }, 0);
     }
 
-    var offset = maxLabelWidth + 5;
+    var offset = Math.ceil(maxLabelWidth + 5);
     if (offset < 30) {
       offset = 30;
     }
+
     config.axisY.offset = offset;
   }
 

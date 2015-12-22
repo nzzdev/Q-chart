@@ -283,6 +283,8 @@ export function display(item, element, withoutContext = false) {
       let chart;
 
       sizeObserver.onResize((rect) => {
+
+        // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
@@ -307,6 +309,7 @@ export function display(item, element, withoutContext = false) {
         }
       }, element, true);
 
+      // this is going crazy on nzz.ch with its floating ads
       // sizeObserver.onElementRectChange((rect) => {
       //   let drawSize = getElementSize(rect);
       //   if (withoutContext) {
