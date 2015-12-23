@@ -66,7 +66,7 @@ define(['exports', './helpers', './seriesTypes'], function (exports, _helpers, _
         }
       }
       maxLabelWidth = sums.reduce(function (maxWidth, label) {
-        var width = (0, _helpers.getTextWidth)(label, (0, _seriesTypes.getDigitLabelFontStyle)());
+        var width = (0, _helpers.getTextWidth)(Math.round(label * 10) / 10, (0, _seriesTypes.getDigitLabelFontStyle)());
         if (maxWidth < width) {
           return width;
         }

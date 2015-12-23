@@ -61,7 +61,7 @@ System.register(['./helpers', './seriesTypes'], function (_export) {
         }
       }
       maxLabelWidth = sums.reduce(function (maxWidth, label) {
-        var width = getTextWidth(label, getDigitLabelFontStyle());
+        var width = getTextWidth(Math.round(label * 10) / 10, getDigitLabelFontStyle());
         if (maxWidth < width) {
           return width;
         }

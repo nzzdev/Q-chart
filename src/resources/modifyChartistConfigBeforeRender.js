@@ -87,7 +87,7 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
     }
     maxLabelWidth = sums
       .reduce((maxWidth, label) => {
-        let width = getTextWidth(label, getDigitLabelFontStyle());
+        let width = getTextWidth(Math.round(label * 10)/10, getDigitLabelFontStyle());
         if (maxWidth < width) {
           return width;
         }
