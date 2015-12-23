@@ -248,12 +248,14 @@ function getContextHtml(item, chartistConfig) {
   if (item.notes) {
     html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
   }
-  if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text.length > 0) {
+
+  html += '<div class="q-chart__footer__sources">';
+  if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
     var sources = item.sources.filter(function (source) {
       return source.text && source.text.length > 0;
     });
 
-    html += '<div class="q-chart__footer__sources">Quelle' + (sources.length > 1 ? 'n' : '') + ': ';
+    html += 'Quelle' + (sources.length > 1 ? 'n' : '') + ': ';
     var _iteratorNormalCompletion2 = true;
     var _didIteratorError2 = false;
     var _iteratorError2 = undefined;
@@ -265,7 +267,7 @@ function getContextHtml(item, chartistConfig) {
         if (source.href && source.href.length > 0 && source.validHref) {
           html += '<a href="' + source.href + '">' + source.text + '</a> ';
         } else {
-          html += source.text + ' ';
+          html += '' + source.text + (sources.indexOf(source) !== sources.length - 1 ? ', ' : ' ');
         }
       }
     } catch (err) {
@@ -282,10 +284,10 @@ function getContextHtml(item, chartistConfig) {
         }
       }
     }
-
-    html += '</div>';
+  } else {
+    html += 'Quelle: nicht angegeben';
   }
-  html += '</div>';
+  html += '</div></div>';
   return html;
 }
 
