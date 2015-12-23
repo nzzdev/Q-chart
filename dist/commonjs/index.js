@@ -77,7 +77,9 @@ function shortenNumberLabels(config, data) {
 
   var axis = config.horizontalBars ? 'axisX' : 'axisY';
 
-  config[axis].scaleMinSpace = (0, _resourcesHelpers.getTextWidth)(maxLabel / divisor, (0, _resourcesSeriesTypes.getDigitLabelFontStyle)()) * 1.5;
+  if (axis === 'axisX') {
+    config[axis].scaleMinSpace = (0, _resourcesHelpers.getTextWidth)(maxLabel / divisor, (0, _resourcesSeriesTypes.getDigitLabelFontStyle)()) * 1.5;
+  }
   config[axis].labelInterpolationFnc = function (value, index) {
     return value / divisor;
   };

@@ -47,7 +47,9 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
     var axis = config.horizontalBars ? 'axisX' : 'axisY';
 
-    config[axis].scaleMinSpace = getTextWidth(maxLabel / divisor, getDigitLabelFontStyle()) * 1.5;
+    if (axis === 'axisX') {
+      config[axis].scaleMinSpace = getTextWidth(maxLabel / divisor, getDigitLabelFontStyle()) * 1.5;
+    }
     config[axis].labelInterpolationFnc = function (value, index) {
       return value / divisor;
     };
