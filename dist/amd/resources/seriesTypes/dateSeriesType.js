@@ -1,4 +1,4 @@
-define(['exports', './dateConfigPerLabelInterval', './helpers'], function (exports, _dateConfigPerLabelInterval, _helpers) {
+define(['exports', './dateConfigPerInterval', './helpers'], function (exports, _dateConfigPerInterval, _helpers) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -12,8 +12,8 @@ define(['exports', './dateConfigPerLabelInterval', './helpers'], function (expor
     var lastLabel = undefined;
     data.labels.map(function (label, index) {
       var formattedLabel = label;
-      if (_dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval] && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format) {
-        formattedLabel = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, data.labels.length, new Date(label.toString()), true);
+      if (_dateConfigPerInterval.seriesTypeConfig[typeOptions.interval] && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format) {
+        formattedLabel = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, data.labels.length, new Date(label.toString()), true);
       }
       if (formattedLabel !== lastLabel) {
         lastLabel = formattedLabel;
@@ -35,7 +35,7 @@ define(['exports', './dateConfigPerLabelInterval', './helpers'], function (expor
     if ((0, _helpers.isThereEnoughSpace)(labelsToDisplay, rect, config, fontstyle)) {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
-          data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+          data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
         } else {
           data.labels[index] = '';
         }
@@ -43,8 +43,8 @@ define(['exports', './dateConfigPerLabelInterval', './helpers'], function (expor
     } else {
         data.labels.map(function (label, index) {
           if (labelsToDisplay[index]) {
-            if (_dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval] && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].getForceShow && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-              data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+            if (_dateConfigPerInterval.seriesTypeConfig[typeOptions.interval] && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].getForceShow && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
+              data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
             } else {
               data.labels[index] = ' ';
             }
@@ -59,7 +59,7 @@ define(['exports', './dateConfigPerLabelInterval', './helpers'], function (expor
     var labelsToDisplay = getLabelsToDisplay(typeOptions, data);
 
     data.labels.map(function (label, index) {
-      data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
+      data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
     });
   }
 });

@@ -1,4 +1,4 @@
-System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export) {
+System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
   'use strict';
 
   var seriesTypeConfig, isThereEnoughSpace;
@@ -12,8 +12,8 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     var lastLabel = undefined;
     data.labels.map(function (label, index) {
       var formattedLabel = label;
-      if (seriesTypeConfig[typeOptions.labelInterval] && seriesTypeConfig[typeOptions.labelInterval].format) {
-        formattedLabel = seriesTypeConfig[typeOptions.labelInterval].format(index, data.labels.length, new Date(label.toString()), true);
+      if (seriesTypeConfig[typeOptions.interval] && seriesTypeConfig[typeOptions.interval].format) {
+        formattedLabel = seriesTypeConfig[typeOptions.interval].format(index, data.labels.length, new Date(label.toString()), true);
       }
       if (formattedLabel !== lastLabel) {
         lastLabel = formattedLabel;
@@ -35,7 +35,7 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     if (isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle)) {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
-          data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+          data.labels[index] = seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
         } else {
           data.labels[index] = '';
         }
@@ -43,8 +43,8 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     } else {
         data.labels.map(function (label, index) {
           if (labelsToDisplay[index]) {
-            if (seriesTypeConfig[typeOptions.labelInterval] && seriesTypeConfig[typeOptions.labelInterval].getForceShow && seriesTypeConfig[typeOptions.labelInterval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-              data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+            if (seriesTypeConfig[typeOptions.interval] && seriesTypeConfig[typeOptions.interval].getForceShow && seriesTypeConfig[typeOptions.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
+              data.labels[index] = seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
             } else {
               data.labels[index] = ' ';
             }
@@ -59,13 +59,13 @@ System.register(['./dateConfigPerLabelInterval', './helpers'], function (_export
     var labelsToDisplay = getLabelsToDisplay(typeOptions, data);
 
     data.labels.map(function (label, index) {
-      data.labels[index] = seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
+      data.labels[index] = seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
     });
   }
 
   return {
-    setters: [function (_dateConfigPerLabelInterval) {
-      seriesTypeConfig = _dateConfigPerLabelInterval.seriesTypeConfig;
+    setters: [function (_dateConfigPerInterval) {
+      seriesTypeConfig = _dateConfigPerInterval.seriesTypeConfig;
     }, function (_helpers) {
       isThereEnoughSpace = _helpers.isThereEnoughSpace;
     }],

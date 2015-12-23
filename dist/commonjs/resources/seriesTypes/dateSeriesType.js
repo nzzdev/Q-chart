@@ -6,7 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 exports.setLabelsBasedOnIntervalAndAvailableSpace = setLabelsBasedOnIntervalAndAvailableSpace;
 exports.setLabelsBasedOnInterval = setLabelsBasedOnInterval;
 
-var _dateConfigPerLabelInterval = require('./dateConfigPerLabelInterval');
+var _dateConfigPerInterval = require('./dateConfigPerInterval');
 
 var _helpers = require('./helpers');
 
@@ -15,8 +15,8 @@ function getLabelsToDisplay(typeOptions, data) {
   var lastLabel = undefined;
   data.labels.map(function (label, index) {
     var formattedLabel = label;
-    if (_dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval] && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format) {
-      formattedLabel = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, data.labels.length, new Date(label.toString()), true);
+    if (_dateConfigPerInterval.seriesTypeConfig[typeOptions.interval] && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format) {
+      formattedLabel = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, data.labels.length, new Date(label.toString()), true);
     }
     if (formattedLabel !== lastLabel) {
       lastLabel = formattedLabel;
@@ -38,7 +38,7 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, si
   if ((0, _helpers.isThereEnoughSpace)(labelsToDisplay, rect, config, fontstyle)) {
     data.labels.map(function (label, index) {
       if (labelsToDisplay[index]) {
-        data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+        data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
       } else {
         data.labels[index] = '';
       }
@@ -46,8 +46,8 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, si
   } else {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
-          if (_dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval] && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].getForceShow && _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-            data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+          if (_dateConfigPerInterval.seriesTypeConfig[typeOptions.interval] && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].getForceShow && _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
+            data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
           } else {
             data.labels[index] = ' ';
           }
@@ -62,6 +62,6 @@ function setLabelsBasedOnInterval(config, typeOptions, data, size, rect) {
   var labelsToDisplay = getLabelsToDisplay(typeOptions, data);
 
   data.labels.map(function (label, index) {
-    data.labels[index] = _dateConfigPerLabelInterval.seriesTypeConfig[typeOptions.labelInterval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
+    data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[typeOptions.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()), true);
   });
 }
