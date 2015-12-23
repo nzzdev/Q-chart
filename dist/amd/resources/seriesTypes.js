@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateSeriesType', 'chartist', './max'], function (exports, _seriesTypesDateSeriesType, _chartist, _max) {
+define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (exports, _seriesTypesDateSeriesType, _chartist) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -8,8 +8,6 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', './max'], functio
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
   var _Chartist = _interopRequireDefault(_chartist);
-
-  var _max2 = _interopRequireDefault(_max);
 
   var getLabelFontStyle = function getLabelFontStyle() {
     if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
@@ -36,20 +34,20 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', './max'], functio
           modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
         },
         'Bar': {
-          modifyData: function modifyData(config, typeOptions, data, size, rect) {
+          modifyData: function modifyData(config, type, data, size, rect) {
             if (config.horizontalBars) {
-              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, type, data, size, rect);
             } else {
-              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect, getLabelFontStyle());
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
             }
           }
         },
         'StackedBar': {
-          modifyData: function modifyData(config, typeOptions, data, size, rect) {
+          modifyData: function modifyData(config, type, data, size, rect) {
             if (config.horizontalBars) {
-              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, type, data, size, rect);
             } else {
-              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect, getLabelFontStyle());
+              (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
             }
           }
         }

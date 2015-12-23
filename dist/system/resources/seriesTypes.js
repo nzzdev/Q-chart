@@ -1,15 +1,13 @@
-System.register(['./seriesTypes/dateSeriesType', 'chartist', './max'], function (_export) {
+System.register(['./seriesTypes/dateSeriesType', 'chartist'], function (_export) {
   'use strict';
 
-  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, max, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
+  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
   return {
     setters: [function (_seriesTypesDateSeriesType) {
       setLabelsBasedOnIntervalAndAvailableSpace = _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace;
       setLabelsBasedOnInterval = _seriesTypesDateSeriesType.setLabelsBasedOnInterval;
     }, function (_chartist) {
       Chartist = _chartist['default'];
-    }, function (_max) {
-      max = _max['default'];
     }],
     execute: function () {
       getLabelFontStyle = function getLabelFontStyle() {
@@ -39,20 +37,20 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', './max'], function 
               modifyData: setLabelsBasedOnIntervalAndAvailableSpace
             },
             'Bar': {
-              modifyData: function modifyData(config, typeOptions, data, size, rect) {
+              modifyData: function modifyData(config, type, data, size, rect) {
                 if (config.horizontalBars) {
-                  setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+                  setLabelsBasedOnInterval(config, type, data, size, rect);
                 } else {
-                  setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect, getLabelFontStyle());
+                  setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
                 }
               }
             },
             'StackedBar': {
-              modifyData: function modifyData(config, typeOptions, data, size, rect) {
+              modifyData: function modifyData(config, type, data, size, rect) {
                 if (config.horizontalBars) {
-                  setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+                  setLabelsBasedOnInterval(config, type, data, size, rect);
                 } else {
-                  setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect, getLabelFontStyle());
+                  setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
                 }
               }
             }

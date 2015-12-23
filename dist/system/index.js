@@ -59,19 +59,19 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (seriesTypes[item.data.x.type.id].x.modifyData) {
-          seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
-          seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-          seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-          seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
       }
     }
@@ -122,19 +122,19 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
         }
       }
     }
@@ -290,17 +290,15 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
             };
           }
 
-          var dataForChartist = getChartDataForChartist(item);
-          if (!dataForChartist || dataForChartist === null) {
-            reject('data could not be prepared for chartist');
-            return {
-              v: undefined
-            };
-          }
-
           var chart = undefined;
 
           sizeObserver.onResize(function (rect) {
+            var dataForChartist = getChartDataForChartist(item);
+            if (!dataForChartist || dataForChartist === null) {
+              reject('data could not be prepared for chartist');
+              return;
+            }
+
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);

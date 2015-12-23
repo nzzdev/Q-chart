@@ -72,19 +72,19 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
       }
     }
@@ -135,19 +135,19 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
         }
       }
     }
@@ -303,17 +303,15 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
             };
           }
 
-          var dataForChartist = getChartDataForChartist(item);
-          if (!dataForChartist || dataForChartist === null) {
-            reject('data could not be prepared for chartist');
-            return {
-              v: undefined
-            };
-          }
-
           var chart = undefined;
 
           sizeObserver.onResize(function (rect) {
+            var dataForChartist = getChartDataForChartist(item);
+            if (!dataForChartist || dataForChartist === null) {
+              reject('data could not be prepared for chartist');
+              return;
+            }
+
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);

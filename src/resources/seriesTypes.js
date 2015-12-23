@@ -1,6 +1,5 @@
 import {setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval} from './seriesTypes/dateSeriesType';
 import Chartist from 'chartist';
-import max from './max';
 
 export var getLabelFontStyle = () => {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
@@ -25,20 +24,20 @@ export var seriesTypes = {
         modifyData: setLabelsBasedOnIntervalAndAvailableSpace
       },
       'Bar': {
-        modifyData: (config, typeOptions, data, size, rect) => {
+        modifyData: (config, type, data, size, rect) => {
           if (config.horizontalBars) {
-            setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+            setLabelsBasedOnInterval(config, type, data, size, rect);
           } else {
-            setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect, getLabelFontStyle());
+            setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
           }
         }
       },
       'StackedBar': {
-        modifyData: (config, typeOptions, data, size, rect) => {
+        modifyData: (config, type, data, size, rect) => {
           if (config.horizontalBars) {
-            setLabelsBasedOnInterval(config, typeOptions, data, size, rect);
+            setLabelsBasedOnInterval(config, type, data, size, rect);
           } else {
-            setLabelsBasedOnIntervalAndAvailableSpace(config, typeOptions, data, size, rect, getLabelFontStyle());
+            setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
           }
         }
       }

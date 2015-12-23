@@ -70,19 +70,19 @@ function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
       
       if (seriesTypes[item.data.x.type.id].x.modifyData) {
-        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type, data, size, rect);
       }
       
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type, data, size, rect);
       }
 
       if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type, data, size, rect);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
       }
     
     }
@@ -116,19 +116,19 @@ function getCombinedChartistConfig(item, data, size, rect) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
       
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
       }
       
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
       }
 
       if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type.options, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
       }
     
     }
@@ -273,16 +273,15 @@ export function display(item, element, withoutContext = false) {
         return;
       }
 
-      // prepare data
-      let dataForChartist = getChartDataForChartist(item);
-      if (!dataForChartist || dataForChartist === null) {
-        reject('data could not be prepared for chartist');
-        return;
-      }
-
       let chart;
 
       sizeObserver.onResize((rect) => {
+        // prepare data
+        let dataForChartist = getChartDataForChartist(item);
+        if (!dataForChartist || dataForChartist === null) {
+          reject('data could not be prepared for chartist');
+          return;
+        }
 
         // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);

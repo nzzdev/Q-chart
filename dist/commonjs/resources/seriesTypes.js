@@ -12,10 +12,6 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-var _max = require('./max');
-
-var _max2 = _interopRequireDefault(_max);
-
 var getLabelFontStyle = function getLabelFontStyle() {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
     return '11px Arial';
@@ -41,20 +37,20 @@ var seriesTypes = {
         modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
       },
       'Bar': {
-        modifyData: function modifyData(config, typeOptions, data, size, rect) {
+        modifyData: function modifyData(config, type, data, size, rect) {
           if (config.horizontalBars) {
-            (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+            (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, type, data, size, rect);
           } else {
-            (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect, getLabelFontStyle());
+            (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
           }
         }
       },
       'StackedBar': {
-        modifyData: function modifyData(config, typeOptions, data, size, rect) {
+        modifyData: function modifyData(config, type, data, size, rect) {
           if (config.horizontalBars) {
-            (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, typeOptions, data, size, rect);
+            (0, _seriesTypesDateSeriesType.setLabelsBasedOnInterval)(config, type, data, size, rect);
           } else {
-            (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, typeOptions, data, size, rect, getLabelFontStyle());
+            (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
           }
         }
       }
