@@ -24,7 +24,6 @@ function getChartDataForChartist(item) {
   let data = {
     labels: item.data.x.data.slice(0),
     series: item.data.y.data.slice(0)
-      .filter(serie => serie.data.slice(0))
       .map(serie => serie.data.slice(0))
   };
   return data;
@@ -37,6 +36,7 @@ function shortenNumberLabels(config, data) {
   let divisor = 1;
   let flatDatapoints = data.series
     .reduce((a, b) => a.concat(b))
+    .slice(0) // copy to not mess with original data by sorting
     .sort((a, b) => parseFloat(a) - parseFloat(b));
 
   let medianValue = (flatDatapoints.length % 2 === 0) ? flatDatapoints[flatDatapoints.length / 2 - 1] : flatDatapoints[flatDatapoints.length - 1 / 2];

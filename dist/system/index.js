@@ -12,9 +12,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
     var data = {
       labels: item.data.x.data.slice(0),
-      series: item.data.y.data.slice(0).filter(function (serie) {
-        return serie.data.slice(0);
-      }).map(function (serie) {
+      series: item.data.y.data.slice(0).map(function (serie) {
         return serie.data.slice(0);
       })
     };
@@ -28,7 +26,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
     var divisor = 1;
     var flatDatapoints = data.series.reduce(function (a, b) {
       return a.concat(b);
-    }).sort(function (a, b) {
+    }).slice(0).sort(function (a, b) {
       return parseFloat(a) - parseFloat(b);
     });
 
