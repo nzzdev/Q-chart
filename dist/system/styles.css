@@ -23,16 +23,16 @@
 
 .ct-label.ct-horizontal.ct-start {
   text-anchor: middle; }
-  .ct-label.ct-horizontal.ct-start.ct-horizontal-first {
+  .ct-label.ct-horizontal.ct-start.ct-horizontal--first {
     text-anchor: start; }
-  .ct-label.ct-horizontal.ct-start.ct-horizontal-last {
+  .ct-label.ct-horizontal.ct-start.ct-horizontal--last {
     text-anchor: end; }
 
 .ct-label.ct-horizontal.ct-end {
   text-anchor: middle; }
-  .ct-label.ct-horizontal.ct-end.ct-horizontal-first {
+  .ct-label.ct-horizontal.ct-end.ct-horizontal--first {
     text-anchor: start; }
-  .ct-label.ct-horizontal.ct-end.ct-horizontal-last {
+  .ct-label.ct-horizontal.ct-end.ct-horizontal--last {
     text-anchor: end; }
 
 .ct-label.ct-vertical.ct-start {
@@ -49,16 +49,16 @@
 
 .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start {
   text-anchor: middle; }
-  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start.ct-horizontal-first {
+  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start.ct-horizontal--first {
     text-anchor: start; }
-  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start.ct-horizontal-last {
+  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-start.ct-horizontal--last {
     text-anchor: end; }
 
 .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-end {
   text-anchor: middle; }
-  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-end.ct-horizontal-first {
+  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-end.ct-horizontal--first {
     text-anchor: start; }
-  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-end.ct-horizontal-last {
+  .ct-chart-bar.ct-horizontal-bars .ct-label.ct-horizontal.ct-end.ct-horizontal--last {
     text-anchor: end; }
 
 .ct-chart-bar.ct-horizontal-bars .ct-label.ct-vertical.ct-start {

@@ -25,34 +25,31 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
     return function ctLabelClasses(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
+
         chart.on('draw', function (data) {
           if (data.type === 'label') {
-
-            var labelDirection = data.axis.units.dir;
-            var indexClass = '';
-
-            if (data.index === 0) {
-              indexClass = 'ct-' + labelDirection + '-' + options.first;
-            }
-
-            if (data.index === data.axis.ticks.length - 1) {
-              indexClass = 'ct-' + labelDirection + '-' + options.last;
-            }
-
             var typeClass = '';
             if (data.element._node.nodeName === 'text') {
               if (isNumber(data.element._node.textContent)) {
                 typeClass = 'ct-label--number';
               }
             }
+            addClass(data.element, typeClass);
+          }
+        });
 
-            if (data.element._node.nodeName === 'text') {
-              data.element.addClass(indexClass);
-              data.element.addClass(typeClass);
-            } else {
-              data.element.querySelector('.ct-label:last-child').addClass(indexClass);
-              data.element.querySelector('.ct-label:last-child').addClass(typeClass);
-            }
+        chart.on('created', function (data) {
+          var horizontalLabels = data.svg.querySelectorAll('.ct-label.ct-horizontal');
+          var verticalLabels = data.svg.querySelectorAll('.ct-label.ct-vertical');
+
+          if (horizontalLabels.svgElements.length > 0) {
+            addClass(horizontalLabels.svgElements[0], 'ct-horizontal--' + options.first);
+            addClass(horizontalLabels.svgElements[horizontalLabels.svgElements.length - 1], 'ct-horizontal--' + options.last);
+          }
+
+          if (verticalLabels.svgElements.length > 0) {
+            addClass(verticalLabels.svgElements[0], 'ct-vertical--' + options.first);
+            addClass(verticalLabels.svgElements[verticalLabels.svgElements.length - 1], 'ct-vertical--' + options.last);
           }
         });
       }
@@ -60,4 +57,12 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   }
 
   ;
+
+  function addClass(element, additionalClass) {
+    if (element._node.nodeName === 'text') {
+      element.addClass(additionalClass);
+    } else {
+      element.querySelector('.ct-label:last-child').addClass(additionalClass);
+    }
+  }
 });

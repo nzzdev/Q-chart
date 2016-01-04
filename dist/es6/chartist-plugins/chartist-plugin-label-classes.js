@@ -16,22 +16,9 @@ export function ctLabelClasses(options) {
 
   return function ctLabelClasses(chart) {
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
-      chart.on('draw', function(data) {   
+      
+      chart.on('draw', function(data) {
         if(data.type === 'label') {
-
-          var labelDirection = data.axis.units.dir;
-          var indexClass = '';
-          
-          // add classname to first label in an axis
-          if (data.index === 0) {
-            indexClass = 'ct-' + labelDirection + '-' + options.first;
-          }
-          
-          // add classname to last label in an axis
-          if (data.index === data.axis.ticks.length - 1) {
-            indexClass = 'ct-' + labelDirection + '-' + options.last;
-          }
-
           // add classname with the type of data for x axis
           var typeClass = '';
           if (data.element._node.nodeName === 'text') {
@@ -39,16 +26,33 @@ export function ctLabelClasses(options) {
               typeClass = `ct-label--number`;
             }
           }
-
-          if (data.element._node.nodeName === 'text') {
-            data.element.addClass(indexClass);
-            data.element.addClass(typeClass);
-          } else {
-            data.element.querySelector('.ct-label:last-child').addClass(indexClass);
-            data.element.querySelector('.ct-label:last-child').addClass(typeClass);
-          }
+          addClass(data.element, typeClass);
         }
       });
+
+      chart.on('created', function(data) {
+        var horizontalLabels = data.svg.querySelectorAll('.ct-label.ct-horizontal');
+        var verticalLabels = data.svg.querySelectorAll('.ct-label.ct-vertical');
+
+        if (horizontalLabels.svgElements.length > 0) {
+          addClass(horizontalLabels.svgElements[0], 'ct-horizontal--' + options.first);
+          addClass(horizontalLabels.svgElements[horizontalLabels.svgElements.length - 1], 'ct-horizontal--' + options.last);
+        }
+
+        if (verticalLabels.svgElements.length > 0) {
+          addClass(verticalLabels.svgElements[0], 'ct-vertical--' + options.first);
+          addClass(verticalLabels.svgElements[verticalLabels.svgElements.length - 1], 'ct-vertical--' + options.last);
+        }
+      });
+
     }
   };
 };
+
+function addClass(element, additionalClass) {
+  if (element._node.nodeName === 'text') {
+    element.addClass(additionalClass);
+  } else {
+    element.querySelector('.ct-label:last-child').addClass(additionalClass);
+  }
+}

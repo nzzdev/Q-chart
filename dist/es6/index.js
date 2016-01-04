@@ -40,9 +40,9 @@ function shortenNumberLabels(config, data) {
     .slice(0) // copy to not mess with original data by sorting
     .sort((a, b) => parseFloat(a) - parseFloat(b));
 
-  let maxValue    = flatDatapoints[flatDatapoints.length - 1];
+  let maxValue = flatDatapoints[flatDatapoints.length - 1];
 
-  // use the median value to calculate the divisor
+  // use the max value to calculate the divisor
   if (maxValue >= Math.pow(10,9)) {
     divisor = Math.pow(10,9)
   } else if (maxValue >= Math.pow(10,6)) {
