@@ -32,14 +32,13 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
       return parseFloat(a) - parseFloat(b);
     });
 
-    var medianValue = flatDatapoints.length % 2 === 0 ? flatDatapoints[flatDatapoints.length / 2 - 1] : flatDatapoints[flatDatapoints.length - 1 / 2];
     var maxValue = flatDatapoints[flatDatapoints.length - 1];
 
-    if (medianValue >= Math.pow(10, 9)) {
+    if (maxValue >= Math.pow(10, 9)) {
       divisor = Math.pow(10, 9);
-    } else if (medianValue >= Math.pow(10, 6)) {
+    } else if (maxValue >= Math.pow(10, 6)) {
       divisor = Math.pow(10, 6);
-    } else if (medianValue >= Math.pow(10, 3)) {
+    } else if (maxValue >= Math.pow(10, 4)) {
       divisor = Math.pow(10, 3);
     }
 
@@ -176,13 +175,13 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
     var divisorString = '';
     switch (divisor) {
       case Math.pow(10, 9):
-        divisorString = ' (mrd.)';
+        divisorString = ' (Mrd.)';
         break;
       case Math.pow(10, 6):
-        divisorString = ' (mil.)';
+        divisorString = ' (Mio.)';
         break;
       case Math.pow(10, 3):
-        divisorString = ' (tsd.)';
+        divisorString = ' (Tsd.)';
         break;
       default:
         divisorString = '';

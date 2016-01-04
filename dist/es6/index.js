@@ -40,15 +40,14 @@ function shortenNumberLabels(config, data) {
     .slice(0) // copy to not mess with original data by sorting
     .sort((a, b) => parseFloat(a) - parseFloat(b));
 
-  let medianValue = (flatDatapoints.length % 2 === 0) ? flatDatapoints[flatDatapoints.length / 2 - 1] : flatDatapoints[flatDatapoints.length - 1 / 2];
   let maxValue    = flatDatapoints[flatDatapoints.length - 1];
 
   // use the median value to calculate the divisor
-  if (medianValue >= Math.pow(10,9)) {
+  if (maxValue >= Math.pow(10,9)) {
     divisor = Math.pow(10,9)
-  } else if (medianValue >= Math.pow(10,6)) {
+  } else if (maxValue >= Math.pow(10,6)) {
     divisor = Math.pow(10,6)
-  } else if (medianValue >= Math.pow(10,3)) {
+  } else if (maxValue >= Math.pow(10,4)) {
     divisor = Math.pow(10,3);
   }
 
@@ -179,13 +178,13 @@ export function getDivisorString(divisor) {
   let divisorString = '';
   switch (divisor) {
     case Math.pow(10,9):
-      divisorString = ' (mrd.)';
+      divisorString = ' (Mrd.)';
       break;
     case Math.pow(10,6):
-      divisorString = ' (mil.)';
+      divisorString = ' (Mio.)';
       break;
     case Math.pow(10,3):
-      divisorString = ' (tsd.)';
+      divisorString = ' (Tsd.)';
       break;
     default:
       divisorString = '';
