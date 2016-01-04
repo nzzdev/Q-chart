@@ -29,10 +29,10 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline()
       ]
     },
     large: {
@@ -52,11 +52,11 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline(),
-       ctExtendFitBarsToData()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline(),
+        ctExtendFitBarsToData()
       ]
     },
   },
@@ -79,10 +79,10 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline()
       ]
     },
     large: {
@@ -103,11 +103,11 @@ export var chartistConfigs = {
       axisY: {
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline(),
-       ctExtendFitBarsToData()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline(),
+        ctExtendFitBarsToData()
       ]
     },
   },
@@ -133,10 +133,10 @@ export var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline()
       ]
     },
     large: {
@@ -159,10 +159,10 @@ export var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [
-       ctLabelClasses(),
-       ctLabelPosition(),
-       ctProtrudeGrid(),
-       ctBaseline()
+        ctLabelClasses(),
+        ctLabelPosition(),
+        ctProtrudeGrid(),
+        ctBaseline()
       ]
     }
   }
