@@ -36,6 +36,7 @@ function shortenNumberLabels(config, data) {
   let divisor = 1;
   let flatDatapoints = data.series
     .reduce((a, b) => a.concat(b))
+    .filter(cell => !isNaN(parseFloat(cell)))
     .slice(0) // copy to not mess with original data by sorting
     .sort((a, b) => parseFloat(a) - parseFloat(b));
 
@@ -52,6 +53,7 @@ function shortenNumberLabels(config, data) {
   }
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
+  console.log(maxValue, flatDatapoints, flatDatapoints.length, flatDatapoints[flatDatapoints.length - 1]);
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
 
   let axis = config.horizontalBars ? 'axisX' : 'axisY';

@@ -56,6 +56,8 @@ function shortenNumberLabels(config, data) {
   var divisor = 1;
   var flatDatapoints = data.series.reduce(function (a, b) {
     return a.concat(b);
+  }).filter(function (cell) {
+    return !isNaN(parseFloat(cell));
   }).slice(0).sort(function (a, b) {
     return parseFloat(a) - parseFloat(b);
   });
@@ -71,6 +73,7 @@ function shortenNumberLabels(config, data) {
     divisor = Math.pow(10, 3);
   }
 
+  console.log(maxValue, flatDatapoints, flatDatapoints.length, flatDatapoints[flatDatapoints.length - 1]);
   var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
   var axis = config.horizontalBars ? 'axisX' : 'axisY';
