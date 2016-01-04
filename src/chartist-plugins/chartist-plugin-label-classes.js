@@ -34,12 +34,12 @@ export function ctLabelClasses(options) {
         var horizontalLabels = data.svg.querySelectorAll('.ct-label.ct-horizontal');
         var verticalLabels = data.svg.querySelectorAll('.ct-label.ct-vertical');
 
-        if (horizontalLabels.svgElements.length > 0) {
+        if (horizontalLabels && horizontalLabels.svgElements.length > 0) {
           addClass(horizontalLabels.svgElements[0], 'ct-horizontal--' + options.first);
           addClass(horizontalLabels.svgElements[horizontalLabels.svgElements.length - 1], 'ct-horizontal--' + options.last);
         }
 
-        if (verticalLabels.svgElements.length > 0) {
+        if (verticalLabels && verticalLabels.svgElements.length > 0) {
           addClass(verticalLabels.svgElements[0], 'ct-vertical--' + options.first);
           addClass(verticalLabels.svgElements[verticalLabels.svgElements.length - 1], 'ct-vertical--' + options.last);
         }
