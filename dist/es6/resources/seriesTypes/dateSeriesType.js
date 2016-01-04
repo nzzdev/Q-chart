@@ -40,7 +40,7 @@ function getDateObject(dateString, format) {
 // filters the labels and only shows the ones at the given interval in type.options
 function getLabelsToDisplay(type, data) {
   let labelsToDisplay = [];
-  let lastLabel;
+  let lastLabel; // do not repeat label, so we store the last generated label in this var
   data.labels.map((label, index) => {
     let formattedLabel = label;
     if (seriesTypeConfig[type.options.interval]
@@ -51,7 +51,7 @@ function getLabelsToDisplay(type, data) {
     }
     if (formattedLabel !== lastLabel) {
       lastLabel = formattedLabel;
-      labelsToDisplay[index] = label;
+      labelsToDisplay[index] = formattedLabel;
     }
   })
   return labelsToDisplay;
@@ -61,6 +61,8 @@ function isLastVisibleLabel(labelsToDisplay, labelIndex) {
   return (labelsToDisplay.length - 1 === labelIndex);
 }
 
+// it is inefficient to format the labels again here, we already did that to measure the needed space.
+// todo: improve that
 export function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, fontstyle) {
   let labelsToDisplay = getLabelsToDisplay(type, data);
 
@@ -69,7 +71,7 @@ export function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, si
   if (isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle)) {
     data.labels.map((label, index) => {
       if (labelsToDisplay[index]) {
-        data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+        data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
       } else {
         data.labels[index] = ''; // do not show a gridline
       }
@@ -80,7 +82,7 @@ export function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, si
         if (seriesTypeConfig[type.options.interval]
             && seriesTypeConfig[type.options.interval].getForceShow
             && seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-          data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+          data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
         } else {
           data.labels[index] = ' '; // return false/empty string to make chartist not render a gridline here.
         }

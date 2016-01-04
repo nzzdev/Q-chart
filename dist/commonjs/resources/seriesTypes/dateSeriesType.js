@@ -73,7 +73,7 @@ function getLabelsToDisplay(type, data) {
     }
     if (formattedLabel !== lastLabel) {
       lastLabel = formattedLabel;
-      labelsToDisplay[index] = label;
+      labelsToDisplay[index] = formattedLabel;
     }
   });
   return labelsToDisplay;
@@ -91,7 +91,7 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rec
   if ((0, _helpers.isThereEnoughSpace)(labelsToDisplay, rect, config, fontstyle)) {
     data.labels.map(function (label, index) {
       if (labelsToDisplay[index]) {
-        data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+        data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
       } else {
         data.labels[index] = '';
       }
@@ -100,7 +100,7 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rec
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
           if (_dateConfigPerInterval.seriesTypeConfig[type.options.interval] && _dateConfigPerInterval.seriesTypeConfig[type.options.interval].getForceShow && _dateConfigPerInterval.seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-            data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+            data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
           } else {
             data.labels[index] = ' ';
           }

@@ -70,7 +70,7 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
       }
       if (formattedLabel !== lastLabel) {
         lastLabel = formattedLabel;
-        labelsToDisplay[index] = label;
+        labelsToDisplay[index] = formattedLabel;
       }
     });
     return labelsToDisplay;
@@ -88,7 +88,7 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
     if (isThereEnoughSpace(labelsToDisplay, rect, config, fontstyle)) {
       data.labels.map(function (label, index) {
         if (labelsToDisplay[index]) {
-          data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+          data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
         } else {
           data.labels[index] = '';
         }
@@ -97,7 +97,7 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
         data.labels.map(function (label, index) {
           if (labelsToDisplay[index]) {
             if (seriesTypeConfig[type.options.interval] && seriesTypeConfig[type.options.interval].getForceShow && seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
-              data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), new Date(label.toString()));
+              data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
             } else {
               data.labels[index] = ' ';
             }
