@@ -53,7 +53,6 @@ function shortenNumberLabels(config, data) {
   }
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
-  console.log(maxValue, flatDatapoints, flatDatapoints.length, flatDatapoints[flatDatapoints.length - 1]);
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
 
   let axis = config.horizontalBars ? 'axisX' : 'axisY';

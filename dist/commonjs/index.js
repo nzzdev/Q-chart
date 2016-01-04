@@ -73,7 +73,6 @@ function shortenNumberLabels(config, data) {
     divisor = Math.pow(10, 3);
   }
 
-  console.log(maxValue, flatDatapoints, flatDatapoints.length, flatDatapoints[flatDatapoints.length - 1]);
   var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
   var axis = config.horizontalBars ? 'axisX' : 'axisY';
