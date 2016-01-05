@@ -213,21 +213,28 @@ function getContextHtml(item, chartistConfig) {
   if (chartistConfig.horizontalBars) {
     axisNames.reverse();
   }
+  
   html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
-  if (chartistConfig.horizontalBars) {
-    html += `
-      <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
-      <div class="q-chart__chartist-container"></div>
-    `;
+  if (item.data.x.type.id === 'date') {
+    html += '<div class="q-chart__chartist-container"></div>';
   } else {
-    html += `
-      <div class="q-chart__chartist-container"></div>
-      <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
-    `;
+    if (chartistConfig.horizontalBars) {
+      html += `
+        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__chartist-container"></div>
+      `;
+    } else {
+      html += `
+        <div class="q-chart__chartist-container"></div>
+        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+      `;
+    }
   }
+
   html += `  
     <div class="q-chart__footer">`;
+  
   if (item.notes) {
     html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
   }
