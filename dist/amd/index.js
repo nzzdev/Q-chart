@@ -1,4 +1,4 @@
-define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (exports, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _stylesCss) {
+define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './styles.css!'], function (exports, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _stylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -12,6 +12,10 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
   var _Chartist = _interopRequireDefault(_chartist);
 
   var _SizeObserver = _interopRequireDefault(_resourcesSizeObserver);
+
+  var _modifyChartistConfigBeforeRender = _interopRequireDefault(_resourcesModifyChartistConfigBeforeRender);
+
+  var _setYAxisOffset = _interopRequireDefault(_resourcesSetYAxisOffset);
 
   var types = _resourcesTypes.types;
 
@@ -157,7 +161,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
       }
     }
 
-    (0, _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender)(config, item.type, data, size, rect);
+    (0, _modifyChartistConfigBeforeRender['default'])(config, item.type, data, size, rect);
 
     return config;
   }
@@ -329,6 +333,7 @@ define(['exports', 'core-js/es6/object', 'chartist', './resources/chartistConfig
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+            (0, _setYAxisOffset['default'])(chartistConfig, item.type, dataForChartist);
             modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
             try {

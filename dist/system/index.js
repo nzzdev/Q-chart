@@ -1,7 +1,7 @@
-System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './styles.css!'], function (_export) {
+System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './styles.css!'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, types, sizeObserver, chars;
 
   _export('getDivisorString', getDivisorString);
 
@@ -316,6 +316,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+            setYAxisOffset(chartistConfig, item.type, dataForChartist);
             modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
             try {
@@ -362,7 +363,9 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
     }, function (_resourcesHelpers) {
       getTextWidth = _resourcesHelpers.getTextWidth;
     }, function (_resourcesModifyChartistConfigBeforeRender) {
-      modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender;
+      modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender['default'];
+    }, function (_resourcesSetYAxisOffset) {
+      setYAxisOffset = _resourcesSetYAxisOffset['default'];
     }, function (_stylesCss) {}],
     execute: function () {
       types = chartTypes;

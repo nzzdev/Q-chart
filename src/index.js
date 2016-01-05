@@ -6,7 +6,8 @@ import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes, getDigitLabelFontStyle} from './resources/seriesTypes';
 import {getTextWidth} from './resources/helpers';
-import {modifyChartistConfigBeforeRender} from './resources/modifyChartistConfigBeforeRender';
+import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
+import setYAxisOffset from './resources/setYAxisOffset';
 
 import './styles.css!'
 
@@ -304,6 +305,7 @@ export function display(item, element, withoutContext = false) {
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+        setYAxisOffset(chartistConfig, item.type, dataForChartist);
         modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
         try {

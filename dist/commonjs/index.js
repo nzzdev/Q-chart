@@ -28,6 +28,12 @@ var _resourcesHelpers = require('./resources/helpers');
 
 var _resourcesModifyChartistConfigBeforeRender = require('./resources/modifyChartistConfigBeforeRender');
 
+var _resourcesModifyChartistConfigBeforeRender2 = _interopRequireDefault(_resourcesModifyChartistConfigBeforeRender);
+
+var _resourcesSetYAxisOffset = require('./resources/setYAxisOffset');
+
+var _resourcesSetYAxisOffset2 = _interopRequireDefault(_resourcesSetYAxisOffset);
+
 require('./styles.css!');
 
 var types = _resourcesTypes.types;
@@ -174,7 +180,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
     }
   }
 
-  (0, _resourcesModifyChartistConfigBeforeRender.modifyChartistConfigBeforeRender)(config, item.type, data, size, rect);
+  (0, _resourcesModifyChartistConfigBeforeRender2['default'])(config, item.type, data, size, rect);
 
   return config;
 }
@@ -346,6 +352,7 @@ function display(item, element) {
           var drawSize = getElementSize(rect);
           var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
           chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+          (0, _resourcesSetYAxisOffset2['default'])(chartistConfig, item.type, dataForChartist);
           modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
           try {
