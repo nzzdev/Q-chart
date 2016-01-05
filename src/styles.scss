@@ -11,11 +11,6 @@ $ct-include-classes: false;
 @import "sass/chartist_styles";
 
 
-// --- COLORS
-$primary-color: #333;           //for headline, description and relevant elements of chart, inherited from nzz.ch
-$secondary-color: #787878;      //for less important info like notes
-$grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
-
 %label-element {
   @include font(label);
   &--type-number {
@@ -27,6 +22,10 @@ $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
   margin: 22px 0 22px 0;
   @include respond-to(large-up) {
     margin: 32px 0 32px 0;
+  }
+  box-sizing: border-box;
+  *, *::after, *::before {
+    box-sizing: inherit;
   }
 }
 
@@ -97,6 +96,12 @@ $grid-color: #8E8E8E;           //light grey for grid in …_settings.scss
     margin-right: 10px;
     &:last-child {
       margin-right: 0;
+    }
+  }
+  a, a:active, a:visited {
+    @include font(secondary-text, $color: $link-color);
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

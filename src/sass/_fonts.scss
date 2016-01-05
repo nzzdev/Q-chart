@@ -6,6 +6,7 @@ $fonts: (
     color: $primary-color,
     font-size: 15px,
     line-height: 1.45,
+    text-decoration: none,
     respond-to: (
       medium-up: (
         font-size: 20px
@@ -19,6 +20,7 @@ $fonts: (
     color: $secondary-color,
     font-size: 11px,
     line-height: 1.45,
+    text-decoration: none,
     respond-to: (
       medium-up: (
         font-size: 13px
@@ -31,6 +33,7 @@ $fonts: (
     color: $primary-color,
     font-size: 11px,
     line-height: 1.45,
+    text-decoration: none,
     respond-to: (
       medium-up: (
         font-size: 13px

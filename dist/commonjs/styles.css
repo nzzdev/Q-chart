@@ -6,7 +6,8 @@
   font-weight: normal;
   color: #333;
   font-size: 11px;
-  line-height: 1.45; }
+  line-height: 1.45;
+  text-decoration: none; }
   @media (min-width: 414px) {
     .ct-label, .q-chart__legend__item__text, .q-chart__label-x-axis, .q-chart__label-y-axis {
       font-size: 13px; } }
@@ -16,7 +17,8 @@
   font-weight: normal;
   color: #333;
   font-size: 10px;
-  line-height: 1.45; }
+  line-height: 1.45;
+  text-decoration: none; }
   @media (min-width: 414px) {
     .ct-label--number {
       font-size: 12px; } }
@@ -175,10 +177,13 @@
   stroke-width: 1px; }
 
 .q-chart {
-  margin: 22px 0 22px 0; }
+  margin: 22px 0 22px 0;
+  box-sizing: border-box; }
   @media (min-width: 768px) {
     .q-chart {
       margin: 32px 0 32px 0; } }
+  .q-chart *, .q-chart *::after, .q-chart *::before {
+    box-sizing: inherit; }
 
 .q-chart__title {
   margin: 0 0 8px 0; }
@@ -188,7 +193,8 @@
     text-align: left;
     color: #333;
     font-size: 15px;
-    line-height: 1.45; }
+    line-height: 1.45;
+    text-decoration: none; }
     @media (min-width: 414px) {
       .q-chart__title {
         font-size: 20px; } }
@@ -246,7 +252,8 @@
   text-align: left;
   color: #787878;
   font-size: 11px;
-  line-height: 1.45; }
+  line-height: 1.45;
+  text-decoration: none; }
   @media (min-width: 414px) {
     .q-chart__footer {
       font-size: 13px; } }
@@ -261,6 +268,21 @@
   margin-right: 10px; }
   .q-chart__footer .q-chart__footer__notes:last-child, .q-chart__footer .q-chart__footer__sources:last-child {
     margin-right: 0; }
+
+.q-chart__footer a, .q-chart__footer a:active, .q-chart__footer a:visited {
+  color: #0092cc;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  text-align: left;
+  font-size: 11px;
+  line-height: 1.45;
+  text-decoration: none; }
+  @media (min-width: 414px) {
+    .q-chart__footer a, .q-chart__footer a:active, .q-chart__footer a:visited {
+      color: #0092cc;
+      font-size: 13px; } }
+  .q-chart__footer a:hover, .q-chart__footer a:active:hover, .q-chart__footer a:visited:hover {
+    text-decoration: underline; }
 
 .q-chart__legend__item--a .q-chart__legend__item__box {
   background: #4997be; }
