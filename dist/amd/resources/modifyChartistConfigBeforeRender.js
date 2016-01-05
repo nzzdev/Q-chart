@@ -77,8 +77,9 @@ define(['exports', './helpers', './seriesTypes'], function (exports, _helpers, _
         var serieMaxWidth = serie.reduce(function (maxWidth, datapoint) {
           var possibleLabel = datapoint;
           if (!isNaN(parseFloat(datapoint))) {
-            possibleLabel = Math.round(datapoint * 10) / 10;
+            possibleLabel = parseFloat(datapoint).toFixed(1);
           }
+
           var width = (0, _helpers.getTextWidth)(possibleLabel, (0, _seriesTypes.getDigitLabelFontStyle)());
           if (maxWidth < width) {
             return width;

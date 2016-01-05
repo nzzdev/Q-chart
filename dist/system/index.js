@@ -34,6 +34,10 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
 
     var maxValue = flatDatapoints[flatDatapoints.length - 1];
 
+    if (!maxValue) {
+      return;
+    }
+
     if (maxValue >= Math.pow(10, 9)) {
       divisor = Math.pow(10, 9);
     } else if (maxValue >= Math.pow(10, 6)) {
@@ -314,10 +318,14 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
             modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
-            if (withoutContext) {
-              chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
-            } else {
-              chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+            try {
+              if (withoutContext) {
+                chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
+              } else {
+                chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+              }
+            } catch (e) {
+              reject();
             }
 
             chart.supportsForeignObject = false;

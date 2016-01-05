@@ -42,6 +42,10 @@ function shortenNumberLabels(config, data) {
 
   let maxValue = flatDatapoints[flatDatapoints.length - 1];
 
+  if (!maxValue) {
+    return;
+  }
+
   // use the max value to calculate the divisor
   if (maxValue >= Math.pow(10,9)) {
     divisor = Math.pow(10,9)
@@ -302,10 +306,14 @@ export function display(item, element, withoutContext = false) {
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
         modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
-        if (withoutContext) {
-          chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
-        } else {
-          chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+        try {
+          if (withoutContext) {
+            chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
+          } else {
+            chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+          }
+        } catch (e) {
+          reject();
         }
         
         // we do not want line breaking in labels and develop a consistent version

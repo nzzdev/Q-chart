@@ -64,6 +64,10 @@ function shortenNumberLabels(config, data) {
 
   var maxValue = flatDatapoints[flatDatapoints.length - 1];
 
+  if (!maxValue) {
+    return;
+  }
+
   if (maxValue >= Math.pow(10, 9)) {
     divisor = Math.pow(10, 9);
   } else if (maxValue >= Math.pow(10, 6)) {
@@ -344,10 +348,14 @@ function display(item, element) {
           chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
           modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
 
-          if (withoutContext) {
-            chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
-          } else {
-            chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+          try {
+            if (withoutContext) {
+              chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
+            } else {
+              chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+            }
+          } catch (e) {
+            reject();
           }
 
           chart.supportsForeignObject = false;

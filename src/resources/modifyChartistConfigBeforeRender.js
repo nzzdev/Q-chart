@@ -99,8 +99,9 @@ export function modifyChartistConfigBeforeRender(config, type, data, size, rect)
         let serieMaxWidth = serie.reduce((maxWidth, datapoint) => {
           let possibleLabel = datapoint;
           if (!isNaN(parseFloat(datapoint))) {
-            possibleLabel = Math.round(datapoint * 10)/10;
+            possibleLabel = parseFloat(datapoint).toFixed(1);
           }
+          
           let width = getTextWidth(possibleLabel, getDigitLabelFontStyle());
           if (maxWidth < width) {
             return width;

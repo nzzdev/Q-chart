@@ -72,8 +72,9 @@ System.register(['./helpers', './seriesTypes'], function (_export) {
         var serieMaxWidth = serie.reduce(function (maxWidth, datapoint) {
           var possibleLabel = datapoint;
           if (!isNaN(parseFloat(datapoint))) {
-            possibleLabel = Math.round(datapoint * 10) / 10;
+            possibleLabel = parseFloat(datapoint).toFixed(1);
           }
+
           var width = getTextWidth(possibleLabel, getDigitLabelFontStyle());
           if (maxWidth < width) {
             return width;
