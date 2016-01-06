@@ -8,6 +8,10 @@ exports.display = display;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+require('paulirish/matchMedia.js');
+
+require('paulirish/matchMedia.js/matchMedia.addListener.js');
+
 require('core-js/es6/object');
 
 var _chartist = require('chartist');

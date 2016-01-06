@@ -1,4 +1,4 @@
-System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './styles.css!'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './styles.css!'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, types, sizeObserver, chars;
@@ -349,7 +349,7 @@ System.register(['core-js/es6/object', 'chartist', './resources/chartistConfig',
   }
 
   return {
-    setters: [function (_coreJsEs6Object) {}, function (_chartist) {
+    setters: [function (_paulirishMatchMediaJs) {}, function (_paulirishMatchMediaJsMatchMediaAddListenerJs) {}, function (_coreJsEs6Object) {}, function (_chartist) {
       Chartist = _chartist['default'];
     }, function (_resourcesChartistConfig) {
       getChartistConfig = _resourcesChartistConfig.getConfig;
