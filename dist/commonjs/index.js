@@ -330,7 +330,7 @@ function displayWithoutContext(item, element, chartistConfig, dataForChartist) {
   return renderChartist(item, element, chartistConfig, dataForChartist);
 }
 
-function display(item, rendererConfig, element) {
+function display(item, element, rendererConfig) {
   var withoutContext = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
   return new Promise(function (resolve, reject) {
@@ -352,7 +352,7 @@ function display(item, rendererConfig, element) {
           rendererConfig = _rendererConfigDefaults2['default'];
         }
 
-        var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + '/themes/' + rendererConfig.theme;
+        var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
         System['import'](themeUrl + '/styles.css!');
 
         var chart = undefined;

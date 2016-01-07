@@ -285,7 +285,7 @@ function displayWithoutContext(item, element, chartistConfig, dataForChartist) {
   return renderChartist(item, element, chartistConfig, dataForChartist);
 }
 
-export function display(item, rendererConfig, element, withoutContext = false) {
+export function display(item, element, rendererConfig, withoutContext = false) {
   return new Promise((resolve, reject) => {
     try {
       if (!element) throw 'Element is not defined';
@@ -302,8 +302,7 @@ export function display(item, rendererConfig, element, withoutContext = false) {
         rendererConfig = rendererConfigDefaults;
       }
 
-      // load theme styles
-      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}/themes/${rendererConfig.theme}`;
+      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
       System.import(`${themeUrl}/styles.css!`);
 
       let chart;

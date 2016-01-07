@@ -5,7 +5,8 @@ System.register([], function (_export) {
     setters: [],
     execute: function () {
       _export('default', {
-        theme: 'default'
+        theme: 'default',
+        rendererBaseUrl: ''
       });
     }
   };

@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports['default'] = {
-  theme: 'default'
+  theme: 'default',
+  rendererBaseUrl: ''
 };
 module.exports = exports['default'];

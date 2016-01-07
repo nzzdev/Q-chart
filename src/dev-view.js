@@ -799,25 +799,29 @@ var chart14 = {
 import {display as displayChart} from 'index';
 import 'themes/default/dev-styles.css!';
 
+let rendererConfig = {
+  rendererBaseUrl: '',
+}
 
-displayChart(chart1, undefined, document.getElementById('chart1'));
-displayChart(chart2, undefined, document.getElementById('chart2'));
+
+displayChart(chart1, rendererConfig, document.getElementById('chart1'));
+displayChart(chart2, rendererConfig, document.getElementById('chart2'));
 
 // -- colors bars
 
-displayChart(chart3, undefined, document.getElementById('chart3'));
-displayChart(chart4, undefined, document.getElementById('chart4'));
-displayChart(chart5, undefined, document.getElementById('chart5'));
-displayChart(chart6, undefined, document.getElementById('chart6'));
-displayChart(chart7, undefined, document.getElementById('chart7'));
+displayChart(chart3, rendererConfig, document.getElementById('chart3'));
+displayChart(chart4, rendererConfig, document.getElementById('chart4'));
+displayChart(chart5, rendererConfig, document.getElementById('chart5'));
+displayChart(chart6, rendererConfig, document.getElementById('chart6'));
+displayChart(chart7, rendererConfig, document.getElementById('chart7'));
 
 // -- colors lines
 
-displayChart(chart8, undefined, document.getElementById('chart8'));
-displayChart(chart9, undefined, document.getElementById('chart9'));
-displayChart(chart10, undefined, document.getElementById('chart10'));
-displayChart(chart11, undefined, document.getElementById('chart11'));
-displayChart(chart12, undefined, document.getElementById('chart12'));
+displayChart(chart8, rendererConfig, document.getElementById('chart8'));
+displayChart(chart9, rendererConfig, document.getElementById('chart9'));
+displayChart(chart10, rendererConfig, document.getElementById('chart10'));
+displayChart(chart11, rendererConfig, document.getElementById('chart11'));
+displayChart(chart12, rendererConfig, document.getElementById('chart12'));
 
-displayChart(chart13, undefined, document.getElementById('chart13'));
-displayChart(chart14, undefined, document.getElementById('chart14'));
+displayChart(chart13, rendererConfig, document.getElementById('chart13'));
+displayChart(chart14, rendererConfig, document.getElementById('chart14'));
