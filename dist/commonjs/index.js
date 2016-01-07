@@ -352,8 +352,8 @@ function display(item, rendererConfig, element) {
           rendererConfig = _rendererConfigDefaults2['default'];
         }
 
-        var themeFolder = rendererConfig.rendererBaseUrl + '/themes/' + rendererConfig.theme;
-        System['import'](themeFolder + '/styles.css!');
+        var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + '/themes/' + rendererConfig.theme;
+        System['import'](themeUrl + '/styles.css!');
 
         var chart = undefined;
 

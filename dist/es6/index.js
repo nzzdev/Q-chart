@@ -303,8 +303,8 @@ export function display(item, rendererConfig, element, withoutContext = false) {
       }
 
       // load theme styles
-      let themeFolder = `${rendererConfig.rendererBaseUrl}/themes/${rendererConfig.theme}`;
-      System.import(`${themeFolder}/styles.css!`);
+      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}/themes/${rendererConfig.theme}`;
+      System.import(`${themeUrl}/styles.css!`);
 
       let chart;
 
