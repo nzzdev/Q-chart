@@ -12,7 +12,9 @@ import {getTextWidth} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
 
-import './styles.css!'
+import rendererConfigDefaults from './rendererConfigDefaults';
+
+// import './styles.css!'
 
 export var types = chartTypes;
 
@@ -224,7 +226,7 @@ function getContextHtml(item, chartistConfig) {
   
   html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
-  if (item.data.x.type.id === 'date') {
+  if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
@@ -283,7 +285,7 @@ function displayWithoutContext(item, element, chartistConfig, dataForChartist) {
   return renderChartist(item, element, chartistConfig, dataForChartist);
 }
 
-export function display(item, element, withoutContext = false) {
+export function display(item, rendererConfig, element, withoutContext = false) {
   return new Promise((resolve, reject) => {
     try {
       if (!element) throw 'Element is not defined';
@@ -293,6 +295,16 @@ export function display(item, element, withoutContext = false) {
         reject('no data');
         return;
       }
+
+      if (rendererConfig && typeof rendererConfig === 'object') {
+        rendererConfig = Object.assign(rendererConfigDefaults, rendererConfig);
+      } else {
+        rendererConfig = rendererConfigDefaults;
+      }
+
+      // load theme
+      let themeFolder = `themes/${rendererConfig.theme}`;
+      System.import(`${themeFolder}/styles.css!`);
 
       let chart;
 
@@ -318,7 +330,7 @@ export function display(item, element, withoutContext = false) {
             chart = displayWithContext(item, element, chartistConfig, dataForChartist);
           }
         } catch (e) {
-          reject();
+          reject(e);
         }
         
         // we do not want line breaking in labels and develop a consistent version

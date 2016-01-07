@@ -38,7 +38,9 @@ var _resourcesSetYAxisOffset = require('./resources/setYAxisOffset');
 
 var _resourcesSetYAxisOffset2 = _interopRequireDefault(_resourcesSetYAxisOffset);
 
-require('./styles.css!');
+var _rendererConfigDefaults = require('./rendererConfigDefaults');
+
+var _rendererConfigDefaults2 = _interopRequireDefault(_rendererConfigDefaults);
 
 var types = _resourcesTypes.types;
 
@@ -255,7 +257,7 @@ function getContextHtml(item, chartistConfig) {
 
   html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
 
-  if (item.data.x.type.id === 'date') {
+  if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
@@ -328,8 +330,8 @@ function displayWithoutContext(item, element, chartistConfig, dataForChartist) {
   return renderChartist(item, element, chartistConfig, dataForChartist);
 }
 
-function display(item, element) {
-  var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+function display(item, rendererConfig, element) {
+  var withoutContext = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
   return new Promise(function (resolve, reject) {
     try {
@@ -343,6 +345,15 @@ function display(item, element) {
             v: undefined
           };
         }
+
+        if (rendererConfig && typeof rendererConfig === 'object') {
+          rendererConfig = Object.assign(_rendererConfigDefaults2['default'], rendererConfig);
+        } else {
+          rendererConfig = _rendererConfigDefaults2['default'];
+        }
+
+        var themeFolder = 'themes/' + rendererConfig.theme;
+        System['import'](themeFolder + '/styles.css!');
 
         var chart = undefined;
 
@@ -366,7 +377,7 @@ function display(item, element) {
               chart = displayWithContext(item, element, chartistConfig, dataForChartist);
             }
           } catch (e) {
-            reject();
+            reject(e);
           }
 
           chart.supportsForeignObject = false;

@@ -12,6 +12,9 @@ var chart1 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -62,6 +65,9 @@ var chart2 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -480,6 +486,9 @@ var chart8 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -516,6 +525,9 @@ var chart9 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -556,6 +568,9 @@ var chart10 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -600,6 +615,9 @@ var chart11 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -648,6 +666,9 @@ var chart12 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04','2012-05','2012-06','2012-07','2012-08','2012-09','2012-10','2012-11','2012-12','2013-01','2013-02','2013-03','2013-04','2013-05','2013-06','2013-07','2013-08','2013-09','2013-10','2013-11','2013-12','2014-01','2014-02','2014-03','2014-04','2014-05','2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -700,6 +721,9 @@ var chart13 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -740,6 +764,9 @@ var chart14 = {
       data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04'],
       type: {
         id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
         options: {
           interval: 'month'
         }
@@ -769,28 +796,28 @@ var chart14 = {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-import 'styles.css!';
-import 'dev-styles.css!';
 import {display as displayChart} from 'index';
+import 'themes/default/dev-styles.css!';
 
-displayChart(chart1, document.getElementById('chart1'));
-displayChart(chart2, document.getElementById('chart2'));
+
+displayChart(chart1, undefined, document.getElementById('chart1'));
+displayChart(chart2, undefined, document.getElementById('chart2'));
 
 // -- colors bars
 
-displayChart(chart3, document.getElementById('chart3'));
-displayChart(chart4, document.getElementById('chart4'));
-displayChart(chart5, document.getElementById('chart5'));
-displayChart(chart6, document.getElementById('chart6'));
-displayChart(chart7, document.getElementById('chart7'));
+displayChart(chart3, undefined, document.getElementById('chart3'));
+displayChart(chart4, undefined, document.getElementById('chart4'));
+displayChart(chart5, undefined, document.getElementById('chart5'));
+displayChart(chart6, undefined, document.getElementById('chart6'));
+displayChart(chart7, undefined, document.getElementById('chart7'));
 
 // -- colors lines
 
-displayChart(chart8, document.getElementById('chart8'));
-displayChart(chart9, document.getElementById('chart9'));
-displayChart(chart10, document.getElementById('chart10'));
-displayChart(chart11, document.getElementById('chart11'));
-displayChart(chart12, document.getElementById('chart12'));
+displayChart(chart8, undefined, document.getElementById('chart8'));
+displayChart(chart9, undefined, document.getElementById('chart9'));
+displayChart(chart10, undefined, document.getElementById('chart10'));
+displayChart(chart11, undefined, document.getElementById('chart11'));
+displayChart(chart12, undefined, document.getElementById('chart12'));
 
-displayChart(chart13, document.getElementById('chart13'));
-displayChart(chart14, document.getElementById('chart14'));
+displayChart(chart13, undefined, document.getElementById('chart13'));
+displayChart(chart14, undefined, document.getElementById('chart14'));

@@ -1,4 +1,4 @@
-define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './styles.css!'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _stylesCss) {
+define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -16,6 +16,8 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
   var _modifyChartistConfigBeforeRender = _interopRequireDefault(_resourcesModifyChartistConfigBeforeRender);
 
   var _setYAxisOffset = _interopRequireDefault(_resourcesSetYAxisOffset);
+
+  var _rendererConfigDefaults2 = _interopRequireDefault(_rendererConfigDefaults);
 
   var types = _resourcesTypes.types;
 
@@ -232,7 +234,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
 
     html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
 
-    if (item.data.x.type.id === 'date') {
+    if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
       html += '<div class="q-chart__chartist-container"></div>';
     } else {
       if (chartistConfig.horizontalBars) {
@@ -305,8 +307,8 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     return renderChartist(item, element, chartistConfig, dataForChartist);
   }
 
-  function display(item, element) {
-    var withoutContext = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+  function display(item, rendererConfig, element) {
+    var withoutContext = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
     return new Promise(function (resolve, reject) {
       try {
@@ -320,6 +322,15 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
               v: undefined
             };
           }
+
+          if (rendererConfig && typeof rendererConfig === 'object') {
+            rendererConfig = Object.assign(_rendererConfigDefaults2['default'], rendererConfig);
+          } else {
+            rendererConfig = _rendererConfigDefaults2['default'];
+          }
+
+          var themeFolder = 'themes/' + rendererConfig.theme;
+          System['import'](themeFolder + '/styles.css!');
 
           var chart = undefined;
 
@@ -343,7 +354,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
                 chart = displayWithContext(item, element, chartistConfig, dataForChartist);
               }
             } catch (e) {
-              reject();
+              reject(e);
             }
 
             chart.supportsForeignObject = false;
