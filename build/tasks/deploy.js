@@ -50,6 +50,8 @@ if (process.env.TRAVIS_BRANCH) {
   deployTargets.push(slug + '-' + process.env.TRAVIS_BRANCH);
 }
 
+deployTargets.push(slug + '-dev');
+
 var fastlyPurgeCallback = function(err, result) {
   if (err) {
     gutil.log('fastlyPurgeError', err, result);

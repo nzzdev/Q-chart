@@ -1,5 +1,7 @@
 var gulp  = require('gulp'),
-    shell = require('gulp-shell');
+    shell = require('gulp-shell'),
+    paths = require('../paths'),
+    runSequence = require('run-sequence');
 
 var bundle = {
   includes: [
@@ -20,4 +22,18 @@ function bundleCommands() {
   return bundleCommands;
 }
 
-gulp.task('bundle', ['build'], shell.task(bundleCommands()));
+gulp.task('copy-theme-for-deployment', function() {
+  return gulp.src([paths.output + '/amd/themes/**'])
+    .pipe(gulp.dest('./deployable-build/themes'));
+});
+
+gulp.task('bundle-js', ['build'], shell.task(bundleCommands()));
+
+gulp.task('bundle', function(callback) {
+  return runSequence(
+    'build',
+    'copy-theme-for-deployment',
+    'bundle-js',
+    callback
+  );
+});

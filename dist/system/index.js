@@ -310,7 +310,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
             rendererConfig = rendererConfigDefaults;
           }
 
-          var themeFolder = 'themes/' + rendererConfig.theme;
+          var themeFolder = rendererConfig.rendererBaseUrl + '/themes/' + rendererConfig.theme;
           System['import'](themeFolder + '/styles.css!');
 
           var chart = undefined;

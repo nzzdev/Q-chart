@@ -329,7 +329,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
             rendererConfig = _rendererConfigDefaults2['default'];
           }
 
-          var themeFolder = 'themes/' + rendererConfig.theme;
+          var themeFolder = rendererConfig.rendererBaseUrl + '/themes/' + rendererConfig.theme;
           System['import'](themeFolder + '/styles.css!');
 
           var chart = undefined;
