@@ -9,7 +9,7 @@ var config = new AWS.Config({
 });
 var s3 = require('gulp-s3-upload')(config);
 
-if (!process.env.KEYCDN_API_KEY || !process.env.FASTLY_API_KEY || !process.env.S3_BUCKET) {
+if (!process.env.KEYCDN_API_KEY !process.env.S3_BUCKET) {
   var envFile = '.env.json';
   try {
     stats = fs.lstatSync(envFile);
@@ -26,12 +26,9 @@ if (!process.env.KEYCDN_API_KEY || !process.env.FASTLY_API_KEY || !process.env.S
 var keycdn = require('gulp-keycdn');
 var keycdnOptions = {
   apiKey  : process.env.KEYCDN_API_KEY,
-  zoneId  : 22360,
+  zoneId  : process.env.KEYCDN_ZONE_ID,
   method : 'del'
 };
-
-var FastlyPurge = require('fastly-purge');
-var fastlyPurge = new FastlyPurge(process.env.FASTLY_API_KEY);
 
 var slug          = 'Q-renderers/chart';
 var deployTargets = [];
@@ -59,14 +56,6 @@ if (process.env.TRAVIS_BRANCH) {
 
 deployTargets.push(slug + '-dev');
 
-var fastlyPurgeCallback = function(err, result) {
-  if (err) {
-    gutil.log('fastlyPurgeError', err, result);
-  } else {
-    gutil.log('fastlyPurge', result);
-  }
-}
-
 function createDeployTask(name, target) {
   gulp.task(name, function() {
      return gulp.src("./deployable-build/**")
@@ -83,12 +72,10 @@ function createDeployTask(name, target) {
           return new_name;
         },
         onChange: function(keyname) {
-          keycdn(keycdnOptions, 'nzzstorytelling-2cac.kxcdn.com/' + keyname);
-          fastlyPurge.url('http://' + process.env.S3_BUCKET + '/' + keyname, fastlyPurgeCallback);
+          keycdn(keycdnOptions, process.env.KEYCDN_ZONE_URL + '/' + keyname);
         },
         onNew: function(keyname) {
-          keycdn(keycdnOptions, 'nzzstorytelling-2cac.kxcdn.com/' + keyname);
-          fastlyPurge.url('http://' + process.env.S3_BUCKET + '/' + keyname, fastlyPurgeCallback);
+          keycdn(keycdnOptions, process.env.KEYCDN_ZONE_URL + '/' + keyname);
         }
     }));
   });
