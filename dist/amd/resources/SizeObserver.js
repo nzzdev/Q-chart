@@ -162,6 +162,7 @@ define(['exports', 'module'], function (exports, module) {
       key: 'invokeCallback',
       value: function invokeCallback(cb) {
         if (cb.element && cb.element.getBoundingClientRect) {
+
           cb.func(cb.element.getBoundingClientRect());
         } else {
           cb.func();

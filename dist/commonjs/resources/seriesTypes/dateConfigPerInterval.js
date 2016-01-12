@@ -42,7 +42,7 @@ var seriesTypeConfig = {
       }
     },
     getLabelLength: function getLabelLength(index, isLastIntervalLabel, data, config) {
-      return index === 0 || isLastIntervalLabel ? 40 : 23;
+      return index === 0 || isLastIntervalLabel ? 53 : 40;
     },
     getForceShow: function getForceShow(index, isLastIntervalLabel, data, config, size) {
       return index === 0 || isLastIntervalLabel;

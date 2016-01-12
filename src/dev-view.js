@@ -804,24 +804,24 @@ let rendererConfig = {
 }
 
 
-displayChart(chart1, rendererConfig, document.getElementById('chart1'));
-displayChart(chart2, rendererConfig, document.getElementById('chart2'));
+displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+displayChart(chart2, document.getElementById('chart2'), rendererConfig);
 
 // -- colors bars
 
-displayChart(chart3, rendererConfig, document.getElementById('chart3'));
-displayChart(chart4, rendererConfig, document.getElementById('chart4'));
-displayChart(chart5, rendererConfig, document.getElementById('chart5'));
-displayChart(chart6, rendererConfig, document.getElementById('chart6'));
-displayChart(chart7, rendererConfig, document.getElementById('chart7'));
+displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+displayChart(chart7, document.getElementById('chart7'), rendererConfig);
 
 // -- colors lines
 
-displayChart(chart8, rendererConfig, document.getElementById('chart8'));
-displayChart(chart9, rendererConfig, document.getElementById('chart9'));
-displayChart(chart10, rendererConfig, document.getElementById('chart10'));
-displayChart(chart11, rendererConfig, document.getElementById('chart11'));
-displayChart(chart12, rendererConfig, document.getElementById('chart12'));
+displayChart(chart8, document.getElementById('chart8'), rendererConfig);
+displayChart(chart9, document.getElementById('chart9'), rendererConfig);
+displayChart(chart10, document.getElementById('chart10'), rendererConfig);
+displayChart(chart11, document.getElementById('chart11'), rendererConfig);
+displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
-displayChart(chart13, rendererConfig, document.getElementById('chart13'));
-displayChart(chart14, rendererConfig, document.getElementById('chart14'));
+displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+displayChart(chart14, document.getElementById('chart14'), rendererConfig);

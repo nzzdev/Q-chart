@@ -120,6 +120,7 @@ export default class SizeObserver {
 
   invokeCallback(cb) {
     if (cb.element && cb.element.getBoundingClientRect) {
+
       cb.func(cb.element.getBoundingClientRect());
     } else {
       cb.func();
