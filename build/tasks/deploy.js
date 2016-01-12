@@ -9,7 +9,7 @@ var config = new AWS.Config({
 });
 var s3 = require('gulp-s3-upload')(config);
 
-if (!process.env.KEYCDN_API_KEY !process.env.S3_BUCKET) {
+if (!process.env.KEYCDN_API_KEY || !process.env.S3_BUCKET) {
   var envFile = '.env.json';
   try {
     stats = fs.lstatSync(envFile);
