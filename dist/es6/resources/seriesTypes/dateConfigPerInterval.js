@@ -25,6 +25,21 @@ export var seriesTypeConfig = {
       return (index === 0 || isLastIntervalLabel);
     }
   },
+  quarter: {
+    format: (index, isLastIntervalLabel, date, forceFull = false) => {
+      if (index === 0 || isLastIntervalLabel || forceFull) {
+        return date.getFullYear() + ' Q' + (date.getMonth()/3 + 1);
+      } else {
+        return date.getFullYear().toString().slice(2) + ' Q' + (date.getMonth()/3 + 1);
+      }
+    },
+    getLabelLength: (index, isLastIntervalLabel, data, config) => {
+      return (index === 0 || isLastIntervalLabel) ? 40 : 23;
+    },
+    getForceShow: (index, isLastIntervalLabel, data, config, size) => {
+      return (index === 0 || isLastIntervalLabel);
+    }
+  },
   month: {
     format: (index, isLastIntervalLabel, date, forceFull = false) => {
       if (index === 0 || isLastIntervalLabel || forceFull) {

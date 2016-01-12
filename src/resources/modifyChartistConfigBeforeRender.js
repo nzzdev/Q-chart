@@ -33,23 +33,23 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
     
     if (noOfBars <= 4){
       barWidth = 36;
-      seriesBarDistance = 37; 
+      seriesBarDistance = 37;
     }
     else if (noOfBars > 4 && noOfBars <= 8){
       barWidth = 28;
-      seriesBarDistance = 29; 
+      seriesBarDistance = 29;
     }
     else if (noOfBars > 8 && noOfBars <= 16){
       barWidth = 20;
-      seriesBarDistance = 21; 
+      seriesBarDistance = 21;
     } 
     else if (noOfBars > 16 && noOfBars <= 24){
       barWidth = 14;
-      seriesBarDistance = 15; 
+      seriesBarDistance = 15;
     } 
     else {
       barWidth = 10;
-      seriesBarDistance = 11; 
+      seriesBarDistance = 11;
     }
 
     // add calcBarWidth object + value to config - this will be used in chartist-plugin-fit-bars.js to set the width of bars 
@@ -61,6 +61,6 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
 
   // add some padding to top of chart if needed for the label
   if (!config.horizontalBars) {
-    config.chartPadding.top = 20;
+    config.chartPadding.top = 12;
   }
 }

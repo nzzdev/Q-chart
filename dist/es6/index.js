@@ -14,8 +14,6 @@ import setYAxisOffset from './resources/setYAxisOffset';
 
 import rendererConfigDefaults from './rendererConfigDefaults';
 
-// import './styles.css!'
-
 export var types = chartTypes;
 
 var sizeObserver = new SizeObserver();

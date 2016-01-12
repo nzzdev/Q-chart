@@ -32,6 +32,23 @@ define(['exports'], function (exports) {
         return index === 0 || isLastIntervalLabel;
       }
     },
+    quarter: {
+      format: function format(index, isLastIntervalLabel, date) {
+        var forceFull = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+
+        if (index === 0 || isLastIntervalLabel || forceFull) {
+          return date.getFullYear() + ' Q' + (date.getMonth() / 3 + 1);
+        } else {
+          return date.getFullYear().toString().slice(2) + ' Q' + (date.getMonth() / 3 + 1);
+        }
+      },
+      getLabelLength: function getLabelLength(index, isLastIntervalLabel, data, config) {
+        return index === 0 || isLastIntervalLabel ? 40 : 23;
+      },
+      getForceShow: function getForceShow(index, isLastIntervalLabel, data, config, size) {
+        return index === 0 || isLastIntervalLabel;
+      }
+    },
     month: {
       format: function format(index, isLastIntervalLabel, date) {
         var forceFull = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];

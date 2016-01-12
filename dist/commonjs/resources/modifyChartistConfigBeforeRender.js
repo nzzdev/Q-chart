@@ -45,7 +45,7 @@ function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
   }
 
   if (!config.horizontalBars) {
-    config.chartPadding.top = 20;
+    config.chartPadding.top = 12;
   }
 }
 

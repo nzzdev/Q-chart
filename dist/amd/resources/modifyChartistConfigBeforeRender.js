@@ -43,7 +43,7 @@ define(['exports', 'module'], function (exports, module) {
     }
 
     if (!config.horizontalBars) {
-      config.chartPadding.top = 20;
+      config.chartPadding.top = 12;
     }
   }
 });
