@@ -335,8 +335,6 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
           var chart = undefined;
 
           sizeObserver.onResize(function (rect) {
-            console.log(rect);
-
             var dataForChartist = getChartDataForChartist(item);
             if (!dataForChartist || dataForChartist === null) {
               reject('data could not be prepared for chartist');

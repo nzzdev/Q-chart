@@ -306,7 +306,6 @@ export function display(item, element, rendererConfig, withoutContext = false) {
       let chart;
 
       sizeObserver.onResize((rect) => {
-        console.log(rect);
         // prepare data
         let dataForChartist = getChartDataForChartist(item);
         if (!dataForChartist || dataForChartist === null) {
