@@ -72,10 +72,10 @@ function createDeployTask(name, target) {
           return new_name;
         },
         onChange: function(keyname) {
-          keycdn(keycdnOptions, process.env.KEYCDN_ZONE_URL + '/' + keyname);
+          keycdn(keycdnOptions, [process.env.KEYCDN_ZONE_URL + '/' + keyname]);
         },
         onNew: function(keyname) {
-          keycdn(keycdnOptions, process.env.KEYCDN_ZONE_URL + '/' + keyname);
+          keycdn(keycdnOptions, [process.env.KEYCDN_ZONE_URL + '/' + keyname]);
         }
     }));
   });
