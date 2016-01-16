@@ -15,6 +15,14 @@ System.register(['./chartistConfig', './min'], function (_export) {
         Bar: {
           label: 'Bar',
           chartistType: 'Bar',
+          modifyData: function modifyData(config, data, size, rect) {
+            if (config.horizontalBars) {
+              data.labels.reverse();
+              data.series.map(function (serie) {
+                serie.reverse();
+              });
+            }
+          },
           options: [{
             name: 'isColumnChart',
             type: 'oneOf',
@@ -23,14 +31,12 @@ System.register(['./chartistConfig', './min'], function (_export) {
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
               config.horizontalBars = !value;
               if (config.horizontalBars) {
-                config.reverseData = true;
                 config.height = (vertBarHeight * data.series.length + vertBarSetPadding) * data.labels.length;
 
                 config.axisX.showGrid = true;
                 config.axisX.position = 'start';
                 config.axisY.showGrid = false;
               } else {
-                config.reverseData = false;
                 config.height = chartHeight;
 
                 config.axisX.showGrid = false;
@@ -50,9 +56,6 @@ System.register(['./chartistConfig', './min'], function (_export) {
                 config.axisX.showGrid = true;
                 config.axisX.position = 'start';
                 config.axisY.showGrid = false;
-              }
-              if (config.horizontalBars) {
-                config.reverseData = true;
               }
             }
           }]
@@ -68,14 +71,12 @@ System.register(['./chartistConfig', './min'], function (_export) {
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
               config.horizontalBars = !value;
               if (config.horizontalBars) {
-                config.reverseData = true;
                 config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
 
                 config.axisX.showGrid = true;
                 config.axisX.position = 'start';
                 config.axisY.showGrid = false;
               } else {
-                config.reverseData = false;
                 config.height = chartHeight;
 
                 config.axisX.showGrid = false;
@@ -90,14 +91,11 @@ System.register(['./chartistConfig', './min'], function (_export) {
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
               if (value && size === 'small') {
                 config.horizontalBars = true;
-                config.reverseData = true;
                 config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
 
                 config.axisX.showGrid = true;
                 config.axisX.position = 'start';
                 config.axisY.showGrid = false;
-              } else {
-                config.reverseData = false;
               }
             }
           }]

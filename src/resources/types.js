@@ -5,6 +5,15 @@ export var types = {
   Bar: {
     label: 'Bar',
     chartistType: 'Bar',
+    modifyData: (config, data, size, rect) => {
+      if (config.horizontalBars) {
+        // reverse data labels and data series for horizontal bars
+        data.labels.reverse();
+        data.series.map(serie => {
+          serie.reverse();
+        })
+      }
+    },
     options: [
       {
         name: 'isColumnChart',      // false would produce a bar chart (aka horizontal bar chart)
@@ -14,7 +23,6 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.reverseData = true;
             config.height = ((vertBarHeight * data.series.length) + vertBarSetPadding) * data.labels.length;
 
             config.axisX.showGrid = true;
@@ -22,13 +30,12 @@ export var types = {
             config.axisY.showGrid = false;
 
           } else {
-            config.reverseData = false;
             config.height = chartHeight;
 
             config.axisX.showGrid = false;
             config.axisX.position = 'end';
           }
-        }
+        },
       },
       {
         name: 'forceBarsOnSmall',
@@ -43,9 +50,6 @@ export var types = {
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
-          }
-          if (config.horizontalBars) {
-            config.reverseData = true;
           }
         }
       }
@@ -63,14 +67,12 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
-            config.reverseData = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
 
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
           } else {
-            config.reverseData = false;
             config.height = chartHeight;
 
             config.axisX.showGrid = false;
@@ -86,14 +88,11 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
-            config.reverseData = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
             
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
-          } else {
-            config.reverseData = false;
           }
         }
       }

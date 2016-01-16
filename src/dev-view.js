@@ -793,6 +793,73 @@ var chart14 = {
   type: 'Line'
 }
 
+var chart15 = {
+  "_id": "95db629edf1203147294be786e48df47",
+  "_rev": "1-399c407962206c0ddef2bac6e1974467",
+  "title": "balken vertauscht",
+  "tool": "chart",
+  "editorVersion": "dev",
+  "rendererVersion": "dev",
+  "type": "Bar",
+  "data": {
+    "x": {
+      "label": "Land",
+      "data": [
+        "Frankreich",
+        "Deutschland",
+        "Grossbritannien",
+        "Türkei",
+        "Belgien",
+        "Bosnien"
+      ],
+      "type": {
+        "id": "default",
+        "options": {}
+      }
+    },
+    "y": {
+      "label": "",
+      "data": [
+        {
+          "label": "Kämpfer",
+          "data": [
+            "1200",
+            "600",
+            "600",
+            "600",
+            "440",
+            "330"
+          ]
+        },
+        {
+          "label": "Richtwert",
+          "data": [
+            "800",
+            "800",
+            "800",
+            "800",
+            "800",
+            "800"
+          ]
+        }
+      ]
+    }
+  },
+  "options": {
+    "isColumnChart": false,
+    "forceBarsOnSmall": true
+  },
+  "sources": [
+    {
+      "text": "",
+      "href": "",
+      "validHref": false
+    }
+  ],
+  "createdDate": "2016-01-16T12:19:18.355Z",
+  "createdBy": "storytelling@nzz.ch"
+}
+
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -825,3 +892,4 @@ displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
 displayChart(chart13, document.getElementById('chart13'), rendererConfig);
 displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+displayChart(chart15, document.getElementById('chart15'), rendererConfig);

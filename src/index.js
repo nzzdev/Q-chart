@@ -73,7 +73,7 @@ function shortenNumberLabels(config, data) {
   return divisor;
 }
 
-function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+function modifyData(config, item, data, size, rect) {
   // if there are detected series types
   // we need to let them modify the data
   if (item.data.x && item.data.x.type) {
@@ -94,7 +94,11 @@ function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
         seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
       }
-    
+    }
+
+    // let the chart type modify the config
+    if (chartTypes[item.type].modifyData) {
+      chartTypes[item.type].modifyData(config, data, size, rect);
     }
   }
 }
@@ -115,7 +119,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
     }
   }
 
-  // if the chart type wants to modify the config
+  // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {
     chartTypes[item.type].modifyConfig(config, data, size, rect);
   }
@@ -318,7 +322,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
         setYAxisOffset(chartistConfig, item.type, dataForChartist);
-        modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
+        modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
 
         try {
           if (withoutContext) {

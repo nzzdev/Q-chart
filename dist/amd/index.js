@@ -78,7 +78,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     return divisor;
   }
 
-  function modifyDataBasedOnSeriesType(config, item, data, size, rect) {
+  function modifyData(config, item, data, size, rect) {
     if (item.data.x && item.data.x.type) {
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
@@ -97,6 +97,10 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
           _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
+      }
+
+      if (_resourcesTypes.types[item.type].modifyData) {
+        _resourcesTypes.types[item.type].modifyData(config, data, size, rect);
       }
     }
   }
@@ -345,7 +349,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
             (0, _setYAxisOffset['default'])(chartistConfig, item.type, dataForChartist);
-            modifyDataBasedOnSeriesType(chartistConfig, item, dataForChartist, drawSize, rect);
+            modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
 
             try {
               if (withoutContext) {
