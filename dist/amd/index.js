@@ -1,4 +1,4 @@
-define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults) {
+define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', './themes/default/styles.css!'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults, _themesDefaultStylesCss) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -332,9 +332,6 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
           } else {
             rendererConfig = _rendererConfigDefaults2['default'];
           }
-
-          var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-          System['import'](themeUrl + '/styles.css!');
 
           var chart = undefined;
 

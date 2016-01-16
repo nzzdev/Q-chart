@@ -42,6 +42,8 @@ var _rendererConfigDefaults = require('./rendererConfigDefaults');
 
 var _rendererConfigDefaults2 = _interopRequireDefault(_rendererConfigDefaults);
 
+require('./themes/default/styles.css!');
+
 var types = _resourcesTypes.types;
 
 exports.types = types;
@@ -355,9 +357,6 @@ function display(item, element, rendererConfig) {
         } else {
           rendererConfig = _rendererConfigDefaults2['default'];
         }
-
-        var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-        System['import'](themeUrl + '/styles.css!');
 
         var chart = undefined;
 

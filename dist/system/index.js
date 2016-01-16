@@ -1,4 +1,4 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', './themes/default/styles.css!'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, types, sizeObserver, chars;
@@ -314,9 +314,6 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
             rendererConfig = rendererConfigDefaults;
           }
 
-          var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-          System['import'](themeUrl + '/styles.css!');
-
           var chart = undefined;
 
           sizeObserver.onResize(function (rect) {
@@ -381,7 +378,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       setYAxisOffset = _resourcesSetYAxisOffset['default'];
     }, function (_rendererConfigDefaults) {
       rendererConfigDefaults = _rendererConfigDefaults['default'];
-    }],
+    }, function (_themesDefaultStylesCss) {}],
     execute: function () {
       types = chartTypes;
 

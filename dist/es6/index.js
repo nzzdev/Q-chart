@@ -14,6 +14,8 @@ import setYAxisOffset from './resources/setYAxisOffset';
 
 import rendererConfigDefaults from './rendererConfigDefaults';
 
+import './themes/default/styles.css!';
+
 export var types = chartTypes;
 
 var sizeObserver = new SizeObserver();
@@ -304,8 +306,8 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         rendererConfig = rendererConfigDefaults;
       }
 
-      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
-      System.import(`${themeUrl}/styles.css!`);
+      // let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
+      // System.import(`${themeUrl}/styles.css!`);
 
       let chart;
 
