@@ -7,7 +7,8 @@ var gulp          = require('gulp'),
     Eyeglass      = require("eyeglass").Eyeglass;
 
 var options = {
-  includePaths: ['jspm_packages/github', 'jspm_packages/npm']
+  includePaths: ['jspm_packages/github', 'jspm_packages/npm'],
+  outputStyle: 'compressed'
 }
 var eyeglass = new Eyeglass(options);
 eyeglass.enableImportOnce = false;
