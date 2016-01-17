@@ -314,13 +314,20 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
             rendererConfig = rendererConfigDefaults;
           }
 
-          var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-          var themeLoadCSS = loadCSS(themeUrl + '/styles.css');
-          var themeLoadPromise = new Promise(function (resolve, reject) {
-            onloadCSS(themeLoadCSS, function () {
-              resolve();
-            });
-          });
+          var rendererPromises = [];
+
+          if (rendererConfig.loadStyles) {
+            (function () {
+              var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
+              var themeLoadCSS = loadCSS(themeUrl + '/styles.css');
+              var themeLoadPromise = new Promise(function (resolve, reject) {
+                onloadCSS(themeLoadCSS, function () {
+                  resolve();
+                });
+              });
+              rendererPromises.push(themeLoadPromise);
+            })();
+          }
 
           var chart = undefined;
 
@@ -353,7 +360,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
               chart.on('created', function () {
                 resolve({
                   graphic: chart,
-                  promises: [themeLoadPromise]
+                  promises: rendererPromises
                 });
               });
             } else {

@@ -6,6 +6,7 @@ System.register([], function (_export) {
     execute: function () {
       _export('default', {
         theme: 'default',
+        loadStyles: true,
         rendererBaseUrl: 'https://q.nzz.ch/Q-renderers/chart-dev/'
       });
     }

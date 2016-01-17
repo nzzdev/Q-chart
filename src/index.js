@@ -307,13 +307,18 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         rendererConfig = rendererConfigDefaults;
       }
 
-      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
-      let themeLoadCSS = loadCSS(`${themeUrl}/styles.css`);
-      let themeLoadPromise = new Promise((resolve, reject) => {
-        onloadCSS(themeLoadCSS, () => {
-          resolve();
+      let rendererPromises = [];
+
+      if (rendererConfig.loadStyles) {
+        let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
+        let themeLoadCSS = loadCSS(`${themeUrl}/styles.css`);
+        let themeLoadPromise = new Promise((resolve, reject) => {
+          onloadCSS(themeLoadCSS, () => {
+            resolve();
+          });
         });
-      })
+        rendererPromises.push(themeLoadPromise);
+      }
 
       let chart;
 
@@ -350,7 +355,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
           chart.on('created', () => {
             resolve({
               graphic: chart, 
-              promises: [themeLoadPromise]
+              promises: rendererPromises
             });
           });
         } else {

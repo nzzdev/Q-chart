@@ -337,13 +337,20 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
             rendererConfig = _rendererConfigDefaults2['default'];
           }
 
-          var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-          var themeLoadCSS = (0, _loadCSS['default'])(themeUrl + '/styles.css');
-          var themeLoadPromise = new Promise(function (resolve, reject) {
-            (0, _onloadCSS['default'])(themeLoadCSS, function () {
-              resolve();
-            });
-          });
+          var rendererPromises = [];
+
+          if (rendererConfig.loadStyles) {
+            (function () {
+              var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
+              var themeLoadCSS = (0, _loadCSS['default'])(themeUrl + '/styles.css');
+              var themeLoadPromise = new Promise(function (resolve, reject) {
+                (0, _onloadCSS['default'])(themeLoadCSS, function () {
+                  resolve();
+                });
+              });
+              rendererPromises.push(themeLoadPromise);
+            })();
+          }
 
           var chart = undefined;
 
@@ -376,7 +383,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
               chart.on('created', function () {
                 resolve({
                   graphic: chart,
-                  promises: [themeLoadPromise]
+                  promises: rendererPromises
                 });
               });
             } else {
