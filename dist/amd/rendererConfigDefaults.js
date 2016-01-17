@@ -3,6 +3,6 @@ define(['exports', 'module'], function (exports, module) {
 
   module.exports = {
     theme: 'default',
-    rendererBaseUrl: ''
+    rendererBaseUrl: 'https://q.nzz.ch/Q-renderers/chart-dev/'
   };
 });

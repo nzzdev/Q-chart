@@ -1,7 +1,7 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', './themes/default/styles.css!'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, types, sizeObserver, chars;
 
   _export('getDivisorString', getDivisorString);
 
@@ -309,10 +309,13 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
           }
 
           if (rendererConfig && typeof rendererConfig === 'object') {
-            rendererConfig = Object.assign(rendererConfigDefaults, rendererConfig);
+            rendererConfig = Object.assign({}, rendererConfigDefaults, rendererConfig);
           } else {
             rendererConfig = rendererConfigDefaults;
           }
+
+          var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
+          loadCSS(themeUrl + '/styles.css');
 
           var chart = undefined;
 
@@ -378,7 +381,9 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       setYAxisOffset = _resourcesSetYAxisOffset['default'];
     }, function (_rendererConfigDefaults) {
       rendererConfigDefaults = _rendererConfigDefaults['default'];
-    }, function (_themesDefaultStylesCss) {}],
+    }, function (_fgLoadcss) {
+      loadCSS = _fgLoadcss['default'];
+    }],
     execute: function () {
       types = chartTypes;
 

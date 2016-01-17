@@ -64,7 +64,7 @@ function createDeployTask(name, target) {
         ACL:    'public-read',         //  Needs to be user-defined
         maps: {
           CacheControl: function(keyname) {
-            return 'public, max-age=360';
+            return 'public, max-age=900';
           }
         },
         keyTransform: function(relative_filename) {

@@ -867,9 +867,8 @@ import {display as displayChart} from 'index';
 import 'themes/default/dev-styles.css!';
 
 let rendererConfig = {
-  rendererBaseUrl: '',
+  rendererBaseUrl: 'dist/system/',
 }
-
 
 displayChart(chart1, document.getElementById('chart1'), rendererConfig);
 displayChart(chart2, document.getElementById('chart2'), rendererConfig);

@@ -42,7 +42,9 @@ var _rendererConfigDefaults = require('./rendererConfigDefaults');
 
 var _rendererConfigDefaults2 = _interopRequireDefault(_rendererConfigDefaults);
 
-require('./themes/default/styles.css!');
+var _fgLoadcss = require('fg-loadcss');
+
+var _fgLoadcss2 = _interopRequireDefault(_fgLoadcss);
 
 var types = _resourcesTypes.types;
 
@@ -353,10 +355,13 @@ function display(item, element, rendererConfig) {
         }
 
         if (rendererConfig && typeof rendererConfig === 'object') {
-          rendererConfig = Object.assign(_rendererConfigDefaults2['default'], rendererConfig);
+          rendererConfig = Object.assign({}, _rendererConfigDefaults2['default'], rendererConfig);
         } else {
           rendererConfig = _rendererConfigDefaults2['default'];
         }
+
+        var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
+        (0, _fgLoadcss2['default'])(themeUrl + '/styles.css');
 
         var chart = undefined;
 

@@ -14,7 +14,9 @@ import setYAxisOffset from './resources/setYAxisOffset';
 
 import rendererConfigDefaults from './rendererConfigDefaults';
 
-import './themes/default/styles.css!';
+import loadCSS from 'fg-loadcss';
+
+// import './themes/default/styles.css!';
 
 export var types = chartTypes;
 
@@ -301,13 +303,13 @@ export function display(item, element, rendererConfig, withoutContext = false) {
       }
 
       if (rendererConfig && typeof rendererConfig === 'object') {
-        rendererConfig = Object.assign(rendererConfigDefaults, rendererConfig);
+        rendererConfig = Object.assign({}, rendererConfigDefaults, rendererConfig);
       } else {
         rendererConfig = rendererConfigDefaults;
       }
 
-      // let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
-      // System.import(`${themeUrl}/styles.css!`);
+      let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
+      loadCSS(`${themeUrl}/styles.css`);
 
       let chart;
 
