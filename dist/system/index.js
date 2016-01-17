@@ -1,4 +1,4 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', 'fg-loadcss@0.2.4/onloadCSS'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
   var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
@@ -388,8 +388,8 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       rendererConfigDefaults = _rendererConfigDefaults['default'];
     }, function (_fgLoadcss) {
       loadCSS = _fgLoadcss['default'];
-    }, function (_fgLoadcss024OnloadCSS) {
-      onloadCSS = _fgLoadcss024OnloadCSS['default'];
+    }, function (_resourcesOnloadCSS) {
+      onloadCSS = _resourcesOnloadCSS['default'];
     }],
     execute: function () {
       types = chartTypes;

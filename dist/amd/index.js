@@ -1,4 +1,4 @@
-define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', 'fg-loadcss@0.2.4/onloadCSS'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults, _fgLoadcss, _fgLoadcss024OnloadCSS) {
+define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults, _fgLoadcss, _resourcesOnloadCSS) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -21,7 +21,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
 
   var _loadCSS = _interopRequireDefault(_fgLoadcss);
 
-  var _onloadCSS = _interopRequireDefault(_fgLoadcss024OnloadCSS);
+  var _onloadCSS = _interopRequireDefault(_resourcesOnloadCSS);
 
   var types = _resourcesTypes.types;
 

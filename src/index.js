@@ -15,7 +15,7 @@ import setYAxisOffset from './resources/setYAxisOffset';
 import rendererConfigDefaults from './rendererConfigDefaults';
 
 import loadCSS from 'fg-loadcss';
-import onloadCSS from 'fg-loadcss@0.2.4/onloadCSS';
+import onloadCSS from './resources/onloadCSS';
 
 export var types = chartTypes;
 
