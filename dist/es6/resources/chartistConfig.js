@@ -123,6 +123,7 @@ export var chartistConfigs = {
       },
       showPoint: false,
       lineSmooth: false,
+      fullWidth: true,
       axisX: {
         showGrid: true,
         showLabel: true,
@@ -149,6 +150,7 @@ export var chartistConfigs = {
       },
       showPoint: false,
       lineSmooth: false,
+      fullWidth: true,
       axisX: {
         showGrid: true,
         showLabel: true,

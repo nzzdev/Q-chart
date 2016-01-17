@@ -111,6 +111,7 @@ var chartistConfigs = {
       },
       showPoint: false,
       lineSmooth: false,
+      fullWidth: true,
       axisX: {
         showGrid: true,
         showLabel: true
@@ -132,6 +133,7 @@ var chartistConfigs = {
       },
       showPoint: false,
       lineSmooth: false,
+      fullWidth: true,
       axisX: {
         showGrid: true,
         showLabel: true

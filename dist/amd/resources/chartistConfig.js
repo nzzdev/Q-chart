@@ -100,6 +100,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         },
         showPoint: false,
         lineSmooth: false,
+        fullWidth: true,
         axisX: {
           showGrid: true,
           showLabel: true
@@ -121,6 +122,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         },
         showPoint: false,
         lineSmooth: false,
+        fullWidth: true,
         axisX: {
           showGrid: true,
           showLabel: true

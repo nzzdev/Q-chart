@@ -121,6 +121,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             },
             showPoint: false,
             lineSmooth: false,
+            fullWidth: true,
             axisX: {
               showGrid: true,
               showLabel: true
@@ -142,6 +143,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             },
             showPoint: false,
             lineSmooth: false,
+            fullWidth: true,
             axisX: {
               showGrid: true,
               showLabel: true
