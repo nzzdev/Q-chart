@@ -15,8 +15,7 @@ import setYAxisOffset from './resources/setYAxisOffset';
 import rendererConfigDefaults from './rendererConfigDefaults';
 
 import loadCSS from 'fg-loadcss';
-
-// import './themes/default/styles.css!';
+import onloadCSS from 'fg-loadcss@0.2.4/onloadCSS';
 
 export var types = chartTypes;
 
@@ -309,7 +308,12 @@ export function display(item, element, rendererConfig, withoutContext = false) {
       }
 
       let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
-      loadCSS(`${themeUrl}/styles.css`);
+      let themeLoadCSS = loadCSS(`${themeUrl}/styles.css`);
+      let themeLoadPromise = new Promise((resolve, reject) => {
+        onloadCSS(themeLoadCSS, () => {
+          resolve();
+        });
+      })
 
       let chart;
 
@@ -344,7 +348,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
         if (chart && chart.on) {
           chart.on('created', () => {
-            resolve(chart);
+            resolve(chart, [themeLoadPromise]);
           });
         } else {
           reject(chart);

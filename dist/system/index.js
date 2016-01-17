@@ -1,7 +1,7 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', 'fg-loadcss@0.2.4/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
 
   _export('getDivisorString', getDivisorString);
 
@@ -315,7 +315,12 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
           }
 
           var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
-          loadCSS(themeUrl + '/styles.css');
+          var themeLoadCSS = loadCSS(themeUrl + '/styles.css');
+          var themeLoadPromise = new Promise(function (resolve, reject) {
+            onloadCSS(themeLoadCSS, function () {
+              resolve();
+            });
+          });
 
           var chart = undefined;
 
@@ -346,7 +351,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
             if (chart && chart.on) {
               chart.on('created', function () {
-                resolve(chart);
+                resolve(chart, [themeLoadPromise]);
               });
             } else {
               reject(chart);
@@ -383,6 +388,8 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       rendererConfigDefaults = _rendererConfigDefaults['default'];
     }, function (_fgLoadcss) {
       loadCSS = _fgLoadcss['default'];
+    }, function (_fgLoadcss024OnloadCSS) {
+      onloadCSS = _fgLoadcss024OnloadCSS['default'];
     }],
     execute: function () {
       types = chartTypes;
