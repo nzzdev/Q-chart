@@ -348,7 +348,10 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
         if (chart && chart.on) {
           chart.on('created', () => {
-            resolve(chart, [themeLoadPromise]);
+            resolve({
+              graphic: chart, 
+              promises: [themeLoadPromise]
+            });
           });
         } else {
           reject(chart);

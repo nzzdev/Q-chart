@@ -401,7 +401,10 @@ function display(item, element, rendererConfig) {
 
           if (chart && chart.on) {
             chart.on('created', function () {
-              resolve(chart, [themeLoadPromise]);
+              resolve({
+                graphic: chart,
+                promises: [themeLoadPromise]
+              });
             });
           } else {
             reject(chart);

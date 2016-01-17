@@ -351,7 +351,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
             if (chart && chart.on) {
               chart.on('created', function () {
-                resolve(chart, [themeLoadPromise]);
+                resolve({
+                  graphic: chart,
+                  promises: [themeLoadPromise]
+                });
               });
             } else {
               reject(chart);

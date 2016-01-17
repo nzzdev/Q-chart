@@ -374,7 +374,10 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
 
             if (chart && chart.on) {
               chart.on('created', function () {
-                resolve(chart, [themeLoadPromise]);
+                resolve({
+                  graphic: chart,
+                  promises: [themeLoadPromise]
+                });
               });
             } else {
               reject(chart);
