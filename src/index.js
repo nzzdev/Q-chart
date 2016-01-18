@@ -262,7 +262,7 @@ function getContextHtml(item, chartistConfig) {
     html += `Quelle${sources.length > 1 ? 'n' : ''}: `;
     for (let source of sources) {
       if (source.href && source.href.length > 0 && source.validHref) {
-        html += `<a href="${source.href}">${source.text}</a> `;
+        html += `<a href="${source.href}" target="_blank">${source.text}</a> `;
       } else {
         html += `${source.text}${sources.indexOf(source) !== sources.length -1 ? ', ' : ' '}`;
       }
