@@ -61,6 +61,14 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
     StackedBar: {
       label: 'Stacked Bar',
       chartistType: 'Bar',
+      modifyData: function modifyData(config, data, size, rect) {
+        if (config.horizontalBars) {
+          data.labels.reverse();
+          data.series.map(function (serie) {
+            serie.reverse();
+          });
+        }
+      },
       options: [{
         name: 'isColumnChart',
         type: 'oneOf',

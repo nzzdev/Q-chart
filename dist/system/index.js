@@ -251,7 +251,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
           var source = _step2.value;
 
           if (source.href && source.href.length > 0 && source.validHref) {
-            html += '<a href="' + source.href + '">' + source.text + '</a> ';
+            html += '<a href="' + source.href + '" target="_blank">' + source.text + '</a> ';
           } else {
             html += '' + source.text + (sources.indexOf(source) !== sources.length - 1 ? ', ' : ' ');
           }

@@ -58,6 +58,15 @@ export var types = {
   StackedBar: {
     label: 'Stacked Bar',
     chartistType: 'Bar',
+    modifyData: (config, data, size, rect) => {
+      if (config.horizontalBars) {
+        // reverse data labels and data series for horizontal bars
+        data.labels.reverse();
+        data.series.map(serie => {
+          serie.reverse();
+        })
+      }
+    },
     options: [
       {
         name: 'isColumnChart',      // false would produce a bar chart (aka horizontal bar chart)
