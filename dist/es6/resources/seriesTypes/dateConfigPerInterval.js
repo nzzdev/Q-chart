@@ -8,7 +8,6 @@ function pad(value, toLength) {
 
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
-
 export var seriesTypeConfig = {
   year: {
     format: (index, isLastIntervalLabel, date, forceFull = false) => {
@@ -28,9 +27,10 @@ export var seriesTypeConfig = {
   quarter: {
     format: (index, isLastIntervalLabel, date, forceFull = false) => {
       if (index === 0 || isLastIntervalLabel || forceFull) {
-        return date.getFullYear() + ' Q' + (date.getMonth()/3 + 1);
+        return date.getFullYear() + ' Q' + Math.floor((date.getMonth()/3 + 1));
       } else {
-        return date.getFullYear().toString().slice(2) + ' Q' + (date.getMonth()/3 + 1);
+        return date.getFullYear().toString().slice(2) + ' Q' + Math.floor((date.getMonth()/3 + 1));
+
       }
     },
     getLabelLength: (index, isLastIntervalLabel, data, config) => {
