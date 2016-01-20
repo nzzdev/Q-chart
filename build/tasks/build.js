@@ -7,17 +7,11 @@ var paths = require('../paths');
 var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
 
-env({
-  file: "dev-env.json"
-});
+var package = JSON.parse(fs.readFileSync('./package.json'));
 
 gulp.task('setup-env', function(cb) {
   var env = {
-    VERSION: process.env.VERSION,
-  }
-
-  if (process.env.TRAVIS_TAG) {
-    env.VERSION = process.env.TRAVIS_TAG;
+    VERSION: package.version,
   }
 
   fs.mkdir(paths.output, function() {
