@@ -805,7 +805,7 @@ var chart15 = {
     "x": {
       "label": "Land",
       "data": [
-        "Frankreich",
+        "1. Frankreich",
         "Deutschland",
         "Grossbritannien",
         "Türkei",
@@ -843,14 +843,14 @@ var chart15 = {
           ]
         },
         {
-          "label": "Richtwert 2",
+          "label": "2. Richtwert",
           "data": [
-            "1000",
-            "1000",
-            "1000",
-            "1000",
-            "1000",
-            "1000"
+            "1000.5",
+            "1000.5",
+            "1000.5",
+            "1000.5",
+            "1000.5",
+            "1000.5"
           ]
         }
       ]

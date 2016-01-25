@@ -6,8 +6,7 @@ var defaultOptions = {
 };
 
 function isNumber(value) {
-  return ((typeof parseInt(value) === 'number' && !isNaN(parseInt(value)))
-          || (typeof parseFloat(value) === 'number' && !isNaN(parseFloat(value))));
+  return !isNaN(value);
 }
 
 export function ctLabelClasses(options) {

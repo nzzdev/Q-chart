@@ -16,7 +16,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   };
 
   function isNumber(value) {
-    return typeof parseInt(value) === 'number' && !isNaN(parseInt(value)) || typeof parseFloat(value) === 'number' && !isNaN(parseFloat(value));
+    return !isNaN(value);
   }
 
   function ctLabelClasses(options) {
