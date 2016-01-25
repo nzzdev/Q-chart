@@ -52,6 +52,7 @@
     "run-sequence": "^1.0.2",
     "slug": "^0.9.1",
     "storytelling-ui-kit": "git+ssh://git@github.com/nzzdev/storytelling-ui-kit.git#dev",
+    "systemjs-builder": "^0.15.5",
     "vinyl-paths": "^1.0.0",
     "yargs": "^2.1.1"
   },
