@@ -27,7 +27,6 @@ function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
 
   // we need to clone the arrays (with slice(0)) because chartist fumbles with the data
-  // if reverseData is true, which we need for horizontal bars
   let data = {
     labels: item.data.x.data.slice(0),
     series: item.data.y.data.slice(0)

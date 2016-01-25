@@ -17,6 +17,8 @@ var _chartistPluginsChartistPluginLabelPositionJs = require('../chartist-plugins
 
 var _chartistPluginsChartistPluginFitBarsJs = require('../chartist-plugins/chartist-plugin-fit-bars.js');
 
+var _chartistPluginsChartistPluginSeriesClassOrderJs = require('../chartist-plugins/chartist-plugin-series-class-order.js');
+
 var _clone = require('./clone');
 
 var _clone2 = _interopRequireDefault(_clone);
@@ -44,7 +46,7 @@ var chartistConfigs = {
       horizontalBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
     },
     large: {
       height: chartHeight,
@@ -60,7 +62,7 @@ var chartistConfigs = {
       horizontalBars: false,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
     }
   },
 
@@ -79,7 +81,7 @@ var chartistConfigs = {
       stackBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
     },
     large: {
       height: chartHeight,
@@ -96,7 +98,7 @@ var chartistConfigs = {
       stackBars: true,
       axisX: {},
       axisY: {},
-      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+      plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
     }
   },
 

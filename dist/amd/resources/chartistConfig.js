@@ -1,4 +1,4 @@
-define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-baseline.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-label-position.js', '../chartist-plugins/chartist-plugin-fit-bars.js', './clone'], function (exports, _chartistPluginsChartistPluginProtrudeGridJs, _chartistPluginsChartistPluginBaselineJs, _chartistPluginsChartistPluginLabelClassesJs, _chartistPluginsChartistPluginLabelPositionJs, _chartistPluginsChartistPluginFitBarsJs, _clone) {
+define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-baseline.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-label-position.js', '../chartist-plugins/chartist-plugin-fit-bars.js', '../chartist-plugins/chartist-plugin-series-class-order.js', './clone'], function (exports, _chartistPluginsChartistPluginProtrudeGridJs, _chartistPluginsChartistPluginBaselineJs, _chartistPluginsChartistPluginLabelClassesJs, _chartistPluginsChartistPluginLabelPositionJs, _chartistPluginsChartistPluginFitBarsJs, _chartistPluginsChartistPluginSeriesClassOrderJs, _clone) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -33,7 +33,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         horizontalBars: true,
         axisX: {},
         axisY: {},
-        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
+        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
       },
       large: {
         height: chartHeight,
@@ -49,7 +49,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         horizontalBars: false,
         axisX: {},
         axisY: {},
-        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
       }
     },
 
@@ -68,7 +68,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         stackBars: true,
         axisX: {},
         axisY: {},
-        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)()]
+        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
       },
       large: {
         height: chartHeight,
@@ -85,7 +85,7 @@ define(['exports', '../chartist-plugins/chartist-plugin-protrude-grid.js', '../c
         stackBars: true,
         axisX: {},
         axisY: {},
-        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)()]
+        plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()]
       }
     },
 

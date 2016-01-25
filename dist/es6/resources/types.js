@@ -9,6 +9,7 @@ export var types = {
       if (config.horizontalBars) {
         // reverse data labels and data series for horizontal bars
         data.labels.reverse();
+        data.series.reverse();
         data.series.map(serie => {
           serie.reverse();
         })
@@ -62,6 +63,7 @@ export var types = {
       if (config.horizontalBars) {
         // reverse data labels and data series for horizontal bars
         data.labels.reverse();
+        data.series.reverse();
         data.series.map(serie => {
           serie.reverse();
         })
