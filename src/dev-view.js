@@ -796,7 +796,7 @@ var chart14 = {
 var chart15 = {
   "_id": "95db629edf1203147294be786e48df47",
   "_rev": "1-399c407962206c0ddef2bac6e1974467",
-  "title": "balken vertauscht",
+  "title": "balken",
   "tool": "chart",
   "editorVersion": "dev",
   "rendererVersion": "dev",
@@ -841,12 +841,23 @@ var chart15 = {
             "800",
             "800"
           ]
+        },
+        {
+          "label": "Richtwert 2",
+          "data": [
+            "1000",
+            "1000",
+            "1000",
+            "1000",
+            "1000",
+            "1000"
+          ]
         }
       ]
     }
   },
   "options": {
-    "isColumnChart": false,
+    "isColumnChart": true,
     "forceBarsOnSmall": true
   },
   "sources": [
@@ -870,25 +881,25 @@ let rendererConfig = {
   rendererBaseUrl: 'dist/system/',
 }
 
-displayChart(chart1, document.getElementById('chart1'), rendererConfig);
-displayChart(chart2, document.getElementById('chart2'), rendererConfig);
+// displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+// displayChart(chart2, document.getElementById('chart2'), rendererConfig);
 
 // -- colors bars
 
-displayChart(chart3, document.getElementById('chart3'), rendererConfig);
-displayChart(chart4, document.getElementById('chart4'), rendererConfig);
-displayChart(chart5, document.getElementById('chart5'), rendererConfig);
-displayChart(chart6, document.getElementById('chart6'), rendererConfig);
-displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+// displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+// displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+// displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+// displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+// displayChart(chart7, document.getElementById('chart7'), rendererConfig);
 
 // -- colors lines
 
-displayChart(chart8, document.getElementById('chart8'), rendererConfig);
-displayChart(chart9, document.getElementById('chart9'), rendererConfig);
-displayChart(chart10, document.getElementById('chart10'), rendererConfig);
-displayChart(chart11, document.getElementById('chart11'), rendererConfig);
-displayChart(chart12, document.getElementById('chart12'), rendererConfig);
+// displayChart(chart8, document.getElementById('chart8'), rendererConfig);
+// displayChart(chart9, document.getElementById('chart9'), rendererConfig);
+// displayChart(chart10, document.getElementById('chart10'), rendererConfig);
+// displayChart(chart11, document.getElementById('chart11'), rendererConfig);
+// displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
-displayChart(chart13, document.getElementById('chart13'), rendererConfig);
-displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+// displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+// displayChart(chart14, document.getElementById('chart14'), rendererConfig);
 displayChart(chart15, document.getElementById('chart15'), rendererConfig);

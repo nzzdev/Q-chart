@@ -18,6 +18,7 @@ System.register(['./chartistConfig', './min'], function (_export) {
           modifyData: function modifyData(config, data, size, rect) {
             if (config.horizontalBars) {
               data.labels.reverse();
+              data.series.reverse();
               data.series.map(function (serie) {
                 serie.reverse();
               });
@@ -66,6 +67,7 @@ System.register(['./chartistConfig', './min'], function (_export) {
           modifyData: function modifyData(config, data, size, rect) {
             if (config.horizontalBars) {
               data.labels.reverse();
+              data.series.reverse();
               data.series.map(function (serie) {
                 serie.reverse();
               });

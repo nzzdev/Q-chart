@@ -3,6 +3,7 @@ import {ctBaseline} from '../chartist-plugins/chartist-plugin-baseline.js';
 import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.js';
 import {ctLabelPosition} from '../chartist-plugins/chartist-plugin-label-position.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
+import {ctSeriesClassOrder} from '../chartist-plugins/chartist-plugin-series-class-order.js';
 
 import clone from './clone';
 
@@ -32,7 +33,8 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
+        ctBaseline(),
+        ctSeriesClassOrder()
       ]
     },
     large: {
@@ -56,7 +58,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline(),
-        ctExtendFitBarsToData()
+        ctExtendFitBarsToData(),
+        ctSeriesClassOrder()
       ]
     },
   },
@@ -82,7 +85,8 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
+        ctBaseline(),
+        ctSeriesClassOrder()
       ]
     },
     large: {
@@ -107,7 +111,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline(),
-        ctExtendFitBarsToData()
+        ctExtendFitBarsToData(),
+        ctSeriesClassOrder()
       ]
     },
   },
