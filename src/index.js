@@ -8,7 +8,7 @@ import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes, getDigitLabelFontStyle} from './resources/seriesTypes';
-import {getTextWidth} from './resources/helpers';
+import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
 
@@ -33,19 +33,6 @@ function getChartDataForChartist(item) {
       .map(serie => serie.data.slice(0))
   };
   return data;
-}
-
-function getFlatDatapoints(data) {
-  if (!data.series.length || data.series[0].length === 0) {
-    return 0;
-  }
-  let flatDatapoints = data.series
-    .reduce((a, b) => a.concat(b))
-    .filter(cell => !isNaN(parseFloat(cell)))
-    .slice(0) // copy to not mess with original data by sorting
-    .sort((a, b) => parseFloat(a) - parseFloat(b));
-
-  return flatDatapoints;
 }
 
 function getMaxValue(data) {

@@ -43,23 +43,8 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     return data;
   }
 
-  function getFlatDatapoints(data) {
-    if (!data.series.length || data.series[0].length === 0) {
-      return 0;
-    }
-    var flatDatapoints = data.series.reduce(function (a, b) {
-      return a.concat(b);
-    }).filter(function (cell) {
-      return !isNaN(parseFloat(cell));
-    }).slice(0).sort(function (a, b) {
-      return parseFloat(a) - parseFloat(b);
-    });
-
-    return flatDatapoints;
-  }
-
   function getMaxValue(data) {
-    var flatDatapoints = getFlatDatapoints(data);
+    var flatDatapoints = (0, _resourcesHelpers.getFlatDatapoints)(data);
     if (flatDatapoints && flatDatapoints.length) {
       return flatDatapoints[flatDatapoints.length - 1];
     }

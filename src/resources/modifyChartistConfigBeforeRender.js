@@ -1,3 +1,5 @@
+import {getFlatDatapoints} from './helpers';
+
 Number.isInteger = Number.isInteger || function(value) {
   return typeof value === "number" && 
    isFinite(value) && 
@@ -62,5 +64,19 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
   // add some padding to top of chart if needed for the label
   if (!config.horizontalBars) {
     config.chartPadding.top = 12;
+  }
+
+  // check if we have only integers as values (no floats), then use only integers for the axis labels
+  try {
+    let flatDatapoints = getFlatDatapoints(data);
+    let onlyInteger = true;
+    for (let value of flatDatapoints) {
+      if (!Number.isInteger(parseFloat(value))) {
+        onlyInteger = false;
+      }
+    }
+    config.axisY.onlyInteger = onlyInteger;
+  } catch (e) {
+    // ignore errors;
   }
 }

@@ -1,7 +1,7 @@
 System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
 
   _export('getDivisor', getDivisor);
 
@@ -19,21 +19,6 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       })
     };
     return data;
-  }
-
-  function getFlatDatapoints(data) {
-    if (!data.series.length || data.series[0].length === 0) {
-      return 0;
-    }
-    var flatDatapoints = data.series.reduce(function (a, b) {
-      return a.concat(b);
-    }).filter(function (cell) {
-      return !isNaN(parseFloat(cell));
-    }).slice(0).sort(function (a, b) {
-      return parseFloat(a) - parseFloat(b);
-    });
-
-    return flatDatapoints;
   }
 
   function getMaxValue(data) {
@@ -409,6 +394,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       getDigitLabelFontStyle = _resourcesSeriesTypes.getDigitLabelFontStyle;
     }, function (_resourcesHelpers) {
       getTextWidth = _resourcesHelpers.getTextWidth;
+      getFlatDatapoints = _resourcesHelpers.getFlatDatapoints;
     }, function (_resourcesModifyChartistConfigBeforeRender) {
       modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender['default'];
     }, function (_resourcesSetYAxisOffset) {

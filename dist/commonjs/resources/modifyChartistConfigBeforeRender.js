@@ -4,6 +4,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 exports['default'] = modifyChartistConfigBeforeRender;
+
+var _helpers = require('./helpers');
+
 Number.isInteger = Number.isInteger || function (value) {
   return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
 };
@@ -47,6 +50,39 @@ function modifyChartistConfigBeforeRender(config, type, data, size, rect) {
   if (!config.horizontalBars) {
     config.chartPadding.top = 12;
   }
+
+  try {
+    var flatDatapoints = (0, _helpers.getFlatDatapoints)(data);
+    var onlyInteger = true;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = flatDatapoints[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var value = _step.value;
+
+        if (!Number.isInteger(parseFloat(value))) {
+          onlyInteger = false;
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    config.axisY.onlyInteger = onlyInteger;
+  } catch (e) {}
 }
 
 module.exports = exports['default'];
