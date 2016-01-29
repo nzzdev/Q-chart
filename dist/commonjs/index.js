@@ -70,7 +70,7 @@ function getChartDataForChartist(item) {
   return data;
 }
 
-function getMaxValue(data) {
+function getFlatDatapoints(data) {
   if (!data.series.length || data.series[0].length === 0) {
     return 0;
   }
@@ -82,7 +82,15 @@ function getMaxValue(data) {
     return parseFloat(a) - parseFloat(b);
   });
 
-  return flatDatapoints[flatDatapoints.length - 1];
+  return flatDatapoints;
+}
+
+function getMaxValue(data) {
+  var flatDatapoints = getFlatDatapoints(data);
+  if (flatDatapoints && flatDatapoints.length) {
+    return flatDatapoints[flatDatapoints.length - 1];
+  }
+  return 0;
 }
 
 function shortenNumberLabels(config, data) {
