@@ -1,3 +1,4 @@
+// chartist needs this, which is a bit sad, as we don't really need the responsive options of chartist.
 import 'paulirish/matchMedia.js';
 import 'paulirish/matchMedia.js/matchMedia.addListener.js';
 
