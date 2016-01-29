@@ -61,7 +61,6 @@ function setYAxisOffset(config, type, data) {
   if (offset < 30) {
     offset = 30;
   }
-
   config.axisY.offset = offset;
 }
 

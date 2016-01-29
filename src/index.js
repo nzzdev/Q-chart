@@ -337,8 +337,11 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-        setYAxisOffset(chartistConfig, item.type, dataForChartist);
+        
         modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+        // set Y axis offset after we have modified the data (date series label formatting)
+        setYAxisOffset(chartistConfig, item.type, dataForChartist);
 
         try {
           if (withoutContext) {

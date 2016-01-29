@@ -55,7 +55,6 @@ define(['exports', 'module', './seriesTypes', './helpers'], function (exports, m
     if (offset < 30) {
       offset = 30;
     }
-
     config.axisY.offset = offset;
   }
 });

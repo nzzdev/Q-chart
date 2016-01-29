@@ -12,10 +12,10 @@
   }
 }
 
-.#{$ct-class-chart-line} .#{$ct-class-label},
-.#{$ct-class-chart-bar} .#{$ct-class-label} {
-  // @include ct-flex();
-}
+// .#{$ct-class-chart-line} .#{$ct-class-label},
+// .#{$ct-class-chart-bar} .#{$ct-class-label} {
+//   // @include ct-flex();
+// }
 
 // .#{$ct-class-label}.#{$ct-class-horizontal} {
 //   text-anchor: middle;
@@ -56,11 +56,11 @@
 }
 
 .#{$ct-class-chart-bar} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
-  text-anchor: start;
+  text-anchor: middle;
 }
 
 .#{$ct-class-chart-bar} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
-  text-anchor: start;
+  text-anchor: middle;
 }
 
 .#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {

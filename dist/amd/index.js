@@ -367,8 +367,10 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-            (0, _setYAxisOffset['default'])(chartistConfig, item.type, dataForChartist);
+
             modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+            (0, _setYAxisOffset['default'])(chartistConfig, item.type, dataForChartist);
 
             try {
               if (withoutContext) {

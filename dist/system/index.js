@@ -345,8 +345,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-            setYAxisOffset(chartistConfig, item.type, dataForChartist);
+
             modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+            setYAxisOffset(chartistConfig, item.type, dataForChartist);
 
             try {
               if (withoutContext) {
