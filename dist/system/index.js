@@ -3,6 +3,8 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
   var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
 
+  _export('getDivisor', getDivisor);
+
   _export('getDivisorString', getDivisorString);
 
   _export('display', display);
@@ -19,11 +21,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     return data;
   }
 
-  function shortenNumberLabels(config, data) {
+  function getMaxValue(data) {
     if (!data.series.length || data.series[0].length === 0) {
-      return 1;
+      return 0;
     }
-    var divisor = 1;
     var flatDatapoints = data.series.reduce(function (a, b) {
       return a.concat(b);
     }).filter(function (cell) {
@@ -32,19 +33,13 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       return parseFloat(a) - parseFloat(b);
     });
 
-    var maxValue = flatDatapoints[flatDatapoints.length - 1];
+    return flatDatapoints[flatDatapoints.length - 1];
+  }
 
-    if (!maxValue) {
-      return;
-    }
+  function shortenNumberLabels(config, data) {
+    var maxValue = getMaxValue(data);
 
-    if (maxValue >= Math.pow(10, 9)) {
-      divisor = Math.pow(10, 9);
-    } else if (maxValue >= Math.pow(10, 6)) {
-      divisor = Math.pow(10, 6);
-    } else if (maxValue >= Math.pow(10, 4)) {
-      divisor = Math.pow(10, 3);
-    }
+    var divisor = getDivisor(maxValue);
 
     var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
@@ -177,6 +172,22 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     }
     html += '\n    </div>\n  ';
     return html;
+  }
+
+  function getDivisor(maxValue) {
+    var divisor = 1;
+    if (!maxValue || maxValue === 0) {
+      return divisor;
+    }
+
+    if (maxValue >= Math.pow(10, 9)) {
+      divisor = Math.pow(10, 9);
+    } else if (maxValue >= Math.pow(10, 6)) {
+      divisor = Math.pow(10, 6);
+    } else if (maxValue >= Math.pow(10, 4)) {
+      divisor = Math.pow(10, 3);
+    }
+    return divisor;
   }
 
   function getDivisorString(divisor) {

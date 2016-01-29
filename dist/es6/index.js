@@ -35,31 +35,23 @@ function getChartDataForChartist(item) {
   return data;
 }
 
-function shortenNumberLabels(config, data) {
+function getMaxValue(data) {
   if (!data.series.length || data.series[0].length === 0) {
-    return 1;
+    return 0;
   }
-  let divisor = 1;
   let flatDatapoints = data.series
     .reduce((a, b) => a.concat(b))
     .filter(cell => !isNaN(parseFloat(cell)))
     .slice(0) // copy to not mess with original data by sorting
     .sort((a, b) => parseFloat(a) - parseFloat(b));
 
-  let maxValue = flatDatapoints[flatDatapoints.length - 1];
+  return flatDatapoints[flatDatapoints.length - 1];
+}
 
-  if (!maxValue) {
-    return;
-  }
+function shortenNumberLabels(config, data) {
+  let maxValue = getMaxValue(data);
 
-  // use the max value to calculate the divisor
-  if (maxValue >= Math.pow(10,9)) {
-    divisor = Math.pow(10,9)
-  } else if (maxValue >= Math.pow(10,6)) {
-    divisor = Math.pow(10,6)
-  } else if (maxValue >= Math.pow(10,4)) {
-    divisor = Math.pow(10,3);
-  }
+  let divisor = getDivisor(maxValue);
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
@@ -186,6 +178,23 @@ function getLegendHtml(item) {
     </div>
   `;
   return html;
+}
+
+export function getDivisor(maxValue) {
+  let divisor = 1;
+  if (!maxValue || maxValue === 0) {
+    return divisor;
+  }
+
+  // use the max value to calculate the divisor
+  if (maxValue >= Math.pow(10,9)) {
+    divisor = Math.pow(10,9)
+  } else if (maxValue >= Math.pow(10,6)) {
+    divisor = Math.pow(10,6)
+  } else if (maxValue >= Math.pow(10,4)) {
+    divisor = Math.pow(10,3);
+  }
+  return divisor;
 }
 
 export function getDivisorString(divisor) {
