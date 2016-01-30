@@ -75,7 +75,11 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
         onlyInteger = false;
       }
     }
-    config.axisY.onlyInteger = onlyInteger;
+    if (config.horizontalBars) {
+      config.axisX.onlyInteger = onlyInteger;
+    } else {
+      config.axisY.onlyInteger = onlyInteger;
+    }
   } catch (e) {
     // ignore errors;
   }

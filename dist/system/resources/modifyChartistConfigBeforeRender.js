@@ -75,7 +75,11 @@ System.register(['./helpers'], function (_export) {
         }
       }
 
-      config.axisY.onlyInteger = onlyInteger;
+      if (config.horizontalBars) {
+        config.axisX.onlyInteger = onlyInteger;
+      } else {
+        config.axisY.onlyInteger = onlyInteger;
+      }
     } catch (e) {}
   }
 
