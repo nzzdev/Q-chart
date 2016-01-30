@@ -5,6 +5,8 @@ System.register([], function (_export) {
 
   _export("getTextWidth", getTextWidth);
 
+  _export("getFlatDatapoints", getFlatDatapoints);
+
   function getTextWidth(label, fontstyle) {
     var length = undefined;
     if (ctx) {
@@ -14,6 +16,21 @@ System.register([], function (_export) {
         length = label.length * 9;
       }
     return length;
+  }
+
+  function getFlatDatapoints(data) {
+    if (!data.series.length || data.series[0].length === 0) {
+      return 0;
+    }
+    var flatDatapoints = data.series.reduce(function (a, b) {
+      return a.concat(b);
+    }).filter(function (cell) {
+      return !isNaN(parseFloat(cell));
+    }).slice(0).sort(function (a, b) {
+      return parseFloat(a) - parseFloat(b);
+    });
+
+    return flatDatapoints;
   }
 
   return {

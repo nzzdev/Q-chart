@@ -57,7 +57,6 @@ System.register(['./seriesTypes', './helpers'], function (_export) {
     if (offset < 30) {
       offset = 30;
     }
-
     config.axisY.offset = offset;
   }
 

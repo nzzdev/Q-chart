@@ -1,7 +1,9 @@
 System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
+
+  _export('getDivisor', getDivisor);
 
   _export('getDivisorString', getDivisorString);
 
@@ -19,32 +21,18 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     return data;
   }
 
+  function getMaxValue(data) {
+    var flatDatapoints = getFlatDatapoints(data);
+    if (flatDatapoints && flatDatapoints.length) {
+      return flatDatapoints[flatDatapoints.length - 1];
+    }
+    return 0;
+  }
+
   function shortenNumberLabels(config, data) {
-    if (!data.series.length || data.series[0].length === 0) {
-      return 1;
-    }
-    var divisor = 1;
-    var flatDatapoints = data.series.reduce(function (a, b) {
-      return a.concat(b);
-    }).filter(function (cell) {
-      return !isNaN(parseFloat(cell));
-    }).slice(0).sort(function (a, b) {
-      return parseFloat(a) - parseFloat(b);
-    });
+    var maxValue = getMaxValue(data);
 
-    var maxValue = flatDatapoints[flatDatapoints.length - 1];
-
-    if (!maxValue) {
-      return;
-    }
-
-    if (maxValue >= Math.pow(10, 9)) {
-      divisor = Math.pow(10, 9);
-    } else if (maxValue >= Math.pow(10, 6)) {
-      divisor = Math.pow(10, 6);
-    } else if (maxValue >= Math.pow(10, 4)) {
-      divisor = Math.pow(10, 3);
-    }
+    var divisor = getDivisor(maxValue);
 
     var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
@@ -177,6 +165,22 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     }
     html += '\n    </div>\n  ';
     return html;
+  }
+
+  function getDivisor(maxValue) {
+    var divisor = 1;
+    if (!maxValue || maxValue === 0) {
+      return divisor;
+    }
+
+    if (maxValue >= Math.pow(10, 9)) {
+      divisor = Math.pow(10, 9);
+    } else if (maxValue >= Math.pow(10, 6)) {
+      divisor = Math.pow(10, 6);
+    } else if (maxValue >= Math.pow(10, 4)) {
+      divisor = Math.pow(10, 3);
+    }
+    return divisor;
   }
 
   function getDivisorString(divisor) {
@@ -341,8 +345,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
             chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-            setYAxisOffset(chartistConfig, item.type, dataForChartist);
+
             modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+            setYAxisOffset(chartistConfig, item.type, dataForChartist);
 
             try {
               if (withoutContext) {
@@ -390,6 +396,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       getDigitLabelFontStyle = _resourcesSeriesTypes.getDigitLabelFontStyle;
     }, function (_resourcesHelpers) {
       getTextWidth = _resourcesHelpers.getTextWidth;
+      getFlatDatapoints = _resourcesHelpers.getFlatDatapoints;
     }, function (_resourcesModifyChartistConfigBeforeRender) {
       modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender['default'];
     }, function (_resourcesSetYAxisOffset) {

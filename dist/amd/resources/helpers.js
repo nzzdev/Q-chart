@@ -5,6 +5,7 @@ define(["exports"], function (exports) {
     value: true
   });
   exports.getTextWidth = getTextWidth;
+  exports.getFlatDatapoints = getFlatDatapoints;
   var c = document.createElement("canvas");
   var ctx = c.getContext("2d");
 
@@ -17,5 +18,20 @@ define(["exports"], function (exports) {
         length = label.length * 9;
       }
     return length;
+  }
+
+  function getFlatDatapoints(data) {
+    if (!data.series.length || data.series[0].length === 0) {
+      return 0;
+    }
+    var flatDatapoints = data.series.reduce(function (a, b) {
+      return a.concat(b);
+    }).filter(function (cell) {
+      return !isNaN(parseFloat(cell));
+    }).slice(0).sort(function (a, b) {
+      return parseFloat(a) - parseFloat(b);
+    });
+
+    return flatDatapoints;
   }
 });

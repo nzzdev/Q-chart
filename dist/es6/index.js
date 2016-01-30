@@ -1,3 +1,4 @@
+// chartist needs this, which is a bit sad, as we don't really need the responsive options of chartist.
 import 'paulirish/matchMedia.js';
 import 'paulirish/matchMedia.js/matchMedia.addListener.js';
 
@@ -8,7 +9,7 @@ import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes, getDigitLabelFontStyle} from './resources/seriesTypes';
-import {getTextWidth} from './resources/helpers';
+import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
 
@@ -35,31 +36,18 @@ function getChartDataForChartist(item) {
   return data;
 }
 
+function getMaxValue(data) {
+  let flatDatapoints = getFlatDatapoints(data);
+  if (flatDatapoints && flatDatapoints.length) {
+    return flatDatapoints[flatDatapoints.length - 1];
+  }
+  return 0;
+}
+
 function shortenNumberLabels(config, data) {
-  if (!data.series.length || data.series[0].length === 0) {
-    return 1;
-  }
-  let divisor = 1;
-  let flatDatapoints = data.series
-    .reduce((a, b) => a.concat(b))
-    .filter(cell => !isNaN(parseFloat(cell)))
-    .slice(0) // copy to not mess with original data by sorting
-    .sort((a, b) => parseFloat(a) - parseFloat(b));
+  let maxValue = getMaxValue(data);
 
-  let maxValue = flatDatapoints[flatDatapoints.length - 1];
-
-  if (!maxValue) {
-    return;
-  }
-
-  // use the max value to calculate the divisor
-  if (maxValue >= Math.pow(10,9)) {
-    divisor = Math.pow(10,9)
-  } else if (maxValue >= Math.pow(10,6)) {
-    divisor = Math.pow(10,6)
-  } else if (maxValue >= Math.pow(10,4)) {
-    divisor = Math.pow(10,3);
-  }
+  let divisor = getDivisor(maxValue);
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
@@ -186,6 +174,23 @@ function getLegendHtml(item) {
     </div>
   `;
   return html;
+}
+
+export function getDivisor(maxValue) {
+  let divisor = 1;
+  if (!maxValue || maxValue === 0) {
+    return divisor;
+  }
+
+  // use the max value to calculate the divisor
+  if (maxValue >= Math.pow(10,9)) {
+    divisor = Math.pow(10,9)
+  } else if (maxValue >= Math.pow(10,6)) {
+    divisor = Math.pow(10,6)
+  } else if (maxValue >= Math.pow(10,4)) {
+    divisor = Math.pow(10,3);
+  }
+  return divisor;
 }
 
 export function getDivisorString(divisor) {
@@ -333,8 +338,11 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-        setYAxisOffset(chartistConfig, item.type, dataForChartist);
+        
         modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+        // set Y axis offset after we have modified the data (date series label formatting)
+        setYAxisOffset(chartistConfig, item.type, dataForChartist);
 
         try {
           if (withoutContext) {

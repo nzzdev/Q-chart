@@ -20,10 +20,9 @@ function ctLabelPosition() {
 
           var labelDirection = data.axis.units.dir;
 
-          if (!chart.options.horizontalBars && labelDirection === 'horizontal') {
-            if (data.element._node.getComputedTextLength) {
-              data.element._node.setAttribute('x', Math.floor(parseInt(data.element._node.getAttribute('x')) + (parseInt(data.element._node.getAttribute('width')) - data.element._node.getComputedTextLength()) / 2));
-            }
+          if (!chart.options.horizontalBars && labelDirection === 'horizontal' && data.element._node.getComputedTextLength) {
+            data.element._node.setAttribute('x', Math.floor(parseInt(data.element._node.getAttribute('x')) + parseInt(data.element._node.getAttribute('width')) / 2));
+            data.element._node.removeAttribute('width');
           }
 
           if (chart.options.horizontalBars && labelDirection === 'vertical') {

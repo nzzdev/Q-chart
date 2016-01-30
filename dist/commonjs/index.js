@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports.getDivisor = getDivisor;
 exports.getDivisorString = getDivisorString;
 exports.display = display;
 
@@ -69,32 +70,18 @@ function getChartDataForChartist(item) {
   return data;
 }
 
+function getMaxValue(data) {
+  var flatDatapoints = (0, _resourcesHelpers.getFlatDatapoints)(data);
+  if (flatDatapoints && flatDatapoints.length) {
+    return flatDatapoints[flatDatapoints.length - 1];
+  }
+  return 0;
+}
+
 function shortenNumberLabels(config, data) {
-  if (!data.series.length || data.series[0].length === 0) {
-    return 1;
-  }
-  var divisor = 1;
-  var flatDatapoints = data.series.reduce(function (a, b) {
-    return a.concat(b);
-  }).filter(function (cell) {
-    return !isNaN(parseFloat(cell));
-  }).slice(0).sort(function (a, b) {
-    return parseFloat(a) - parseFloat(b);
-  });
+  var maxValue = getMaxValue(data);
 
-  var maxValue = flatDatapoints[flatDatapoints.length - 1];
-
-  if (!maxValue) {
-    return;
-  }
-
-  if (maxValue >= Math.pow(10, 9)) {
-    divisor = Math.pow(10, 9);
-  } else if (maxValue >= Math.pow(10, 6)) {
-    divisor = Math.pow(10, 6);
-  } else if (maxValue >= Math.pow(10, 4)) {
-    divisor = Math.pow(10, 3);
-  }
+  var divisor = getDivisor(maxValue);
 
   var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
@@ -227,6 +214,22 @@ function getLegendHtml(item) {
   }
   html += '\n    </div>\n  ';
   return html;
+}
+
+function getDivisor(maxValue) {
+  var divisor = 1;
+  if (!maxValue || maxValue === 0) {
+    return divisor;
+  }
+
+  if (maxValue >= Math.pow(10, 9)) {
+    divisor = Math.pow(10, 9);
+  } else if (maxValue >= Math.pow(10, 6)) {
+    divisor = Math.pow(10, 6);
+  } else if (maxValue >= Math.pow(10, 4)) {
+    divisor = Math.pow(10, 3);
+  }
+  return divisor;
 }
 
 function getDivisorString(divisor) {
@@ -391,8 +394,10 @@ function display(item, element, rendererConfig) {
           var drawSize = getElementSize(rect);
           var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
           chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-          (0, _resourcesSetYAxisOffset2['default'])(chartistConfig, item.type, dataForChartist);
+
           modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+
+          (0, _resourcesSetYAxisOffset2['default'])(chartistConfig, item.type, dataForChartist);
 
           try {
             if (withoutContext) {
