@@ -54,7 +54,7 @@ if (process.env.TRAVIS_BRANCH) {
   deployTargets.push(slug + '-' + process.env.TRAVIS_BRANCH);
 }
 
-deployTargets.push(slug + '-dev');
+var newOrUpdatedUrls = [];
 
 function createDeployTask(name, target) {
   gulp.task(name, function() {
@@ -72,10 +72,10 @@ function createDeployTask(name, target) {
           return new_name;
         },
         onChange: function(keyname) {
-          keycdn(keycdnOptions, { urls: [process.env.KEYCDN_ZONE_URL + '/' + keyname] });
+          newOrUpdatedUrls.push(process.env.KEYCDN_ZONE_URL + '/' + keyname);
         },
         onNew: function(keyname) {
-          keycdn(keycdnOptions, { urls: [process.env.KEYCDN_ZONE_URL + '/' + keyname] });
+          newOrUpdatedUrls.push(process.env.KEYCDN_ZONE_URL + '/' + keyname);
         }
     }));
   });
@@ -89,4 +89,12 @@ for (var target of deployTargets) {
   deployTasks.push(taskName);
 }
 
-gulp.task('deploy', deployTasks);
+gulp.task('deploy', deployTasks, function(callback) {
+  // purge cdn cache
+  if (newOrUpdatedUrls.length > 0) {
+    keycdn(keycdnOptions, {
+      urls: newOrUpdatedUrls
+    });
+  }
+  callback();
+});
