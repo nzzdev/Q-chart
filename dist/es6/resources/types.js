@@ -100,7 +100,7 @@ export var types = {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
-            
+
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
@@ -112,12 +112,42 @@ export var types = {
   Line: {
     label: 'Line',
     chartistType: 'Line',
-    options: [],
+    options: [
+      {
+        name: 'minValue',
+        type: 'number',
+        label: 'Minimaler Wert',
+        defaultValue: undefined,
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value && value !== '' && !isNaN(Number(value))) {
+            config.low = Number(value);
+          }
+        }
+      },
+      {
+        name: 'maxValue',
+        type: 'number',
+        label: 'Maximaler Wert',
+        defaultValue: undefined,
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value && value !== '' && !isNaN(Number(value))) {
+            config.high = Number(value);
+          }
+        }
+      }
+    ],
     modifyConfig: (config, data, size, rect) => {
+
+      // do not set low if it's already set (by minValue option)
+      if (typeof config.low !== 'undefined') {
+        return;
+      }
+
+      // default low is 0
       config.low = 0;
-      let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
 
       // if we have a value below 0, this is our low
+      let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
       if (minValue < 0) {
         config.low = minValue;
         return;

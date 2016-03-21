@@ -86,6 +86,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         var option = _step.value;
 
         switch (option.type) {
+          case 'number':
           case 'oneOf':
           case 'boolean':
             if (item.options && typeof item.options[option.name] !== undefined) {
@@ -233,7 +234,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       }
     }
 
-    html += '  \n    <div class="q-chart__footer">';
+    html += '\n    <div class="q-chart__footer">';
 
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';

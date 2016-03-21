@@ -108,6 +108,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
         var option = _step.value;
 
         switch (option.type) {
+          case 'number':
           case 'oneOf':
           case 'boolean':
             if (item.options && typeof item.options[option.name] !== undefined) {
@@ -255,7 +256,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
       }
     }
 
-    html += '  \n    <div class="q-chart__footer">';
+    html += '\n    <div class="q-chart__footer">';
 
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';

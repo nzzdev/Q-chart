@@ -113,15 +113,39 @@ System.register(['./chartistConfig', './min'], function (_export) {
         Line: {
           label: 'Line',
           chartistType: 'Line',
-          options: [],
+          options: [{
+            name: 'minValue',
+            type: 'number',
+            label: 'Minimaler Wert',
+            defaultValue: undefined,
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
+              if (value && value !== '' && !isNaN(Number(value))) {
+                config.low = Number(value);
+              }
+            }
+          }, {
+            name: 'maxValue',
+            type: 'number',
+            label: 'Maximaler Wert',
+            defaultValue: undefined,
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
+              if (value && value !== '' && !isNaN(Number(value))) {
+                config.high = Number(value);
+              }
+            }
+          }],
           modifyConfig: function modifyConfig(config, data, size, rect) {
+            if (typeof config.low !== 'undefined') {
+              return;
+            }
+
             config.low = 0;
+
             var minValue = min(data.series.map(function (serie) {
               return min(serie.map(function (datapoint) {
                 return parseFloat(datapoint);
               }));
             }));
-
             if (minValue < 0) {
               config.low = minValue;
               return;
