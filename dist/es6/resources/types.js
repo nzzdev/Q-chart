@@ -117,9 +117,9 @@ export var types = {
         name: 'minValue',
         type: 'number',
         label: 'Minimaler Wert',
-        defaultValue: '',
+        defaultValue: undefined,
         modifyConfig: (config, value, data, size, rect) => {
-          if (value != '' && !isNaN(Number(value))) {
+          if (value && value !== '' && !isNaN(Number(value))) {
             config.low = Number(value);
           }
         }
@@ -128,9 +128,9 @@ export var types = {
         name: 'maxValue',
         type: 'number',
         label: 'Maximaler Wert',
-        defaultValue: '',
+        defaultValue: undefined,
         modifyConfig: (config, value, data, size, rect) => {
-          if (value != '' && !isNaN(Number(value))) {
+          if (value && value !== '' && !isNaN(Number(value))) {
             config.high = Number(value);
           }
         }
@@ -138,15 +138,16 @@ export var types = {
     ],
     modifyConfig: (config, data, size, rect) => {
 
-      // do not set low if it's already set by minValue option
-      if (typeof config.low != 'undefined') {
+      // do not set low if it's already set (by minValue option)
+      if (typeof config.low !== 'undefined') {
         return;
       }
 
+      // default low is 0
       config.low = 0;
-      let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
 
       // if we have a value below 0, this is our low
+      let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
       if (minValue < 0) {
         config.low = minValue;
         return;

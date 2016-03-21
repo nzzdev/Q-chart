@@ -476,7 +476,7 @@ var chart7 = {
 
 var chart8 = {
   _id: '_8',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'Hummeln fliegen besser als gedacht (mit minValue/maxValue options)',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -509,8 +509,8 @@ var chart8 = {
 
   },
   options: {
-    minValue:180,
-    maxValue:500
+    minValue:200,
+    maxValue:'test with invalid number'
   },
   type: 'Line'
 }
