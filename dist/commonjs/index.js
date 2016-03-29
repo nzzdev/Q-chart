@@ -389,10 +389,7 @@ function display(item, element, rendererConfig) {
 
         sizeObserver.onResize(function (rect) {
 
-          console.log('lastWidth', lastWidth, rect.width);
-
           if (rect.width && lastWidth === rect.width) {
-            console.log('abort render');
             return;
           }
 

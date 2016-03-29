@@ -340,10 +340,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
           sizeObserver.onResize(function (rect) {
 
-            console.log('lastWidth', lastWidth, rect.width);
-
             if (rect.width && lastWidth === rect.width) {
-              console.log('abort render');
               return;
             }
 

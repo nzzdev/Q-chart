@@ -331,10 +331,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
       sizeObserver.onResize((rect) => {
 
-        console.log('lastWidth', lastWidth, rect.width);
-
         if (rect.width && lastWidth === rect.width) {
-          console.log('abort render');
           return;
         }
 
