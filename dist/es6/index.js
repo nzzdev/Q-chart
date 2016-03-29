@@ -327,7 +327,19 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
       let chart;
 
+      let lastWidth;
+
       sizeObserver.onResize((rect) => {
+
+        console.log('lastWidth', lastWidth, rect.width);
+
+        if (rect.width && lastWidth === rect.width) {
+          console.log('abort render');
+          return;
+        }
+
+        lastWidth = rect.width;
+
         // prepare data
         let dataForChartist = getChartDataForChartist(item);
         if (!dataForChartist || dataForChartist === null) {

@@ -385,7 +385,19 @@ function display(item, element, rendererConfig) {
 
         var chart = undefined;
 
+        var lastWidth = undefined;
+
         sizeObserver.onResize(function (rect) {
+
+          console.log('lastWidth', lastWidth, rect.width);
+
+          if (rect.width && lastWidth === rect.width) {
+            console.log('abort render');
+            return;
+          }
+
+          lastWidth = rect.width;
+
           var dataForChartist = getChartDataForChartist(item);
           if (!dataForChartist || dataForChartist === null) {
             reject('data could not be prepared for chartist');
