@@ -1,6 +1,6 @@
 {
   "name": "Q-chart",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Q Charting Renderer",
   "keywords": [
     "storytelling",
@@ -65,16 +65,16 @@
     "dependencies": {
       "chartist": "npm:chartist@^0.9.5",
       "clone": "npm:clone@^1.0.2",
-      "css": "github:systemjs/plugin-css@^0.1.19",
+      "core-js": "npm:core-js@1.2.6",
+      "css": "github:systemjs/plugin-css@^0.1.20",
       "fg-loadcss": "npm:fg-loadcss@^0.2.4",
       "paulirish/matchMedia.js": "github:paulirish/matchMedia.js@^0.3.0",
-      "text": "github:systemjs/plugin-text@^0.0.3"
+      "text": "github:systemjs/plugin-text@^0.0.7"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
-      "clean-css": "npm:clean-css@^3.4.8",
-      "core-js": "npm:core-js@^1.1.4"
+      "clean-css": "npm:clean-css@^3.4.8"
     }
   }
 }

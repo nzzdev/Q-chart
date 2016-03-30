@@ -21,10 +21,10 @@ System.config({
     "clone": "npm:clone@1.0.2",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",
     "core-js": "npm:core-js@1.2.6",
-    "css": "github:systemjs/plugin-css@0.1.19",
+    "css": "github:systemjs/plugin-css@0.1.20",
     "fg-loadcss": "npm:fg-loadcss@0.2.4",
     "paulirish/matchMedia.js": "github:paulirish/matchMedia.js@0.3.0",
-    "text": "github:systemjs/plugin-text@0.0.3",
+    "text": "github:systemjs/plugin-text@0.0.7",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
