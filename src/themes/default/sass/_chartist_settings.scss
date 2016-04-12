@@ -20,19 +20,21 @@ $ct-line-width: 2px;
 $ct-bar-width: 10px;
 
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
-$ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l);
+$ct-series-names: (a, b, c, d, e, f);
 $ct-series-colors: (
   $color-nzz-blue,
   $color-nzz-ochre,
   $color-nzz-green,
   $color-nzz-brown,
   $color-nzz-magenta,
-  $color-nzz-red,
-  mix(white, $color-nzz-blue, 30),
-  mix(white, $color-nzz-ochre, 30),
-  mix(white, $color-nzz-green, 30),
-  mix(white, $color-nzz-blue, 30),
-  mix(white, $color-nzz-brown, 30),
-  mix(white, $color-nzz-magenta, 30),
-  mix(white, $color-nzz-red, 30)
+  $color-nzz-red
+);
+$ct-series-colors-brightened: (
+  mix(white, $color-nzz-blue, 60),
+  mix(white, $color-nzz-ochre, 60),
+  mix(white, $color-nzz-green, 60),
+  mix(white, $color-nzz-blue, 60),
+  mix(white, $color-nzz-brown, 60),
+  mix(white, $color-nzz-magenta, 60),
+  mix(white, $color-nzz-red, 60)
 );

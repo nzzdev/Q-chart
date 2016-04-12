@@ -116,8 +116,22 @@
 }
 
 @for $i from 0 to length($ct-series-names) {
+
   .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
     $color: nth($ct-series-colors, $i + 1);
+
+    @include ct-chart-series-color($color);
+  }
+
+  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-bar.active,
+  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.active {
+    $color: nth($ct-series-colors, $i + 1);
+    stroke: $color;
+  }
+
+  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+    $color: nth($ct-series-colors-brightened, $i + 1);
+    stroke: $color;
 
     @include ct-chart-series-color($color);
   }
@@ -140,4 +154,8 @@
   stroke: $primary-color;
   opacity: 1;
   stroke-width: 1px;
+}
+
+.ct-label.active {
+  font-weight: bold;
 }
