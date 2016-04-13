@@ -112,7 +112,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {
-    chartTypes[item.type].modifyConfig(config, data, size, rect);
+    chartTypes[item.type].modifyConfig(config, data, size, rect, item);
   }
 
   // if there are detected series types
@@ -121,19 +121,19 @@ function getCombinedChartistConfig(item, data, size, rect) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
     }
