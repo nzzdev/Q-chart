@@ -121,12 +121,19 @@
     $color: nth($ct-series-colors, $i + 1);
 
     @include ct-chart-series-color($color);
+
+    .prognosis {
+      stroke-dasharray: 7px 2px;
+      stroke-dashoffset: -7px;
+    }
+
   }
 
   .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-bar.active,
   .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.active {
     $color: nth($ct-series-colors, $i + 1);
     stroke: $color;
+    stroke-width: 2px;
   }
 
   .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
@@ -134,6 +141,10 @@
     stroke: $color;
 
     @include ct-chart-series-color($color);
+
+    .ct-line {
+      stroke-width: 1px;
+    }
   }
 }
 
