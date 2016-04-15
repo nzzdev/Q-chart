@@ -60,7 +60,7 @@ export var types = {
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: -1,
-        options: [{label:'keine', value:-1}],
+        options: [], //[{label:'keine', value:-1}],
         modifyConfig: (config, value, data, size, rect) => {
           config.plugins.push(
             ctHighlighting(value, !config.horizontalBars, data.labels.length)

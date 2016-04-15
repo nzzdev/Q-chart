@@ -68,11 +68,11 @@ function modifyData(config, item, data, size, rect) {
   // we need to let them modify the data
   if (item.data.x && item.data.x.type) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-      
+
       if (seriesTypes[item.data.x.type.id].x.modifyData) {
         seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type, data, size, rect);
       }
-      
+
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
         seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type, data, size, rect);
       }
@@ -100,6 +100,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
     switch (option.type) {
       case 'oneOf':
       case 'boolean':
+      case 'selection':
         if (item.options && typeof item.options[option.name] !== undefined) {
           option.modifyConfig(config, item.options[option.name], data, size, rect);
         } else {
@@ -111,30 +112,30 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {
-    chartTypes[item.type].modifyConfig(config, data, size, rect);
+    chartTypes[item.type].modifyConfig(config, data, size, rect, item);
   }
 
   // if there are detected series types
   // we need to let them modify the config
   if (item.data.x && item.data.x.type) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-      
+
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
-      
+
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
-    
+
     }
   }
 
@@ -158,15 +159,29 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
 }
 
 function getLegendHtml(item) {
+  let highlightDataRow = item.options && item.options.highlightDataRow;
+  let hasHighlighted = highlightDataRow && highlightDataRow > -1;
+  let isDate = item.data.x.type.id === 'date';
+  console.log(item.data.x.type.options);
+  let hasPrognosis = isDate && item.data.x.type.options.prognoseStart > -1;
+  let prognosisStart = hasPrognosis && item.data.x.type.options.prognoseStart;
   let html = `
-    <div class="q-chart__legend">`;
+    <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} ${item.type.toLowerCase()}">`;
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
     for (var i in item.data.y.data) {
       let serie = item.data.y.data[i];
+      let isActive = hasHighlighted && highlightDataRow == i;
       html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
+        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
           <div class="q-chart__legend__item__box"></div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
+        </div>`;
+    }
+    if (hasPrognosis){
+      html += `
+        <div class="q-chart__legend__item q-chart__legend__item--prognosis">
+          <div class="q-chart__legend__item__box"></div>
+          <div class="q-chart__legend__item__text">Prognose (ab ${item.data.x.data[prognosisStart]})</div>
         </div>`;
     }
   }
@@ -232,7 +247,7 @@ function getContextHtml(item, chartistConfig) {
   if (chartistConfig.horizontalBars) {
     axisNames.reverse();
   }
-  
+
   html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
@@ -251,9 +266,9 @@ function getContextHtml(item, chartistConfig) {
     }
   }
 
-  html += `  
+  html += `
     <div class="q-chart__footer">`;
-  
+
   if (item.notes) {
     html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
   }
@@ -271,7 +286,7 @@ function getContextHtml(item, chartistConfig) {
         html += `${source.text}${sources.indexOf(source) !== sources.length -1 ? ', ' : ' '}`;
       }
     }
-    
+
   } else {
     html += 'Quelle: nicht angegeben';
   }
@@ -338,7 +353,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
         chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
-        
+
         modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
 
         // set Y axis offset after we have modified the data (date series label formatting)
@@ -353,7 +368,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         } catch (e) {
           reject(e);
         }
-        
+
         // we do not want line breaking in labels and develop a consistent version
         // for all browsers, so we disable foreignObject here.
         chart.supportsForeignObject = false;
@@ -361,7 +376,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         if (chart && chart.on) {
           chart.on('created', () => {
             resolve({
-              graphic: chart, 
+              graphic: chart,
               promises: rendererPromises
             });
           });
@@ -382,6 +397,6 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
     } catch (e) {
       reject(e);
-    } 
+    }
   });
 }

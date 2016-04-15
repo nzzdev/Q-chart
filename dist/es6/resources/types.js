@@ -1,4 +1,5 @@
 import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
+import {ctHighlighting} from '../chartist-plugins/chartist-plugin-highlighting';
 import min from './min';
 
 export var types = {
@@ -53,6 +54,18 @@ export var types = {
             config.axisY.showGrid = false;
           }
         }
+      },
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [], //[{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value, !config.horizontalBars, data.labels.length)
+          )
+        }
       }
     ]
   },
@@ -100,11 +113,23 @@ export var types = {
           if (value && size === 'small') {
             config.horizontalBars = true;
             config.height = (vertBarHeight + vertBarSetPadding) * data.labels.length;
-            
+
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
           }
+        }
+      },
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value, !config.horizontalBars, data.labels.length)
+          )
         }
       }
     ]
@@ -112,7 +137,6 @@ export var types = {
   Line: {
     label: 'Line',
     chartistType: 'Line',
-    options: [],
     modifyConfig: (config, data, size, rect) => {
       config.low = 0;
       let minValue = min(data.series.map(serie => min(serie.map(datapoint => parseFloat(datapoint)))));
@@ -130,6 +154,20 @@ export var types = {
       }
 
       return;
-    }
-  },
+    },
+    options: [
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value,true,data.series.length, true)
+          );
+        }
+      }
+    ]
+  }
 }

@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (exports, _seriesTypesDateSeriesType, _chartist) {
+define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosesplit'], function (exports, _seriesTypesDateSeriesType, _chartist, _chartistPluginsChartistPluginPrognosesplit) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -31,7 +31,18 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (export
     'date': {
       'x': {
         'Line': {
-          modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
+          modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace,
+          modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+            var labelIndex = item.data.x.type.options.prognoseStart;
+            if (labelIndex > -1) {
+              var labels = data.labels;
+
+              var numLabels = labels.length;
+              config.plugins.push((0, _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit)({
+                threshold: labelIndex / (numLabels - 1)
+              }));
+            }
+          }
         },
         'Bar': {
           modifyData: function modifyData(config, type, data, size, rect) {

@@ -88,6 +88,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         switch (option.type) {
           case 'oneOf':
           case 'boolean':
+          case 'selection':
             if (item.options && typeof item.options[option.name] !== undefined) {
               option.modifyConfig(config, item.options[option.name], data, size, rect);
             } else {
@@ -112,26 +113,26 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     }
 
     if (chartTypes[item.type].modifyConfig) {
-      chartTypes[item.type].modifyConfig(config, data, size, rect);
+      chartTypes[item.type].modifyConfig(config, data, size, rect, item);
     }
 
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+          seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-          seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+          seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
       }
     }
@@ -156,11 +157,21 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
   }
 
   function getLegendHtml(item) {
-    var html = '\n    <div class="q-chart__legend">';
+    var highlightDataRow = item.options && item.options.highlightDataRow;
+    var hasHighlighted = highlightDataRow && highlightDataRow > -1;
+    var isDate = item.data.x.type.id === 'date';
+    console.log(item.data.x.type.options);
+    var hasPrognosis = isDate && item.data.x.type.options.prognoseStart > -1;
+    var prognosisStart = hasPrognosis && item.data.x.type.options.prognoseStart;
+    var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'highlighted' : '') + ' ' + item.type.toLowerCase() + '">';
     if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
       for (var i in item.data.y.data) {
         var serie = item.data.y.data[i];
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+        var isActive = hasHighlighted && highlightDataRow == i;
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'active' : '') + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+      }
+      if (hasPrognosis) {
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + item.data.x.data[prognosisStart] + ')</div>\n        </div>';
       }
     }
     html += '\n    </div>\n  ';
@@ -233,7 +244,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       }
     }
 
-    html += '  \n    <div class="q-chart__footer">';
+    html += '\n    <div class="q-chart__footer">';
 
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';

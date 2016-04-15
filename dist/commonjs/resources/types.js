@@ -8,6 +8,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 var _chartistConfig = require('./chartistConfig');
 
+var _chartistPluginsChartistPluginHighlighting = require('../chartist-plugins/chartist-plugin-highlighting');
+
 var _min = require('./min');
 
 var _min2 = _interopRequireDefault(_min);
@@ -60,6 +62,15 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+      }
     }]
   },
   StackedBar: {
@@ -109,12 +120,20 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [{ label: 'keine', value: -1 }],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+      }
     }]
   },
   Line: {
     label: 'Line',
     chartistType: 'Line',
-    options: [],
     modifyConfig: function modifyConfig(config, data, size, rect) {
       config.low = 0;
       var minValue = (0, _min2['default'])(data.series.map(function (serie) {
@@ -138,7 +157,17 @@ var types = {
       }
 
       return;
-    }
+    },
+    options: [{
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [{ label: 'keine', value: -1 }],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length, true));
+      }
+    }]
   }
 };
 exports.types = types;

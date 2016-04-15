@@ -115,5 +115,37 @@ $ct-include-classes: false;
   }
 }
 
+@for $i from 0 to length($ct-series-names) {
+  .q-chart__legend.highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+    .q-chart__legend__item__box {
+        $color: nth($ct-series-colors-brightened, $i + 1);
+        background: $color;
+        
+    }
+    
+    .q-chart__legend__item__text{
+      color:$secondary-color;
+    } 
+    
+    &.active {
+      
+      .q-chart__legend__item__box {
+        $color: nth($ct-series-colors, $i + 1);
+        background: $color;
+      }
+      
+      .q-chart__legend__item__text{
+        color: $primary-color;
+      } 
+      
+    }
+  }
+}
 
+.q-chart__legend.line .q-chart__legend__item__box{
+  border-radius: 0px;
+  height: 3px;
+  width: 12px;
+  transform: translate(2px,3px) rotate(-45deg);
+}
 

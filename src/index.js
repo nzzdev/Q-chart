@@ -159,15 +159,29 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
 }
 
 function getLegendHtml(item) {
+  let highlightDataRow = item.options && item.options.highlightDataRow;
+  let hasHighlighted = highlightDataRow && highlightDataRow > -1;
+  let isDate = item.data.x.type.id === 'date';
+  console.log(item.data.x.type.options);
+  let hasPrognosis = isDate && item.data.x.type.options.prognoseStart > -1;
+  let prognosisStart = hasPrognosis && item.data.x.type.options.prognoseStart;
   let html = `
-    <div class="q-chart__legend">`;
+    <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} ${item.type.toLowerCase()}">`;
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
     for (var i in item.data.y.data) {
       let serie = item.data.y.data[i];
+      let isActive = hasHighlighted && highlightDataRow == i;
       html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
+        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
           <div class="q-chart__legend__item__box"></div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
+        </div>`;
+    }
+    if (hasPrognosis){
+      html += `
+        <div class="q-chart__legend__item q-chart__legend__item--prognosis">
+          <div class="q-chart__legend__item__box"></div>
+          <div class="q-chart__legend__item__text">Prognose (ab ${item.data.x.data[prognosisStart]})</div>
         </div>`;
     }
   }

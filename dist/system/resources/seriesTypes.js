@@ -1,13 +1,15 @@
-System.register(['./seriesTypes/dateSeriesType', 'chartist'], function (_export) {
+System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosesplit'], function (_export) {
   'use strict';
 
-  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
+  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, ctPrognoseSplit, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
   return {
     setters: [function (_seriesTypesDateSeriesType) {
       setLabelsBasedOnIntervalAndAvailableSpace = _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace;
       setLabelsBasedOnInterval = _seriesTypesDateSeriesType.setLabelsBasedOnInterval;
     }, function (_chartist) {
       Chartist = _chartist['default'];
+    }, function (_chartistPluginsChartistPluginPrognosesplit) {
+      ctPrognoseSplit = _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit;
     }],
     execute: function () {
       getLabelFontStyle = function getLabelFontStyle() {
@@ -34,7 +36,18 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist'], function (_export)
         'date': {
           'x': {
             'Line': {
-              modifyData: setLabelsBasedOnIntervalAndAvailableSpace
+              modifyData: setLabelsBasedOnIntervalAndAvailableSpace,
+              modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+                var labelIndex = item.data.x.type.options.prognoseStart;
+                if (labelIndex > -1) {
+                  var labels = data.labels;
+
+                  var numLabels = labels.length;
+                  config.plugins.push(ctPrognoseSplit({
+                    threshold: labelIndex / (numLabels - 1)
+                  }));
+                }
+              }
             },
             'Bar': {
               modifyData: function modifyData(config, type, data, size, rect) {
