@@ -1,7 +1,7 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/seriesTypes/dateSeriesType', './resources/seriesTypes/dateConfigPerInterval', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
 
   _export('getDivisor', getDivisor);
 
@@ -160,19 +160,23 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
   function getLegendHtml(item) {
     var highlightDataRow = item.options && item.options.highlightDataRow;
     var hasHighlighted = highlightDataRow && highlightDataRow > -1;
-    var isDate = item.data.x.type.id === 'date';
-    console.log(item.data.x.type.options);
-    var hasPrognosis = isDate && item.data.x.type.options.prognoseStart > -1;
-    var prognosisStart = hasPrognosis && item.data.x.type.options.prognoseStart;
+    var isDate = item.data.x.type && item.data.x.type.id === 'date';
+    var hasPrognosis = isDate && item.data.x.type.options.prognosisStart > -1;
+    var prognosisStart = hasPrognosis && item.data.x.type.options.prognosisStart;
+    var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
+    var isLine = item.type === 'Line';
+    var itemBox = isLine ? svgBox : '';
     var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'highlighted' : '') + ' ' + item.type.toLowerCase() + '">';
     if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
       for (var i in item.data.y.data) {
         var serie = item.data.y.data[i];
         var isActive = hasHighlighted && highlightDataRow == i;
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'active' : '') + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'active' : '') + '">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
       }
       if (hasPrognosis) {
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + item.data.x.data[prognosisStart] + ')</div>\n        </div>';
+        var date = getDateObject(item.data.x.data[prognosisStart], item.data.x.type.config.format);
+        var formattedLabel = seriesTypeConfig[item.data.x.type.options.interval].format(i, false, date, true);
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + formattedLabel + ')</div>\n        </div>';
       }
     }
     html += '\n    </div>\n  ';
@@ -415,6 +419,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     }, function (_resourcesSeriesTypes) {
       seriesTypes = _resourcesSeriesTypes.seriesTypes;
       getDigitLabelFontStyle = _resourcesSeriesTypes.getDigitLabelFontStyle;
+    }, function (_resourcesSeriesTypesDateSeriesType) {
+      getDateObject = _resourcesSeriesTypesDateSeriesType.getDateObject;
+    }, function (_resourcesSeriesTypesDateConfigPerInterval) {
+      seriesTypeConfig = _resourcesSeriesTypesDateConfigPerInterval.seriesTypeConfig;
     }, function (_resourcesHelpers) {
       getTextWidth = _resourcesHelpers.getTextWidth;
       getFlatDatapoints = _resourcesHelpers.getFlatDatapoints;

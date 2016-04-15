@@ -24,7 +24,7 @@ export var seriesTypes = {
       'Line': {
         modifyData: setLabelsBasedOnIntervalAndAvailableSpace,
         modifyConfig: (config, type, data, size, rect, item)=>{
-          let labelIndex = item.data.x.type.options.prognoseStart;
+          let labelIndex = item.data.x.type.options.prognosisStart;
           if (labelIndex > -1) {
             let {labels} = data;
             let numLabels = labels.length;

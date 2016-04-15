@@ -86,7 +86,7 @@ $ct-include-classes: false;
   margin: 0 0 6px 0;
 }
 
-.q-chart__label-y-axis { 
+.q-chart__label-y-axis {
   @extend %label-element;
   color: $secondary-color;
 }
@@ -114,41 +114,79 @@ $ct-include-classes: false;
     .q-chart__legend__item__box {
         $color: nth($ct-series-colors, $i + 1);
         background: $color;
+
+        line {
+          stroke: $color;
+        }
     }
   }
 }
 
 @for $i from 0 to length($ct-series-names) {
   .q-chart__legend.highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+
     .q-chart__legend__item__box {
         $color: nth($ct-series-colors-brightened, $i + 1);
         background: $color;
-        
+
+        &.line {
+          background:transparent;
+        }
+
+        line {
+          stroke: $color;
+        }
     }
-    
+
     .q-chart__legend__item__text{
       color:$secondary-color;
-    } 
-    
+    }
+
     &.active {
-      
+
       .q-chart__legend__item__box {
         $color: nth($ct-series-colors, $i + 1);
-        background: $color;
+
+        line {
+          stroke: $color;
+        }
+
       }
-      
-      .q-chart__legend__item__text{
+
+      .q-chart__legend__item__text {
         color: $primary-color;
-      } 
-      
+      }
+
     }
   }
 }
 
-.q-chart__legend.line .q-chart__legend__item__box{
-  border-radius: 0px;
-  height: 3px;
-  width: 12px;
-  transform: translate(2px,3px) rotate(-45deg);
-}
+.q-chart__legend.line {
 
+  .q-chart__legend__item__box {
+    border-radius: 0px;
+    background:transparent;
+    position: relative;
+  }
+
+  .q-chart__legend__item__box svg {
+
+    position: absolute;
+    top:-1px;
+    display:block;
+
+    line {
+      stroke-width: 2px;
+    }
+
+  }
+
+  .q-chart__legend__item--prognosis {
+
+    .q-chart__legend__item__box line {
+      stroke-dasharray: 2px 2px;
+      stroke:$secondary-color
+    }
+  }
+
+}

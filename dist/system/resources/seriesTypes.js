@@ -38,7 +38,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
             'Line': {
               modifyData: setLabelsBasedOnIntervalAndAvailableSpace,
               modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
-                var labelIndex = item.data.x.type.options.prognoseStart;
+                var labelIndex = item.data.x.type.options.prognosisStart;
                 if (labelIndex > -1) {
                   var labels = data.labels;
 

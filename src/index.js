@@ -9,6 +9,10 @@ import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes, getDigitLabelFontStyle} from './resources/seriesTypes';
+
+import {getDateObject} from './resources/seriesTypes/dateSeriesType';
+import {seriesTypeConfig} from './resources/seriesTypes/dateConfigPerInterval';
+
 import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
@@ -162,10 +166,15 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
 function getLegendHtml(item) {
   let highlightDataRow = item.options && item.options.highlightDataRow;
   let hasHighlighted = highlightDataRow && highlightDataRow > -1;
-  let isDate = item.data.x.type.id === 'date';
-  console.log(item.data.x.type.options);
-  let hasPrognosis = isDate && item.data.x.type.options.prognoseStart > -1;
-  let prognosisStart = hasPrognosis && item.data.x.type.options.prognoseStart;
+  let isDate = item.data.x.type && item.data.x.type.id === 'date';
+  let hasPrognosis = isDate && item.data.x.type.options.prognosisStart > -1;
+  let prognosisStart = hasPrognosis && item.data.x.type.options.prognosisStart;
+  let svgBox = `
+    <svg width="12" height="12">
+      <line x1="1" y1="11" x2="11" y2="1" />
+    </svg>`;
+  let isLine = item.type === 'Line';
+  let itemBox = isLine ? svgBox : '';
   let html = `
     <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} ${item.type.toLowerCase()}">`;
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
@@ -174,15 +183,17 @@ function getLegendHtml(item) {
       let isActive = hasHighlighted && highlightDataRow == i;
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
-          <div class="q-chart__legend__item__box"></div>
+          <div class="q-chart__legend__item__box ${isLine ? 'line' : ''}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
         </div>`;
     }
     if (hasPrognosis){
+      let date = getDateObject( item.data.x.data[prognosisStart], item.data.x.type.config.format);
+      let formattedLabel = seriesTypeConfig[item.data.x.type.options.interval].format(i, false, date, true);
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--prognosis">
-          <div class="q-chart__legend__item__box"></div>
-          <div class="q-chart__legend__item__text">Prognose (ab ${item.data.x.data[prognosisStart]})</div>
+          <div class="q-chart__legend__item__box">${itemBox}</div>
+          <div class="q-chart__legend__item__text">Prognose (ab ${formattedLabel})</div>
         </div>`;
     }
   }

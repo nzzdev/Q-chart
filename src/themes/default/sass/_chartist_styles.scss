@@ -108,13 +108,12 @@
     @include ct-chart-series-color($color);
 
     .prognosis {
-      stroke-dasharray: 7px 2px;
+      stroke-dasharray: 6px 2px;
       stroke-dashoffset: -7px;
     }
 
   }
 
-  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-bar.active,
   .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.active {
     $color: nth($ct-series-colors, $i + 1);
     stroke: $color;
@@ -129,6 +128,11 @@
 
     .ct-line {
       stroke-width: 1px;
+    }
+
+    .active {
+      $color: nth($ct-series-colors, $i + 1);
+      stroke: $color;
     }
   }
 }
@@ -152,6 +156,14 @@
   stroke-width: 1px;
 }
 
-.ct-label.active {
-  font-weight: bold;
+svg.highlighted {
+
+  .ct-label {
+    fill: $secondary-color;
+  }
+
+  .ct-label.active {
+    fill: $primary-color;
+  }
+
 }
