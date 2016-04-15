@@ -98,6 +98,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   for (let option of chartTypes[item.type].options) {
     switch (option.type) {
+      case 'number':
       case 'oneOf':
       case 'boolean':
       case 'selection':
@@ -139,7 +140,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
     }
   }
 
-  modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
+modifyChartistConfigBeforeRender(config, item.type, data, size, rect);
 
   return config;
 }
@@ -341,7 +342,16 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
       let chart;
 
+      let lastWidth;
+
       sizeObserver.onResize((rect) => {
+
+        if (rect.width && lastWidth === rect.width) {
+          return;
+        }
+
+        lastWidth = rect.width;
+
         // prepare data
         let dataForChartist = getChartDataForChartist(item);
         if (!dataForChartist || dataForChartist === null) {

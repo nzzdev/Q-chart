@@ -486,7 +486,7 @@ var chart7 = {
 
 var chart8 = {
   _id: '_8',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'Hummeln fliegen besser als gedacht (mit minValue/maxValue options)',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -517,6 +517,10 @@ var chart8 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  options: {
+    minValue:200,
+    maxValue:'test with invalid number'
   },
   type: 'Line'
 }
@@ -717,6 +721,10 @@ var chart12 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  options: {
+    // minValue: 100,
+    maxValue: 200
   },
   type: 'Line'
 }

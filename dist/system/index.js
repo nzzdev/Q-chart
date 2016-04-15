@@ -86,6 +86,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         var option = _step.value;
 
         switch (option.type) {
+          case 'number':
           case 'oneOf':
           case 'boolean':
           case 'selection':
@@ -346,7 +347,16 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
           var chart = undefined;
 
+          var lastWidth = undefined;
+
           sizeObserver.onResize(function (rect) {
+
+            if (rect.width && lastWidth === rect.width) {
+              return;
+            }
+
+            lastWidth = rect.width;
+
             var dataForChartist = getChartDataForChartist(item);
             if (!dataForChartist || dataForChartist === null) {
               reject('data could not be prepared for chartist');

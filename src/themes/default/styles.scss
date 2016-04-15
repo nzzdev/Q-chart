@@ -27,6 +27,9 @@ $ct-include-classes: false;
   *, *::after, *::before {
     box-sizing: inherit;
   }
+  svg {
+    overflow: visible;
+  }
 }
 
 .q-chart__title {
