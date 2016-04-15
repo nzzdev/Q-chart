@@ -176,7 +176,7 @@ function getLegendHtml(item) {
   let isLine = item.type === 'Line';
   let itemBox = isLine ? svgBox : '';
   let html = `
-    <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} ${item.type.toLowerCase()}">`;
+    <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
     for (var i in item.data.y.data) {
       let serie = item.data.y.data[i];

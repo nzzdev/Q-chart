@@ -219,7 +219,7 @@ function getLegendHtml(item) {
   var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
   var isLine = item.type === 'Line';
   var itemBox = isLine ? svgBox : '';
-  var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'highlighted' : '') + ' ' + item.type.toLowerCase() + '">';
+  var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'highlighted' : '') + ' q-chart__legend--' + item.type.toLowerCase() + '">';
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
     for (var i in item.data.y.data) {
       var serie = item.data.y.data[i];

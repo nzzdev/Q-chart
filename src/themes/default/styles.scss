@@ -129,7 +129,7 @@ $ct-include-classes: false;
         $color: nth($ct-series-colors-brightened, $i + 1);
         background: $color;
 
-        &.line {
+        &.q-chart__legend--line {
           background:transparent;
         }
 
@@ -161,7 +161,7 @@ $ct-include-classes: false;
   }
 }
 
-.q-chart__legend.line {
+.q-chart__legend.q-chart__legend--line {
 
   .q-chart__legend__item__box {
     border-radius: 0px;
