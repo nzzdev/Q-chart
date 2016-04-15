@@ -12,6 +12,8 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
+var _chartistPluginsChartistPluginPrognosesplit = require('../chartist-plugins/chartist-plugin-prognosesplit');
+
 var getLabelFontStyle = function getLabelFontStyle() {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
     return '11px Arial';
@@ -34,7 +36,18 @@ var seriesTypes = {
   'date': {
     'x': {
       'Line': {
-        modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
+        modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace,
+        modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+          var labelIndex = item.data.x.type.options.prognoseStart;
+          if (labelIndex > -1) {
+            var labels = data.labels;
+
+            var numLabels = labels.length;
+            config.plugins.push((0, _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit)({
+              threshold: labelIndex / (numLabels - 1)
+            }));
+          }
+        }
       },
       'Bar': {
         modifyData: function modifyData(config, type, data, size, rect) {

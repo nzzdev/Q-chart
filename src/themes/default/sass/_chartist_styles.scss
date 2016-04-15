@@ -12,21 +12,6 @@
   }
 }
 
-// .#{$ct-class-chart-line} .#{$ct-class-label},
-// .#{$ct-class-chart-bar} .#{$ct-class-label} {
-//   // @include ct-flex();
-// }
-
-// .#{$ct-class-label}.#{$ct-class-horizontal} {
-//   text-anchor: middle;
-//   &.ct-horizontal--first {
-//     text-anchor: start;
-//   }
-//   &.ct-horizontal--last {
-//     text-anchor: end;
-//   }
-// }
-
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
   text-anchor: middle;
   &.ct-horizontal--first {
