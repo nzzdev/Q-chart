@@ -86,8 +86,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         var option = _step.value;
 
         switch (option.type) {
+          case 'number':
           case 'oneOf':
           case 'boolean':
+          case 'selection':
             if (item.options && typeof item.options[option.name] !== undefined) {
               option.modifyConfig(config, item.options[option.name], data, size, rect);
             } else {
@@ -233,7 +235,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       }
     }
 
-    html += '  \n    <div class="q-chart__footer">';
+    html += '\n    <div class="q-chart__footer">';
 
     if (item.notes) {
       html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
@@ -335,7 +337,16 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
           var chart = undefined;
 
+          var lastWidth = undefined;
+
           sizeObserver.onResize(function (rect) {
+
+            if (rect.width && lastWidth === rect.width) {
+              return;
+            }
+
+            lastWidth = rect.width;
+
             var dataForChartist = getChartDataForChartist(item);
             if (!dataForChartist || dataForChartist === null) {
               reject('data could not be prepared for chartist');

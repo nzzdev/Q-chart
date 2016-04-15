@@ -135,8 +135,10 @@ function getCombinedChartistConfig(item, data, size, rect) {
       var option = _step.value;
 
       switch (option.type) {
+        case 'number':
         case 'oneOf':
         case 'boolean':
+        case 'selection':
           if (item.options && typeof item.options[option.name] !== undefined) {
             option.modifyConfig(config, item.options[option.name], data, size, rect);
           } else {
@@ -282,7 +284,7 @@ function getContextHtml(item, chartistConfig) {
     }
   }
 
-  html += '  \n    <div class="q-chart__footer">';
+  html += '\n    <div class="q-chart__footer">';
 
   if (item.notes) {
     html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
@@ -384,7 +386,16 @@ function display(item, element, rendererConfig) {
 
         var chart = undefined;
 
+        var lastWidth = undefined;
+
         sizeObserver.onResize(function (rect) {
+
+          if (rect.width && lastWidth === rect.width) {
+            return;
+          }
+
+          lastWidth = rect.width;
+
           var dataForChartist = getChartDataForChartist(item);
           if (!dataForChartist || dataForChartist === null) {
             reject('data could not be prepared for chartist');
