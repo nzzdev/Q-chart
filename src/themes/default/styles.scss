@@ -28,7 +28,7 @@ $ct-include-classes: false;
     box-sizing: inherit;
   }
   svg {
-    overflow: hidden;
+    overflow: visible;
   }
 }
 
@@ -160,6 +160,7 @@ $ct-include-classes: false;
     }
   }
 }
+
 
 .q-chart__legend.q-chart__legend--line {
 

@@ -163,12 +163,16 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
   return new Chartist[chartTypes[item.type].chartistType](element, dataForChartist, chartistConfig);
 }
 
+export function getFormattedDate(date, format, interval){
+  date = getDateObject( date, format);
+  return seriesTypeConfig[interval].format(0, false, date, true);
+}
+
 function getLegendHtml(item) {
   let highlightDataRow = item.options && item.options.highlightDataRow;
   let hasHighlighted = highlightDataRow && highlightDataRow > -1;
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
   let hasPrognosis = isDate && item.data.x.type.options.prognosisStart > -1;
-  let prognosisStart = hasPrognosis && item.data.x.type.options.prognosisStart;
   let svgBox = `
     <svg width="12" height="12">
       <line x1="1" y1="11" x2="11" y2="1" />
@@ -183,17 +187,17 @@ function getLegendHtml(item) {
       let isActive = hasHighlighted && highlightDataRow == i;
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
-          <div class="q-chart__legend__item__box ${isLine ? 'line' : ''}">${itemBox}</div>
+          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend--line' : ''}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
         </div>`;
     }
     if (hasPrognosis){
-      let date = getDateObject( item.data.x.data[prognosisStart], item.data.x.type.config.format);
-      let formattedLabel = seriesTypeConfig[item.data.x.type.options.interval].format(i, false, date, true);
+      let {prognosisStart,interval} = item.data.x.type.options;
+      let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--prognosis">
           <div class="q-chart__legend__item__box">${itemBox}</div>
-          <div class="q-chart__legend__item__text">Prognose (ab ${formattedLabel})</div>
+          <div class="q-chart__legend__item__text">Prognose (ab ${date})</div>
         </div>`;
     }
   }
