@@ -2362,7 +2362,7 @@ var chart16 = {
       "type": {
         "id": "date",
         "options": {
-          "interval": "year"
+          "interval": "day"
         },
         "config": {
           "format": "DD/MM/YYYY"

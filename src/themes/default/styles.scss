@@ -13,9 +13,6 @@ $ct-include-classes: false;
 
 %label-element {
   @include font(label);
-  &--type-number {
-    @include font(label-digits);
-  }
 }
 
 .q-chart {

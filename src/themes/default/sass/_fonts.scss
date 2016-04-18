@@ -1,11 +1,13 @@
+$font-family: 'Roboto, Arial, sans-serif';
+
 $fonts: (
   title: (
-    font-family: "Arial, Helvetica, sans-serif",
+    font-family: $font-family,
     font-weight: 700,
     text-align: left,
     color: $primary-color,
-    font-size: 15px,
-    line-height: 1.45,
+    font-size: 16px,
+    line-height: 1.25,
     text-decoration: none,
     respond-to: (
       medium-up: (
@@ -14,12 +16,12 @@ $fonts: (
     )
   ),
   secondary-text: (
-    font-family: "Arial, Helvetica, sans-serif",
+    font-family: $font-family,
     font-weight: 400,
     text-align: left,
     color: $secondary-color,
-    font-size: 11px,
-    line-height: 1.45,
+    font-size: 12px,
+    line-height: 1.3,
     text-decoration: none,
     respond-to: (
       medium-up: (
@@ -28,25 +30,15 @@ $fonts: (
     )
   ),
   label: (
-    font-family: "Arial, Helvetica, sans-serif",
+    font-family: $font-family,
     font-weight: normal,
     color: $primary-color,
-    font-size: 11px,
-    line-height: 1.45,
+    font-size: 12px,
+    line-height: 1.3,
     text-decoration: none,
     respond-to: (
       medium-up: (
         font-size: 13px
-      )
-    )
-  ),
-  label-digits: (
-    inherit: label,
-    font-family: "Lucida Sans Typewriter, monospace",
-    font-size: 10px,
-    respond-to: (
-      medium-up: (
-        font-size: 12px
       )
     )
   )
