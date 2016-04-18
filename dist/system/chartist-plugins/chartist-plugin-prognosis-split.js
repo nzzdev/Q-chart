@@ -3,9 +3,9 @@ System.register(['chartist'], function (_export) {
 
   var Chartist;
 
-  _export('ctPrognoseSplit', ctPrognoseSplit);
+  _export('ctPrognosisSplit', ctPrognosisSplit);
 
-  function ctPrognoseSplit(options) {
+  function ctPrognosisSplit(options) {
 
     var defaultOptions = {
       threshold: 0,
@@ -60,7 +60,7 @@ System.register(['chartist'], function (_export) {
       return defs;
     }
 
-    return function ctPrognoseSplit(chart) {
+    return function ctPrognosisSplit(chart) {
       if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
         chart.on('draw', function (data) {

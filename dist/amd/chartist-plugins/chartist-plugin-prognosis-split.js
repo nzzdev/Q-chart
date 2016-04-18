@@ -4,13 +4,13 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
-  exports.ctPrognoseSplit = ctPrognoseSplit;
+  exports.ctPrognosisSplit = ctPrognosisSplit;
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
   var _Chartist = _interopRequireDefault(_chartist);
 
-  function ctPrognoseSplit(options) {
+  function ctPrognosisSplit(options) {
 
     var defaultOptions = {
       threshold: 0,
@@ -65,7 +65,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
       return defs;
     }
 
-    return function ctPrognoseSplit(chart) {
+    return function ctPrognosisSplit(chart) {
       if (chart instanceof _Chartist['default'].Line || chart instanceof _Chartist['default'].Bar) {
 
         chart.on('draw', function (data) {

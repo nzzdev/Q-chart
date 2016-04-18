@@ -12,7 +12,7 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
-var _chartistPluginsChartistPluginPrognosesplit = require('../chartist-plugins/chartist-plugin-prognosesplit');
+var _chartistPluginsChartistPluginPrognosisSplit = require('../chartist-plugins/chartist-plugin-prognosis-split');
 
 var getLabelFontStyle = function getLabelFontStyle() {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
@@ -43,7 +43,7 @@ var seriesTypes = {
             var labels = data.labels;
 
             var numLabels = labels.length;
-            config.plugins.push((0, _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit)({
+            config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
               threshold: labelIndex / (numLabels - 1)
             }));
           }

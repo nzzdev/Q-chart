@@ -1,6 +1,6 @@
 import {setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval} from './seriesTypes/dateSeriesType';
 import Chartist from 'chartist';
-import {ctPrognoseSplit} from '../chartist-plugins/chartist-plugin-prognosesplit'
+import {ctPrognosisSplit} from '../chartist-plugins/chartist-plugin-prognosis-split'
 
 export var getLabelFontStyle = () => {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
@@ -28,7 +28,7 @@ export var seriesTypes = {
           if (labelIndex > -1) {
             let {labels} = data;
             let numLabels = labels.length;
-            config.plugins.push(ctPrognoseSplit({
+            config.plugins.push(ctPrognosisSplit({
               threshold: (labelIndex) / (numLabels-1)
             }));
           }

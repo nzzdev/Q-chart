@@ -1,6 +1,6 @@
 import Chartist from 'chartist';
 
-export function ctPrognoseSplit(options) {
+export function ctPrognosisSplit(options) {
 
   var defaultOptions = {
     threshold: 0,
@@ -61,7 +61,7 @@ export function ctPrognoseSplit(options) {
     return defs;
   }
 
-  return function ctPrognoseSplit(chart) {
+  return function ctPrognosisSplit(chart) {
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
 
         chart.on('draw', function (data) {

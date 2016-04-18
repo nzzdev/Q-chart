@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosesplit'], function (exports, _seriesTypesDateSeriesType, _chartist, _chartistPluginsChartistPluginPrognosesplit) {
+define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosis-split'], function (exports, _seriesTypesDateSeriesType, _chartist, _chartistPluginsChartistPluginPrognosisSplit) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -38,7 +38,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
               var labels = data.labels;
 
               var numLabels = labels.length;
-              config.plugins.push((0, _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit)({
+              config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                 threshold: labelIndex / (numLabels - 1)
               }));
             }

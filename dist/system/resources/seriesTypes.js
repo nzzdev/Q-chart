@@ -1,15 +1,15 @@
-System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosesplit'], function (_export) {
+System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosis-split'], function (_export) {
   'use strict';
 
-  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, ctPrognoseSplit, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
+  var setLabelsBasedOnIntervalAndAvailableSpace, setLabelsBasedOnInterval, Chartist, ctPrognosisSplit, getLabelFontStyle, getDigitLabelFontStyle, seriesTypes;
   return {
     setters: [function (_seriesTypesDateSeriesType) {
       setLabelsBasedOnIntervalAndAvailableSpace = _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace;
       setLabelsBasedOnInterval = _seriesTypesDateSeriesType.setLabelsBasedOnInterval;
     }, function (_chartist) {
       Chartist = _chartist['default'];
-    }, function (_chartistPluginsChartistPluginPrognosesplit) {
-      ctPrognoseSplit = _chartistPluginsChartistPluginPrognosesplit.ctPrognoseSplit;
+    }, function (_chartistPluginsChartistPluginPrognosisSplit) {
+      ctPrognosisSplit = _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit;
     }],
     execute: function () {
       getLabelFontStyle = function getLabelFontStyle() {
@@ -43,7 +43,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                   var labels = data.labels;
 
                   var numLabels = labels.length;
-                  config.plugins.push(ctPrognoseSplit({
+                  config.plugins.push(ctPrognosisSplit({
                     threshold: labelIndex / (numLabels - 1)
                   }));
                 }
