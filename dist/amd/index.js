@@ -235,7 +235,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     var axisExplanation = { x: '', y: '' };
     axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-    var html = '<h3 class="q-chart__title">' + wrapEmojisInSpan(item.title) + '</h3>';
+    var html = '<h3 class="q-item__title">' + wrapEmojisInSpan(item.title) + '</h3>';
     html += getLegendHtml(item);
     if (!item.data.y) {
       item.data.y = {};
@@ -260,13 +260,13 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
       }
     }
 
-    html += '\n    <div class="q-chart__footer">';
+    html += '\n    <div class="q-item__footer">';
 
     if (item.notes) {
-      html += '<div class="q-chart__footer__notes">' + item.notes + '</div>';
+      html += '<div class="q-item__footer__notes">' + item.notes + '</div>';
     }
 
-    html += '<div class="q-chart__footer__sources">';
+    html += '<div class="q-item__footer__sources">';
     if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
       var sources = item.sources.filter(function (source) {
         return source.text && source.text.length > 0;

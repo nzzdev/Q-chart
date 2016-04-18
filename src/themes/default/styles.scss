@@ -1,3 +1,5 @@
+@import 'q-nzzch-theme/settings';
+
 @import "sass/settings";
 @import "storytelling-ui-kit/clearfix";
 @import "storytelling-ui-kit/font";
@@ -9,6 +11,8 @@ $ct-include-classes: false;
 
 @import "sass/chartist_settings";
 @import "sass/chartist_styles";
+
+@import 'q-nzzch-theme/styles';
 
 
 %label-element {
@@ -26,14 +30,6 @@ $ct-include-classes: false;
   }
   svg {
     overflow: visible;
-  }
-}
-
-.q-chart__title {
-  @include font(title);
-  margin: 0 0 8px 0;
-  .emoji {
-    font-weight: normal;
   }
 }
 
@@ -86,24 +82,6 @@ $ct-include-classes: false;
 .q-chart__label-y-axis { 
   @extend %label-element;
   color: $secondary-color;
-}
-
-.q-chart__footer {
-  @include font(secondary-text);
-  @include clearfix;
-  .q-chart__footer__notes, .q-chart__footer__sources {
-    float: left;
-    margin-right: 10px;
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-  a, a:active, a:visited {
-    @include font(secondary-text, $color: $link-color);
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 @for $i from 0 to length($ct-series-names) {
