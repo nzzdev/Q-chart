@@ -2,7 +2,7 @@ import env from 'env';
 
 var chart1 = {
   _id: '_1',
-  title: 'Hummeln fliegen besser als gedacht 💀👊',
+  title: 'C1 Hummeln fliegen besser als gedacht 💀👊',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -55,7 +55,7 @@ var chart1 = {
 
 var chart2 = {
   id: '_2',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'C2 Ein Kampf zwischen Ahnen',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -126,7 +126,7 @@ var chart2 = {
 
 var chart3 = {
   id: '_3',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'C3: Ein Kampf zwischen Ahnen',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -175,7 +175,7 @@ var chart3 = {
 
 var chart4 = {
   id: '_4',
-  title: 'Ein Kampf zwischen Ahnen [GRUPPIERT1]',
+  title: 'C4: Ein Kampf zwischen Ahnen [GRUPPIERT1]',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -237,7 +237,7 @@ var chart4 = {
 
 var chart5 = {
   id: '_5',
-  title: 'Ein Kampf zwischen Ahnen [GRUPPIERT2]',
+  title: 'C5: Ein Kampf zwischen Ahnen [GRUPPIERT2]',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -310,7 +310,7 @@ var chart5 = {
 
 var chart6 = {
   id: '_6',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'C6: Ein Kampf zwischen Ahnen',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -392,7 +392,99 @@ var chart6 = {
 
 var chart7 = {
   id: '_2',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'C7: Ein Kampf zwischen Ahnen',
+  tool: 'chart',
+  rendererVersion: env.VERSION,
+  sources: [],
+  data: {
+    x: {
+      label: '',
+      data: [
+          'Apex',
+          'BhetaBheta',
+          'Budh',
+          'Meto',
+          'Notu',
+          'Ming',
+          'Dris'
+      ]
+    },
+    y: {
+      label: 'gemessen in Spacepunkten',
+      data: [
+        {
+          label: 'Stärke',
+          data: [
+            10.3,
+            106.0,
+            105.4,
+            101.8,
+            95.9,
+            94.1,
+            102.0
+          ]
+        },
+        {
+          label: 'Intelligenz',
+          data: [
+            49.843099,
+            49.931931,
+            61.478163,
+            58.981617,
+            61.223861,
+            65.601574,
+            67.89832
+          ]
+        },
+        {
+          label: 'Love',
+          data: [
+            56,
+            21,
+            41,
+            22,
+            15,
+            12,
+            34
+          ]
+        },
+        {
+          label: 'Wahrheit',
+          data: [
+            30,
+            20,
+            40,
+            50,
+            60,
+            71,
+            10
+          ]
+        },
+        {
+          label: 'Führerschein',
+          data: [
+            51,
+            31,
+            22,
+            71,
+            41,
+            34,
+            15
+          ]
+        }
+      ]
+    }
+  },
+  notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
+  chartConfig: {
+
+  },
+  type: 'Bar'
+}
+
+var chart7b = {
+  id: '_2',
+  title: 'C7b: Ein Kampf zwischen Ahnen',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -486,7 +578,7 @@ var chart7 = {
 
 var chart8 = {
   _id: '_8',
-  title: 'Hummeln fliegen besser als gedacht (mit minValue/maxValue options)',
+  title: 'C8: Hummeln fliegen besser als gedacht (mit minValue/maxValue options)',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -500,7 +592,8 @@ var chart8 = {
           format: 'YYYY-M',
         },
         options: {
-          interval: 'month'
+          interval: 'month',
+          prognosisStart: 14
         }
       }
     },
@@ -519,8 +612,8 @@ var chart8 = {
 
   },
   options: {
-    minValue:200,
-    maxValue:'test with invalid number'
+    minValue:300,
+    maxValue:'test with invalid number',
   },
   type: 'Line'
 }
@@ -529,7 +622,7 @@ var chart8 = {
 
 var chart9 = {
   _id: '_9',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C9: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -572,7 +665,7 @@ var chart9 = {
 
 var chart10 = {
   _id: '_10',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C10: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -623,7 +716,7 @@ var chart10 = {
 
 var chart11 = {
   _id: '_11',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C11: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -674,7 +767,7 @@ var chart11 = {
 
 var chart12 = {
   _id: '_12',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C12: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -688,7 +781,8 @@ var chart12 = {
           format: 'YYYY-M',
         },
         options: {
-          interval: 'month'
+          interval: 'month',
+          prognosisStart: 14
         }
       }
     },
@@ -724,7 +818,7 @@ var chart12 = {
   },
   options: {
     // minValue: 100,
-    maxValue: 200
+    maxValue: 400
   },
   type: 'Line'
 }
@@ -733,7 +827,7 @@ var chart12 = {
 
 var chart13 = {
   _id: '_13',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C13: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -776,7 +870,7 @@ var chart13 = {
 
 var chart14 = {
   _id: '_14',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: 'C14: Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -818,7 +912,7 @@ var chart14 = {
 var chart15 = {
   "_id": "95db629edf1203147294be786e48df47",
   "_rev": "1-399c407962206c0ddef2bac6e1974467",
-  "title": "balken",
+  "title": "C15: balken",
   "tool": "chart",
   "editorVersion": "dev",
   "rendererVersion": "dev",
@@ -903,25 +997,26 @@ let rendererConfig = {
   rendererBaseUrl: 'dist/system/',
 }
 
-displayChart(chart1, document.getElementById('chart1'), rendererConfig);
-displayChart(chart2, document.getElementById('chart2'), rendererConfig);
-
-// -- colors bars
-
-displayChart(chart3, document.getElementById('chart3'), rendererConfig);
-displayChart(chart4, document.getElementById('chart4'), rendererConfig);
-displayChart(chart5, document.getElementById('chart5'), rendererConfig);
-displayChart(chart6, document.getElementById('chart6'), rendererConfig);
-displayChart(chart7, document.getElementById('chart7'), rendererConfig);
-
-// -- colors lines
-
+// displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+// displayChart(chart2, document.getElementById('chart2'), rendererConfig);
+//
+// // -- colors bars
+//
+// displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+// displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+// displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+// displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+// displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+// displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
+//
+// // -- colors lines
+//
 displayChart(chart8, document.getElementById('chart8'), rendererConfig);
 displayChart(chart9, document.getElementById('chart9'), rendererConfig);
 displayChart(chart10, document.getElementById('chart10'), rendererConfig);
 displayChart(chart11, document.getElementById('chart11'), rendererConfig);
 displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
-displayChart(chart13, document.getElementById('chart13'), rendererConfig);
-displayChart(chart14, document.getElementById('chart14'), rendererConfig);
-displayChart(chart15, document.getElementById('chart15'), rendererConfig);
+// displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+// displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+// displayChart(chart15, document.getElementById('chart15'), rendererConfig);

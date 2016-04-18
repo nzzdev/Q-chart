@@ -15,11 +15,23 @@ export function ctPrognosisSplit(options) {
   };
   options = Chartist.extend({}, defaultOptions, options);
 
-  function createMasks(data, options, el) {
+  function createMasks(data, options, id) {
 
     var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
     var width = data.svg.width();
     var height = data.svg.height();
+    let {childNodes} = data.svg._node;
+    let gridsRect = childNodes[0].getBoundingClientRect();
+    let {top,bottom} = gridsRect;
+    let origTop = top;
+    let elements = childNodes[1].querySelectorAll('*');
+    for (var i = 0; i < elements.length; i++) {
+      let elRect = elements[i].getBoundingClientRect();
+      top = Math.min(top, elRect.top);
+      bottom = Math.max(bottom, elRect.bottom);
+    }
+    height = bottom - top + 10;
+    var y = (top - origTop);
     var chartWidth = data.chartRect.width();
     var borderLeft = width - chartWidth;
     var projectedThreshold = options.threshold * chartWidth;
@@ -28,14 +40,14 @@ export function ctPrognosisSplit(options) {
     defs
       .elem('mask', {
         x: 0,
-        y: 0,
+        y: y,
         width: width,
         height: height,
-        id: options.maskNames.nonePrognosis
+        id: options.maskNames.nonePrognosis + id
       })
       .elem('rect', {
         x: borderLeft,
-        y: 0,
+        y: y,
         width: projectedThreshold,
         height: height,
         fill: 'white'
@@ -45,14 +57,14 @@ export function ctPrognosisSplit(options) {
     defs
       .elem('mask', {
         x: 0,
-        y: 0,
+        y: y,
         width: width,
         height: height,
-        id: options.maskNames.prognosis
+        id: options.maskNames.prognosis + id
       })
       .elem('rect', {
         x: projectedThreshold + borderLeft,
-        y: 0,
+        y: y,
         width: width - projectedThreshold,
         height: height,
         fill: 'white'
@@ -63,6 +75,8 @@ export function ctPrognosisSplit(options) {
 
   return function ctPrognosisSplit(chart) {
     if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+
+        var id = new Date().getTime();
 
         chart.on('draw', function (data) {
           if (data.type === 'point') {
@@ -78,7 +92,7 @@ export function ctPrognosisSplit(options) {
               .parent()
               .elem(data.element._node.cloneNode(true))
               .attr({
-                mask: 'url(#' + options.maskNames.nonePrognosis + ')'
+                mask: 'url(#' + options.maskNames.nonePrognosis + id + ')'
               })
               .addClass(options.classNames.nonePrognosis);
 
@@ -86,7 +100,7 @@ export function ctPrognosisSplit(options) {
             // for blow threshold
             data.element
               .attr({
-                mask: 'url(#' + options.maskNames.prognosis + ')'
+                mask: 'url(#' + options.maskNames.prognosis + id + ')'
               })
               .addClass(options.classNames.prognosis);
           }
@@ -94,7 +108,7 @@ export function ctPrognosisSplit(options) {
 
         // On the created event, create the two mask definitions used to mask the line graphs
         chart.on('created', function (data) {
-          createMasks(data, options, chart.element);
+          createMasks(data, options, id);
         });
       }
   }
