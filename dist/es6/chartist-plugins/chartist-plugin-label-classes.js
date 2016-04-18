@@ -5,10 +5,6 @@ var defaultOptions = {
   last: 'last'
 };
 
-function isNumber(value) {
-  return !isNaN(value);
-}
-
 export function ctLabelClasses(options) {
 
   options = Object.assign(defaultOptions, options);

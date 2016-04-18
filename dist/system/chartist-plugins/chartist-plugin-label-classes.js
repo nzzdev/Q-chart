@@ -5,10 +5,6 @@ System.register(['chartist'], function (_export) {
 
   _export('ctLabelClasses', ctLabelClasses);
 
-  function isNumber(value) {
-    return !isNaN(value);
-  }
-
   function ctLabelClasses(options) {
 
     options = Object.assign(defaultOptions, options);

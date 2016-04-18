@@ -15,10 +15,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
     last: 'last'
   };
 
-  function isNumber(value) {
-    return !isNaN(value);
-  }
-
   function ctLabelClasses(options) {
 
     options = Object.assign(defaultOptions, options);
