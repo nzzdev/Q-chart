@@ -165,6 +165,9 @@ var chart3 = {
   chartConfig: {
 
   },
+  options: {
+    highlightDataRow: 2
+  },
   type: 'Bar'
 }
 
@@ -172,7 +175,7 @@ var chart3 = {
 
 var chart4 = {
   id: '_4',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'Ein Kampf zwischen Ahnen [GRUPPIERT1]',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -223,6 +226,10 @@ var chart4 = {
   chartConfig: {
 
   },
+  options: {
+    highlightDataRow: 2,
+    isColumnChart:true
+  },
   type: 'Bar'
 }
 
@@ -230,7 +237,7 @@ var chart4 = {
 
 var chart5 = {
   id: '_5',
-  title: 'Ein Kampf zwischen Ahnen',
+  title: 'Ein Kampf zwischen Ahnen [GRUPPIERT2]',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
@@ -292,6 +299,9 @@ var chart5 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  options: {
+    highlightDataRow: 6
   },
   type: 'Bar'
 }
@@ -601,6 +611,9 @@ var chart10 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  options: {
+    highlightDataRow:2
   },
   type: 'Line'
 }

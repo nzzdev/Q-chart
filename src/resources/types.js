@@ -1,4 +1,5 @@
 import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
+import {ctHighlighting} from '../chartist-plugins/chartist-plugin-highlighting';
 import min from './min';
 
 export var types = {
@@ -53,6 +54,18 @@ export var types = {
             config.axisY.showGrid = false;
           }
         }
+      },
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value, !config.horizontalBars, data.labels.length)
+          )
+        }
       }
     ]
   },
@@ -106,6 +119,18 @@ export var types = {
             config.axisY.showGrid = false;
           }
         }
+      },
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value, !config.horizontalBars, data.labels.length)
+          )
+        }
       }
     ]
   },
@@ -134,6 +159,18 @@ export var types = {
             config.high = Number(value);
           }
         }
+      },
+      {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{label:'keine', value:-1}],
+        modifyConfig: (config, value, data, size, rect) => {
+          config.plugins.push(
+            ctHighlighting(value,true,data.series.length, true)
+          );
+        }
       }
     ],
     modifyConfig: (config, data, size, rect) => {
@@ -161,5 +198,5 @@ export var types = {
 
       return;
     }
-  },
+  }
 }

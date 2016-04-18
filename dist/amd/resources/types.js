@@ -1,4 +1,4 @@
-define(['exports', './chartistConfig', './min'], function (exports, _chartistConfig, _min) {
+define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-highlighting', './min'], function (exports, _chartistConfig, _chartistPluginsChartistPluginHighlighting, _min) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -57,6 +57,15 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
             config.axisY.showGrid = false;
           }
         }
+      }, {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{ label: 'keine', value: -1 }],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+        }
       }]
     },
     StackedBar: {
@@ -106,6 +115,15 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
             config.axisY.showGrid = false;
           }
         }
+      }, {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{ label: 'keine', value: -1 }],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+        }
       }]
     },
     Line: {
@@ -130,6 +148,15 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
           if (value && value !== '' && !isNaN(Number(value))) {
             config.high = Number(value);
           }
+        }
+      }, {
+        name: 'highlightDataRow',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: -1,
+        options: [{ label: 'keine', value: -1 }],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length, true));
         }
       }],
       modifyConfig: function modifyConfig(config, data, size, rect) {

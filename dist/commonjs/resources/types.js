@@ -8,6 +8,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 var _chartistConfig = require('./chartistConfig');
 
+var _chartistPluginsChartistPluginHighlighting = require('../chartist-plugins/chartist-plugin-highlighting');
+
 var _min = require('./min');
 
 var _min2 = _interopRequireDefault(_min);
@@ -60,6 +62,15 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [{ label: 'keine', value: -1 }],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+      }
     }]
   },
   StackedBar: {
@@ -109,6 +120,15 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [{ label: 'keine', value: -1 }],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.labels.length));
+      }
     }]
   },
   Line: {
@@ -133,6 +153,15 @@ var types = {
         if (value && value !== '' && !isNaN(Number(value))) {
           config.high = Number(value);
         }
+      }
+    }, {
+      name: 'highlightDataRow',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: -1,
+      options: [{ label: 'keine', value: -1 }],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length, true));
       }
     }],
     modifyConfig: function modifyConfig(config, data, size, rect) {

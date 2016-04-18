@@ -138,6 +138,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
         case 'number':
         case 'oneOf':
         case 'boolean':
+        case 'selection':
           if (item.options && typeof item.options[option.name] !== undefined) {
             option.modifyConfig(config, item.options[option.name], data, size, rect);
           } else {
