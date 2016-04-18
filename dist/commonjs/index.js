@@ -274,6 +274,9 @@ function getContextHtml(item, chartistConfig) {
   html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
+    if (chartistConfig.horizontalBars) {
+      html += '<div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>';
+    }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {

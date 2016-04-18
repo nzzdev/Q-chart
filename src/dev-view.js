@@ -719,7 +719,7 @@ var chart12 = {
 
 var chart13 = {
   _id: '_13',
-  title: 'Hummeln fliegen besser als gedacht',
+  title: '13 Hummeln fliegen besser als gedacht',
   tool: 'chart',
   rendererVersion: env.VERSION,
   sources: [],
