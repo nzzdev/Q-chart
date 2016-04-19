@@ -166,7 +166,7 @@ var chart3 = {
 
   },
   options: {
-    highlightDataRow: 2
+    // highlightDataSeries: 0
   },
   type: 'Bar'
 }
@@ -227,7 +227,7 @@ var chart4 = {
 
   },
   options: {
-    highlightDataRow: 2,
+    highlightDataSeries: 1,
     isColumnChart:true
   },
   type: 'Bar'
@@ -301,7 +301,7 @@ var chart5 = {
 
   },
   options: {
-    highlightDataRow: 6
+    highlightDataSeries: 2
   },
   type: 'Bar'
 }
@@ -384,6 +384,10 @@ var chart6 = {
   notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
   chartConfig: {
 
+  },
+  options: {
+    isColumnChart: true,
+    highlightDataSeries:1
   },
   type: 'Bar'
 }
@@ -571,6 +575,9 @@ var chart7b = {
   chartConfig: {
 
   },
+  options: {
+    highlightDataSeries:3
+  },
   type: 'Bar'
 }
 
@@ -707,7 +714,7 @@ var chart10 = {
 
   },
   options: {
-    highlightDataRow:2
+    highlightDataSeries:2
   },
   type: 'Line'
 }
@@ -760,7 +767,66 @@ var chart11 = {
   chartConfig: {
 
   },
-  type: 'Line'
+  type: 'Line',
+  options: {
+    highlightDataSeries:2
+  }
+}
+
+//--------
+
+var chart11b = {
+  _id: '_11',
+  title: 'C11b: Hummeln fliegen besser als gedacht',
+  tool: 'chart',
+  rendererVersion: env.VERSION,
+  sources: [],
+  data: {
+    x: {
+      label: '',
+      data: ['2011-05','2011-06','2011-07','2011-08','2011-09'],
+      type: {
+        id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
+        options: {
+          interval: 'month',
+          prognosisStart:2
+        }
+      }
+    },
+    y: {
+      label: 'Flugpunkte',
+      data: [
+        {
+          label: 'Hummeln',
+          data: [531.10,491.00,475.70,421.45,402.90]
+        },
+        // {
+        //   label: 'Fliegen',
+        //   data: [70.53,4.64,63.43,25.47,54.39,52.83,66.03,44.76,25.03,79.4,41.14,71.73,22.79,64.77,29.02,59.86,38.1,44.48,16.07,62.8,77.6,23.1,83.25,95.18,11.97,3.15,92.01,22.22,68.62,90.64,74.12,28.68,38.29,93.71,37.98,30.83,28.4,55.69,17.11,51.24,25.74,26.51,13.01,76.48,37.22,62.92,73.37,37.94,38.52,72.77,59.48,62.62,49.23,82.04]
+        // },
+        {
+          label: 'Füchse',
+          data: [171.82,35.47,66.4,54.17,58.27]
+        },
+        {
+          label: 'Dachse',
+          data: [374,435,402,32,60]
+        }
+      ]
+    }
+  },
+  notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
+  chartConfig: {
+
+  },
+  type: 'StackedBar',
+  options: {
+    highlightDataSeries:1,
+    isColumnChart:true
+  }
 }
 
 //--------
@@ -841,7 +907,8 @@ var chart13 = {
           format: 'YYYY-M',
         },
         options: {
-          interval: 'month'
+          interval: 'month',
+          prognosisStart: 8
         }
       }
     },
@@ -861,6 +928,50 @@ var chart13 = {
   },
   "options": {
     "isColumnChart": false,
+    "forceBarsOnSmall": true
+  },
+  type: 'Bar'
+}
+
+//--------
+
+var chart13b = {
+  _id: '_13',
+  title: 'C13b: Hummeln fliegen besser als gedacht',
+  tool: 'chart',
+  rendererVersion: env.VERSION,
+  sources: [],
+  data: {
+    x: {
+      label: '',
+      data: ['2011-05','2011-06','2011-07','2011-08','2011-09','2011-10','2011-11','2011-12','2012-01','2012-02','2012-03','2012-04'],
+      type: {
+        id: 'date',
+        config: {
+          format: 'YYYY-M',
+        },
+        options: {
+          interval: 'month',
+          prognosisStart: 8
+        }
+      }
+    },
+    y: {
+      label: 'Flugpunkte',
+      data: [
+        {
+          label: 'Hummeln',
+          data: [531.10,491.00,475.70,421.45,402.90,438.00,398.50,392.00,411.20,432.00,389.40,425.60]
+        },
+      ]
+    }
+  },
+  notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
+  chartConfig: {
+
+  },
+  "options": {
+    "isColumnChart": true,
     "forceBarsOnSmall": true
   },
   type: 'Bar'
@@ -997,26 +1108,40 @@ let rendererConfig = {
   rendererBaseUrl: 'dist/system/',
 }
 
-// displayChart(chart1, document.getElementById('chart1'), rendererConfig);
-// displayChart(chart2, document.getElementById('chart2'), rendererConfig);
-//
-// // -- colors bars
-//
-// displayChart(chart3, document.getElementById('chart3'), rendererConfig);
-// displayChart(chart4, document.getElementById('chart4'), rendererConfig);
-// displayChart(chart5, document.getElementById('chart5'), rendererConfig);
-// displayChart(chart6, document.getElementById('chart6'), rendererConfig);
-// displayChart(chart7, document.getElementById('chart7'), rendererConfig);
-// displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
-//
-// // -- colors lines
-//
-displayChart(chart8, document.getElementById('chart8'), rendererConfig);
-displayChart(chart9, document.getElementById('chart9'), rendererConfig);
-displayChart(chart10, document.getElementById('chart10'), rendererConfig);
-displayChart(chart11, document.getElementById('chart11'), rendererConfig);
-displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
-// displayChart(chart13, document.getElementById('chart13'), rendererConfig);
-// displayChart(chart14, document.getElementById('chart14'), rendererConfig);
-// displayChart(chart15, document.getElementById('chart15'), rendererConfig);
+
+let solo;// = [chart13,'13'];
+
+if (solo) {
+
+  displayChart(solo[0], document.getElementById('chart'+solo[1]), rendererConfig);
+
+} else {
+
+  displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+  displayChart(chart2, document.getElementById('chart2'), rendererConfig);
+
+  // -- colors bars
+
+  displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+  displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+  displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+  displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+  displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+  displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
+
+  // -- colors lines
+
+  displayChart(chart8, document.getElementById('chart8'), rendererConfig);
+  displayChart(chart9, document.getElementById('chart9'), rendererConfig);
+  displayChart(chart10, document.getElementById('chart10'), rendererConfig);
+  displayChart(chart11, document.getElementById('chart11'), rendererConfig);
+  displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
+  displayChart(chart12, document.getElementById('chart12'), rendererConfig);
+
+  displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+  displayChart(chart13b, document.getElementById('chart13b'), rendererConfig);
+  displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+  displayChart(chart15, document.getElementById('chart15'), rendererConfig);
+
+}

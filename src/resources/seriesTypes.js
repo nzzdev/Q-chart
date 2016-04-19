@@ -23,14 +23,17 @@ export var seriesTypes = {
     'x': {
       'Line': {
         modifyData: setLabelsBasedOnIntervalAndAvailableSpace,
-        modifyConfig: (config, type, data, size, rect, item)=>{
-          let labelIndex = item.data.x.type.options.prognosisStart;
-          if (labelIndex > -1) {
-            let {labels} = data;
-            let numLabels = labels.length;
-            config.plugins.push(ctPrognosisSplit({
-              threshold: (labelIndex) / (numLabels-1)
-            }));
+        modifyConfig: (config, type, data, size, rect, item) => {
+          try {
+            let {prognosisStart} = item.data.x.type.options;
+            if (typeof prognosisStart != 'undefined') {
+              let {labels} = data;
+              let numLabels = labels.length;
+              config.plugins.push(ctPrognosisSplit({
+                threshold: (prognosisStart) / (numLabels-1)
+              }));
+            }
+          } catch(e) {
           }
         }
       },
@@ -41,6 +44,18 @@ export var seriesTypes = {
           } else {
             setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
           }
+        },
+        modifyConfig: (config, type, data, size, rect, item) => {
+          try {
+            let {prognosisStart} = item.data.x.type.options;
+            if (typeof prognosisStart != 'undefined') {
+              config.plugins.push(ctPrognosisSplit({
+                index: prognosisStart,
+                hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+              }));
+            }
+          } catch(e) {
+          }
         }
       },
       'StackedBar': {
@@ -49,6 +64,18 @@ export var seriesTypes = {
             setLabelsBasedOnInterval(config, type, data, size, rect);
           } else {
             setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rect, getLabelFontStyle());
+          }
+        },
+        modifyConfig: (config, type, data, size, rect, item) => {
+          try {
+            let {prognosisStart} = item.data.x.type.options;
+            if (typeof prognosisStart != 'undefined') {
+              config.plugins.push(ctPrognosisSplit({
+                index: prognosisStart,
+                hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+              }));
+            }
+          } catch(e) {
           }
         }
       }

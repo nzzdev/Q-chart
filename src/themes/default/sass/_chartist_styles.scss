@@ -102,14 +102,29 @@
 
 @for $i from 0 to length($ct-series-names) {
 
-  .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
-    $color: nth($ct-series-colors, $i + 1);
+  .ct-chart-line {
 
-    @include ct-chart-series-color($color);
+    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+      $color: nth($ct-series-colors, $i + 1);
 
-    .prognosis {
-      stroke-dasharray: 6px 2px;
-      stroke-dashoffset: -7px;
+      @include ct-chart-series-color($color);
+
+      .prognosis {
+        stroke-dasharray: 6px 2px;
+        stroke-dashoffset: -7px;
+      }
+
+    }
+
+  }
+
+  .ct-chart-bar {
+
+    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+      $color: nth($ct-series-colors, $i + 1);
+
+      @include ct-chart-series-color($color);
+
     }
 
   }
@@ -137,12 +152,6 @@
   }
 }
 
-// line chart
-.ct-chart-line {
-
-
-}
-
 
 .ct-chart-line .ct-baseline {
   stroke: $primary-color;
@@ -154,16 +163,4 @@
   stroke: $primary-color;
   opacity: 1;
   stroke-width: 1px;
-}
-
-svg.highlighted {
-
-  .ct-label {
-    fill: $secondary-color;
-  }
-
-  .ct-label.active {
-    fill: $primary-color;
-  }
-
 }

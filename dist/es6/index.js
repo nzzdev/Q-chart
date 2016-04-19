@@ -169,10 +169,10 @@ export function getFormattedDate(date, format, interval){
 }
 
 function getLegendHtml(item) {
-  let highlightDataRow = item.options && item.options.highlightDataRow;
-  let hasHighlighted = highlightDataRow && highlightDataRow > -1;
+  let highlightDataSeries = item.options && item.options.highlightDataSeries;
+  let hasHighlighted = typeof highlightDataSeries != 'undefined' && highlightDataSeries != null;
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
-  let hasPrognosis = isDate && item.data.x.type.options.prognosisStart > -1;
+  let hasPrognosis = isDate && typeof item.data.x.type.options.prognosisStart != 'undefined' && item.data.x.type.options.prognosisStart != null;
   let svgBox = `
     <svg width="12" height="12">
       <line x1="1" y1="11" x2="11" y2="1" />
@@ -181,22 +181,24 @@ function getLegendHtml(item) {
   let itemBox = isLine ? svgBox : '';
   let html = `
     <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
-  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
-    for (var i in item.data.y.data) {
-      let serie = item.data.y.data[i];
-      let isActive = hasHighlighted && highlightDataRow == i;
-      html += `
+  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
+    if( item.data.y.data.length > 1 ){
+      for (var i in item.data.y.data) {
+        let serie = item.data.y.data[i];
+        let isActive = hasHighlighted && highlightDataSeries == i;
+        html += `
         <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
-          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend--line' : ''}">${itemBox}</div>
+          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
         </div>`;
+      }
     }
     if (hasPrognosis){
       let {prognosisStart,interval} = item.data.x.type.options;
       let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--prognosis">
-          <div class="q-chart__legend__item__box">${itemBox}</div>
+          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
           <div class="q-chart__legend__item__text">Prognose (ab ${date})</div>
         </div>`;
     }

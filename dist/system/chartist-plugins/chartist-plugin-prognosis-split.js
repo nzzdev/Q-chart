@@ -16,6 +16,10 @@ System.register(['chartist'], function (_export) {
       maskNames: {
         nonePrognosis: 'none-prognosis-mask',
         prognosis: 'prognosis-mask'
+      },
+      patternNames: {
+        nonePrognosis: 'none-prognosis-pattern',
+        prognosis: 'prognosis-pattern'
       }
     };
     options = Chartist.extend({}, defaultOptions, options);
@@ -75,10 +79,34 @@ System.register(['chartist'], function (_export) {
       return defs;
     }
 
-    return function ctPrognosisSplit(chart) {
-      if (chart instanceof Chartist.Line || chart instanceof Chartist.Bar) {
+    function createPattern(data, id) {
 
-        var id = new Date().getTime();
+      var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
+
+      var pttrnSize = 5;
+      var pattrn = defs.elem('pattern', {
+        x: 0,
+        y: 0,
+        width: pttrnSize,
+        height: pttrnSize,
+        id: options.patternNames.prognosis + id,
+        patternUnits: 'userSpaceOnUse'
+      });
+
+      pattrn.elem('path', {
+        'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
+        'stroke-width': 1,
+        'stroke': '#FFF',
+        'stroke-opacity': 0.5
+      });
+      return defs;
+    }
+
+    return function ctPrognosisSplit(chart) {
+
+      var id = new Date().getTime();
+
+      if (chart instanceof Chartist.Line) {
 
         chart.on('draw', function (data) {
           if (data.type === 'point') {
@@ -96,6 +124,23 @@ System.register(['chartist'], function (_export) {
 
         chart.on('created', function (data) {
           createMasks(data, options, id);
+        });
+      } else if (chart instanceof Chartist.Bar) {
+
+        chart.on('draw', function (data, i) {
+          if (data.type !== 'bar') {
+            return;
+          }
+          var isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index : data.index >= options.index;
+          if (isPrognosis) {
+            data.element.parent().elem(data.element._node.cloneNode(true)).addClass(options.classNames.prognosis)._node.style.stroke = 'url(#' + options.patternNames.prognosis + id + ')';
+          } else {
+            data.element.addClass(options.classNames.nonePrognosis);
+          }
+        });
+
+        chart.on('created', function (data) {
+          createPattern(data, id);
         });
       }
     };

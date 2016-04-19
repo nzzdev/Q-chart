@@ -5,11 +5,11 @@ System.register(['chartist'], function (_export) {
 
   _export('ctHighlighting', ctHighlighting);
 
-  function ctHighlighting(highlightDataRow, countAsc, dataLength, preventLabelClasses) {
+  function ctHighlighting(highlightDataSeries, countAsc, dataLength) {
     if (countAsc === undefined) countAsc = true;
 
-    var highLightedIndex = Number(highlightDataRow);
-    var hasHighlighted = highLightedIndex > -1;
+    var highLightedIndex = Number(highlightDataSeries);
+    var hasHighlighted = highLightedIndex != null;
 
     return function ctHighlighting(chart) {
 
@@ -31,13 +31,23 @@ System.register(['chartist'], function (_export) {
 
       chart.on('draw', function (data) {
         try {
-          var index = countAsc ? data.index : dataLength - 1 - data.index;
-          if (hasHighlighted && index === highLightedIndex) {
-            if (data.type === 'line' || data.type === 'bar' || data.type === 'label' && !preventLabelClasses) {
+
+          if (chart instanceof Chartist.Bar) {
+
+            var index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (hasHighlighted && index === highLightedIndex) {
               data.element._node.classList.add('active');
+            } else {
+              data.element._node.classList.remove('active');
             }
-          } else {
-            data.element._node.classList.remove('active');
+          } else if (chart instanceof Chartist.Line) {
+
+            var index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (hasHighlighted && index === highLightedIndex) {
+              data.element._node.classList.add('active');
+            } else {
+              data.element._node.classList.remove('active');
+            }
           }
         } catch (e) {}
       });

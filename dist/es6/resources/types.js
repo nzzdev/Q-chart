@@ -56,15 +56,17 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
-        defaultValue: -1,
-        options: [], //[{label:'keine', value:-1}],
+        defaultValue: undefined,
+        options: [{label:'keine', value:null}],
         modifyConfig: (config, value, data, size, rect) => {
-          config.plugins.push(
-            ctHighlighting(value, !config.horizontalBars, data.labels.length)
-          )
+          if (typeof value != 'undefined') {
+            config.plugins.push(
+              ctHighlighting(value, !config.horizontalBars, data.series.length)
+            )
+          }
         }
       }
     ]
@@ -121,15 +123,17 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
-        defaultValue: -1,
-        options: [{label:'keine', value:-1}],
+        defaultValue: undefined,
+        options: [{label:'keine', value:undefined}],
         modifyConfig: (config, value, data, size, rect) => {
-          config.plugins.push(
-            ctHighlighting(value, !config.horizontalBars, data.labels.length)
-          )
+          if (typeof value != 'undefined') {
+            config.plugins.push(
+              ctHighlighting(value, !config.horizontalBars, data.series.length)
+            )
+          }
         }
       }
     ]
@@ -161,15 +165,17 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
-        defaultValue: -1,
-        options: [{label:'keine', value:-1}],
+        defaultValue: undefined,
+        options: [{label:'keine', value:undefined}],
         modifyConfig: (config, value, data, size, rect) => {
-          config.plugins.push(
-            ctHighlighting(value,true,data.series.length, true)
-          );
+          if (typeof value != 'undefined') {
+            config.plugins.push(
+              ctHighlighting(value, true, data.series.length)
+            );
+          }
         }
       }
     ],

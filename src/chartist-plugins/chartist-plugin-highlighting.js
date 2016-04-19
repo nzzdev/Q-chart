@@ -1,16 +1,16 @@
 import Chartist from 'chartist';
 
-export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength, preventLabelClasses) {
-  
+export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength) {
+
   let highLightedIndex = Number(highlightDataSeries);
-  let hasHighlighted = highLightedIndex > -1;
-  
+  let hasHighlighted = highLightedIndex != null;
+
   return function ctHighlighting(chart) {
-      
+
       let moveToFront = function (el) {
         el.parentNode.appendChild(el)
-      }  
-      
+      }
+
       chart.on('created', function(data) {
         try {
           if (hasHighlighted) {
@@ -21,24 +21,37 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength,
             data.svg._node.classList.remove('highlighted');
           }
         } catch(e) {
-          
+
         }
       });
-      
+
+
       chart.on('draw', function(data) {
         try {
-          let index = countAsc ? data.index : dataLength - 1 - data.index;
-          if (hasHighlighted && index === highLightedIndex) {
-            if(data.type === 'line' || data.type === 'bar' || (data.type === 'label' && !preventLabelClasses )) {
+
+          if (chart instanceof Chartist.Bar) {
+            
+            let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (hasHighlighted && index === highLightedIndex) {
               data.element._node.classList.add('active');
+            }else{
+              data.element._node.classList.remove('active');
             }
-          }else{
-            data.element._node.classList.remove('active');
+
+          } else if (chart instanceof Chartist.Line) {
+
+            let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (hasHighlighted && index === highLightedIndex) {
+              data.element._node.classList.add('active');
+            }else{
+              data.element._node.classList.remove('active');
+            }
+
           }
+
         } catch(e) {
 
         }
-			});
-      
+      });
   };
 };
