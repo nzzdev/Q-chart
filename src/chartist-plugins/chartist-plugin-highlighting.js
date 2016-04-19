@@ -1,8 +1,8 @@
 import Chartist from 'chartist';
 
-export function ctHighlighting(highlightDataRow, countAsc = true, dataLength, preventLabelClasses) {
+export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength, preventLabelClasses) {
   
-  let highLightedIndex = Number(highlightDataRow);
+  let highLightedIndex = Number(highlightDataSeries);
   let hasHighlighted = highLightedIndex > -1;
   
   return function ctHighlighting(chart) {

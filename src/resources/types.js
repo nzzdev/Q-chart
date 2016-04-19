@@ -56,7 +56,7 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: -1,
@@ -121,7 +121,7 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: -1,
@@ -161,7 +161,7 @@ export var types = {
         }
       },
       {
-        name: 'highlightDataRow',
+        name: 'highlightDataSeries',
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: -1,
