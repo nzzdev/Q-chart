@@ -60,9 +60,9 @@ export var types = {
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: undefined,
-        options: [{label:'keine', value:null}],
+        options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value != 'undefined') {
+          if (value != 'undefined' && typeof value != 'undefined') {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -127,9 +127,9 @@ export var types = {
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: undefined,
-        options: [{label:'keine', value:undefined}],
+        options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value != 'undefined') {
+          if (value != 'undefined' && typeof value != 'undefined') {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -169,9 +169,9 @@ export var types = {
         type: 'selection',
         label: 'Hervorhebung',
         defaultValue: undefined,
-        options: [{label:'keine', value:undefined}],
+        options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value != 'undefined') {
+          if (value != 'undefined' && typeof value != 'undefined') {
             config.plugins.push(
               ctHighlighting(value, true, data.series.length)
             );

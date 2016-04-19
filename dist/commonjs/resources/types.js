@@ -67,9 +67,9 @@ var types = {
       type: 'selection',
       label: 'Hervorhebung',
       defaultValue: undefined,
-      options: [{ label: 'keine', value: null }],
+      options: [],
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
-        if (typeof value != 'undefined') {
+        if (value != 'undefined' && typeof value != 'undefined') {
           config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
         }
       }
@@ -127,9 +127,9 @@ var types = {
       type: 'selection',
       label: 'Hervorhebung',
       defaultValue: undefined,
-      options: [{ label: 'keine', value: undefined }],
+      options: [],
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
-        if (typeof value != 'undefined') {
+        if (value != 'undefined' && typeof value != 'undefined') {
           config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
         }
       }
@@ -163,9 +163,9 @@ var types = {
       type: 'selection',
       label: 'Hervorhebung',
       defaultValue: undefined,
-      options: [{ label: 'keine', value: undefined }],
+      options: [],
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
-        if (typeof value != 'undefined') {
+        if (value != 'undefined' && typeof value != 'undefined') {
           config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length));
         }
       }

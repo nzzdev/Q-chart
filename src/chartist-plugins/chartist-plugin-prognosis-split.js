@@ -25,10 +25,11 @@ export function ctPrognosisSplit(options) {
     var width = data.svg.width();
     var height = data.svg.height();
     let {childNodes} = data.svg._node;
-    let gridsRect = childNodes[0].getBoundingClientRect();
-    let {top,bottom} = gridsRect;
+    let gridGroup = childNodes[0];
+    let elementsGroup = childNodes[1];
+    let {top,bottom} = gridGroup.getBoundingClientRect();
+    let elements = elementsGroup.querySelectorAll('*');
     let origTop = top;
-    let elements = childNodes[1].querySelectorAll('*');
     for (var i = 0; i < elements.length; i++) {
       let elRect = elements[i].getBoundingClientRect();
       top = Math.min(top, elRect.top);
@@ -80,8 +81,6 @@ export function ctPrognosisSplit(options) {
   function createPattern(data, id) {
 
     var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-
-    // Create mask for part left from threshold
     let pttrnSize = 5;
     let pattrn = defs
       .elem('pattern', {
@@ -92,13 +91,6 @@ export function ctPrognosisSplit(options) {
         id: options.patternNames.prognosis + id,
         patternUnits: 'userSpaceOnUse'
       });
-    // pattrn.elem('rect', {
-    //   x: 0,
-    //   y: 0,
-    //   width: pttrnSize-0,
-    //   height: pttrnSize-0,
-    //   // fill: 'blue',
-    // })
     pattrn.elem('path', {
       'd':'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
       'stroke-width':1,
@@ -153,7 +145,7 @@ export function ctPrognosisSplit(options) {
           if (data.type !== 'bar') {
             return;
           }
-          let isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index : data.index >= options.index;
+          let isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index - 1 : data.index >= options.index;
           if (isPrognosis) {
             data.element
               .parent()

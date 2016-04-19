@@ -37,12 +37,16 @@ function ctPrognosisSplit(options) {
     var height = data.svg.height();
     var childNodes = data.svg._node.childNodes;
 
-    var gridsRect = childNodes[0].getBoundingClientRect();
-    var top = gridsRect.top;
-    var bottom = gridsRect.bottom;
+    var gridGroup = childNodes[0];
+    var elementsGroup = childNodes[1];
 
+    var _gridGroup$getBoundingClientRect = gridGroup.getBoundingClientRect();
+
+    var top = _gridGroup$getBoundingClientRect.top;
+    var bottom = _gridGroup$getBoundingClientRect.bottom;
+
+    var elements = elementsGroup.querySelectorAll('*');
     var origTop = top;
-    var elements = childNodes[1].querySelectorAll('*');
     for (var i = 0; i < elements.length; i++) {
       var elRect = elements[i].getBoundingClientRect();
       top = Math.min(top, elRect.top);
@@ -88,7 +92,6 @@ function ctPrognosisSplit(options) {
   function createPattern(data, id) {
 
     var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-
     var pttrnSize = 5;
     var pattrn = defs.elem('pattern', {
       x: 0,
@@ -98,7 +101,6 @@ function ctPrognosisSplit(options) {
       id: options.patternNames.prognosis + id,
       patternUnits: 'userSpaceOnUse'
     });
-
     pattrn.elem('path', {
       'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
       'stroke-width': 1,
@@ -137,7 +139,7 @@ function ctPrognosisSplit(options) {
         if (data.type !== 'bar') {
           return;
         }
-        var isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index : data.index >= options.index;
+        var isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index - 1 : data.index >= options.index;
         if (isPrognosis) {
           data.element.parent().elem(data.element._node.cloneNode(true)).addClass(options.classNames.prognosis)._node.style.stroke = 'url(#' + options.patternNames.prognosis + id + ')';
         } else {
