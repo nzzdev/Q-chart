@@ -62,7 +62,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
               if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                   index: prognosisStart,
-                  hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                  hasSwitchedAxisCount: config.horizontalBars
                 }));
               }
             } catch (e) {}
@@ -83,7 +83,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
               if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                   index: prognosisStart,
-                  hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                  hasSwitchedAxisCount: config.horizontalBars
                 }));
               }
             } catch (e) {}

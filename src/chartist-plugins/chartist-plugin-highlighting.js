@@ -12,7 +12,7 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
       chart.on('created', function(data) {
         try {
-          data.svg._node.classList.add('highlighted');
+          data.svg.addClass('highlighted');
           let active = data.svg._node.querySelector('.active').parentNode;
           moveToFront( active );
         } catch(e) {
@@ -27,9 +27,9 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
             let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
             if (index === highLightedIndex) {
-              data.element._node.classList.add('active');
+              data.element.addClass('active');
             }else{
-              data.element._node.classList.remove('active');
+              data.element.removeClass('active');
             }
 
           }

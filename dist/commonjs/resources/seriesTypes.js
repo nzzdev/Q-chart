@@ -67,7 +67,7 @@ var seriesTypes = {
             if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                 index: prognosisStart,
-                hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                hasSwitchedAxisCount: config.horizontalBars
               }));
             }
           } catch (e) {}
@@ -88,7 +88,7 @@ var seriesTypes = {
             if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                 index: prognosisStart,
-                hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                hasSwitchedAxisCount: config.horizontalBars
               }));
             }
           } catch (e) {}

@@ -67,7 +67,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                   if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
                     config.plugins.push(ctPrognosisSplit({
                       index: prognosisStart,
-                      hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                      hasSwitchedAxisCount: config.horizontalBars
                     }));
                   }
                 } catch (e) {}
@@ -88,7 +88,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                   if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
                     config.plugins.push(ctPrognosisSplit({
                       index: prognosisStart,
-                      hasSwitchedAxisCount: !!(item.options && !item.options.isColumnChart)
+                      hasSwitchedAxisCount: config.horizontalBars
                     }));
                   }
                 } catch (e) {}
