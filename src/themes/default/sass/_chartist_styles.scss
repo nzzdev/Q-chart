@@ -1,4 +1,4 @@
-@import "sass/settings";
+@import 'q-nzzch-theme/settings';
 @import "storytelling-ui-kit/font";
 
 .ct-grid, line.ct-bar {
@@ -7,9 +7,6 @@
 
 .#{$ct-class-label} {
   @include font(label);
-  &--number {
-    @include font(label-digits);
-  }
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
