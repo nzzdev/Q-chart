@@ -170,9 +170,9 @@ export function getFormattedDate(date, format, interval){
 
 function getLegendHtml(item) {
   let highlightDataSeries = item.options && item.options.highlightDataSeries;
-  let hasHighlighted = typeof highlightDataSeries != 'undefined' && highlightDataSeries != null;
+  let hasHighlighted = !isNaN(highlightDataSeries);
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
-  let hasPrognosis = isDate && typeof item.data.x.type.options.prognosisStart != 'undefined' && item.data.x.type.options.prognosisStart != null;
+  let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   let svgBox = `
     <svg width="12" height="12">
       <line x1="1" y1="11" x2="11" y2="1" />
@@ -188,7 +188,7 @@ function getLegendHtml(item) {
         let isActive = hasHighlighted && highlightDataSeries == i;
         html += `
         <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
-          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
+          <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
         </div>`;
       }

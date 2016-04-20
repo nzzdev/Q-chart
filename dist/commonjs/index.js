@@ -218,9 +218,9 @@ function getFormattedDate(date, format, interval) {
 
 function getLegendHtml(item) {
   var highlightDataSeries = item.options && item.options.highlightDataSeries;
-  var hasHighlighted = typeof highlightDataSeries != 'undefined' && highlightDataSeries != null;
+  var hasHighlighted = !isNaN(highlightDataSeries);
   var isDate = item.data.x.type && item.data.x.type.id === 'date';
-  var hasPrognosis = isDate && typeof item.data.x.type.options.prognosisStart != 'undefined' && item.data.x.type.options.prognosisStart != null;
+  var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
   var isLine = item.type === 'Line';
   var itemBox = isLine ? svgBox : '';
@@ -230,7 +230,7 @@ function getLegendHtml(item) {
       for (var i in item.data.y.data) {
         var serie = item.data.y.data[i];
         var isActive = hasHighlighted && highlightDataSeries == i;
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'active' : '') + '">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'active' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
       }
     }
     if (hasPrognosis) {
