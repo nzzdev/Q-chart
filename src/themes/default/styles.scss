@@ -1,6 +1,5 @@
 @import 'q-nzzch-theme/settings';
 
-@import "sass/settings";
 @import "storytelling-ui-kit/clearfix";
 @import "storytelling-ui-kit/font";
 @import "storytelling-ui-kit/respond-to";
@@ -17,9 +16,6 @@ $ct-include-classes: false;
 
 %label-element {
   @include font(label);
-  &--type-number {
-    @include font(label-digits);
-  }
 }
 
 .q-chart {
