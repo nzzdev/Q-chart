@@ -36,7 +36,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
             try {
               var prognosisStart = item.data.x.type.options.prognosisStart;
 
-              if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
+              if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
                 var labels = data.labels;
 
                 var numLabels = labels.length;
@@ -59,7 +59,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
             try {
               var prognosisStart = item.data.x.type.options.prognosisStart;
 
-              if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
+              if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                   index: prognosisStart,
                   hasSwitchedAxisCount: config.horizontalBars
@@ -80,7 +80,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
             try {
               var prognosisStart = item.data.x.type.options.prognosisStart;
 
-              if (prognosisStart != 'undefined' && typeof prognosisStart != 'undefined') {
+              if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
                   index: prognosisStart,
                   hasSwitchedAxisCount: config.horizontalBars

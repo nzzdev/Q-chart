@@ -62,7 +62,7 @@ export var types = {
         defaultValue: undefined,
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value != 'undefined' && typeof value != 'undefined') {
+          if (value !== 'undefined' && typeof value !== 'undefined') {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -129,7 +129,7 @@ export var types = {
         defaultValue: undefined,
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value != 'undefined' && typeof value != 'undefined') {
+          if (value !== 'undefined' && typeof value !== 'undefined') {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -171,7 +171,7 @@ export var types = {
         defaultValue: undefined,
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value != 'undefined' && typeof value != 'undefined') {
+          if (value !== 'undefined' && typeof value !== 'undefined') {
             config.plugins.push(
               ctHighlighting(value, true, data.series.length)
             );
