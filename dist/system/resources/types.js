@@ -66,9 +66,11 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             type: 'selection',
             label: 'Hervorhebung',
             defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (value !== 'undefined' && typeof value !== 'undefined') {
+              if (typeof value !== 'undefined') {
                 config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
               }
             }
@@ -126,9 +128,11 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             type: 'selection',
             label: 'Hervorhebung',
             defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (value !== 'undefined' && typeof value !== 'undefined') {
+              if (typeof value !== 'undefined') {
                 config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
               }
             }
@@ -162,9 +166,11 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             type: 'selection',
             label: 'Hervorhebung',
             defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (value !== 'undefined' && typeof value !== 'undefined') {
+              if (typeof value !== 'undefined') {
                 config.plugins.push(ctHighlighting(value, true, data.series.length));
               }
             }
