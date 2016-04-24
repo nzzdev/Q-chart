@@ -7,44 +7,42 @@ export function ctPrognosisSplit(options) {
     lineClassNames: {
       prognosis: 'ct-chart-line--prognosis'
     },
-    barClassNames: {
-      prognosis: 'ct-chart-bar--prognosis'
-    },
-    patternNames: {
-      prognosis: 'prognosis-pattern'
+    pattern: {
+      size: 5,
+      strokeWidth: 1,
+      strokeOpacity: 0.5,
+      strokeColor: '#FFFFFF',
+      name: 'prognosis-pattern'
     }
   };
   options = Chartist.extend({}, defaultOptions, options);
 
-  function createPattern(data, id) {
+  function createPattern(data) {
 
-    var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-    let patternSize = 5;
+    let defs = data.svg.querySelector('defs') || data.svg.elem('defs');
     let pattern = defs
       .elem('pattern', {
         x: 0,
         y: 0,
-        width: patternSize,
-        height: patternSize,
-        id: options.patternNames.prognosis,
+        width: options.pattern.size,
+        height: options.pattern.size,
+        id: options.pattern.name,
         patternUnits: 'userSpaceOnUse'
       });
     pattern.elem('path', {
       'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
-      'stroke-width': 1,
-      'stroke': '#FFF',
-      'stroke-opacity': 0.5
+      'stroke-width': options.strokeWidth,
+      'stroke': options.pattern.strokeColor,
+      'stroke-opacity': options.strokeOpacity
     })
     return defs;
   }
 
   return function ctPrognosisSplit(chart) {
 
-    var id = new Date().getTime();
-
     if (chart instanceof Chartist.Line ) {
 
-        chart.on('draw', function (data) {
+        chart.on('draw', function(data) {
           if (data.type !== 'line') {
             return;
           }
@@ -66,6 +64,7 @@ export function ctPrognosisSplit(options) {
           let pathBeforePrognosis = new Chartist.Svg.Path();
           let pathPrognosis = new Chartist.Svg.Path();
 
+          // prognosis path needs to start at the last non prognosis point, so we move it there first
           pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
           
           pathBeforePrognosis.pathElements = beforePrognosisElements;
@@ -79,14 +78,12 @@ export function ctPrognosisSplit(options) {
             d: pathBeforePrognosis.stringify()
           }, chart.options.classNames.line, true);
 
-          
-
           data.element.parent()._node.removeChild(data.element._node)
         });
 
       } else if (chart instanceof Chartist.Bar) {
 
-        chart.on('draw', function (data,i) {
+        chart.on('draw', function(data) {
           if (data.type !== 'bar') {
             return;
           }
@@ -100,12 +97,12 @@ export function ctPrognosisSplit(options) {
               .elem(data.element._node.cloneNode(true))
             
             patternLine._node.setAttribute('class','');
-            patternLine._node.style.stroke = `url(#${options.patternNames.prognosis})`;
+            patternLine._node.style.stroke = `url(#${options.pattern.name})`;
           }
         });
 
         chart.on('created', function (data) {
-          createPattern(data, id);
+          createPattern(data);
         })
 
       }
