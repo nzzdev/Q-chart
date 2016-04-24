@@ -600,7 +600,7 @@ var chart8 = {
         },
         options: {
           interval: 'month',
-          prognosisStart: 3
+          prognosisStart: 14
         }
       }
     },
@@ -687,7 +687,7 @@ var chart10 = {
         },
         options: {
           interval: 'month',
-          prognosisStart:18
+          prognosisStart: 18
         }
       }
     },
@@ -792,7 +792,7 @@ var chart11b = {
         },
         options: {
           interval: 'month',
-          prognosisStart:2
+          prognosisStart: 2
         }
       }
     },
@@ -1136,7 +1136,7 @@ if (solo) {
   // displayChart(chart9, document.getElementById('chart9'), rendererConfig);
   // displayChart(chart10, document.getElementById('chart10'), rendererConfig);
   // displayChart(chart11, document.getElementById('chart11'), rendererConfig);
-  // displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
+  displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
   // displayChart(chart12, document.getElementById('chart12'), rendererConfig);
 
   // displayChart(chart13, document.getElementById('chart13'), rendererConfig);

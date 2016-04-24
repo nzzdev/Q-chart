@@ -7,12 +7,10 @@ export function ctPrognosisSplit(options) {
     lineClassNames: {
       prognosis: 'ct-chart-line--prognosis'
     },
-    classNames: {
-      nonePrognosis: 'none-prognosis',
-      prognosis: 'ct-chart-line--prognosis'
+    barClassNames: {
+      prognosis: 'ct-chart-bar--prognosis'
     },
     patternNames: {
-      nonePrognosis: 'none-prognosis-pattern',
       prognosis: 'prognosis-pattern'
     }
   };
@@ -21,21 +19,21 @@ export function ctPrognosisSplit(options) {
   function createPattern(data, id) {
 
     var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-    let pttrnSize = 5;
-    let pattrn = defs
+    let patternSize = 5;
+    let pattern = defs
       .elem('pattern', {
         x: 0,
         y: 0,
-        width: pttrnSize,
-        height: pttrnSize,
-        id: options.patternNames.prognosis + id,
+        width: patternSize,
+        height: patternSize,
+        id: options.patternNames.prognosis,
         patternUnits: 'userSpaceOnUse'
       });
-    pattrn.elem('path', {
-      'd':'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
-      'stroke-width':1,
-      'stroke':'#FFF',
-      'stroke-opacity':0.5
+    pattern.elem('path', {
+      'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
+      'stroke-width': 1,
+      'stroke': '#FFF',
+      'stroke-opacity': 0.5
     })
     return defs;
   }
@@ -47,41 +45,42 @@ export function ctPrognosisSplit(options) {
     if (chart instanceof Chartist.Line ) {
 
         chart.on('draw', function (data) {
-          if (data.type === 'line') {
-
-            let pathElement = data.element._node;
-            let commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
-            
-            let beforePrognosisElements = data.path.pathElements.slice(0, options.prognosisStart + 1);
-
-            let lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
-
-            let prognosisElements  = data.path.pathElements.slice(options.prognosisStart + 1);
-
-            let pathBeforePrognosis = new Chartist.Svg.Path();
-            let pathPrognosis = new Chartist.Svg.Path();
-
-            pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
-            
-            pathBeforePrognosis.pathElements = beforePrognosisElements;
-            pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
-
-            let lineBeforePrognosis = chart.svg.elem('path', {
-              d: pathBeforePrognosis.stringify()
-            }, chart.options.classNames.line, true);
-
-            let linePrognosis = chart.svg.elem('path', {
-              d: pathPrognosis.stringify()
-            }, chart.options.classNames.line, true);
-
-            linePrognosis.addClass(options.lineClassNames.prognosis);
-
-            let parent = Chartist.Svg(data.element._node.parentNode);
-            parent.append(lineBeforePrognosis);
-            parent.append(linePrognosis);
-
-            data.element._node.parentElement.removeChild(data.element._node)
+          if (data.type !== 'line') {
+            return;
           }
+
+          let pathElement = data.element._node;
+          let commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
+          
+          let beforePrognosisElements = data.path.pathElements.slice(0, options.prognosisStart + 1);
+
+          let lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
+
+          let prognosisElements  = data.path.pathElements.slice(options.prognosisStart + 1);
+
+          let pathBeforePrognosis = new Chartist.Svg.Path();
+          let pathPrognosis = new Chartist.Svg.Path();
+
+          pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
+          
+          pathBeforePrognosis.pathElements = beforePrognosisElements;
+          pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
+
+          let lineBeforePrognosis = chart.svg.elem('path', {
+            d: pathBeforePrognosis.stringify()
+          }, chart.options.classNames.line, true);
+
+          let linePrognosis = chart.svg.elem('path', {
+            d: pathPrognosis.stringify()
+          }, chart.options.classNames.line, true);
+
+          linePrognosis.addClass(options.lineClassNames.prognosis);
+
+          let parent = Chartist.Svg(data.element._node.parentNode);
+          parent.append(lineBeforePrognosis);
+          parent.append(linePrognosis);
+
+          data.element._node.parentElement.removeChild(data.element._node)
         });
 
       } else if (chart instanceof Chartist.Bar) {
@@ -90,15 +89,17 @@ export function ctPrognosisSplit(options) {
           if (data.type !== 'bar') {
             return;
           }
+
           let isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index - 1 : data.index >= options.index;
+          
+          // if it is a prognosis, we add a second element with the pattern that covers the original bar line
           if (isPrognosis) {
-            data.element
+            let patternLine = data.element
               .parent()
               .elem(data.element._node.cloneNode(true))
-              .addClass(options.classNames.prognosis)
-              ._node.style.stroke = 'url(#' + options.patternNames.prognosis + id + ')';
-          } else {
-            data.element.addClass(options.classNames.nonePrognosis);
+            
+            patternLine._node.setAttribute('class','');
+            patternLine._node.style.stroke = `url(#${options.patternNames.prognosis})`;
           }
         });
 
