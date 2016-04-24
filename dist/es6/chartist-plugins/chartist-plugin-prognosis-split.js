@@ -72,11 +72,11 @@ export function ctPrognosisSplit(options) {
 
           let linePrognosis = data.element.parent().elem('path', {
             d: pathPrognosis.stringify()
-          }, chart.options.classNames.line + ' ' + options.lineClassNames.prognosis, true);
+          }, data.element._node.getAttribute('class') + ' ' + options.lineClassNames.prognosis, true);
 
           let lineBeforePrognosis = data.element.parent().elem('path', {
             d: pathBeforePrognosis.stringify()
-          }, chart.options.classNames.line, true);
+          }, data.element._node.getAttribute('class'), true);
 
           data.element.parent()._node.removeChild(data.element._node)
         });
