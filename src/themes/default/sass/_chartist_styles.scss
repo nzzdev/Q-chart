@@ -1,4 +1,4 @@
-@import "sass/settings";
+@import 'q-nzzch-theme/settings';
 @import "storytelling-ui-kit/font";
 
 .ct-grid, line.ct-bar {
@@ -7,28 +7,25 @@
 
 .#{$ct-class-label} {
   @include font(label);
-  &--number {
-    @include font(label-digits);
-  }
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
   text-anchor: middle;
-  &.ct-horizontal--first {
-    text-anchor: start;
-  }
   &.ct-horizontal--last {
     text-anchor: end;
+  }
+  &.ct-horizontal--first {
+    text-anchor: start;
   }
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
   text-anchor: middle;
-  &.ct-horizontal--first {
-    text-anchor: start;
-  }
   &.ct-horizontal--last {
     text-anchor: end;
+  }
+  &.ct-horizontal--first {
+    text-anchor: start;
   }
 }
 
@@ -50,21 +47,21 @@
 
 .#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
   text-anchor: middle;
-  &.ct-horizontal--first {
-    text-anchor: start;
-  }
   &.ct-horizontal--last {
     text-anchor: end;
+  }
+  &.ct-horizontal--first {
+    text-anchor: start;
   }
 }
 
 .#{$ct-class-chart-bar}.#{$ct-class-horizontal-bars} .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-end} {
   text-anchor: middle;
-  &.ct-horizontal--first {
-    text-anchor: start;
-  }
   &.ct-horizontal--last {
     text-anchor: end;
+  }
+  &.ct-horizontal--first {
+    text-anchor: start;
   }
 }
 

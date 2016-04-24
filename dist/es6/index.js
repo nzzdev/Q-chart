@@ -256,7 +256,7 @@ function getContextHtml(item, chartistConfig) {
   let axisExplanation = {x: '', y: ''};
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  let html = `<h3 class="q-chart__title">${wrapEmojisInSpan(item.title)}</h3>`;
+  let html = `<h3 class="q-item__title">${wrapEmojisInSpan(item.title)}</h3>`;
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
@@ -269,6 +269,9 @@ function getContextHtml(item, chartistConfig) {
   html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
+    if (chartistConfig.horizontalBars) {
+      html += `<div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
+    }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
@@ -285,13 +288,13 @@ function getContextHtml(item, chartistConfig) {
   }
 
   html += `
-    <div class="q-chart__footer">`;
+    <div class="q-item__footer">`;
 
   if (item.notes) {
-    html += `<div class="q-chart__footer__notes">${item.notes}</div>`;
+    html += `<div class="q-item__footer__notes">${item.notes}</div>`;
   }
 
-  html += '<div class="q-chart__footer__sources">';
+  html += '<div class="q-item__footer__sources">';
   if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
     let sources = item.sources
       .filter(source => source.text && source.text.length > 0);
