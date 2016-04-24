@@ -53,6 +53,10 @@ System.register(['chartist'], function (_export) {
             return;
           }
 
+          if (data.path.pathElements.length === options.prognosisStart) {
+            return;
+          }
+
           var pathElement = data.element._node;
           var commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
 
@@ -70,21 +74,15 @@ System.register(['chartist'], function (_export) {
           pathBeforePrognosis.pathElements = beforePrognosisElements;
           pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
 
-          var lineBeforePrognosis = chart.svg.elem('path', {
+          var linePrognosis = data.element.parent().elem('path', {
+            d: pathPrognosis.stringify()
+          }, chart.options.classNames.line + ' ' + options.lineClassNames.prognosis, true);
+
+          var lineBeforePrognosis = data.element.parent().elem('path', {
             d: pathBeforePrognosis.stringify()
           }, chart.options.classNames.line, true);
 
-          var linePrognosis = chart.svg.elem('path', {
-            d: pathPrognosis.stringify()
-          }, chart.options.classNames.line, true);
-
-          linePrognosis.addClass(options.lineClassNames.prognosis);
-
-          var parent = Chartist.Svg(data.element._node.parentNode);
-          parent.append(lineBeforePrognosis);
-          parent.append(linePrognosis);
-
-          data.element._node.parentElement.removeChild(data.element._node);
+          data.element.parent()._node.removeChild(data.element._node);
         });
       } else if (chart instanceof Chartist.Bar) {
 
