@@ -9,9 +9,12 @@ System.register(['chartist'], function (_export) {
 
     var defaultOptions = {
       threshold: 0,
+      lineClassNames: {
+        prognosis: 'ct-chart-line--prognosis'
+      },
       classNames: {
         nonePrognosis: 'none-prognosis',
-        prognosis: 'prognosis'
+        prognosis: 'ct-chart-line--prognosis'
       },
       patternNames: {
         nonePrognosis: 'none-prognosis-pattern',
@@ -35,7 +38,7 @@ System.register(['chartist'], function (_export) {
       pattrn.elem('path', {
         'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
         'stroke-width': 1,
-        'stroke': '#FF0000',
+        'stroke': '#FFF',
         'stroke-opacity': 0.5
       });
       return defs;
@@ -75,7 +78,7 @@ System.register(['chartist'], function (_export) {
               d: pathPrognosis.stringify()
             }, chart.options.classNames.line, true);
 
-            linePrognosis.addClass('prognosis');
+            linePrognosis.addClass(options.lineClassNames.prognosis);
 
             var _parent = Chartist.Svg(data.element._node.parentNode);
             _parent.append(lineBeforePrognosis);

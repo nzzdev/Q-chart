@@ -15,9 +15,12 @@ function ctPrognosisSplit(options) {
 
   var defaultOptions = {
     threshold: 0,
+    lineClassNames: {
+      prognosis: 'ct-chart-line--prognosis'
+    },
     classNames: {
       nonePrognosis: 'none-prognosis',
-      prognosis: 'prognosis'
+      prognosis: 'ct-chart-line--prognosis'
     },
     patternNames: {
       nonePrognosis: 'none-prognosis-pattern',
@@ -41,7 +44,7 @@ function ctPrognosisSplit(options) {
     pattrn.elem('path', {
       'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
       'stroke-width': 1,
-      'stroke': '#FF0000',
+      'stroke': '#FFF',
       'stroke-opacity': 0.5
     });
     return defs;
@@ -81,7 +84,7 @@ function ctPrognosisSplit(options) {
             d: pathPrognosis.stringify()
           }, chart.options.classNames.line, true);
 
-          linePrognosis.addClass('prognosis');
+          linePrognosis.addClass(options.lineClassNames.prognosis);
 
           var _parent = _chartist2['default'].Svg(data.element._node.parentNode);
           _parent.append(lineBeforePrognosis);

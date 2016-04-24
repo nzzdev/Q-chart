@@ -188,7 +188,11 @@ $ct-include-classes: false;
 
   }
 
+}
 
+.ct-chart-line--prognosis {
+  stroke-dasharray: 6px 2px;
+  stroke-dashoffset: -7px;
 }
 
 .q-chart__legend__item.q-chart__legend__item--prognosis {
@@ -205,7 +209,7 @@ $ct-include-classes: false;
 
       line {
         stroke-dasharray: 2px 2px;
-        stroke:$secondary-color
+        stroke: $secondary-color
       }
 
     }

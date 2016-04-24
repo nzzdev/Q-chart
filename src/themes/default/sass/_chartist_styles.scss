@@ -109,11 +109,6 @@
 
       @include ct-chart-series-color($color);
 
-      .prognosis {
-        stroke-dasharray: 6px 2px;
-        stroke-dashoffset: -7px;
-      }
-
     }
 
   }
