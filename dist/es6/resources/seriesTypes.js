@@ -30,6 +30,7 @@ export var seriesTypes = {
               let {labels} = data;
               let numLabels = labels.length;
               config.plugins.push(ctPrognosisSplit({
+                prognosisStart: prognosisStart,
                 threshold: (prognosisStart) / (numLabels-1)
               }));
             }

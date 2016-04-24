@@ -46,6 +46,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
 
                     var numLabels = labels.length;
                     config.plugins.push(ctPrognosisSplit({
+                      prognosisStart: prognosisStart,
                       threshold: prognosisStart / (numLabels - 1)
                     }));
                   }

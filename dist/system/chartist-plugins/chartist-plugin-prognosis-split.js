@@ -13,75 +13,12 @@ System.register(['chartist'], function (_export) {
         nonePrognosis: 'none-prognosis',
         prognosis: 'prognosis'
       },
-      maskNames: {
-        nonePrognosis: 'none-prognosis-mask',
-        prognosis: 'prognosis-mask'
-      },
       patternNames: {
         nonePrognosis: 'none-prognosis-pattern',
         prognosis: 'prognosis-pattern'
       }
     };
     options = Chartist.extend({}, defaultOptions, options);
-
-    function createMasks(data, options, id) {
-
-      var defs = data.svg.querySelector('defs') || data.svg.elem('defs');
-      var width = data.svg.width();
-      var height = data.svg.height();
-      var childNodes = data.svg._node.childNodes;
-
-      var gridGroup = childNodes[0];
-      var elementsGroup = childNodes[1];
-
-      var _gridGroup$getBoundingClientRect = gridGroup.getBoundingClientRect();
-
-      var top = _gridGroup$getBoundingClientRect.top;
-      var bottom = _gridGroup$getBoundingClientRect.bottom;
-
-      var elements = elementsGroup.querySelectorAll('*');
-      var origTop = top;
-      for (var i = 0; i < elements.length; i++) {
-        var elRect = elements[i].getBoundingClientRect();
-        top = Math.min(top, elRect.top);
-        bottom = Math.max(bottom, elRect.bottom);
-      }
-      height = bottom - top + 10;
-      var y = top - origTop;
-      var chartWidth = data.chartRect.width();
-      var borderLeft = width - chartWidth;
-      var projectedThreshold = options.threshold * chartWidth;
-
-      defs.elem('mask', {
-        x: 0,
-        y: y,
-        width: width,
-        height: height,
-        id: options.maskNames.nonePrognosis + id
-      }).elem('rect', {
-        x: borderLeft,
-        y: y,
-        width: projectedThreshold,
-        height: height,
-        fill: 'white'
-      });
-
-      defs.elem('mask', {
-        x: 0,
-        y: y,
-        width: width,
-        height: height,
-        id: options.maskNames.prognosis + id
-      }).elem('rect', {
-        x: projectedThreshold + borderLeft,
-        y: y,
-        width: width - projectedThreshold,
-        height: height,
-        fill: 'white'
-      });
-
-      return defs;
-    }
 
     function createPattern(data, id) {
 
@@ -98,7 +35,7 @@ System.register(['chartist'], function (_export) {
       pattrn.elem('path', {
         'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
         'stroke-width': 1,
-        'stroke': '#FFF',
+        'stroke': '#FF0000',
         'stroke-opacity': 0.5
       });
       return defs;
@@ -111,21 +48,41 @@ System.register(['chartist'], function (_export) {
       if (chart instanceof Chartist.Line) {
 
         chart.on('draw', function (data) {
-          if (data.type === 'point') {
-            data.element.addClass(data.value.x >= options.threshold ? options.classNames.nonePrognosis : options.classNames.prognosis);
-          } else if (data.type === 'line' || data.type === 'bar' || data.type === 'area') {
-            data.element.parent().elem(data.element._node.cloneNode(true)).attr({
-              mask: 'url(#' + options.maskNames.nonePrognosis + id + ')'
-            }).addClass(options.classNames.nonePrognosis);
+          if (data.type === 'line') {
 
-            data.element.attr({
-              mask: 'url(#' + options.maskNames.prognosis + id + ')'
-            }).addClass(options.classNames.prognosis);
+            var pathElement = data.element._node;
+            var commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
+
+            var beforePrognosisElements = data.path.pathElements.slice(0, options.prognosisStart + 1);
+
+            var lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
+
+            var prognosisElements = data.path.pathElements.slice(options.prognosisStart + 1);
+
+            var pathBeforePrognosis = new Chartist.Svg.Path();
+            var pathPrognosis = new Chartist.Svg.Path();
+
+            pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
+
+            pathBeforePrognosis.pathElements = beforePrognosisElements;
+            pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
+
+            var lineBeforePrognosis = chart.svg.elem('path', {
+              d: pathBeforePrognosis.stringify()
+            }, chart.options.classNames.line, true);
+
+            var linePrognosis = chart.svg.elem('path', {
+              d: pathPrognosis.stringify()
+            }, chart.options.classNames.line, true);
+
+            linePrognosis.addClass('prognosis');
+
+            var _parent = Chartist.Svg(data.element._node.parentNode);
+            _parent.append(lineBeforePrognosis);
+            _parent.append(linePrognosis);
+
+            data.element._node.parentElement.removeChild(data.element._node);
           }
-        });
-
-        chart.on('created', function (data) {
-          createMasks(data, options, id);
         });
       } else if (chart instanceof Chartist.Bar) {
 

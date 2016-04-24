@@ -46,6 +46,7 @@ var seriesTypes = {
 
               var numLabels = labels.length;
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                prognosisStart: prognosisStart,
                 threshold: prognosisStart / (numLabels - 1)
               }));
             }
