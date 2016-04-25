@@ -108,16 +108,13 @@ $ct-include-classes: false;
           stroke: $color;
         }
 
-        &.q-chart__legend__item__box--line {
-          background:transparent;
-        }
     }
 
     .q-chart__legend__item__text{
       color:$secondary-color;
     }
 
-    &.active {
+    &.q-chart__legend__item--highlighted {
 
       .q-chart__legend__item__box {
 
@@ -134,13 +131,23 @@ $ct-include-classes: false;
 
       }
 
-      .q-chart__legend__item__text {
-        color: $primary-color;
-      }
-
     }
   }
 }
+
+
+.q-chart__legend.q-chart__legend--highlighted .q-chart__legend__item {
+
+  &.q-chart__legend__item--highlighted .q-chart__legend__item__text {
+    color: $primary-color;
+  }
+
+  .q-chart__legend__item__box.q-chart__legend__item__box--line {
+    background:transparent;
+  }
+
+}
+
 
 
 .q-chart__legend.q-chart__legend--line {
