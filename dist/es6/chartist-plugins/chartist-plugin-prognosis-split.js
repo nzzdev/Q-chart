@@ -3,7 +3,7 @@ import Chartist from 'chartist';
 export function ctPrognosisSplit(options) {
 
   var defaultOptions = {
-    threshold: 0,
+    prognosisStart: 0,
     lineClassNames: {
       prognosis: 'ct-chart-line--prognosis'
     },
@@ -88,7 +88,7 @@ export function ctPrognosisSplit(options) {
             return;
           }
 
-          let isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index - 1 : data.index >= options.index;
+          let isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.prognosisStart - 1 : data.index >= options.prognosisStart;
           
           // if it is a prognosis, we add a second element with the pattern that covers the original bar line
           if (isPrognosis) {

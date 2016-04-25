@@ -13,7 +13,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
   function ctPrognosisSplit(options) {
 
     var defaultOptions = {
-      threshold: 0,
+      prognosisStart: 0,
       lineClassNames: {
         prognosis: 'ct-chart-line--prognosis'
       },
@@ -94,7 +94,7 @@ define(['exports', 'chartist'], function (exports, _chartist) {
             return;
           }
 
-          var isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.index - 1 : data.index >= options.index;
+          var isPrognosis = options.hasSwitchedAxisCount ? data.index <= data.series.length - options.prognosisStart - 1 : data.index >= options.prognosisStart;
 
           if (isPrognosis) {
             var patternLine = data.element.parent().elem(data.element._node.cloneNode(true));

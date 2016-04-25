@@ -41,8 +41,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
 
                 var numLabels = labels.length;
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                  prognosisStart: prognosisStart,
-                  threshold: prognosisStart / (numLabels - 1)
+                  prognosisStart: prognosisStart
                 }));
               }
             } catch (e) {}
@@ -62,7 +61,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
 
               if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                  index: prognosisStart,
+                  prognosisStart: prognosisStart,
                   hasSwitchedAxisCount: config.horizontalBars
                 }));
               }
@@ -83,7 +82,7 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plug
 
               if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
                 config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                  index: prognosisStart,
+                  prognosisStart: prognosisStart,
                   hasSwitchedAxisCount: config.horizontalBars
                 }));
               }
