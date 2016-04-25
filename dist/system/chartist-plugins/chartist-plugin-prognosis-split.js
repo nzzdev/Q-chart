@@ -62,25 +62,19 @@ System.register(['chartist'], function (_export) {
 
           var lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
 
-          var prognosisElements = data.path.pathElements.slice(options.prognosisStart + 1);
+          var prognosisElements = data.path.pathElements.splice(options.prognosisStart + 1);
 
-          var pathBeforePrognosis = new Chartist.Svg.Path();
+          data.element._node.setAttribute('d', data.path.stringify());
+
           var pathPrognosis = new Chartist.Svg.Path();
 
           pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
 
-          pathBeforePrognosis.pathElements = beforePrognosisElements;
           pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
 
-          var linePrognosis = data.element.parent().elem('path', {
+          data.element.parent().elem('path', {
             d: pathPrognosis.stringify()
-          }, data.element._node.getAttribute('class') + ' ' + options.lineClassNames.prognosis, true);
-
-          var lineBeforePrognosis = data.element.parent().elem('path', {
-            d: pathBeforePrognosis.stringify()
-          }, data.element._node.getAttribute('class'), true);
-
-          data.element.parent()._node.removeChild(data.element._node);
+          }, data.element._node.getAttribute('class') + ' ' + options.lineClassNames.prognosis, false);
         });
       } else if (chart instanceof Chartist.Bar) {
 

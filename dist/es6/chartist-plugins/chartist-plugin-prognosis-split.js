@@ -59,26 +59,26 @@ export function ctPrognosisSplit(options) {
 
           let lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
 
-          let prognosisElements  = data.path.pathElements.slice(options.prognosisStart + 1);
+          // we use splice here, so the pathElements of the original path get updated
+          let prognosisElements  = data.path.pathElements.splice(options.prognosisStart + 1);
 
-          let pathBeforePrognosis = new Chartist.Svg.Path();
+          // update the existing path with the prognosis elements removed
+          data.element._node.setAttribute('d', data.path.stringify());
+
+          // let pathBeforePrognosis = new Chartist.Svg.Path();
           let pathPrognosis = new Chartist.Svg.Path();
 
           // prognosis path needs to start at the last non prognosis point, so we move it there first
           pathPrognosis.move(lastBeforePrognosis.x, lastBeforePrognosis.y);
           
-          pathBeforePrognosis.pathElements = beforePrognosisElements;
+          // pathBeforePrognosis.pathElements = beforePrognosisElements;
           pathPrognosis.pathElements = pathPrognosis.pathElements.concat(prognosisElements);
 
-          let linePrognosis = data.element.parent().elem('path', {
+          // add the the prognosis path to the group
+          data.element.parent().elem('path', {
             d: pathPrognosis.stringify()
-          }, data.element._node.getAttribute('class') + ' ' + options.lineClassNames.prognosis, true);
+          }, data.element._node.getAttribute('class') + ' ' + options.lineClassNames.prognosis, false);
 
-          let lineBeforePrognosis = data.element.parent().elem('path', {
-            d: pathBeforePrognosis.stringify()
-          }, data.element._node.getAttribute('class'), true);
-
-          data.element.parent()._node.removeChild(data.element._node)
         });
 
       } else if (chart instanceof Chartist.Bar) {
