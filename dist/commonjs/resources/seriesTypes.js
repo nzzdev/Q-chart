@@ -46,7 +46,7 @@ var seriesTypes = {
 
               var numLabels = labels.length;
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                threshold: prognosisStart / (numLabels - 1)
+                prognosisStart: prognosisStart
               }));
             }
           } catch (e) {}
@@ -66,7 +66,7 @@ var seriesTypes = {
 
             if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                index: prognosisStart,
+                prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars
               }));
             }
@@ -87,7 +87,7 @@ var seriesTypes = {
 
             if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
               config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
-                index: prognosisStart,
+                prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars
               }));
             }

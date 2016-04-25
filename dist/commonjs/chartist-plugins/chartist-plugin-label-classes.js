@@ -16,28 +16,12 @@ var defaultOptions = {
   last: 'last'
 };
 
-function isNumber(value) {
-  return !isNaN(value);
-}
-
 function ctLabelClasses(options) {
 
   options = Object.assign(defaultOptions, options);
 
   return function ctLabelClasses(chart) {
     if (chart instanceof _chartist2['default'].Line || chart instanceof _chartist2['default'].Bar) {
-
-      chart.on('draw', function (data) {
-        if (data.type === 'label') {
-          var typeClass = '';
-          if (data.element._node.nodeName === 'text') {
-            if (isNumber(data.element._node.textContent)) {
-              typeClass = 'ct-label--number';
-            }
-          }
-          addClass(data.element, typeClass);
-        }
-      });
 
       chart.on('created', function (data) {
         var horizontalLabels = data.svg.querySelectorAll('.ct-label.ct-horizontal');

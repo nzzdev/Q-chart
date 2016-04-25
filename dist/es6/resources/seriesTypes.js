@@ -30,7 +30,7 @@ export var seriesTypes = {
               let {labels} = data;
               let numLabels = labels.length;
               config.plugins.push(ctPrognosisSplit({
-                threshold: (prognosisStart) / (numLabels-1)
+                prognosisStart: prognosisStart,
               }));
             }
           } catch(e) {
@@ -50,7 +50,7 @@ export var seriesTypes = {
             let {prognosisStart} = item.data.x.type.options;
             if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
               config.plugins.push(ctPrognosisSplit({
-                index: prognosisStart,
+                prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars
               }));
             }
@@ -71,7 +71,7 @@ export var seriesTypes = {
             let {prognosisStart} = item.data.x.type.options;
             if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
               config.plugins.push(ctPrognosisSplit({
-                index: prognosisStart,
+                prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars
               }));
             }
