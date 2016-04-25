@@ -41,7 +41,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                 try {
                   var prognosisStart = item.data.x.type.options.prognosisStart;
 
-                  if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
+                  if (typeof prognosisStart !== 'undefined') {
                     var labels = data.labels;
 
                     var numLabels = labels.length;
@@ -64,7 +64,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                 try {
                   var prognosisStart = item.data.x.type.options.prognosisStart;
 
-                  if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
+                  if (typeof prognosisStart !== 'undefined') {
                     config.plugins.push(ctPrognosisSplit({
                       prognosisStart: prognosisStart,
                       hasSwitchedAxisCount: config.horizontalBars
@@ -85,7 +85,7 @@ System.register(['./seriesTypes/dateSeriesType', 'chartist', '../chartist-plugin
                 try {
                   var prognosisStart = item.data.x.type.options.prognosisStart;
 
-                  if (prognosisStart !== 'undefined' && typeof prognosisStart !== 'undefined') {
+                  if (typeof prognosisStart !== 'undefined') {
                     config.plugins.push(ctPrognosisSplit({
                       prognosisStart: prognosisStart,
                       hasSwitchedAxisCount: config.horizontalBars

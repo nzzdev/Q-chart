@@ -187,7 +187,7 @@ function getLegendHtml(item) {
         let serie = item.data.y.data[i];
         let isActive = hasHighlighted && highlightDataSeries == i;
         html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'active' : ''}">
+        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'q-chart__legend__item--highlighted' : ''}">
           <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
         </div>`;

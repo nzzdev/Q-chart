@@ -41,9 +41,9 @@ function ctPrognosisSplit(options) {
     });
     pattern.elem('path', {
       'd': 'M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z',
-      'stroke-width': options.strokeWidth,
+      'stroke-width': options.pattern.strokeWidth,
       'stroke': options.pattern.strokeColor,
-      'stroke-opacity': options.strokeOpacity
+      'stroke-opacity': options.pattern.strokeOpacity
     });
     return defs;
   }
@@ -94,7 +94,7 @@ function ctPrognosisSplit(options) {
         if (isPrognosis) {
           var patternLine = data.element.parent().elem(data.element._node.cloneNode(true));
 
-          patternLine._node.setAttribute('class', '');
+          patternLine._node.setAttribute('class', 'ct-bar');
           patternLine._node.style.stroke = 'url(#' + options.pattern.name + ')';
         }
       });
