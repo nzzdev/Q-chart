@@ -180,7 +180,7 @@ function getLegendHtml(item) {
   let isLine = item.type === 'Line';
   let itemBox = isLine ? svgBox : '';
   let html = `
-    <div class="q-chart__legend ${hasHighlighted ? 'highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
+    <div class="q-chart__legend ${hasHighlighted ? 'q-chart__legend--highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
   if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
     if( item.data.y.data.length > 1 ){
       for (var i in item.data.y.data) {

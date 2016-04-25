@@ -12,9 +12,9 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
       chart.on('created', function(data) {
         try {
-          data.svg.addClass('highlighted');
-          let active = data.svg._node.querySelector('.active').parentNode;
-          moveToFront( active );
+          data.svg.addClass('ct-contains-highlighted-el');
+          let active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          moveToFront(active);
         } catch(e) {
 
         }
@@ -27,9 +27,9 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
             let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
             if (index === highLightedIndex) {
-              data.element.addClass('active');
+              data.element.addClass('ct-highlighted-el');
             }else{
-              data.element.removeClass('active');
+              data.element.removeClass('ct-highlighted-el');
             }
 
           }

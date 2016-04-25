@@ -123,7 +123,7 @@ $ct-include-classes: false;
 }
 
 @for $i from 0 to length($ct-series-names) {
-  .q-chart__legend.highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+  .q-chart__legend.q-chart__legend--highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
 
     .q-chart__legend__item__box {
 

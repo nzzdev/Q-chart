@@ -129,13 +129,13 @@
 
   }
 
-  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.active {
+  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.ct-highlighted-el {
     $color: nth($ct-series-colors, $i + 1);
     stroke: $color;
     stroke-width: 2px;
   }
 
-  .highlighted .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
     $color: nth($ct-series-colors-brightened, $i + 1);
     stroke: $color;
 
@@ -145,7 +145,7 @@
       stroke-width: 1px;
     }
 
-    .active {
+    .ct-highlighted-el {
       $color: nth($ct-series-colors, $i + 1);
       stroke: $color;
     }
