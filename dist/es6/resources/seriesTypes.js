@@ -26,7 +26,7 @@ export var seriesTypes = {
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
             let {prognosisStart} = item.data.x.type.options;
-            if (typeof prognosisStart !== 'undefined') {
+            if (prognosisStart !== undefined) {
               let {labels} = data;
               let numLabels = labels.length;
               config.plugins.push(ctPrognosisSplit({
@@ -48,7 +48,7 @@ export var seriesTypes = {
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
             let {prognosisStart} = item.data.x.type.options;
-            if (typeof prognosisStart !== 'undefined') {
+            if (prognosisStart !== undefined) {
               config.plugins.push(ctPrognosisSplit({
                 prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars
@@ -69,7 +69,7 @@ export var seriesTypes = {
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
             let {prognosisStart} = item.data.x.type.options;
-            if (typeof prognosisStart !== 'undefined') {
+            if (prognosisStart !== undefined) {
               config.plugins.push(ctPrognosisSplit({
                 prognosisStart: prognosisStart,
                 hasSwitchedAxisCount: config.horizontalBars

@@ -64,7 +64,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -133,7 +133,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -177,7 +177,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push(
               ctHighlighting(value, true, data.series.length)
             );

@@ -54,7 +54,7 @@ export function ctPrognosisSplit(options) {
 
           let pathElement = data.element._node;
           let commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
-
+          
           let beforePrognosisElements = data.path.pathElements.slice(0, options.prognosisStart + 1);
 
           let lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];

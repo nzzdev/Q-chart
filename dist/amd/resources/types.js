@@ -66,7 +66,7 @@ define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-high
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
           }
         }
@@ -128,7 +128,7 @@ define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-high
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
           }
         }
@@ -166,7 +166,7 @@ define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-high
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
-          if (typeof value !== 'undefined') {
+          if (value !== undefined) {
             config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length));
           }
         }
