@@ -47,8 +47,6 @@ export function ctPrognosisSplit(options) {
             return;
           }
 
-          options.prognosisStart = Number(options.prognosisStart);
-
           // if the prognosis starts at the last element, we do nothing
           if (data.path.pathElements.length === options.prognosisStart) {
             return;

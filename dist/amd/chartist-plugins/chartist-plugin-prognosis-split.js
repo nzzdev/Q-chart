@@ -56,8 +56,6 @@ define(['exports', 'chartist'], function (exports, _chartist) {
             return;
           }
 
-          options.prognosisStart = Number(options.prognosisStart);
-
           if (data.path.pathElements.length === options.prognosisStart) {
             return;
           }

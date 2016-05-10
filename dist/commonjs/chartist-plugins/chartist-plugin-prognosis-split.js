@@ -57,8 +57,6 @@ function ctPrognosisSplit(options) {
           return;
         }
 
-        options.prognosisStart = Number(options.prognosisStart);
-
         if (data.path.pathElements.length === options.prognosisStart) {
           return;
         }
