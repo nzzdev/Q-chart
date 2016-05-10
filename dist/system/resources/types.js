@@ -70,7 +70,7 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (typeof value !== 'undefined') {
+              if (value !== undefined) {
                 config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
               }
             }
@@ -132,7 +132,7 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (typeof value !== 'undefined') {
+              if (value !== undefined) {
                 config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
               }
             }
@@ -170,7 +170,7 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
             undefinedOptionLabel: 'keine',
             options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              if (typeof value !== 'undefined') {
+              if (value !== undefined) {
                 config.plugins.push(ctHighlighting(value, true, data.series.length));
               }
             }

@@ -51,6 +51,8 @@ System.register(['chartist'], function (_export) {
             return;
           }
 
+          options.prognosisStart = Number(options.prognosisStart);
+
           if (data.path.pathElements.length === options.prognosisStart) {
             return;
           }

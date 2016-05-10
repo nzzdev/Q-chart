@@ -47,6 +47,8 @@ export function ctPrognosisSplit(options) {
             return;
           }
 
+          options.prognosisStart = Number(options.prognosisStart);
+
           // if the prognosis starts at the last element, we do nothing
           if (data.path.pathElements.length === options.prognosisStart) {
             return;
@@ -54,7 +56,7 @@ export function ctPrognosisSplit(options) {
 
           let pathElement = data.element._node;
           let commands = data.element._node.getAttribute('d').split(/(?=[LMC])/);
-
+          
           let beforePrognosisElements = data.path.pathElements.slice(0, options.prognosisStart + 1);
 
           let lastBeforePrognosis = beforePrognosisElements[beforePrognosisElements.length - 1];
