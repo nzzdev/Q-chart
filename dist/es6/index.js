@@ -9,6 +9,10 @@ import {getConfig as getChartistConfig} from './resources/chartistConfig';
 import SizeObserver from './resources/SizeObserver';
 import {types as chartTypes} from './resources/types';
 import {seriesTypes, getDigitLabelFontStyle} from './resources/seriesTypes';
+
+import {getDateObject} from './resources/seriesTypes/dateSeriesType';
+import {seriesTypeConfig} from './resources/seriesTypes/dateConfigPerInterval';
+
 import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
@@ -113,7 +117,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {
-    chartTypes[item.type].modifyConfig(config, data, size, rect);
+    chartTypes[item.type].modifyConfig(config, data, size, rect, item);
   }
 
   // if there are detected series types
@@ -122,19 +126,19 @@ function getCombinedChartistConfig(item, data, size, rect) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
       if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
     }
@@ -159,16 +163,43 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
   return new Chartist[chartTypes[item.type].chartistType](element, dataForChartist, chartistConfig);
 }
 
+export function getFormattedDate(date, format, interval){
+  date = getDateObject( date, format);
+  return seriesTypeConfig[interval].format(0, false, date, true);
+}
+
 function getLegendHtml(item) {
+  let highlightDataSeries = item.options && item.options.highlightDataSeries;
+  let hasHighlighted = !isNaN(highlightDataSeries);
+  let isDate = item.data.x.type && item.data.x.type.id === 'date';
+  let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
+  let svgBox = `
+    <svg width="12" height="12">
+      <line x1="1" y1="11" x2="11" y2="1" />
+    </svg>`;
+  let isLine = item.type === 'Line';
+  let itemBox = isLine ? svgBox : '';
   let html = `
-    <div class="q-chart__legend">`;
-  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
-    for (var i in item.data.y.data) {
-      let serie = item.data.y.data[i];
-      html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]}">
-          <div class="q-chart__legend__item__box"></div>
+    <div class="q-chart__legend ${hasHighlighted ? 'q-chart__legend--highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
+  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
+    if( item.data.y.data.length > 1 ){
+      for (var i in item.data.y.data) {
+        let serie = item.data.y.data[i];
+        let isActive = hasHighlighted && highlightDataSeries == i;
+        html += `
+        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'q-chart__legend__item--highlighted' : ''}">
+          <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
           <div class="q-chart__legend__item__text">${serie.label}</div>
+        </div>`;
+      }
+    }
+    if (hasPrognosis){
+      let {prognosisStart,interval} = item.data.x.type.options;
+      let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+      html += `
+        <div class="q-chart__legend__item q-chart__legend__item--prognosis">
+          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
+          <div class="q-chart__legend__item__text">Prognose (ab ${date})</div>
         </div>`;
     }
   }

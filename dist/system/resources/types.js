@@ -62,13 +62,17 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
               }
             }
           }, {
-            name: 'highlightDataRow',
+            name: 'highlightDataSeries',
             type: 'selection',
             label: 'Hervorhebung',
-            defaultValue: -1,
-            options: [{ label: 'keine', value: -1 }],
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.labels.length));
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
+              }
             }
           }]
         },
@@ -120,13 +124,17 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
               }
             }
           }, {
-            name: 'highlightDataRow',
+            name: 'highlightDataSeries',
             type: 'selection',
             label: 'Hervorhebung',
-            defaultValue: -1,
-            options: [{ label: 'keine', value: -1 }],
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.labels.length));
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
+              }
             }
           }]
         },
@@ -154,13 +162,17 @@ System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highli
               }
             }
           }, {
-            name: 'highlightDataRow',
+            name: 'highlightDataSeries',
             type: 'selection',
             label: 'Hervorhebung',
-            defaultValue: -1,
-            options: [{ label: 'keine', value: -1 }],
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
-              config.plugins.push(ctHighlighting(value, true, data.series.length, true));
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, true, data.series.length));
+              }
             }
           }],
           modifyConfig: function modifyConfig(config, data, size, rect) {

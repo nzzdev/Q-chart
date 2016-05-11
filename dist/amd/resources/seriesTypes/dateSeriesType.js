@@ -4,6 +4,7 @@ define(['exports', './dateConfigPerInterval', './helpers'], function (exports, _
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
+  exports.getDateObject = getDateObject;
   exports.setLabelsBasedOnIntervalAndAvailableSpace = setLabelsBasedOnIntervalAndAvailableSpace;
   exports.setLabelsBasedOnInterval = setLabelsBasedOnInterval;
 

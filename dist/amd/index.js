@@ -1,9 +1,10 @@
-define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults, _fgLoadcss, _resourcesOnloadCSS) {
+define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/seriesTypes/dateSeriesType', './resources/seriesTypes/dateConfigPerInterval', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (exports, _paulirishMatchMediaJs, _paulirishMatchMediaJsMatchMediaAddListenerJs, _coreJsEs6Object, _chartist, _resourcesChartistConfig, _resourcesSizeObserver, _resourcesTypes, _resourcesSeriesTypes, _resourcesSeriesTypesDateSeriesType, _resourcesSeriesTypesDateConfigPerInterval, _resourcesHelpers, _resourcesModifyChartistConfigBeforeRender, _resourcesSetYAxisOffset, _rendererConfigDefaults, _fgLoadcss, _resourcesOnloadCSS) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
+  exports.getFormattedDate = getFormattedDate;
   exports.getDivisor = getDivisor;
   exports.getDivisorString = getDivisorString;
   exports.display = display;
@@ -136,26 +137,26 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     }
 
     if (_resourcesTypes.types[item.type].modifyConfig) {
-      _resourcesTypes.types[item.type].modifyConfig(config, data, size, rect);
+      _resourcesTypes.types[item.type].modifyConfig(config, data, size, rect, item);
     }
 
     if (item.data.x && item.data.x.type) {
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
 
         if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+          _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
         }
       }
     }
@@ -179,12 +180,35 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     return new _Chartist['default'][_resourcesTypes.types[item.type].chartistType](element, dataForChartist, chartistConfig);
   }
 
+  function getFormattedDate(date, format, interval) {
+    date = (0, _resourcesSeriesTypesDateSeriesType.getDateObject)(date, format);
+    return _resourcesSeriesTypesDateConfigPerInterval.seriesTypeConfig[interval].format(0, false, date, true);
+  }
+
   function getLegendHtml(item) {
-    var html = '\n    <div class="q-chart__legend">';
-    if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
-      for (var i in item.data.y.data) {
-        var serie = item.data.y.data[i];
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+    var highlightDataSeries = item.options && item.options.highlightDataSeries;
+    var hasHighlighted = !isNaN(highlightDataSeries);
+    var isDate = item.data.x.type && item.data.x.type.id === 'date';
+    var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
+    var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
+    var isLine = item.type === 'Line';
+    var itemBox = isLine ? svgBox : '';
+    var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'q-chart__legend--highlighted' : '') + ' q-chart__legend--' + item.type.toLowerCase() + '">';
+    if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
+      if (item.data.y.data.length > 1) {
+        for (var i in item.data.y.data) {
+          var serie = item.data.y.data[i];
+          var isActive = hasHighlighted && highlightDataSeries == i;
+          html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+        }
+      }
+      if (hasPrognosis) {
+        var _item$data$x$type$options = item.data.x.type.options;
+        var prognosisStart = _item$data$x$type$options.prognosisStart;
+        var interval = _item$data$x$type$options.interval;
+
+        var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + date + ')</div>\n        </div>';
       }
     }
     html += '\n    </div>\n  ';

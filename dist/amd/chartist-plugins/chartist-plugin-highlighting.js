@@ -10,37 +10,36 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
   var _Chartist = _interopRequireDefault(_chartist);
 
-  function ctHighlighting(highlightDataRow, countAsc, dataLength, preventLabelClasses) {
+  function ctHighlighting(highlightDataSeries, countAsc, dataLength) {
     if (countAsc === undefined) countAsc = true;
 
-    var highLightedIndex = Number(highlightDataRow);
-    var hasHighlightedBar = highLightedIndex > -1;
+    var highLightedIndex = Number(highlightDataSeries);
 
     return function ctHighlighting(chart) {
 
-      console.log('bla');
+      var moveToFront = function moveToFront(el) {
+        el.parentNode.appendChild(el);
+      };
+
       chart.on('created', function (data) {
         try {
-          var element = data.element;
-          var options = data.options;
-
-          if (hasHighlightedBar) {
-            data.svg._node.classList.add('highlighted');
-          } else {
-            data.svg._node.classList.remove('highlighted');
-          }
+          data.svg.addClass('ct-contains-highlighted-el');
+          var active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          moveToFront(active);
         } catch (e) {}
       });
 
       chart.on('draw', function (data) {
-        var index = countAsc ? data.index : dataLength - 1 - data.index;
         try {
-          if (hasHighlightedBar && index === highLightedIndex) {
-            if (data.type === 'line' || data.type === 'bar' || data.type === 'label' && !preventLabelClasses) {
-              data.element._node.classList.add('active');
+
+          if (chart instanceof _Chartist['default'].Bar || chart instanceof _Chartist['default'].Line) {
+
+            var index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (index === highLightedIndex) {
+              data.element.addClass('ct-highlighted-el');
+            } else {
+              data.element.removeClass('ct-highlighted-el');
             }
-          } else {
-            data.element._node.classList.remove('active');
           }
         } catch (e) {}
       });

@@ -1,4 +1,4 @@
-define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (exports, _seriesTypesDateSeriesType, _chartist) {
+define(['exports', './seriesTypes/dateSeriesType', 'chartist', '../chartist-plugins/chartist-plugin-prognosis-split'], function (exports, _seriesTypesDateSeriesType, _chartist, _chartistPluginsChartistPluginPrognosisSplit) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -31,7 +31,21 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (export
     'date': {
       'x': {
         'Line': {
-          modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
+          modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace,
+          modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+            try {
+              var prognosisStart = item.data.x.type.options.prognosisStart;
+
+              if (prognosisStart !== undefined) {
+                var labels = data.labels;
+
+                var numLabels = labels.length;
+                config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                  prognosisStart: prognosisStart
+                }));
+              }
+            } catch (e) {}
+          }
         },
         'Bar': {
           modifyData: function modifyData(config, type, data, size, rect) {
@@ -40,6 +54,18 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (export
             } else {
               (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
             }
+          },
+          modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+            try {
+              var prognosisStart = item.data.x.type.options.prognosisStart;
+
+              if (prognosisStart !== undefined) {
+                config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                  prognosisStart: prognosisStart,
+                  hasSwitchedAxisCount: config.horizontalBars
+                }));
+              }
+            } catch (e) {}
           }
         },
         'StackedBar': {
@@ -49,6 +75,18 @@ define(['exports', './seriesTypes/dateSeriesType', 'chartist'], function (export
             } else {
               (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
             }
+          },
+          modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+            try {
+              var prognosisStart = item.data.x.type.options.prognosisStart;
+
+              if (prognosisStart !== undefined) {
+                config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                  prognosisStart: prognosisStart,
+                  hasSwitchedAxisCount: config.horizontalBars
+                }));
+              }
+            } catch (e) {}
           }
         }
       }

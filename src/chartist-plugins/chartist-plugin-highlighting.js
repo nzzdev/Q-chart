@@ -1,40 +1,42 @@
 import Chartist from 'chartist';
 
-export function ctHighlighting(highlightDataRow, countAsc = true, dataLength, preventLabelClasses) {
+export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength) {
 
-  let highLightedIndex = Number(highlightDataRow);
-  let hasHighlightedBar = highLightedIndex > -1;
+  let highLightedIndex = Number(highlightDataSeries);
 
   return function ctHighlighting(chart) {
 
-      console.log('bla');
+      let moveToFront = function (el) {
+        el.parentNode.appendChild(el)
+      }
+
       chart.on('created', function(data) {
         try {
-          let {element,options} = data;
-          if (hasHighlightedBar) {
-            data.svg._node.classList.add('highlighted');
-          }else{
-            data.svg._node.classList.remove('highlighted');
-          }
+          data.svg.addClass('ct-contains-highlighted-el');
+          let active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          moveToFront(active);
         } catch(e) {
 
         }
       });
 
       chart.on('draw', function(data) {
-        let index = countAsc ? data.index : dataLength - 1 - data.index;
         try {
-          if (hasHighlightedBar && index === highLightedIndex) {
-            if(data.type === 'line' || data.type === 'bar' || (data.type === 'label' && !preventLabelClasses )) {
-              data.element._node.classList.add('active');
+
+          if (chart instanceof Chartist.Bar || chart instanceof Chartist.Line) {
+
+            let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
+            if (index === highLightedIndex) {
+              data.element.addClass('ct-highlighted-el');
+            }else{
+              data.element.removeClass('ct-highlighted-el');
             }
-          }else{
-            data.element._node.classList.remove('active');
+
           }
+
         } catch(e) {
 
         }
-			});
-
+      });
   };
 };

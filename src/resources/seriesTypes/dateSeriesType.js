@@ -9,7 +9,7 @@ function dateFromIsoWeek(year, week, day) {
   return d;
 }
 
-function getDateObject(dateString, format) {
+export function getDateObject(dateString, format) {
   if (format === 'Date') {
     return new Date(dateString);
   } else {
