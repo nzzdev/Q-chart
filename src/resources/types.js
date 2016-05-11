@@ -1,4 +1,5 @@
 import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
+import {ctHighlighting} from '../chartist-plugins/chartist-plugin-highlighting';
 import min from './min';
 
 export var types = {
@@ -51,6 +52,22 @@ export var types = {
             config.axisX.showGrid = true;
             config.axisX.position = 'start';
             config.axisY.showGrid = false;
+          }
+        }
+      },
+      {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== undefined) {
+            config.plugins.push(
+              ctHighlighting(value, !config.horizontalBars, data.series.length)
+            )
           }
         }
       }
@@ -106,6 +123,22 @@ export var types = {
             config.axisY.showGrid = false;
           }
         }
+      },
+      {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== undefined) {
+            config.plugins.push(
+              ctHighlighting(value, !config.horizontalBars, data.series.length)
+            )
+          }
+        }
       }
     ]
   },
@@ -132,6 +165,22 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value && value !== '' && !isNaN(Number(value))) {
             config.high = Number(value);
+          }
+        }
+      },
+      {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== undefined) {
+            config.plugins.push(
+              ctHighlighting(value, true, data.series.length)
+            );
           }
         }
       }
@@ -161,5 +210,5 @@ export var types = {
 
       return;
     }
-  },
+  }
 }

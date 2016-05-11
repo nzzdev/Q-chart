@@ -12,6 +12,8 @@ var _chartist = require('chartist');
 
 var _chartist2 = _interopRequireDefault(_chartist);
 
+var _chartistPluginsChartistPluginPrognosisSplit = require('../chartist-plugins/chartist-plugin-prognosis-split');
+
 var getLabelFontStyle = function getLabelFontStyle() {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
     return '11px Arial';
@@ -34,7 +36,21 @@ var seriesTypes = {
   'date': {
     'x': {
       'Line': {
-        modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace
+        modifyData: _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace,
+        modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+          try {
+            var prognosisStart = item.data.x.type.options.prognosisStart;
+
+            if (prognosisStart !== undefined) {
+              var labels = data.labels;
+
+              var numLabels = labels.length;
+              config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                prognosisStart: prognosisStart
+              }));
+            }
+          } catch (e) {}
+        }
       },
       'Bar': {
         modifyData: function modifyData(config, type, data, size, rect) {
@@ -43,6 +59,18 @@ var seriesTypes = {
           } else {
             (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
           }
+        },
+        modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+          try {
+            var prognosisStart = item.data.x.type.options.prognosisStart;
+
+            if (prognosisStart !== undefined) {
+              config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                prognosisStart: prognosisStart,
+                hasSwitchedAxisCount: config.horizontalBars
+              }));
+            }
+          } catch (e) {}
         }
       },
       'StackedBar': {
@@ -52,6 +80,18 @@ var seriesTypes = {
           } else {
             (0, _seriesTypesDateSeriesType.setLabelsBasedOnIntervalAndAvailableSpace)(config, type, data, size, rect, getLabelFontStyle());
           }
+        },
+        modifyConfig: function modifyConfig(config, type, data, size, rect, item) {
+          try {
+            var prognosisStart = item.data.x.type.options.prognosisStart;
+
+            if (prognosisStart !== undefined) {
+              config.plugins.push((0, _chartistPluginsChartistPluginPrognosisSplit.ctPrognosisSplit)({
+                prognosisStart: prognosisStart,
+                hasSwitchedAxisCount: config.horizontalBars
+              }));
+            }
+          } catch (e) {}
         }
       }
     }

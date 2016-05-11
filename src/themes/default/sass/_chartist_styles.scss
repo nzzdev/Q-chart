@@ -97,18 +97,56 @@
   @include ct-chart-donut($ct-donut-width);
 }
 
-@for $i from 0 to length($ct-series-names) {
-  .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
-    $color: nth($ct-series-colors, $i + 1);
-
-    @include ct-chart-series-color($color);
-  }
+.ct-chart-line--prognosis {
+  stroke-dasharray: 6px 2px;
+  stroke-dashoffset: -7px;
 }
 
-// line chart
-.ct-chart-line {
+@for $i from 0 to length($ct-series-names) {
 
+  .ct-chart-line {
 
+    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+      $color: nth($ct-series-colors, $i + 1);
+
+      @include ct-chart-series-color($color);
+
+    }
+
+  }
+
+  .ct-chart-bar {
+
+    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+      $color: nth($ct-series-colors, $i + 1);
+
+      @include ct-chart-series-color($color);
+
+    }
+
+  }
+
+  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.ct-highlighted-el {
+    $color: nth($ct-series-colors, $i + 1);
+    stroke: $color;
+    stroke-width: 2px;
+  }
+
+  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
+    $color: nth($ct-series-colors-brightened, $i + 1);
+    stroke: $color;
+
+    @include ct-chart-series-color($color);
+
+    .ct-line {
+      stroke-width: 1px;
+    }
+
+    .ct-highlighted-el {
+      $color: nth($ct-series-colors, $i + 1);
+      stroke: $color;
+    }
+  }
 }
 
 

@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports.getFormattedDate = getFormattedDate;
 exports.getDivisor = getDivisor;
 exports.getDivisorString = getDivisorString;
 exports.display = display;
@@ -28,6 +29,10 @@ var _resourcesSizeObserver2 = _interopRequireDefault(_resourcesSizeObserver);
 var _resourcesTypes = require('./resources/types');
 
 var _resourcesSeriesTypes = require('./resources/seriesTypes');
+
+var _resourcesSeriesTypesDateSeriesType = require('./resources/seriesTypes/dateSeriesType');
+
+var _resourcesSeriesTypesDateConfigPerInterval = require('./resources/seriesTypes/dateConfigPerInterval');
 
 var _resourcesHelpers = require('./resources/helpers');
 
@@ -138,6 +143,7 @@ function getCombinedChartistConfig(item, data, size, rect) {
         case 'number':
         case 'oneOf':
         case 'boolean':
+        case 'selection':
           if (item.options && typeof item.options[option.name] !== undefined) {
             option.modifyConfig(config, item.options[option.name], data, size, rect);
           } else {
@@ -162,26 +168,26 @@ function getCombinedChartistConfig(item, data, size, rect) {
   }
 
   if (_resourcesTypes.types[item.type].modifyConfig) {
-    _resourcesTypes.types[item.type].modifyConfig(config, data, size, rect);
+    _resourcesTypes.types[item.type].modifyConfig(config, data, size, rect, item);
   }
 
   if (item.data.x && item.data.x.type) {
     if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect);
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect);
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
 
       if (_resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type] && _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect);
+        _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
       }
     }
   }
@@ -205,12 +211,35 @@ function renderChartist(item, element, chartistConfig, dataForChartist) {
   return new _chartist2['default'][_resourcesTypes.types[item.type].chartistType](element, dataForChartist, chartistConfig);
 }
 
+function getFormattedDate(date, format, interval) {
+  date = (0, _resourcesSeriesTypesDateSeriesType.getDateObject)(date, format);
+  return _resourcesSeriesTypesDateConfigPerInterval.seriesTypeConfig[interval].format(0, false, date, true);
+}
+
 function getLegendHtml(item) {
-  var html = '\n    <div class="q-chart__legend">';
-  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
-    for (var i in item.data.y.data) {
-      var serie = item.data.y.data[i];
-      html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + '">\n          <div class="q-chart__legend__item__box"></div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+  var highlightDataSeries = item.options && item.options.highlightDataSeries;
+  var hasHighlighted = !isNaN(highlightDataSeries);
+  var isDate = item.data.x.type && item.data.x.type.id === 'date';
+  var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
+  var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
+  var isLine = item.type === 'Line';
+  var itemBox = isLine ? svgBox : '';
+  var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'q-chart__legend--highlighted' : '') + ' q-chart__legend--' + item.type.toLowerCase() + '">';
+  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
+    if (item.data.y.data.length > 1) {
+      for (var i in item.data.y.data) {
+        var serie = item.data.y.data[i];
+        var isActive = hasHighlighted && highlightDataSeries == i;
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+      }
+    }
+    if (hasPrognosis) {
+      var _item$data$x$type$options = item.data.x.type.options;
+      var prognosisStart = _item$data$x$type$options.prognosisStart;
+      var interval = _item$data$x$type$options.interval;
+
+      var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
+      html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + date + ')</div>\n        </div>';
     }
   }
   html += '\n    </div>\n  ';

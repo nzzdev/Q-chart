@@ -1,4 +1,4 @@
-define(['exports', './chartistConfig', './min'], function (exports, _chartistConfig, _min) {
+define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-highlighting', './min'], function (exports, _chartistConfig, _chartistPluginsChartistPluginHighlighting, _min) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -57,6 +57,19 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
             config.axisY.showGrid = false;
           }
         }
+      }, {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          if (value !== undefined) {
+            config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
+          }
+        }
       }]
     },
     StackedBar: {
@@ -106,6 +119,19 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
             config.axisY.showGrid = false;
           }
         }
+      }, {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          if (value !== undefined) {
+            config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
+          }
+        }
       }]
     },
     Line: {
@@ -129,6 +155,19 @@ define(['exports', './chartistConfig', './min'], function (exports, _chartistCon
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
           if (value && value !== '' && !isNaN(Number(value))) {
             config.high = Number(value);
+          }
+        }
+      }, {
+        name: 'highlightDataSeries',
+        type: 'selection',
+        label: 'Hervorhebung',
+        defaultValue: undefined,
+        withUndefinedOption: true,
+        undefinedOptionLabel: 'keine',
+        options: [],
+        modifyConfig: function modifyConfig(config, value, data, size, rect) {
+          if (value !== undefined) {
+            config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length));
           }
         }
       }],

@@ -8,6 +8,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 var _chartistConfig = require('./chartistConfig');
 
+var _chartistPluginsChartistPluginHighlighting = require('../chartist-plugins/chartist-plugin-highlighting');
+
 var _min = require('./min');
 
 var _min2 = _interopRequireDefault(_min);
@@ -60,6 +62,19 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataSeries',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: undefined,
+      withUndefinedOption: true,
+      undefinedOptionLabel: 'keine',
+      options: [],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        if (value !== undefined) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
+        }
+      }
     }]
   },
   StackedBar: {
@@ -109,6 +124,19 @@ var types = {
           config.axisY.showGrid = false;
         }
       }
+    }, {
+      name: 'highlightDataSeries',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: undefined,
+      withUndefinedOption: true,
+      undefinedOptionLabel: 'keine',
+      options: [],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        if (value !== undefined) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
+        }
+      }
     }]
   },
   Line: {
@@ -132,6 +160,19 @@ var types = {
       modifyConfig: function modifyConfig(config, value, data, size, rect) {
         if (value && value !== '' && !isNaN(Number(value))) {
           config.high = Number(value);
+        }
+      }
+    }, {
+      name: 'highlightDataSeries',
+      type: 'selection',
+      label: 'Hervorhebung',
+      defaultValue: undefined,
+      withUndefinedOption: true,
+      undefinedOptionLabel: 'keine',
+      options: [],
+      modifyConfig: function modifyConfig(config, value, data, size, rect) {
+        if (value !== undefined) {
+          config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, true, data.series.length));
         }
       }
     }],

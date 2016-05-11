@@ -1,12 +1,14 @@
-System.register(['./chartistConfig', './min'], function (_export) {
+System.register(['./chartistConfig', '../chartist-plugins/chartist-plugin-highlighting', './min'], function (_export) {
   'use strict';
 
-  var vertBarHeight, vertBarSetPadding, chartHeight, min, types;
+  var vertBarHeight, vertBarSetPadding, chartHeight, ctHighlighting, min, types;
   return {
     setters: [function (_chartistConfig) {
       vertBarHeight = _chartistConfig.vertBarHeight;
       vertBarSetPadding = _chartistConfig.vertBarSetPadding;
       chartHeight = _chartistConfig.chartHeight;
+    }, function (_chartistPluginsChartistPluginHighlighting) {
+      ctHighlighting = _chartistPluginsChartistPluginHighlighting.ctHighlighting;
     }, function (_min) {
       min = _min['default'];
     }],
@@ -59,6 +61,19 @@ System.register(['./chartistConfig', './min'], function (_export) {
                 config.axisY.showGrid = false;
               }
             }
+          }, {
+            name: 'highlightDataSeries',
+            type: 'selection',
+            label: 'Hervorhebung',
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
+              }
+            }
           }]
         },
         StackedBar: {
@@ -108,6 +123,19 @@ System.register(['./chartistConfig', './min'], function (_export) {
                 config.axisY.showGrid = false;
               }
             }
+          }, {
+            name: 'highlightDataSeries',
+            type: 'selection',
+            label: 'Hervorhebung',
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, !config.horizontalBars, data.series.length));
+              }
+            }
           }]
         },
         Line: {
@@ -131,6 +159,19 @@ System.register(['./chartistConfig', './min'], function (_export) {
             modifyConfig: function modifyConfig(config, value, data, size, rect) {
               if (value && value !== '' && !isNaN(Number(value))) {
                 config.high = Number(value);
+              }
+            }
+          }, {
+            name: 'highlightDataSeries',
+            type: 'selection',
+            label: 'Hervorhebung',
+            defaultValue: undefined,
+            withUndefinedOption: true,
+            undefinedOptionLabel: 'keine',
+            options: [],
+            modifyConfig: function modifyConfig(config, value, data, size, rect) {
+              if (value !== undefined) {
+                config.plugins.push(ctHighlighting(value, true, data.series.length));
               }
             }
           }],

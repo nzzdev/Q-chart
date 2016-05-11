@@ -3,6 +3,8 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
 
   var seriesTypeConfig, isThereEnoughSpace, dateFormats;
 
+  _export('getDateObject', getDateObject);
+
   _export('setLabelsBasedOnIntervalAndAvailableSpace', setLabelsBasedOnIntervalAndAvailableSpace);
 
   _export('setLabelsBasedOnInterval', setLabelsBasedOnInterval);
