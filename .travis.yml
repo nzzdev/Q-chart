@@ -1,16 +1,25 @@
 language: node_js
+
 node_js:
 - '4.2'
+
 before_install:
 - npm install -g jspm@0.16.25
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
+
 install:
 - npm install -g gulp
 - npm install
 - jspm install
+
 script:
 - gulp bundle
 - gulp deploy
+
+cache:
+  directories:
+    - node_modules
+
 env:
   global:
   - S3_BUCKET=q-s3.nzz.ch
