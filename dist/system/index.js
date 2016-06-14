@@ -50,6 +50,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
   }
 
   function modifyData(config, item, data, size, rect) {
+
     if (item.data.x && item.data.x.type) {
       if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
@@ -69,10 +70,10 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
           seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
       }
+    }
 
-      if (chartTypes[item.type].modifyData) {
-        chartTypes[item.type].modifyData(config, data, size, rect);
-      }
+    if (chartTypes[item.type].modifyData) {
+      chartTypes[item.type].modifyData(config, data, size, rect);
     }
   }
 

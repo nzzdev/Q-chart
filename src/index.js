@@ -70,6 +70,7 @@ function shortenNumberLabels(config, data) {
 function modifyData(config, item, data, size, rect) {
   // if there are detected series types
   // we need to let them modify the data
+
   if (item.data.x && item.data.x.type) {
     if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
@@ -90,10 +91,10 @@ function modifyData(config, item, data, size, rect) {
       }
     }
 
-    // let the chart type modify the config
-    if (chartTypes[item.type].modifyData) {
-      chartTypes[item.type].modifyData(config, data, size, rect);
-    }
+  }
+  // let the chart type modify the config
+  if (chartTypes[item.type].modifyData) {
+    chartTypes[item.type].modifyData(config, data, size, rect);
   }
 }
 
