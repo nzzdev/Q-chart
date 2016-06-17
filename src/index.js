@@ -40,18 +40,21 @@ function getChartDataForChartist(item) {
   return data;
 }
 
-function getMaxValue(data) {
+function getExtent(data) {
   let flatDatapoints = getFlatDatapoints(data);
   if (flatDatapoints && flatDatapoints.length) {
-    return flatDatapoints[flatDatapoints.length - 1];
+    return [
+      flatDatapoints[0],
+      flatDatapoints[flatDatapoints.length - 1]
+    ];
   }
   return 0;
 }
 
 function shortenNumberLabels(config, data) {
-  let maxValue = getMaxValue(data);
+  let [minValue, maxValue] = getExtent(data);
 
-  let divisor = getDivisor(maxValue);
+  let divisor = Math.max(getDivisor(maxValue), getDivisor(Math.abs(minValue)));
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
