@@ -92,7 +92,7 @@ function modifyData(config, item, data, size, rect) {
     }
 
   }
-  // let the chart type modify the config
+  // let the chart type modify the data
   if (chartTypes[item.type].modifyData) {
     chartTypes[item.type].modifyData(config, data, size, rect);
   }
