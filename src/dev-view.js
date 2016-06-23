@@ -5,7 +5,23 @@ var chart1 = {
   title: 'C1 Hummeln fliegen besser als gedacht 💀👊',
   tool: 'chart',
   rendererVersion: env.VERSION,
-  sources: [],
+  sources: [
+    {
+      "text": "Comparis",
+      "href": "https://www.comparis.ch/comparis/press/medienmitteilungen/artikel/2016/immobilien/monatsmiete-vergleich/mietpreise-staedte.aspx",
+      "validHref": true
+    },
+    {
+      "text": "Wüest & Partner Immo-Monitoring 2/2016",
+      "href": "",
+      "validHref": false
+    },
+    {
+      "text": "",
+      "href": "",
+      "validHref": false
+    }
+  ],
   data: {
     x: {
       label: '',
@@ -431,7 +447,7 @@ var chart7 = {
         {
           label: 'Intelligenz',
           data: [
-            49.843099,
+            10.3,
             49.931931,
             61.478163,
             58.981617,
@@ -523,7 +539,7 @@ var chart7b = {
         {
           label: 'Intelligenz',
           data: [
-            49.843099,
+            10.3,
             49.931931,
             61.478163,
             58.981617,
@@ -578,7 +594,101 @@ var chart7b = {
   options: {
     highlightDataSeries:3
   },
-  type: 'Bar'
+  type: 'StackedBar'
+}
+var chart7c = {
+  id: '_2',
+  title: 'C7b: Ein Kampf zwischen Ahnen',
+  tool: 'chart',
+  rendererVersion: env.VERSION,
+  sources: [],
+  data: {
+    x: {
+      label: '',
+      data: [
+          'Apex',
+          'BhetaBheta',
+          'Budh',
+          'Meto',
+          'Notu',
+          'Ming',
+          'Dris'
+      ]
+    },
+    y: {
+      label: 'gemessen in Spacepunkten',
+      data: [
+        {
+          label: 'Stärke',
+          data: [
+            10.3,
+            106.0,
+            105.4,
+            101.8,
+            95.9,
+            94.1,
+            102.0
+          ]
+        },
+        {
+          label: 'Intelligenz',
+          data: [
+            10.3,
+            49.931931,
+            61.478163,
+            58.981617,
+            61.223861,
+            65.601574,
+            67.89832
+          ]
+        },
+        {
+          label: 'Love',
+          data: [
+            56,
+            21,
+            41,
+            22,
+            15,
+            12,
+            34
+          ]
+        },
+        {
+          label: 'Wahrheit',
+          data: [
+            30,
+            20,
+            40,
+            50,
+            60,
+            71,
+            10
+          ]
+        },
+        {
+          label: 'Führerschein',
+          data: [
+            51,
+            31,
+            22,
+            71,
+            41,
+            34,
+            15
+          ]
+        }
+      ]
+    }
+  },
+  notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
+  chartConfig: {
+  },
+  options: {
+    isColumnChart:true,
+    highlightDataSeries:3
+  },
+  type: 'StackedBar'
 }
 
 //--------
@@ -4110,8 +4220,9 @@ let rendererConfig = {
 }
 
 
+let solo;
 
-let solo = [chart11,'11'];
+// solo = [chart1, '1'];
 
 if (solo) {
 

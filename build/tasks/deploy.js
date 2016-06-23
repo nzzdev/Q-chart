@@ -44,8 +44,8 @@ if (process.env.TRAVIS_TAG) {
     deployTargets.push(slug + '-releases/' + versionDigits[0] + '.*.*');
   }
 
-  // If we have a tagged release on master, we deploy this to the live production environment
-  if (process.env.TRAVIS_BRANCH && process.env.TRAVIS_BRANCH === 'master') {
+  // If target is master branch and it is not a pull request, we deploy this to the live production environment
+  if (process.env.TRAVIS_PULL_REQUEST === "false" && process.env.TRAVIS_BRANCH && process.env.TRAVIS_BRANCH === 'master') {
     deployTargets.push(slug);
   }
 }

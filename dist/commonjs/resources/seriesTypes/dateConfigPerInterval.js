@@ -90,7 +90,7 @@ var seriesTypeConfig = {
     format: function format(index, isLastIntervalLabel, date) {
       var forceFull = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
-      return pad(date.getHours() + 1, 2) + ':' + pad(date.getMinutes(), 2);
+      return pad(date.getHours(), 2) + ':' + pad(date.getMinutes(), 2);
     },
     getLabelLength: function getLabelLength(index, isLastIntervalLabel, data, config) {
       return 40;

@@ -91,7 +91,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSeriesClassOrder()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()]
           },
           large: {
             height: chartHeight,
@@ -108,7 +108,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData(), ctSeriesClassOrder()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData()]
           }
         },
 
