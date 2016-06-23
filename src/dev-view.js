@@ -5,7 +5,23 @@ var chart1 = {
   title: 'C1 Hummeln fliegen besser als gedacht 💀👊',
   tool: 'chart',
   rendererVersion: env.VERSION,
-  sources: [],
+  sources: [
+    {
+      "text": "Comparis",
+      "href": "https://www.comparis.ch/comparis/press/medienmitteilungen/artikel/2016/immobilien/monatsmiete-vergleich/mietpreise-staedte.aspx",
+      "validHref": true
+    },
+    {
+      "text": "Wüest & Partner Immo-Monitoring 2/2016",
+      "href": "",
+      "validHref": false
+    },
+    {
+      "text": "",
+      "href": "",
+      "validHref": false
+    }
+  ],
   data: {
     x: {
       label: '',
@@ -4204,43 +4220,40 @@ let rendererConfig = {
 }
 
 
+let solo;
 
-displayChart(chart7, document.getElementById('chart7'), rendererConfig);
-displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
-displayChart(chart7c, document.getElementById('chart7c'), rendererConfig);
+solo = [chart1, '1'];
 
-//
-//
-// if (solo) {
-//
-//   displayChart(solo[0], document.getElementById('chart'+solo[1]), rendererConfig);
-//
-// } else {
-//
-//   displayChart(chart1, document.getElementById('chart1'), rendererConfig);
-//   displayChart(chart2, document.getElementById('chart2'), rendererConfig);
-//
-//   // -- colors bars
-//
-//   displayChart(chart3, document.getElementById('chart3'), rendererConfig);
-//   displayChart(chart4, document.getElementById('chart4'), rendererConfig);
-//   displayChart(chart5, document.getElementById('chart5'), rendererConfig);
-//   displayChart(chart6, document.getElementById('chart6'), rendererConfig);
-//   displayChart(chart7, document.getElementById('chart7'), rendererConfig);
-//   displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
-//
-//   // -- colors lines
-//
-//   displayChart(chart8, document.getElementById('chart8'), rendererConfig);
-//   displayChart(chart9, document.getElementById('chart9'), rendererConfig);
-//   displayChart(chart10, document.getElementById('chart10'), rendererConfig);
-//   displayChart(chart11, document.getElementById('chart11'), rendererConfig);
-//   displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
-//   displayChart(chart12, document.getElementById('chart12'), rendererConfig);
-//
-//   displayChart(chart13, document.getElementById('chart13'), rendererConfig);
-//   displayChart(chart13b, document.getElementById('chart13b'), rendererConfig);
-//   displayChart(chart14, document.getElementById('chart14'), rendererConfig);
-//   displayChart(chart15, document.getElementById('chart15'), rendererConfig);
-//
-// }
+if (solo) {
+
+  displayChart(solo[0], document.getElementById('chart'+solo[1]), rendererConfig);
+
+} else {
+
+  displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+  displayChart(chart2, document.getElementById('chart2'), rendererConfig);
+
+  // -- colors bars
+
+  displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+  displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+  displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+  displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+  displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+  displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
+
+  // -- colors lines
+
+  displayChart(chart8, document.getElementById('chart8'), rendererConfig);
+  displayChart(chart9, document.getElementById('chart9'), rendererConfig);
+  displayChart(chart10, document.getElementById('chart10'), rendererConfig);
+  displayChart(chart11, document.getElementById('chart11'), rendererConfig);
+  displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
+  displayChart(chart12, document.getElementById('chart12'), rendererConfig);
+
+  displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+  displayChart(chart13b, document.getElementById('chart13b'), rendererConfig);
+  displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+  displayChart(chart15, document.getElementById('chart15'), rendererConfig);
+
+}

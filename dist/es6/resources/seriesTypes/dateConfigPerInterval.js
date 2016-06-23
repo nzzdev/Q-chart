@@ -76,7 +76,7 @@ export var seriesTypeConfig = {
   },
   hour: {
     format: (index, isLastIntervalLabel, date, forceFull = false) => {
-      return `${pad(date.getHours()+1,2)}:${pad(date.getMinutes(),2)}`;
+      return `${pad(date.getHours(),2)}:${pad(date.getMinutes(),2)}`;
     },
     getLabelLength: (index, isLastIntervalLabel, data, config) => {
       return 40;

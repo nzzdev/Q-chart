@@ -3,6 +3,8 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
   var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
 
+  var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+
   _export('getFormattedDate', getFormattedDate);
 
   _export('getDivisor', getDivisor);
@@ -23,18 +25,23 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     return data;
   }
 
-  function getMaxValue(data) {
+  function getExtent(data) {
     var flatDatapoints = getFlatDatapoints(data);
     if (flatDatapoints && flatDatapoints.length) {
-      return flatDatapoints[flatDatapoints.length - 1];
+      return [flatDatapoints[0], flatDatapoints[flatDatapoints.length - 1]];
     }
     return 0;
   }
 
   function shortenNumberLabels(config, data) {
-    var maxValue = getMaxValue(data);
+    var _getExtent = getExtent(data);
 
-    var divisor = getDivisor(maxValue);
+    var _getExtent2 = _slicedToArray(_getExtent, 2);
+
+    var minValue = _getExtent2[0];
+    var maxValue = _getExtent2[1];
+
+    var divisor = Math.max(getDivisor(maxValue), getDivisor(Math.abs(minValue)));
 
     var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
 
@@ -286,7 +293,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
           var source = _step2.value;
 
           if (source.href && source.href.length > 0 && source.validHref) {
-            html += '<a href="' + source.href + '" target="_blank">' + source.text + '</a> ';
+            html += '<a href="' + source.href + '" target="_blank">' + source.text + '</a>' + (sources.indexOf(source) !== sources.length - 1 ? ', ' : ' ');
           } else {
             html += '' + source.text + (sources.indexOf(source) !== sources.length - 1 ? ', ' : ' ');
           }
