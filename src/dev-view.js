@@ -4222,7 +4222,7 @@ let rendererConfig = {
 
 let solo;
 
-solo = [chart1, '1'];
+// solo = [chart1, '1'];
 
 if (solo) {
 
