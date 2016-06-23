@@ -1,25 +1,19 @@
 language: node_js
-
 node_js:
 - '4.2'
-
 before_install:
 - npm install -g jspm@0.16.25
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
-
 install:
 - npm install -g gulp
 - npm install
 - jspm install
-
 script:
 - gulp bundle
 - gulp deploy
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 env:
   global:
   - S3_BUCKET=q-s3.nzz.ch
@@ -34,4 +28,4 @@ env:
   - secure: pxcweUSWygnfOTGbeVf/YywELuYFpizXjZci+HRMU1/bMRXLQrqOxLTjHLdUWno2cqxs5R92EcbttS7QAVjv0UB2KGbXDbiNr87QGHlZhajQ+FBpdJIadPoLKdqxUejE84vHTomgY2jhqmz2U25KrWtInNE7aiim2rA+jMES3xiXVSt+ZWib/I6Vlp+Jg9jyPKS6lpxVEaFpnxHBftXmoLj+AI/RWB895qRB0HVTtSNgmlN+WB+MtWWI7MBxtWjCrl7HZErnhQqE1XzsJ+liDEE9LZoZvJd788k2BsPSn43Z8FxuzQLwvlV6LgUbTt0mrKHTnunqi7PbEQc70LUw/LFU1maEEyh0pRDrhYz+GpNuTABSapMyPl1k7mA/e2i2DeIWh7LeBsorp33QKSE5PkhcujZ+8uL0knJMhmADtvTVCzCNy/1kAPKxbREXPecDyKe0/w66O/96/gi4hrfiLrMwh66nxgGUoxpwjvxvrAtESDjOvNtDZnfiO+rX6ZQbYJG9y62UngnxhAN0eF/uKHWFwxU63F/XwZgcIvkOGhKpQCnVpIy0pTfEwVMfnX5AbVjU9AbawsaYJ1/f3Vjn2cTe1eEfety9hRv8MMOW+jFiQVm4lel9kAcAh/Zlf6RDhracBeVDAQmCjzTqG0b67ESE8pn4h3Wd5KPWijWHZ6U=
 notifications:
   slack:
-    secure: nMgmJlgciG6A6BdkktM9BjSW2ZRvXU7bQm+S506sSnSXhi8vrgV8xxqvR4CDQHJYwgCrYr9PP2ZeL5NPnBUHu15/DiaUp4fS8qFnNX9TE2UHzg85l/hGWU9CfBb+mqMsq05/8C1KwMkzNlWXYSAsxpN3JtbY5bBrWTuuhr+fpcG+sG4EWqVWrV6RyHHEjHukHTywLzgb0h3g9zc74MNMQuIkL+arY/3RLru5VjNvaW0xudeos5Wh/DUpZ0aUqjjRDb5yls/UmLQ56iUuci41XpNuufA8I9uZQXyXI/10CZlNmMZiCH+KgzHxmzzU8Lgfvfq+BJDNGx+BBRFL981pW5AP7O4wZWfgCqQZYt7Moup0nxURpGuZiZQF6v0ZRXp40Qv3+Q/dBkbZ6Oyh1qZdSg81Xn8Ii6aeQtzByWajJ1jJKrrGeoVaPbNbwVRqwJN6P4di9TiAqg/JKcJ9EFOGc6yikQuhMvQ7kKSwwq6YW3ThC1LGH9H8v1cgy6ZXNWD4SvVta7IS9Xob0qWvW4Sg9NRMRB9Va2jUTuS/vXsbCZDqnqMudWvFYqM+/sNLbZpNU915MT8WbUa5eeMXiQ3vWGmLG1kecpnMaP2TRzp7FhK+AozbKxIe5dFFcaye+U2x0cj9GhvFa3nq0q8yzWkFsL39umkIbWhIcwnuYPPQcIc=
+    secure: YE7/y7d9HOUbT+Ri70R9WMX3ixfVQAAyLMdySnrfrEpnz4nAm5b05yRAx8V9mfiSP9sZJ254Ye1ZyL+daVq9TzQqM5dMIe6iu9tKlKi8/awfa0XmgyGQsw4FdVRPHa9GKikwnQSLhUiKcONAr/KctxN6pAJ/YNjUk/HKD9DdQOm0B6SZ+JNxfyZb273VxxRMG4aIh1oYxuBl7ACiAVjjv/xZbaX3fU62FmntmhaGTO41yrYY54P/3P+fyk8DVYUeZn51pvax7i39quyRAncb8/B0mrcnGbXu+aOdn2NlP+J4iIR5IzM0YND/die56VMLkccuSCDeTKxxrnC8xSP7gkJj7QQP5FOEI+rGnSoIoAPH/6//kciwxlaychTFQDPKWdirmgUHjpYud3xnN4Bpttifa2gyr7NAhOowuq6iJ5AyQS62kX8B9oe3d0ggmCuquaoD573shwchGB8qWZYMHMYIv9+91oYQLixfRIWyRq4tZFGYbspLKLXhBFoovjp0NCG4nG0JDh+bTSymA8+rWFqBRSatsbgZ/woxOZslyLotJlBkRIR2M5Twrbwdxjbp+sGZDEq31lvhWOlw3B5ILgW31fgk6tj42F6KoCztCOlsO++rDfwwfvpVwOBFdT7zE9AnEB0Q3Po8h8fq8GtTIqBJ3gv+ZQQmxH9xt5QvdhM=
