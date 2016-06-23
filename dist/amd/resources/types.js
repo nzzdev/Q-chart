@@ -78,7 +78,6 @@ define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-high
       modifyData: function modifyData(config, data, size, rect) {
         if (config.horizontalBars) {
           data.labels.reverse();
-          data.series.reverse();
           data.series.map(function (serie) {
             serie.reverse();
           });
@@ -129,7 +128,7 @@ define(['exports', './chartistConfig', '../chartist-plugins/chartist-plugin-high
         options: [],
         modifyConfig: function modifyConfig(config, value, data, size, rect) {
           if (value !== undefined) {
-            config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value, !config.horizontalBars, data.series.length));
+            config.plugins.push((0, _chartistPluginsChartistPluginHighlighting.ctHighlighting)(value));
           }
         }
       }]

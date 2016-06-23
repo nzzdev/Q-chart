@@ -85,8 +85,7 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline(),
-        ctSeriesClassOrder()
+        ctBaseline()
       ]
     },
     large: {
@@ -112,7 +111,6 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
-        ctSeriesClassOrder()
       ]
     },
   },

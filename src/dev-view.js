@@ -431,7 +431,7 @@ var chart7 = {
         {
           label: 'Intelligenz',
           data: [
-            49.843099,
+            10.3,
             49.931931,
             61.478163,
             58.981617,
@@ -523,7 +523,7 @@ var chart7b = {
         {
           label: 'Intelligenz',
           data: [
-            49.843099,
+            10.3,
             49.931931,
             61.478163,
             58.981617,
@@ -578,7 +578,101 @@ var chart7b = {
   options: {
     highlightDataSeries:3
   },
-  type: 'Bar'
+  type: 'StackedBar'
+}
+var chart7c = {
+  id: '_2',
+  title: 'C7b: Ein Kampf zwischen Ahnen',
+  tool: 'chart',
+  rendererVersion: env.VERSION,
+  sources: [],
+  data: {
+    x: {
+      label: '',
+      data: [
+          'Apex',
+          'BhetaBheta',
+          'Budh',
+          'Meto',
+          'Notu',
+          'Ming',
+          'Dris'
+      ]
+    },
+    y: {
+      label: 'gemessen in Spacepunkten',
+      data: [
+        {
+          label: 'Stärke',
+          data: [
+            10.3,
+            106.0,
+            105.4,
+            101.8,
+            95.9,
+            94.1,
+            102.0
+          ]
+        },
+        {
+          label: 'Intelligenz',
+          data: [
+            10.3,
+            49.931931,
+            61.478163,
+            58.981617,
+            61.223861,
+            65.601574,
+            67.89832
+          ]
+        },
+        {
+          label: 'Love',
+          data: [
+            56,
+            21,
+            41,
+            22,
+            15,
+            12,
+            34
+          ]
+        },
+        {
+          label: 'Wahrheit',
+          data: [
+            30,
+            20,
+            40,
+            50,
+            60,
+            71,
+            10
+          ]
+        },
+        {
+          label: 'Führerschein',
+          data: [
+            51,
+            31,
+            22,
+            71,
+            41,
+            34,
+            15
+          ]
+        }
+      ]
+    }
+  },
+  notes: "Dieses Diagramm zeigt die Anzahl der Haustiere pro Fahrrard im Kanton Zürich über die letzten zehn Jahre. Quellen: Amt für Pilzprüfung; Haustieramt; Deine Mutter – Beteiligte: Peter Lustig; Luise Honig; Franz Brand",
+  chartConfig: {
+  },
+  options: {
+    isColumnChart:true,
+    highlightDataSeries:3
+  },
+  type: 'StackedBar'
 }
 
 //--------
@@ -4111,38 +4205,42 @@ let rendererConfig = {
 
 
 
-let solo = [chart11,'11'];
+displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
+displayChart(chart7c, document.getElementById('chart7c'), rendererConfig);
 
-if (solo) {
-
-  displayChart(solo[0], document.getElementById('chart'+solo[1]), rendererConfig);
-
-} else {
-
-  displayChart(chart1, document.getElementById('chart1'), rendererConfig);
-  displayChart(chart2, document.getElementById('chart2'), rendererConfig);
-
-  // -- colors bars
-
-  displayChart(chart3, document.getElementById('chart3'), rendererConfig);
-  displayChart(chart4, document.getElementById('chart4'), rendererConfig);
-  displayChart(chart5, document.getElementById('chart5'), rendererConfig);
-  displayChart(chart6, document.getElementById('chart6'), rendererConfig);
-  displayChart(chart7, document.getElementById('chart7'), rendererConfig);
-  displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
-
-  // -- colors lines
-
-  displayChart(chart8, document.getElementById('chart8'), rendererConfig);
-  displayChart(chart9, document.getElementById('chart9'), rendererConfig);
-  displayChart(chart10, document.getElementById('chart10'), rendererConfig);
-  displayChart(chart11, document.getElementById('chart11'), rendererConfig);
-  displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
-  displayChart(chart12, document.getElementById('chart12'), rendererConfig);
-
-  displayChart(chart13, document.getElementById('chart13'), rendererConfig);
-  displayChart(chart13b, document.getElementById('chart13b'), rendererConfig);
-  displayChart(chart14, document.getElementById('chart14'), rendererConfig);
-  displayChart(chart15, document.getElementById('chart15'), rendererConfig);
-
-}
+//
+//
+// if (solo) {
+//
+//   displayChart(solo[0], document.getElementById('chart'+solo[1]), rendererConfig);
+//
+// } else {
+//
+//   displayChart(chart1, document.getElementById('chart1'), rendererConfig);
+//   displayChart(chart2, document.getElementById('chart2'), rendererConfig);
+//
+//   // -- colors bars
+//
+//   displayChart(chart3, document.getElementById('chart3'), rendererConfig);
+//   displayChart(chart4, document.getElementById('chart4'), rendererConfig);
+//   displayChart(chart5, document.getElementById('chart5'), rendererConfig);
+//   displayChart(chart6, document.getElementById('chart6'), rendererConfig);
+//   displayChart(chart7, document.getElementById('chart7'), rendererConfig);
+//   displayChart(chart7b, document.getElementById('chart7b'), rendererConfig);
+//
+//   // -- colors lines
+//
+//   displayChart(chart8, document.getElementById('chart8'), rendererConfig);
+//   displayChart(chart9, document.getElementById('chart9'), rendererConfig);
+//   displayChart(chart10, document.getElementById('chart10'), rendererConfig);
+//   displayChart(chart11, document.getElementById('chart11'), rendererConfig);
+//   displayChart(chart11b, document.getElementById('chart11b'), rendererConfig);
+//   displayChart(chart12, document.getElementById('chart12'), rendererConfig);
+//
+//   displayChart(chart13, document.getElementById('chart13'), rendererConfig);
+//   displayChart(chart13b, document.getElementById('chart13b'), rendererConfig);
+//   displayChart(chart14, document.getElementById('chart14'), rendererConfig);
+//   displayChart(chart15, document.getElementById('chart15'), rendererConfig);
+//
+// }

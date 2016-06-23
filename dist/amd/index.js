@@ -71,6 +71,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
   }
 
   function modifyData(config, item, data, size, rect) {
+
     if (item.data.x && item.data.x.type) {
       if (_resourcesSeriesTypes.seriesTypes.hasOwnProperty(item.data.x.type.id)) {
 
@@ -90,10 +91,10 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
           _resourcesSeriesTypes.seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
         }
       }
+    }
 
-      if (_resourcesTypes.types[item.type].modifyData) {
-        _resourcesTypes.types[item.type].modifyData(config, data, size, rect);
-      }
+    if (_resourcesTypes.types[item.type].modifyData) {
+      _resourcesTypes.types[item.type].modifyData(config, data, size, rect);
     }
   }
 
