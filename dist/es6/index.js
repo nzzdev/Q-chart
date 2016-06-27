@@ -48,16 +48,43 @@ function getExtent(data) {
       flatDatapoints[flatDatapoints.length - 1]
     ];
   }
-  return 0;
+  return null;
 }
 
-function shortenNumberLabels(config, data) {
+function getMinMaxAndDivisor(data) {
+  let extent = getExtent(data);
+
+  if (!extent) {
+    return {
+      min: null,
+      max: null,
+      divisor: 1
+    };
+  }
+
   let [minValue, maxValue] = getExtent(data);
 
   let divisor = Math.max(getDivisor(maxValue), getDivisor(Math.abs(minValue)));
 
   // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
   let maxLabel = Math.ceil(maxValue / Math.pow(10,maxValue.length)) * Math.pow(10,maxValue.length);
+
+  return {
+    min: minValue,
+    max: maxValue,
+    divisor: divisor
+  };
+}
+
+function shortenNumberLabels(config, data) {
+  let { min: minValue, max: maxValue, divisor } = getMinMaxAndDivisor(data);
+
+  let maxLabel = 1;
+
+  if (maxValue) {
+    // the max label is the maxvalue rounded up, doesn't need to be perfectly valid, just stay on the save side regarding space
+    maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
+  }
 
   let axis = config.horizontalBars ? 'axisX' : 'axisY';
 
@@ -386,7 +413,11 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
-        chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+        
+        shortenNumberLabels(chartistConfig, dataForChartist);
+        
+        let { divisor } = getMinMaxAndDivisor(dataForChartist);
+        chartistConfig.yValueDivisor = divisor;
 
         modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
 

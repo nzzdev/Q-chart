@@ -22,7 +22,7 @@ define(["exports"], function (exports) {
 
   function getFlatDatapoints(data) {
     if (!data.series.length || data.series[0].length === 0) {
-      return 0;
+      return null;
     }
     var flatDatapoints = data.series.reduce(function (a, b) {
       return a.concat(b);

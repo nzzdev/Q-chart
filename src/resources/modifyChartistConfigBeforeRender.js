@@ -70,9 +70,11 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
   try {
     let flatDatapoints = getFlatDatapoints(data);
     let onlyInteger = true;
-    for (let value of flatDatapoints) {
-      if (!Number.isInteger(parseFloat(value))) {
-        onlyInteger = false;
+    if (flatDatapoints && flatDatapoints.length) {
+      for (let value of flatDatapoints) {
+        if (!Number.isInteger(parseFloat(value))) {
+          onlyInteger = false;
+        }
       }
     }
     if (config.horizontalBars) {

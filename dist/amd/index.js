@@ -52,10 +52,20 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     if (flatDatapoints && flatDatapoints.length) {
       return [flatDatapoints[0], flatDatapoints[flatDatapoints.length - 1]];
     }
-    return 0;
+    return null;
   }
 
-  function shortenNumberLabels(config, data) {
+  function getMinMaxAndDivisor(data) {
+    var extent = getExtent(data);
+
+    if (!extent) {
+      return {
+        min: null,
+        max: null,
+        divisor: 1
+      };
+    }
+
     var _getExtent = getExtent(data);
 
     var _getExtent2 = _slicedToArray(_getExtent, 2);
@@ -66,6 +76,26 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
     var divisor = Math.max(getDivisor(maxValue), getDivisor(Math.abs(minValue)));
 
     var maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
+
+    return {
+      min: minValue,
+      max: maxValue,
+      divisor: divisor
+    };
+  }
+
+  function shortenNumberLabels(config, data) {
+    var _getMinMaxAndDivisor = getMinMaxAndDivisor(data);
+
+    var minValue = _getMinMaxAndDivisor.min;
+    var maxValue = _getMinMaxAndDivisor.max;
+    var divisor = _getMinMaxAndDivisor.divisor;
+
+    var maxLabel = 1;
+
+    if (maxValue) {
+      maxLabel = Math.ceil(maxValue / Math.pow(10, maxValue.length)) * Math.pow(10, maxValue.length);
+    }
 
     var axis = config.horizontalBars ? 'axisX' : 'axisY';
 
@@ -413,7 +443,14 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
 
             var drawSize = getElementSize(rect);
             var chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
-            chartistConfig.yValueDivisor = shortenNumberLabels(chartistConfig, dataForChartist);
+
+            shortenNumberLabels(chartistConfig, dataForChartist);
+
+            var _getMinMaxAndDivisor2 = getMinMaxAndDivisor(dataForChartist);
+
+            var divisor = _getMinMaxAndDivisor2.divisor;
+
+            chartistConfig.yValueDivisor = divisor;
 
             modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
 

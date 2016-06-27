@@ -14,7 +14,7 @@ export function getTextWidth(label, fontstyle) {
 
 export function getFlatDatapoints(data) {
   if (!data.series.length || data.series[0].length === 0) {
-    return 0;
+    return null;
   }
   let flatDatapoints = data.series
     .reduce((a, b) => a.concat(b))
