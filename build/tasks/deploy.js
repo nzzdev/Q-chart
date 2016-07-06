@@ -50,7 +50,7 @@ if (process.env.TRAVIS_TAG) {
   }
 }
 
-if (process.env.TRAVIS_BRANCH) {
+if (process.env.TRAVIS_BRANCH !== process.env.TRAVIS_TAG) {
   deployTargets.push(slug + '-' + process.env.TRAVIS_BRANCH);
 }
 
