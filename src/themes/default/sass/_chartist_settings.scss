@@ -19,15 +19,22 @@ $ct-line-width: 2px;
 // Bar chart bar width
 $ct-bar-width: 10px;
 
+
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
-$ct-series-names: (a, b, c, d, e, f);
+$ct-series-names: (a, b, c, d, e, f, g, h, i, j, k, l);
 $ct-series-colors: (
   $color-nzz-blue,
   $color-nzz-ochre,
   $color-nzz-green,
   $color-nzz-brown,
   $color-nzz-magenta,
-  $color-nzz-red
+  $color-nzz-red,
+  #1f5fc2,
+  #eed900,
+  #5ac08a,
+  #887806,
+  #615aff,
+  #973900
 );
 $ct-series-colors-brightened: (
   mix(white, $color-nzz-blue, 60),
@@ -35,5 +42,11 @@ $ct-series-colors-brightened: (
   mix(white, $color-nzz-green, 60),
   mix(white, $color-nzz-brown, 60),
   mix(white, $color-nzz-magenta, 60),
-  mix(white, $color-nzz-red, 60)
+  mix(white, $color-nzz-red, 60),
+  mix(white, #1f5fc2, 60),
+  mix(white, #eed900, 60),
+  mix(white, #5ac08a, 60),
+  mix(white, #887806, 60),
+  mix(white, #615aff, 60),
+  mix(white, #973900, 60)
 );
