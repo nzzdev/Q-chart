@@ -4,9 +4,9 @@
 @import "storytelling-ui-kit/font";
 @import "storytelling-ui-kit/respond-to";
 
-@import 'chartist@0.9.5/dist/scss/settings/chartist-settings';
+@import 'chartist@0.9.8/dist/scss/settings/chartist-settings';
 $ct-include-classes: false;
-@import 'chartist@0.9.5/dist/scss/chartist';
+@import 'chartist@0.9.8/dist/scss/chartist';
 
 @import "sass/chartist_settings";
 @import "sass/chartist_styles";

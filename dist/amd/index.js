@@ -103,7 +103,7 @@ define(['exports', 'paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedi
       config[axis].scaleMinSpace = (0, _resourcesHelpers.getTextWidth)(maxLabel / divisor, (0, _resourcesSeriesTypes.getDigitLabelFontStyle)()) * 1.5;
     }
     config[axis].labelInterpolationFnc = function (value, index) {
-      return value / divisor;
+      return _Chartist['default'].roundWithPrecision(value) / divisor;
     };
     return divisor;
   }

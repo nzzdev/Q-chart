@@ -16,7 +16,7 @@ System.config({
   map: {
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
-    "chartist": "npm:chartist@0.9.5",
+    "chartist": "npm:chartist@0.9.8",
     "clean-css": "npm:clean-css@3.4.8",
     "clone": "npm:clone@1.0.2",
     "computed-style-to-inline-style": "npm:computed-style-to-inline-style@1.0.2",

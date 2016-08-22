@@ -92,7 +92,9 @@ function shortenNumberLabels(config, data) {
     config[axis].scaleMinSpace = getTextWidth(maxLabel/divisor, getDigitLabelFontStyle()) * 1.5;
   }
   config[axis].labelInterpolationFnc = (value, index) => {
-    return value / divisor;
+    // return value / divisor;
+    // todo: once https://github.com/gionkunz/chartist-js/issues/771 is resolved, the rounding here can get removed again probably
+    return Chartist.roundWithPrecision(value) / divisor;
   }
   return divisor;
 }

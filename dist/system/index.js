@@ -81,7 +81,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       config[axis].scaleMinSpace = getTextWidth(maxLabel / divisor, getDigitLabelFontStyle()) * 1.5;
     }
     config[axis].labelInterpolationFnc = function (value, index) {
-      return value / divisor;
+      return Chartist.roundWithPrecision(value) / divisor;
     };
     return divisor;
   }

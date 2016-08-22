@@ -92,7 +92,7 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
         if (labelsToDisplay[index]) {
           data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
         } else {
-          data.labels[index] = '';
+          data.labels[index] = false;
         }
       });
     } else {
@@ -101,10 +101,10 @@ System.register(['./dateConfigPerInterval', './helpers'], function (_export) {
             if (seriesTypeConfig[type.options.interval] && seriesTypeConfig[type.options.interval].getForceShow && seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
               data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
             } else {
-              data.labels[index] = ' ';
+              data.labels[index] = '';
             }
           } else {
-              data.labels[index] = '';
+              data.labels[index] = false;
             }
         });
       }
