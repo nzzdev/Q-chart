@@ -12,7 +12,7 @@ export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
 export var chartHeight = 200;
 
-var chartistClassNamesConfig = {
+var chartistClassNamesConfigLine = {
   chart: 'ct-chart-line',
   label: 'ct-label s-font-note-s s-font-note-s--light',
   labelGroup: 'ct-labels',
@@ -20,6 +20,21 @@ var chartistClassNamesConfig = {
   line: 'ct-line',
   point: 'ct-point',
   area: 'ct-area',
+  grid: 'ct-grid',
+  gridGroup: 'ct-grids',
+  vertical: 'ct-vertical',
+  horizontal: 'ct-horizontal',
+  start: 'ct-start',
+  end: 'ct-end'
+}
+
+var chartistClassNamesConfigBar = {
+  chart: 'ct-chart-bar',
+  horizontalBars: 'ct-horizontal-bars',
+  label: 'ct-label s-font-note-s s-font-note-s-light',
+  labelGroup: 'ct-labels',
+  series: 'ct-series',
+  bar: 'ct-bar',
   grid: 'ct-grid',
   gridGroup: 'ct-grids',
   vertical: 'ct-vertical',
@@ -54,7 +69,7 @@ export var chartistConfigs = {
         ctSophieVizColorClasses(),
         ctSeriesClassOrder(),
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -81,7 +96,7 @@ export var chartistConfigs = {
         ctSophieVizColorClasses(),
         ctSeriesClassOrder(),
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
   },
 
@@ -109,7 +124,7 @@ export var chartistConfigs = {
         ctBaseline(),
         ctSophieVizColorClasses()
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -136,7 +151,7 @@ export var chartistConfigs = {
         ctExtendFitBarsToData(),
         ctSophieVizColorClasses()
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
   },
 
@@ -168,7 +183,7 @@ export var chartistConfigs = {
         ctBaseline(),
         ctSophieVizColorClasses()
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigLine
     },
     large: {
       height: chartHeight,
@@ -197,7 +212,7 @@ export var chartistConfigs = {
         ctBaseline(),
         ctSophieVizColorClasses()
       ],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigLine
     }
   }
 }

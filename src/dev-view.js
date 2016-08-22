@@ -4605,7 +4605,7 @@ let rendererConfig = {
 
 
 
-let solo //= [chart5,'5']
+let solo //= [chart4,'4']
 
 
 if (solo) {

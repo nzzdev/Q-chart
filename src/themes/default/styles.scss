@@ -2,8 +2,8 @@
 $ct-include-classes: false;
 @import 'chartist@0.9.8/dist/scss/chartist';
 
-@import "sass/chartist_settings";
-@import "sass/chartist_styles";
+@import "sass/_chartist_settings";
+@import "sass/_chartist_styles";
 
 @mixin clearfix {
   &::after {

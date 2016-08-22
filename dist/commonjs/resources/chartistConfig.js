@@ -32,7 +32,7 @@ exports.vertBarSetPadding = vertBarSetPadding;
 var chartHeight = 200;
 
 exports.chartHeight = chartHeight;
-var chartistClassNamesConfig = {
+var chartistClassNamesConfigLine = {
   chart: 'ct-chart-line',
   label: 'ct-label s-font-note-s s-font-note-s--light',
   labelGroup: 'ct-labels',
@@ -40,6 +40,21 @@ var chartistClassNamesConfig = {
   line: 'ct-line',
   point: 'ct-point',
   area: 'ct-area',
+  grid: 'ct-grid',
+  gridGroup: 'ct-grids',
+  vertical: 'ct-vertical',
+  horizontal: 'ct-horizontal',
+  start: 'ct-start',
+  end: 'ct-end'
+};
+
+var chartistClassNamesConfigBar = {
+  chart: 'ct-chart-bar',
+  horizontalBars: 'ct-horizontal-bars',
+  label: 'ct-label s-font-note-s s-font-note-s-light',
+  labelGroup: 'ct-labels',
+  series: 'ct-series',
+  bar: 'ct-bar',
   grid: 'ct-grid',
   gridGroup: 'ct-grids',
   vertical: 'ct-vertical',
@@ -65,7 +80,7 @@ var chartistConfigs = {
       axisX: {},
       axisY: {},
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -82,7 +97,7 @@ var chartistConfigs = {
       axisX: {},
       axisY: {},
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)(), (0, _chartistPluginsChartistPluginSeriesClassOrderJs.ctSeriesClassOrder)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     }
   },
 
@@ -102,7 +117,7 @@ var chartistConfigs = {
       axisX: {},
       axisY: {},
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -120,7 +135,7 @@ var chartistConfigs = {
       axisX: {},
       axisY: {},
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginFitBarsJs.ctExtendFitBarsToData)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigBar
     }
   },
 
@@ -146,7 +161,7 @@ var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigLine
     },
     large: {
       height: chartHeight,
@@ -169,7 +184,7 @@ var chartistConfigs = {
         scaleMinSpace: 40
       },
       plugins: [(0, _chartistPluginsChartistPluginLabelClassesJs.ctLabelClasses)(), (0, _chartistPluginsChartistPluginLabelPositionJs.ctLabelPosition)(), (0, _chartistPluginsChartistPluginProtrudeGridJs.ctProtrudeGrid)(), (0, _chartistPluginsChartistPluginBaselineJs.ctBaseline)(), (0, _chartistPluginsChartistPluginSophieVizColorClassesJs.ctSophieVizColorClasses)()],
-      classNames: chartistClassNamesConfig
+      classNames: chartistClassNamesConfigLine
     }
   }
 };

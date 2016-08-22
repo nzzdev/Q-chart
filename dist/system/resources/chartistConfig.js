@@ -1,7 +1,7 @@
 System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-baseline.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-label-position.js', '../chartist-plugins/chartist-plugin-fit-bars.js', '../chartist-plugins/chartist-plugin-series-class-order.js', '../chartist-plugins/chartist-plugin-sophie-viz-color-classes.js', './clone'], function (_export) {
   'use strict';
 
-  var ctProtrudeGrid, ctBaseline, ctLabelClasses, ctLabelPosition, ctExtendFitBarsToData, ctSeriesClassOrder, ctSophieVizColorClasses, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistClassNamesConfig, chartistConfigs;
+  var ctProtrudeGrid, ctBaseline, ctLabelClasses, ctLabelPosition, ctExtendFitBarsToData, ctSeriesClassOrder, ctSophieVizColorClasses, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistClassNamesConfigLine, chartistClassNamesConfigBar, chartistConfigs;
 
   _export('getConfig', getConfig);
 
@@ -42,7 +42,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
 
       _export('chartHeight', chartHeight);
 
-      chartistClassNamesConfig = {
+      chartistClassNamesConfigLine = {
         chart: 'ct-chart-line',
         label: 'ct-label s-font-note-s s-font-note-s--light',
         labelGroup: 'ct-labels',
@@ -50,6 +50,20 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
         line: 'ct-line',
         point: 'ct-point',
         area: 'ct-area',
+        grid: 'ct-grid',
+        gridGroup: 'ct-grids',
+        vertical: 'ct-vertical',
+        horizontal: 'ct-horizontal',
+        start: 'ct-start',
+        end: 'ct-end'
+      };
+      chartistClassNamesConfigBar = {
+        chart: 'ct-chart-bar',
+        horizontalBars: 'ct-horizontal-bars',
+        label: 'ct-label s-font-note-s s-font-note-s-light',
+        labelGroup: 'ct-labels',
+        series: 'ct-series',
+        bar: 'ct-bar',
         grid: 'ct-grid',
         gridGroup: 'ct-grids',
         vertical: 'ct-vertical',
@@ -74,7 +88,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             axisX: {},
             axisY: {},
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSophieVizColorClasses(), ctSeriesClassOrder()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigBar
           },
           large: {
             height: chartHeight,
@@ -91,7 +105,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             axisX: {},
             axisY: {},
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData(), ctSophieVizColorClasses(), ctSeriesClassOrder()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigBar
           }
         },
 
@@ -111,7 +125,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             axisX: {},
             axisY: {},
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSophieVizColorClasses()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigBar
           },
           large: {
             height: chartHeight,
@@ -129,7 +143,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             axisX: {},
             axisY: {},
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData(), ctSophieVizColorClasses()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigBar
           }
         },
 
@@ -155,7 +169,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
               scaleMinSpace: 40
             },
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSophieVizColorClasses()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigLine
           },
           large: {
             height: chartHeight,
@@ -178,7 +192,7 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
               scaleMinSpace: 40
             },
             plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSophieVizColorClasses()],
-            classNames: chartistClassNamesConfig
+            classNames: chartistClassNamesConfigLine
           }
         }
       };
