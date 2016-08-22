@@ -101,6 +101,7 @@ System.config({
     },
     "npm:clone@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
     },
     "npm:commander@2.8.1": {
