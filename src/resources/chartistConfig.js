@@ -11,6 +11,22 @@ export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
 export var chartHeight = 200;
 
+var chartistClassNamesConfig = {
+  chart: 'ct-chart-line',
+  label: 'ct-label s-font-note-s s-font-note-s--light',
+  labelGroup: 'ct-labels',
+  series: 'ct-series',
+  line: 'ct-line',
+  point: 'ct-point',
+  area: 'ct-area',
+  grid: 'ct-grid',
+  gridGroup: 'ct-grids',
+  vertical: 'ct-vertical',
+  horizontal: 'ct-horizontal',
+  start: 'ct-start',
+  end: 'ct-end'
+}
+
 export var chartistConfigs = {
 
   Bar: {
@@ -35,7 +51,8 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctSeriesClassOrder()
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     },
     large: {
       height: chartHeight,
@@ -60,7 +77,8 @@ export var chartistConfigs = {
         ctBaseline(),
         ctExtendFitBarsToData(),
         ctSeriesClassOrder()
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     },
   },
 
@@ -86,7 +104,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline()
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     },
     large: {
       height: chartHeight,
@@ -111,7 +130,8 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     },
   },
 
@@ -141,7 +161,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline()
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     },
     large: {
       height: chartHeight,
@@ -168,7 +189,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline()
-      ]
+      ],
+      classNames: chartistClassNamesConfig
     }
   }
 }

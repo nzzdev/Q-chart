@@ -1,7 +1,7 @@
 System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../chartist-plugins/chartist-plugin-baseline.js', '../chartist-plugins/chartist-plugin-label-classes.js', '../chartist-plugins/chartist-plugin-label-position.js', '../chartist-plugins/chartist-plugin-fit-bars.js', '../chartist-plugins/chartist-plugin-series-class-order.js', './clone'], function (_export) {
   'use strict';
 
-  var ctProtrudeGrid, ctBaseline, ctLabelClasses, ctLabelPosition, ctExtendFitBarsToData, ctSeriesClassOrder, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistConfigs;
+  var ctProtrudeGrid, ctBaseline, ctLabelClasses, ctLabelPosition, ctExtendFitBarsToData, ctSeriesClassOrder, clone, vertBarHeight, vertBarSetPadding, chartHeight, chartistClassNamesConfig, chartistConfigs;
 
   _export('getConfig', getConfig);
 
@@ -40,6 +40,21 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
 
       _export('chartHeight', chartHeight);
 
+      chartistClassNamesConfig = {
+        chart: 'ct-chart-line',
+        label: 'ct-label s-font-note-s s-font-note-s--light',
+        labelGroup: 'ct-labels',
+        series: 'ct-series',
+        line: 'ct-line',
+        point: 'ct-point',
+        area: 'ct-area',
+        grid: 'ct-grid',
+        gridGroup: 'ct-grids',
+        vertical: 'ct-vertical',
+        horizontal: 'ct-horizontal',
+        start: 'ct-start',
+        end: 'ct-end'
+      };
       chartistConfigs = {
 
         Bar: {
@@ -56,7 +71,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             horizontalBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSeriesClassOrder()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctSeriesClassOrder()],
+            classNames: chartistClassNamesConfig
           },
           large: {
             height: chartHeight,
@@ -72,7 +88,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             horizontalBars: false,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData(), ctSeriesClassOrder()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData(), ctSeriesClassOrder()],
+            classNames: chartistClassNamesConfig
           }
         },
 
@@ -91,7 +108,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()],
+            classNames: chartistClassNamesConfig
           },
           large: {
             height: chartHeight,
@@ -108,7 +126,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
             stackBars: true,
             axisX: {},
             axisY: {},
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline(), ctExtendFitBarsToData()],
+            classNames: chartistClassNamesConfig
           }
         },
 
@@ -133,7 +152,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()],
+            classNames: chartistClassNamesConfig
           },
           large: {
             height: chartHeight,
@@ -155,7 +175,8 @@ System.register(['../chartist-plugins/chartist-plugin-protrude-grid.js', '../cha
               position: 'start',
               scaleMinSpace: 40
             },
-            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()]
+            plugins: [ctLabelClasses(), ctLabelPosition(), ctProtrudeGrid(), ctBaseline()],
+            classNames: chartistClassNamesConfig
           }
         }
       };

@@ -1,7 +1,7 @@
 System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/seriesTypes/dateSeriesType', './resources/seriesTypes/dateConfigPerInterval', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars, stylesLoaded;
 
   var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
 
@@ -216,7 +216,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         for (var i in item.data.y.data) {
           var serie = item.data.y.data[i];
           var isActive = hasHighlighted && highlightDataSeries == i;
-          html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
+          html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">' + serie.label + '</div>\n        </div>';
         }
       }
       if (hasPrognosis) {
@@ -225,7 +225,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
         var interval = _item$data$x$type$options.interval;
 
         var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + date + ')</div>\n        </div>';
+        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ' + date + ')</div>\n        </div>';
       }
     }
     html += '\n    </div>\n  ';
@@ -276,7 +276,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
     var axisExplanation = { x: '', y: '' };
     axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-    var html = '<h3 class="q-item__title">' + wrapEmojisInSpan(item.title) + '</h3>';
+    var html = '<h3 class="s-q-item__title">' + wrapEmojisInSpan(item.title) + '</h3>';
     html += getLegendHtml(item);
     if (!item.data.y) {
       item.data.y = {};
@@ -286,28 +286,28 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       axisNames.reverse();
     }
 
-    html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
+    html += '<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
 
     if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
       if (chartistConfig.horizontalBars) {
-        html += '<div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>';
+        html += '<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>';
       }
       html += '<div class="q-chart__chartist-container"></div>';
     } else {
       if (chartistConfig.horizontalBars) {
-        html += '\n        <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n        <div class="q-chart__chartist-container"></div>\n      ';
+        html += '\n        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n        <div class="q-chart__chartist-container"></div>\n      ';
       } else {
-        html += '\n        <div class="q-chart__chartist-container"></div>\n        <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n      ';
+        html += '\n        <div class="q-chart__chartist-container"></div>\n        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n      ';
       }
     }
 
-    html += '\n    <div class="q-item__footer">';
+    html += '\n    <div class="s-q-item__footer">';
 
     if (item.notes) {
-      html += '<div class="q-item__footer__notes">' + item.notes + '</div>';
+      html += '<div class="s-q-item__footer__notes">' + item.notes + '</div>';
     }
 
-    html += '<div class="q-item__footer__sources">';
+    html += '<div class="s-q-item__footer__sources">';
     if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
       var sources = item.sources.filter(function (source) {
         return source.text && source.text.length > 0;
@@ -351,7 +351,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
   function displayWithContext(item, element, chartistConfig, dataForChartist) {
     var el = document.createElement('section');
-    el.setAttribute('class', 'q-chart');
+    el.setAttribute('class', 'q-chart s-q-item');
     el.innerHTML = getContextHtml(item, chartistConfig);
     while (element.firstChild) {
       element.removeChild(element.firstChild);
@@ -388,7 +388,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
           var rendererPromises = [];
 
-          if (rendererConfig.loadStyles) {
+          if (rendererConfig.loadStyles && stylesLoaded === false) {
             (function () {
               var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
               var themeLoadCSS = loadCSS(themeUrl + '/styles.css');
@@ -397,7 +397,20 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
                   resolve();
                 });
               });
+
+              var sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-input@~0.1.0[range].css');
+              var sophieStylesLoadPromise = new Promise(function (resolve, reject) {
+                onloadCSS(sophieStylesLoad, function () {
+                  resolve();
+                });
+              });
+
+              Promise.all([themeLoadPromise, sophieStylesLoadPromise]).then(function (styles) {
+                stylesLoaded = true;
+              });
+
               rendererPromises.push(themeLoadPromise);
+              rendererPromises.push(sophieStylesLoadPromise);
             })();
           }
 
@@ -503,6 +516,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
       sizeObserver = new SizeObserver();
       chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
+      stylesLoaded = false;
     }
   };
 });

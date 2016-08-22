@@ -28,6 +28,8 @@ var sizeObserver = new SizeObserver();
 
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
+var stylesLoaded = false;
+
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
 
@@ -222,7 +224,7 @@ function getLegendHtml(item) {
         html += `
         <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'q-chart__legend__item--highlighted' : ''}">
           <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
-          <div class="q-chart__legend__item__text">${serie.label}</div>
+          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">${serie.label}</div>
         </div>`;
       }
     }
@@ -232,7 +234,7 @@ function getLegendHtml(item) {
       html += `
         <div class="q-chart__legend__item q-chart__legend__item--prognosis">
           <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
-          <div class="q-chart__legend__item__text">Prognose (ab ${date})</div>
+          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ${date})</div>
         </div>`;
     }
   }
@@ -289,7 +291,7 @@ function getContextHtml(item, chartistConfig) {
   let axisExplanation = {x: '', y: ''};
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  let html = `<h3 class="q-item__title">${wrapEmojisInSpan(item.title)}</h3>`;
+  let html = `<h3 class="s-q-item__title">${wrapEmojisInSpan(item.title)}</h3>`;
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
@@ -299,35 +301,35 @@ function getContextHtml(item, chartistConfig) {
     axisNames.reverse();
   }
 
-  html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
+  html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     if (chartistConfig.horizontalBars) {
-      html += `<div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
+      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
     }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
       html += `
-        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
         <div class="q-chart__chartist-container"></div>
       `;
     } else {
       html += `
         <div class="q-chart__chartist-container"></div>
-        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
       `;
     }
   }
 
   html += `
-    <div class="q-item__footer">`;
+    <div class="s-q-item__footer">`;
 
   if (item.notes) {
-    html += `<div class="q-item__footer__notes">${item.notes}</div>`;
+    html += `<div class="s-q-item__footer__notes">${item.notes}</div>`;
   }
 
-  html += '<div class="q-item__footer__sources">';
+  html += '<div class="s-q-item__footer__sources">';
   if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
     let sources = item.sources
       .filter(source => source.text && source.text.length > 0);
@@ -350,7 +352,7 @@ function getContextHtml(item, chartistConfig) {
 
 function displayWithContext(item, element, chartistConfig, dataForChartist) {
   let el = document.createElement('section');
-  el.setAttribute('class','q-chart');
+  el.setAttribute('class','q-chart s-q-item');
   el.innerHTML = getContextHtml(item, chartistConfig);
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -382,7 +384,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
       let rendererPromises = [];
 
-      if (rendererConfig.loadStyles) {
+      if (rendererConfig.loadStyles && stylesLoaded === false) {
         let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
         let themeLoadCSS = loadCSS(`${themeUrl}/styles.css`);
         let themeLoadPromise = new Promise((resolve, reject) => {
@@ -390,7 +392,22 @@ export function display(item, element, rendererConfig, withoutContext = false) {
             resolve();
           });
         });
+
+        // additional styles
+        let sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-input@~0.1.0[range].css');
+        let sophieStylesLoadPromise = new Promise((resolve, reject) => {
+          onloadCSS(sophieStylesLoad, () => {
+            resolve();
+          });
+        });
+
+        Promise.all([themeLoadPromise, sophieStylesLoadPromise])
+          .then(styles => {
+            stylesLoaded = true;
+          })
+
         rendererPromises.push(themeLoadPromise);
+        rendererPromises.push(sophieStylesLoadPromise);
       }
 
       let chart;
@@ -451,16 +468,6 @@ export function display(item, element, rendererConfig, withoutContext = false) {
           reject(chart);
         }
       }, element, true);
-
-      // this is going crazy on nzz.ch with its floating ads
-      // sizeObserver.onElementRectChange((rect) => {
-      //   let drawSize = getElementSize(rect);
-      //   if (withoutContext) {
-      //     displayWithoutContext(item, element, drawSize, rect);
-      //   } else {
-      //     displayWithContext(item, element, drawSize, rect);
-      //   }
-      // }, element);
 
     } catch (e) {
       reject(e);

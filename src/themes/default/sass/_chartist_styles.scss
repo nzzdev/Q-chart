@@ -6,7 +6,7 @@
 }
 
 .#{$ct-class-label} {
-  @include font(label);
+  fill: currentColor;
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
