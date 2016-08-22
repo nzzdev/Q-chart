@@ -1,7 +1,7 @@
-System.register(['chartist'], function (_export) {
+System.register(['chartist', '../resources/vizColors.js'], function (_export) {
   'use strict';
 
-  var Chartist;
+  var Chartist, brightVizColorClasses;
 
   _export('ctHighlighting', ctHighlighting);
 
@@ -18,8 +18,8 @@ System.register(['chartist'], function (_export) {
 
       chart.on('created', function (data) {
         try {
-          data.svg.addClass('ct-contains-highlighted-el');
-          var active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          data.svg.addClass('ct-contains-highlighted');
+          var active = data.svg._node.querySelector('.ct-highlighted').parentNode;
           moveToFront(active);
         } catch (e) {}
       });
@@ -31,9 +31,11 @@ System.register(['chartist'], function (_export) {
 
             var index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
             if (index === highLightedIndex) {
-              data.element.addClass('ct-highlighted-el');
+              data.element.addClass('ct-highlighted');
+              data.element.removeClass(brightVizColorClasses[index]);
             } else {
-              data.element.removeClass('ct-highlighted-el');
+              data.element.removeClass('ct-highlighted');
+              data.element.addClass(brightVizColorClasses[index]);
             }
           }
         } catch (e) {}
@@ -44,6 +46,8 @@ System.register(['chartist'], function (_export) {
   return {
     setters: [function (_chartist) {
       Chartist = _chartist['default'];
+    }, function (_resourcesVizColorsJs) {
+      brightVizColorClasses = _resourcesVizColorsJs.brightVizColorClasses;
     }],
     execute: function () {
       ;

@@ -17,6 +17,8 @@ import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
 
+import {vizColorClasses, brightVizColorClasses} from './resources/vizColors.js';
+
 import rendererConfigDefaults from './rendererConfigDefaults';
 
 import loadCSS from 'fg-loadcss';
@@ -204,8 +206,7 @@ export function getFormattedDate(date, format, interval){
 }
 
 function getLegendHtml(item) {
-  let highlightDataSeries = item.options && item.options.highlightDataSeries;
-  let hasHighlighted = !isNaN(highlightDataSeries);
+  
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
   let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   let svgBox = `
@@ -215,29 +216,35 @@ function getLegendHtml(item) {
   let isLine = item.type === 'Line';
   let itemBox = isLine ? svgBox : '';
   let html = `
-    <div class="q-chart__legend ${hasHighlighted ? 'q-chart__legend--highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
-  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
-    if( item.data.y.data.length > 1 ){
-      for (var i in item.data.y.data) {
-        let serie = item.data.y.data[i];
-        let isActive = hasHighlighted && highlightDataSeries == i;
-        html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'q-chart__legend__item--highlighted' : ''}">
-          <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
-          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">${serie.label}</div>
-        </div>`;
-      }
+    <div class="q-chart__legend q-chart__legend--${item.type.toLowerCase()}">`;
+
+  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1 ) {
+    let highlightDataSeries = false;
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+      highlightDataSeries = item.options.highlightDataSeries;
     }
-    if (hasPrognosis){
-      let {prognosisStart,interval} = item.data.x.type.options;
-      let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+    let hasHighlighted = highlightDataSeries && !isNaN(highlightDataSeries);
+    for (let i = 0; i < item.data.y.data.length; i++) {
+      let serie = item.data.y.data[i];
+      let isActive = hasHighlighted && highlightDataSeries === i;
       html += `
-        <div class="q-chart__legend__item q-chart__legend__item--prognosis">
-          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
-          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ${date})</div>
-        </div>`;
+      <div class="q-chart__legend__item ${hasHighlighted ? brightVizColorClasses[i] : vizColorClasses[i]} q-chart__legend__item--${chars[i]} ${isActive ? vizColorClasses[i] : ''}">
+        <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
+        <div class="q-chart__legend__item__text s-font-note-s ${isActive && hasHighlighted ? '' : 's-font-note-s--light'}">${serie.label}</div>
+      </div>`;
     }
   }
+
+  if (hasPrognosis){
+    let {prognosisStart,interval} = item.data.x.type.options;
+    let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+    html += `
+      <div class="q-chart__legend__item q-chart__legend__item--prognosis">
+        <div class="q-chart__legend__item__box s-color-gray-5 ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
+        <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ${date})</div>
+      </div>`;
+  }
+
   html += `
     </div>
   `;
@@ -394,7 +401,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         });
 
         // additional styles
-        let sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-input@~0.1.0[range].css');
+        let sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-viz-color@~1.0.1[general].css');
         let sophieStylesLoadPromise = new Promise((resolve, reject) => {
           onloadCSS(sophieStylesLoad, () => {
             resolve();

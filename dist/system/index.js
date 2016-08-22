@@ -1,7 +1,7 @@
-System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/seriesTypes/dateSeriesType', './resources/seriesTypes/dateConfigPerInterval', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
+System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.addListener.js', 'core-js/es6/object', 'chartist', './resources/chartistConfig', './resources/SizeObserver', './resources/types', './resources/seriesTypes', './resources/seriesTypes/dateSeriesType', './resources/seriesTypes/dateConfigPerInterval', './resources/helpers', './resources/modifyChartistConfigBeforeRender', './resources/setYAxisOffset', './resources/vizColors.js', './rendererConfigDefaults', 'fg-loadcss', './resources/onloadCSS'], function (_export) {
   'use strict';
 
-  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars, stylesLoaded;
+  var Chartist, getChartistConfig, SizeObserver, chartTypes, seriesTypes, getDigitLabelFontStyle, getDateObject, seriesTypeConfig, getTextWidth, getFlatDatapoints, modifyChartistConfigBeforeRender, setYAxisOffset, vizColorClasses, brightVizColorClasses, rendererConfigDefaults, loadCSS, onloadCSS, types, sizeObserver, chars, stylesLoaded;
 
   var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
 
@@ -203,31 +203,36 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
   }
 
   function getLegendHtml(item) {
-    var highlightDataSeries = item.options && item.options.highlightDataSeries;
-    var hasHighlighted = !isNaN(highlightDataSeries);
+
     var isDate = item.data.x.type && item.data.x.type.id === 'date';
     var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
     var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
     var isLine = item.type === 'Line';
     var itemBox = isLine ? svgBox : '';
-    var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'q-chart__legend--highlighted' : '') + ' q-chart__legend--' + item.type.toLowerCase() + '">';
-    if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
-      if (item.data.y.data.length > 1) {
-        for (var i in item.data.y.data) {
-          var serie = item.data.y.data[i];
-          var isActive = hasHighlighted && highlightDataSeries == i;
-          html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">' + serie.label + '</div>\n        </div>';
-        }
-      }
-      if (hasPrognosis) {
-        var _item$data$x$type$options = item.data.x.type.options;
-        var prognosisStart = _item$data$x$type$options.prognosisStart;
-        var interval = _item$data$x$type$options.interval;
+    var html = '\n    <div class="q-chart__legend q-chart__legend--' + item.type.toLowerCase() + '">';
 
-        var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ' + date + ')</div>\n        </div>';
+    if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
+      var highlightDataSeries = false;
+      if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+        highlightDataSeries = item.options.highlightDataSeries;
+      }
+      var hasHighlighted = highlightDataSeries && !isNaN(highlightDataSeries);
+      for (var i = 0; i < item.data.y.data.length; i++) {
+        var serie = item.data.y.data[i];
+        var isActive = hasHighlighted && highlightDataSeries === i;
+        html += '\n      <div class="q-chart__legend__item ' + (hasHighlighted ? brightVizColorClasses[i] : vizColorClasses[i]) + ' q-chart__legend__item--' + chars[i] + ' ' + (isActive ? vizColorClasses[i] : '') + '">\n        <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n        <div class="q-chart__legend__item__text s-font-note-s ' + (isActive && hasHighlighted ? '' : 's-font-note-s--light') + '">' + serie.label + '</div>\n      </div>';
       }
     }
+
+    if (hasPrognosis) {
+      var _item$data$x$type$options = item.data.x.type.options;
+      var prognosisStart = _item$data$x$type$options.prognosisStart;
+      var interval = _item$data$x$type$options.interval;
+
+      var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
+      html += '\n      <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n        <div class="q-chart__legend__item__box s-color-gray-5 ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n        <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ' + date + ')</div>\n      </div>';
+    }
+
     html += '\n    </div>\n  ';
     return html;
   }
@@ -398,7 +403,7 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
                 });
               });
 
-              var sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-input@~0.1.0[range].css');
+              var sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-viz-color@~1.0.1[general].css');
               var sophieStylesLoadPromise = new Promise(function (resolve, reject) {
                 onloadCSS(sophieStylesLoad, function () {
                   resolve();
@@ -502,6 +507,9 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
       modifyChartistConfigBeforeRender = _resourcesModifyChartistConfigBeforeRender['default'];
     }, function (_resourcesSetYAxisOffset) {
       setYAxisOffset = _resourcesSetYAxisOffset['default'];
+    }, function (_resourcesVizColorsJs) {
+      vizColorClasses = _resourcesVizColorsJs.vizColorClasses;
+      brightVizColorClasses = _resourcesVizColorsJs.brightVizColorClasses;
     }, function (_rendererConfigDefaults) {
       rendererConfigDefaults = _rendererConfigDefaults['default'];
     }, function (_fgLoadcss) {

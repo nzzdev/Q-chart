@@ -1,5 +1,7 @@
 import Chartist from 'chartist';
 
+import {brightVizColorClasses} from '../resources/vizColors.js';
+
 export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength) {
 
   let highLightedIndex = Number(highlightDataSeries);
@@ -12,8 +14,8 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
       chart.on('created', function(data) {
         try {
-          data.svg.addClass('ct-contains-highlighted-el');
-          let active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          data.svg.addClass('ct-contains-highlighted');
+          let active = data.svg._node.querySelector('.ct-highlighted').parentNode;
           moveToFront(active);
         } catch(e) {
 
@@ -27,9 +29,11 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
 
             let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
             if (index === highLightedIndex) {
-              data.element.addClass('ct-highlighted-el');
-            }else{
-              data.element.removeClass('ct-highlighted-el');
+              data.element.addClass('ct-highlighted');
+              data.element.removeClass(brightVizColorClasses[index]);
+            } else {
+              data.element.removeClass('ct-highlighted');
+              data.element.addClass(brightVizColorClasses[index]);
             }
 
           }

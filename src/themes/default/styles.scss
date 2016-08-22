@@ -1,5 +1,3 @@
-@import 'q-nzzch-theme/settings';
-
 @import 'chartist@0.9.8/dist/scss/settings/chartist-settings';
 $ct-include-classes: false;
 @import 'chartist@0.9.8/dist/scss/chartist';
@@ -51,80 +49,72 @@ $ct-include-classes: false;
   float: left;
 }
 
-.q-chart__chartist-container {
-  margin: 2px 0 0 0;
-  @include respond-to(medium-up) {
-    margin: 10px 0 0 0;
-  }
-}
-
 .q-chart__label-x-axis {
   clear: both;
   text-align: right;
   margin: 0 0 6px 0;
 }
 
-@for $i from 0 to length($ct-series-names) {
-  .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
-    .q-chart__legend__item__box {
-        $color: nth($ct-series-colors, $i + 1);
-        background: $color;
-
-        line {
-          stroke: $color;
-        }
-    }
+.q-chart__legend__item__box {
+  background: currentColor;
+  line {
+    fill: currentColor;
   }
 }
 
-@for $i from 0 to length($ct-series-names) {
-  .q-chart__legend.q-chart__legend--highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+// @for $i from 0 to length($ct-series-names) {
+//   .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
+//     .q-chart__legend__item__box {
+//         $color: nth($ct-series-colors, $i + 1);
+//         background: $color;
 
-    .q-chart__legend__item__box {
+//         line {
+//           stroke: $color;
+//         }
+//     }
+//   }
+// }
 
-        $color: nth($ct-series-colors-brightened, $i + 1);
-        background: $color;
+// @for $i from 0 to length($ct-series-names) {
+//   .q-chart__legend.q-chart__legend--highlighted .q-chart__legend__item--#{nth($ct-series-names, $i + 1)} {
 
-        line {
-          stroke: $color;
-        }
+//     .q-chart__legend__item__box {
 
-    }
+//         $color: nth($ct-series-colors-brightened, $i + 1);
+//         background: $color;
 
-    .q-chart__legend__item__text{
-      color:$secondary-color;
-    }
+//         line {
+//           stroke: $color;
+//         }
 
-    &.q-chart__legend__item--highlighted {
+//     }
 
-      .q-chart__legend__item__box {
+//     &.q-chart__legend__item--highlighted {
 
-        $color: nth($ct-series-colors, $i + 1);
-        background: $color;
+//       .q-chart__legend__item__box {
 
-        &.q-chart__legend__item__box--line {
-          background:transparent;
+//         $color: nth($ct-series-colors, $i + 1);
+//         background: $color;
 
-          line {
-            stroke: $color;
-          }
-        }
+//         &.q-chart__legend__item__box--line {
+//           background:transparent;
 
-      }
+//           line {
+//             stroke: $color;
+//           }
+//         }
 
-    }
-  }
-}
+//       }
+
+//     }
+//   }
+// }
 
 
 .q-chart__legend.q-chart__legend--highlighted .q-chart__legend__item {
 
-  &.q-chart__legend__item--highlighted .q-chart__legend__item__text {
-    color: $primary-color;
-  }
-
   .q-chart__legend__item__box.q-chart__legend__item__box--line {
-    background:transparent;
+    background: transparent;
   }
 
 }
@@ -135,16 +125,17 @@ $ct-include-classes: false;
 
   .q-chart__legend__item__box {
     border-radius: 0px;
-    background:transparent;
+    background: transparent;
     position: relative;
   }
 
   .q-chart__legend__item__box svg {
     position: absolute;
-    top:-1px;
-    display:block;
+    top: -1px;
+    display: block;
 
     line {
+      stroke: currentColor;
       stroke-width: 2px;
     }
 
@@ -159,14 +150,14 @@ $ct-include-classes: false;
     // generated from http://codepen.io/blzzz/pen/jqKMOL
     // background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzIiBoZWlnaHQ9IjMiPgo8cGF0aCBkPSJNMCAzTDMgMFpNNCAyTDIgNFpNLTEgMUwxIC0xWiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utb3BhY2l0eT0iMSIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==");
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjRkZGIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiM3ODc4NzgiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+");
-    background-color: $secondary-color;
+    background-color: currentColor;
 
     &.q-chart__legend__item__box--line {
       background: transparent;
 
       line {
         stroke-dasharray: 2px 2px;
-        stroke: $secondary-color
+        stroke: currentColor;
       }
 
     }

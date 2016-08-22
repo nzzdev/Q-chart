@@ -1,4 +1,4 @@
-define(['exports', 'chartist'], function (exports, _chartist) {
+define(['exports', 'chartist', '../resources/vizColors.js'], function (exports, _chartist, _resourcesVizColorsJs) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -23,8 +23,8 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
       chart.on('created', function (data) {
         try {
-          data.svg.addClass('ct-contains-highlighted-el');
-          var active = data.svg._node.querySelector('.ct-highlighted-el').parentNode;
+          data.svg.addClass('ct-contains-highlighted');
+          var active = data.svg._node.querySelector('.ct-highlighted').parentNode;
           moveToFront(active);
         } catch (e) {}
       });
@@ -36,9 +36,11 @@ define(['exports', 'chartist'], function (exports, _chartist) {
 
             var index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
             if (index === highLightedIndex) {
-              data.element.addClass('ct-highlighted-el');
+              data.element.addClass('ct-highlighted');
+              data.element.removeClass(_resourcesVizColorsJs.brightVizColorClasses[index]);
             } else {
-              data.element.removeClass('ct-highlighted-el');
+              data.element.removeClass('ct-highlighted');
+              data.element.addClass(_resourcesVizColorsJs.brightVizColorClasses[index]);
             }
           }
         } catch (e) {}

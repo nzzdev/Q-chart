@@ -4,6 +4,7 @@ import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.
 import {ctLabelPosition} from '../chartist-plugins/chartist-plugin-label-position.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 import {ctSeriesClassOrder} from '../chartist-plugins/chartist-plugin-series-class-order.js';
+import {ctSophieVizColorClasses} from '../chartist-plugins/chartist-plugin-sophie-viz-color-classes.js';
 
 import clone from './clone';
 
@@ -50,7 +51,8 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline(),
-        ctSeriesClassOrder()
+        ctSophieVizColorClasses(),
+        ctSeriesClassOrder(),
       ],
       classNames: chartistClassNamesConfig
     },
@@ -76,7 +78,8 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
-        ctSeriesClassOrder()
+        ctSophieVizColorClasses(),
+        ctSeriesClassOrder(),
       ],
       classNames: chartistClassNamesConfig
     },
@@ -103,7 +106,8 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
+        ctBaseline(),
+        ctSophieVizColorClasses()
       ],
       classNames: chartistClassNamesConfig
     },
@@ -130,6 +134,7 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
+        ctSophieVizColorClasses()
       ],
       classNames: chartistClassNamesConfig
     },
@@ -160,7 +165,8 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
+        ctBaseline(),
+        ctSophieVizColorClasses()
       ],
       classNames: chartistClassNamesConfig
     },
@@ -188,7 +194,8 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
+        ctBaseline(),
+        ctSophieVizColorClasses()
       ],
       classNames: chartistClassNamesConfig
     }
