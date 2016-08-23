@@ -30,7 +30,7 @@ function ctBaseline() {
       chart.on('created', function () {
         try {
           var baselineGroup = chart.svg.elem('g').addClass('ct-baseline-group');
-          var baselineLine = chart.svg.querySelector('.ct-baseline');
+          var baselineLine = chart.svg.querySelector('.ct-baseline s-color-gray-8');
           baselineGroup.append(baselineLine);
           chart.svg.append(baselineGroup);
         } catch (e) {}

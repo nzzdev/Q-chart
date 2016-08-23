@@ -48,12 +48,10 @@
     "karma-jasmine": "^0.3.5",
     "karma-jspm": "^1.1.5",
     "object.assign": "^1.0.3",
-    "q-nzzch-theme": "git+ssh://git@github.com/nzzdev/q-nzzch-theme.git#0.1.2",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.2",
     "slug": "^0.9.1",
-    "storytelling-ui-kit": "git+ssh://git@github.com/nzzdev/storytelling-ui-kit.git#0.0.1",
-    "systemjs-builder": "^0.15.5",
+    "systemjs-builder": "0.15.23",
     "vinyl-paths": "^1.0.0",
     "yargs": "^2.1.1"
   },
@@ -64,7 +62,7 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "chartist": "npm:chartist@^0.9.5",
+      "chartist": "npm:chartist@0.9.8",
       "clone": "npm:clone@^1.0.2",
       "core-js": "npm:core-js@1.2.6",
       "css": "github:systemjs/plugin-css@^0.1.20",

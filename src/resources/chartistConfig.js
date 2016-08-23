@@ -4,12 +4,44 @@ import {ctLabelClasses} from '../chartist-plugins/chartist-plugin-label-classes.
 import {ctLabelPosition} from '../chartist-plugins/chartist-plugin-label-position.js';
 import {ctExtendFitBarsToData} from '../chartist-plugins/chartist-plugin-fit-bars.js';
 import {ctSeriesClassOrder} from '../chartist-plugins/chartist-plugin-series-class-order.js';
+import {ctSophieVizColorClasses} from '../chartist-plugins/chartist-plugin-sophie-viz-color-classes.js';
 
 import clone from './clone';
 
 export var vertBarHeight = 10;
 export var vertBarSetPadding = 22;
 export var chartHeight = 200;
+
+var chartistClassNamesConfigLine = {
+  chart: 'ct-chart-line',
+  label: 'ct-label s-font-note-s s-font-note-s--light',
+  labelGroup: 'ct-labels',
+  series: 'ct-series',
+  line: 'ct-line',
+  point: 'ct-point',
+  area: 'ct-area',
+  grid: 'ct-grid',
+  gridGroup: 'ct-grids',
+  vertical: 'ct-vertical',
+  horizontal: 'ct-horizontal',
+  start: 'ct-start',
+  end: 'ct-end'
+}
+
+var chartistClassNamesConfigBar = {
+  chart: 'ct-chart-bar',
+  horizontalBars: 'ct-horizontal-bars',
+  label: 'ct-label s-font-note-s s-font-note-s-light',
+  labelGroup: 'ct-labels',
+  series: 'ct-series',
+  bar: 'ct-bar',
+  grid: 'ct-grid',
+  gridGroup: 'ct-grids',
+  vertical: 'ct-vertical',
+  horizontal: 'ct-horizontal',
+  start: 'ct-start',
+  end: 'ct-end'
+}
 
 export var chartistConfigs = {
 
@@ -34,8 +66,10 @@ export var chartistConfigs = {
         ctLabelPosition(),
         ctProtrudeGrid(),
         ctBaseline(),
-        ctSeriesClassOrder()
-      ]
+        ctSophieVizColorClasses(),
+        ctSeriesClassOrder(),
+      ],
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -59,8 +93,10 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
-        ctSeriesClassOrder()
-      ]
+        ctSophieVizColorClasses(),
+        ctSeriesClassOrder(),
+      ],
+      classNames: chartistClassNamesConfigBar
     },
   },
 
@@ -85,8 +121,10 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
-      ]
+        ctBaseline(),
+        ctSophieVizColorClasses()
+      ],
+      classNames: chartistClassNamesConfigBar
     },
     large: {
       height: chartHeight,
@@ -111,7 +149,9 @@ export var chartistConfigs = {
         ctProtrudeGrid(),
         ctBaseline(),
         ctExtendFitBarsToData(),
-      ]
+        ctSophieVizColorClasses()
+      ],
+      classNames: chartistClassNamesConfigBar
     },
   },
 
@@ -140,8 +180,10 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
-      ]
+        ctBaseline(),
+        ctSophieVizColorClasses()
+      ],
+      classNames: chartistClassNamesConfigLine
     },
     large: {
       height: chartHeight,
@@ -167,8 +209,10 @@ export var chartistConfigs = {
         ctLabelClasses(),
         ctLabelPosition(),
         ctProtrudeGrid(),
-        ctBaseline()
-      ]
+        ctBaseline(),
+        ctSophieVizColorClasses()
+      ],
+      classNames: chartistClassNamesConfigLine
     }
   }
 }

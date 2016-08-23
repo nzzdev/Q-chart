@@ -94,7 +94,7 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rec
       if (labelsToDisplay[index]) {
         data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
       } else {
-        data.labels[index] = '';
+        data.labels[index] = false;
       }
     });
   } else {
@@ -103,10 +103,10 @@ function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, size, rec
           if (_dateConfigPerInterval.seriesTypeConfig[type.options.interval] && _dateConfigPerInterval.seriesTypeConfig[type.options.interval].getForceShow && _dateConfigPerInterval.seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
             data.labels[index] = _dateConfigPerInterval.seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
           } else {
-            data.labels[index] = ' ';
+            data.labels[index] = '';
           }
         } else {
-            data.labels[index] = '';
+            data.labels[index] = false;
           }
       });
     }

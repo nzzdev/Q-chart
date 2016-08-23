@@ -17,6 +17,8 @@ import {getTextWidth, getFlatDatapoints} from './resources/helpers';
 import modifyChartistConfigBeforeRender from './resources/modifyChartistConfigBeforeRender';
 import setYAxisOffset from './resources/setYAxisOffset';
 
+import {vizColorClasses, brightVizColorClasses} from './resources/vizColors.js';
+
 import rendererConfigDefaults from './rendererConfigDefaults';
 
 import loadCSS from 'fg-loadcss';
@@ -27,6 +29,8 @@ export var types = chartTypes;
 var sizeObserver = new SizeObserver();
 
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
+
+var stylesLoaded = false;
 
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
@@ -92,7 +96,9 @@ function shortenNumberLabels(config, data) {
     config[axis].scaleMinSpace = getTextWidth(maxLabel/divisor, getDigitLabelFontStyle()) * 1.5;
   }
   config[axis].labelInterpolationFnc = (value, index) => {
-    return value / divisor;
+    // return value / divisor;
+    // todo: once https://github.com/gionkunz/chartist-js/issues/771 is resolved, the rounding here can get removed again probably
+    return Chartist.roundWithPrecision(value) / divisor;
   }
   return divisor;
 }
@@ -200,8 +206,7 @@ export function getFormattedDate(date, format, interval){
 }
 
 function getLegendHtml(item) {
-  let highlightDataSeries = item.options && item.options.highlightDataSeries;
-  let hasHighlighted = !isNaN(highlightDataSeries);
+  
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
   let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   let svgBox = `
@@ -211,29 +216,35 @@ function getLegendHtml(item) {
   let isLine = item.type === 'Line';
   let itemBox = isLine ? svgBox : '';
   let html = `
-    <div class="q-chart__legend ${hasHighlighted ? 'q-chart__legend--highlighted' : ''} q-chart__legend--${item.type.toLowerCase()}">`;
-  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
-    if( item.data.y.data.length > 1 ){
-      for (var i in item.data.y.data) {
-        let serie = item.data.y.data[i];
-        let isActive = hasHighlighted && highlightDataSeries == i;
-        html += `
-        <div class="q-chart__legend__item q-chart__legend__item--${chars[i]} ${isActive ? 'q-chart__legend__item--highlighted' : ''}">
-          <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
-          <div class="q-chart__legend__item__text">${serie.label}</div>
-        </div>`;
-      }
+    <div class="q-chart__legend q-chart__legend--${item.type.toLowerCase()}">`;
+
+  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1 ) {
+    let highlightDataSeries = false;
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+      highlightDataSeries = item.options.highlightDataSeries;
     }
-    if (hasPrognosis){
-      let {prognosisStart,interval} = item.data.x.type.options;
-      let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+    let hasHighlighted = highlightDataSeries && !isNaN(highlightDataSeries);
+    for (let i = 0; i < item.data.y.data.length; i++) {
+      let serie = item.data.y.data[i];
+      let isActive = hasHighlighted && highlightDataSeries === i;
       html += `
-        <div class="q-chart__legend__item q-chart__legend__item--prognosis">
-          <div class="q-chart__legend__item__box ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
-          <div class="q-chart__legend__item__text">Prognose (ab ${date})</div>
-        </div>`;
+      <div class="q-chart__legend__item ${hasHighlighted ? brightVizColorClasses[i] : vizColorClasses[i]} q-chart__legend__item--${chars[i]} ${isActive ? vizColorClasses[i] : ''}">
+        <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
+        <div class="q-chart__legend__item__text s-font-note-s ${isActive && hasHighlighted ? '' : 's-font-note-s--light'}">${serie.label}</div>
+      </div>`;
     }
   }
+
+  if (hasPrognosis){
+    let {prognosisStart,interval} = item.data.x.type.options;
+    let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+    html += `
+      <div class="q-chart__legend__item q-chart__legend__item--prognosis">
+        <div class="q-chart__legend__item__box s-color-gray-5 ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
+        <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ${date})</div>
+      </div>`;
+  }
+
   html += `
     </div>
   `;
@@ -287,7 +298,7 @@ function getContextHtml(item, chartistConfig) {
   let axisExplanation = {x: '', y: ''};
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  let html = `<h3 class="q-item__title">${wrapEmojisInSpan(item.title)}</h3>`;
+  let html = `<h3 class="s-q-item__title">${wrapEmojisInSpan(item.title)}</h3>`;
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
@@ -297,35 +308,35 @@ function getContextHtml(item, chartistConfig) {
     axisNames.reverse();
   }
 
-  html += `<div class="q-chart__label-y-axis">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
+  html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     if (chartistConfig.horizontalBars) {
-      html += `<div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
+      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
     }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
       html += `
-        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
         <div class="q-chart__chartist-container"></div>
       `;
     } else {
       html += `
         <div class="q-chart__chartist-container"></div>
-        <div class="q-chart__label-x-axis">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
       `;
     }
   }
 
   html += `
-    <div class="q-item__footer">`;
+    <div class="s-q-item__footer">`;
 
   if (item.notes) {
-    html += `<div class="q-item__footer__notes">${item.notes}</div>`;
+    html += `<div class="s-q-item__footer__notes">${item.notes}</div>`;
   }
 
-  html += '<div class="q-item__footer__sources">';
+  html += '<div class="s-q-item__footer__sources">';
   if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
     let sources = item.sources
       .filter(source => source.text && source.text.length > 0);
@@ -348,7 +359,7 @@ function getContextHtml(item, chartistConfig) {
 
 function displayWithContext(item, element, chartistConfig, dataForChartist) {
   let el = document.createElement('section');
-  el.setAttribute('class','q-chart');
+  el.setAttribute('class','q-chart s-q-item');
   el.innerHTML = getContextHtml(item, chartistConfig);
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -380,7 +391,7 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
       let rendererPromises = [];
 
-      if (rendererConfig.loadStyles) {
+      if (rendererConfig.loadStyles && stylesLoaded === false) {
         let themeUrl = rendererConfig.themeUrl || `${rendererConfig.rendererBaseUrl}themes/${rendererConfig.theme}`;
         let themeLoadCSS = loadCSS(`${themeUrl}/styles.css`);
         let themeLoadPromise = new Promise((resolve, reject) => {
@@ -388,7 +399,22 @@ export function display(item, element, rendererConfig, withoutContext = false) {
             resolve();
           });
         });
+
+        // additional styles
+        let sophieStylesLoad = loadCSS('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-viz-color@~1.0.1[general].css');
+        let sophieStylesLoadPromise = new Promise((resolve, reject) => {
+          onloadCSS(sophieStylesLoad, () => {
+            resolve();
+          });
+        });
+
+        Promise.all([themeLoadPromise, sophieStylesLoadPromise])
+          .then(styles => {
+            stylesLoaded = true;
+          })
+
         rendererPromises.push(themeLoadPromise);
+        rendererPromises.push(sophieStylesLoadPromise);
       }
 
       let chart;
@@ -449,16 +475,6 @@ export function display(item, element, rendererConfig, withoutContext = false) {
           reject(chart);
         }
       }, element, true);
-
-      // this is going crazy on nzz.ch with its floating ads
-      // sizeObserver.onElementRectChange((rect) => {
-      //   let drawSize = getElementSize(rect);
-      //   if (withoutContext) {
-      //     displayWithoutContext(item, element, drawSize, rect);
-      //   } else {
-      //     displayWithContext(item, element, drawSize, rect);
-      //   }
-      // }, element);
 
     } catch (e) {
       reject(e);

@@ -73,7 +73,7 @@ export function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, si
       if (labelsToDisplay[index]) {
         data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
       } else {
-        data.labels[index] = ''; // do not show a gridline
+        data.labels[index] = false; // do not show a gridline
       }
     });
   } else {
@@ -84,10 +84,10 @@ export function setLabelsBasedOnIntervalAndAvailableSpace(config, type, data, si
             && seriesTypeConfig[type.options.interval].getForceShow(index, isLastVisibleLabel(labelsToDisplay, index), data, config, size)) {
           data.labels[index] = seriesTypeConfig[type.options.interval].format(index, isLastVisibleLabel(labelsToDisplay, index), getDateObject(label.toString(), type.config.format));
         } else {
-          data.labels[index] = ' '; // return false/empty string to make chartist not render a gridline here.
+          data.labels[index] = ''; // if you do not want to render a gridline here, return false, the empty string will render a gridline but not a label
         }
       } else {
-        data.labels[index] = ''; // do not show a gridline
+        data.labels[index] = false; // do not show a gridline
       }
     });
   }

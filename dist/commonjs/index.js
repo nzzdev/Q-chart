@@ -47,6 +47,8 @@ var _resourcesSetYAxisOffset = require('./resources/setYAxisOffset');
 
 var _resourcesSetYAxisOffset2 = _interopRequireDefault(_resourcesSetYAxisOffset);
 
+var _resourcesVizColorsJs = require('./resources/vizColors.js');
+
 var _rendererConfigDefaults = require('./rendererConfigDefaults');
 
 var _rendererConfigDefaults2 = _interopRequireDefault(_rendererConfigDefaults);
@@ -65,6 +67,8 @@ exports.types = types;
 var sizeObserver = new _resourcesSizeObserver2['default']();
 
 var chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'];
+
+var stylesLoaded = false;
 
 function getChartDataForChartist(item) {
   if (!item.data || !item.data.x || !item.data.y) return null;
@@ -134,7 +138,7 @@ function shortenNumberLabels(config, data) {
     config[axis].scaleMinSpace = (0, _resourcesHelpers.getTextWidth)(maxLabel / divisor, (0, _resourcesSeriesTypes.getDigitLabelFontStyle)()) * 1.5;
   }
   config[axis].labelInterpolationFnc = function (value, index) {
-    return value / divisor;
+    return _chartist2['default'].roundWithPrecision(value) / divisor;
   };
   return divisor;
 }
@@ -256,31 +260,36 @@ function getFormattedDate(date, format, interval) {
 }
 
 function getLegendHtml(item) {
-  var highlightDataSeries = item.options && item.options.highlightDataSeries;
-  var hasHighlighted = !isNaN(highlightDataSeries);
+
   var isDate = item.data.x.type && item.data.x.type.id === 'date';
   var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
   var isLine = item.type === 'Line';
   var itemBox = isLine ? svgBox : '';
-  var html = '\n    <div class="q-chart__legend ' + (hasHighlighted ? 'q-chart__legend--highlighted' : '') + ' q-chart__legend--' + item.type.toLowerCase() + '">';
-  if (hasPrognosis || item.data && item.data.y && item.data.y.data && item.data.y.data.length) {
-    if (item.data.y.data.length > 1) {
-      for (var i in item.data.y.data) {
-        var serie = item.data.y.data[i];
-        var isActive = hasHighlighted && highlightDataSeries == i;
-        html += '\n        <div class="q-chart__legend__item q-chart__legend__item--' + chars[i] + ' ' + (isActive ? 'q-chart__legend__item--highlighted' : '') + '">\n          <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">' + serie.label + '</div>\n        </div>';
-      }
-    }
-    if (hasPrognosis) {
-      var _item$data$x$type$options = item.data.x.type.options;
-      var prognosisStart = _item$data$x$type$options.prognosisStart;
-      var interval = _item$data$x$type$options.interval;
+  var html = '\n    <div class="q-chart__legend q-chart__legend--' + item.type.toLowerCase() + '">';
 
-      var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
-      html += '\n        <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n          <div class="q-chart__legend__item__box ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n          <div class="q-chart__legend__item__text">Prognose (ab ' + date + ')</div>\n        </div>';
+  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1) {
+    var highlightDataSeries = false;
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+      highlightDataSeries = item.options.highlightDataSeries;
+    }
+    var hasHighlighted = highlightDataSeries && !isNaN(highlightDataSeries);
+    for (var i = 0; i < item.data.y.data.length; i++) {
+      var serie = item.data.y.data[i];
+      var isActive = hasHighlighted && highlightDataSeries === i;
+      html += '\n      <div class="q-chart__legend__item ' + (hasHighlighted ? _resourcesVizColorsJs.brightVizColorClasses[i] : _resourcesVizColorsJs.vizColorClasses[i]) + ' q-chart__legend__item--' + chars[i] + ' ' + (isActive ? _resourcesVizColorsJs.vizColorClasses[i] : '') + '">\n        <div class="q-chart__legend__item__box q-chart__legend__item__box--' + item.type.toLowerCase() + '">' + itemBox + '</div>\n        <div class="q-chart__legend__item__text s-font-note-s ' + (isActive && hasHighlighted ? '' : 's-font-note-s--light') + '">' + serie.label + '</div>\n      </div>';
     }
   }
+
+  if (hasPrognosis) {
+    var _item$data$x$type$options = item.data.x.type.options;
+    var prognosisStart = _item$data$x$type$options.prognosisStart;
+    var interval = _item$data$x$type$options.interval;
+
+    var date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval);
+    html += '\n      <div class="q-chart__legend__item q-chart__legend__item--prognosis">\n        <div class="q-chart__legend__item__box s-color-gray-5 ' + (isLine ? 'q-chart__legend__item__box--line' : '') + '">' + itemBox + '</div>\n        <div class="q-chart__legend__item__text s-font-note-s s-font-note-s--light">Prognose (ab ' + date + ')</div>\n      </div>';
+  }
+
   html += '\n    </div>\n  ';
   return html;
 }
@@ -329,7 +338,7 @@ function getContextHtml(item, chartistConfig) {
   var axisExplanation = { x: '', y: '' };
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  var html = '<h3 class="q-item__title">' + wrapEmojisInSpan(item.title) + '</h3>';
+  var html = '<h3 class="s-q-item__title">' + wrapEmojisInSpan(item.title) + '</h3>';
   html += getLegendHtml(item);
   if (!item.data.y) {
     item.data.y = {};
@@ -339,28 +348,28 @@ function getContextHtml(item, chartistConfig) {
     axisNames.reverse();
   }
 
-  html += '<div class="q-chart__label-y-axis">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
+  html += '<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[0]].label || '') + axisExplanation[axisNames[0]] + '</div>';
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     if (chartistConfig.horizontalBars) {
-      html += '<div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>';
+      html += '<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>';
     }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
-      html += '\n        <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n        <div class="q-chart__chartist-container"></div>\n      ';
+      html += '\n        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n        <div class="q-chart__chartist-container"></div>\n      ';
     } else {
-      html += '\n        <div class="q-chart__chartist-container"></div>\n        <div class="q-chart__label-x-axis">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n      ';
+      html += '\n        <div class="q-chart__chartist-container"></div>\n        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">' + (item.data[axisNames[1]].label || '') + axisExplanation[axisNames[1]] + '</div>\n      ';
     }
   }
 
-  html += '\n    <div class="q-item__footer">';
+  html += '\n    <div class="s-q-item__footer">';
 
   if (item.notes) {
-    html += '<div class="q-item__footer__notes">' + item.notes + '</div>';
+    html += '<div class="s-q-item__footer__notes">' + item.notes + '</div>';
   }
 
-  html += '<div class="q-item__footer__sources">';
+  html += '<div class="s-q-item__footer__sources">';
   if (item.sources && item.sources.length && item.sources.length > 0 && item.sources[0].text && item.sources[0].text.length > 0) {
     var sources = item.sources.filter(function (source) {
       return source.text && source.text.length > 0;
@@ -404,7 +413,7 @@ function getContextHtml(item, chartistConfig) {
 
 function displayWithContext(item, element, chartistConfig, dataForChartist) {
   var el = document.createElement('section');
-  el.setAttribute('class', 'q-chart');
+  el.setAttribute('class', 'q-chart s-q-item');
   el.innerHTML = getContextHtml(item, chartistConfig);
   while (element.firstChild) {
     element.removeChild(element.firstChild);
@@ -441,7 +450,7 @@ function display(item, element, rendererConfig) {
 
         var rendererPromises = [];
 
-        if (rendererConfig.loadStyles) {
+        if (rendererConfig.loadStyles && stylesLoaded === false) {
           (function () {
             var themeUrl = rendererConfig.themeUrl || rendererConfig.rendererBaseUrl + 'themes/' + rendererConfig.theme;
             var themeLoadCSS = (0, _fgLoadcss2['default'])(themeUrl + '/styles.css');
@@ -450,7 +459,20 @@ function display(item, element, rendererConfig) {
                 resolve();
               });
             });
+
+            var sophieStylesLoad = (0, _fgLoadcss2['default'])('https://service.sophie.nzz.ch/bundle/sophie-q@~0.1.1,sophie-font@~0.2.0,sophie-color@~1.0.0,sophie-viz-color@~1.0.1[general].css');
+            var sophieStylesLoadPromise = new Promise(function (resolve, reject) {
+              (0, _resourcesOnloadCSS2['default'])(sophieStylesLoad, function () {
+                resolve();
+              });
+            });
+
+            Promise.all([themeLoadPromise, sophieStylesLoadPromise]).then(function (styles) {
+              stylesLoaded = true;
+            });
+
             rendererPromises.push(themeLoadPromise);
+            rendererPromises.push(sophieStylesLoadPromise);
           })();
         }
 

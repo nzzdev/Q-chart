@@ -34,7 +34,7 @@ var slug          = 'Q-renderers/chart';
 var deployTargets = [];
 
 // deploy target is different according to branch / tags
-if (process.env.TRAVIS_TAG) {
+if (process.env.TRAVIS_TAG && process.env.TRAVIS_PULL_REQUEST === 'false') {
   deployTargets.push(slug + '-releases/' + process.env.TRAVIS_TAG);
 
   // deploy to masked version folders e.g. 0.2.* and 0.*.*
@@ -42,11 +42,6 @@ if (process.env.TRAVIS_TAG) {
     var versionDigits = process.env.TRAVIS_TAG.split('.');
     deployTargets.push(slug + '-releases/' + versionDigits[0] + '.' + versionDigits[1] + '.*');
     deployTargets.push(slug + '-releases/' + versionDigits[0] + '.*.*');
-  }
-
-  // If target is master branch and it is not a pull request, we deploy this to the live production environment
-  if (process.env.TRAVIS_PULL_REQUEST === "false" && process.env.TRAVIS_BRANCH && process.env.TRAVIS_BRANCH === 'master') {
-    deployTargets.push(slug);
   }
 }
 

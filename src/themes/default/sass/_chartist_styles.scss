@@ -1,12 +1,9 @@
-@import 'q-nzzch-theme/settings';
-@import "storytelling-ui-kit/font";
-
 .ct-grid, line.ct-bar {
  shape-rendering: crispEdges;
 }
 
 .#{$ct-class-label} {
-  @include font(label);
+  fill: currentColor;
 }
 
 .#{$ct-class-label}.#{$ct-class-horizontal}.#{$ct-class-start} {
@@ -102,62 +99,33 @@
   stroke-dashoffset: -7px;
 }
 
-@for $i from 0 to length($ct-series-names) {
+.ct-series .ct-point, .ct-series .ct-line, .ct-series .ct-bar, .ct-series .ct-slice-donut {
+  stroke: currentColor;
+}
 
-  .ct-chart-line {
+.ct-series .ct-slice-pie, .ct-series .ct-area {
+  fill: currentColor;
+}
 
-    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
-      $color: nth($ct-series-colors, $i + 1);
-
-      @include ct-chart-series-color($color);
-
-    }
-
+.ct-contains-highlighted {
+  .ct-line {
+    stroke-width: 1px;
   }
+}
 
-  .ct-chart-bar {
-
-    .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
-      $color: nth($ct-series-colors, $i + 1);
-
-      @include ct-chart-series-color($color);
-
-    }
-
-  }
-
-  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} .ct-line.ct-highlighted-el {
-    $color: nth($ct-series-colors, $i + 1);
-    stroke: $color;
-    stroke-width: 2px;
-  }
-
-  .ct-contains-highlighted-el .#{$ct-class-series}-#{nth($ct-series-names, $i + 1)} {
-    $color: nth($ct-series-colors-brightened, $i + 1);
-    stroke: $color;
-
-    @include ct-chart-series-color($color);
-
-    .ct-line {
-      stroke-width: 1px;
-    }
-
-    .ct-highlighted-el {
-      $color: nth($ct-series-colors, $i + 1);
-      stroke: $color;
-    }
-  }
+.ct-contains-highlighted .ct-line.ct-highlighted {
+  stroke-width: 2px;
 }
 
 
 .ct-chart-line .ct-baseline {
-  stroke: $primary-color;
+  stroke: currentColor;
   opacity: 1;
   stroke-width: 1px;
 }
 
 .ct-chart-bar .ct-baseline {
-  stroke: $primary-color;
+  stroke: currentColor;
   opacity: 1;
   stroke-width: 1px;
 }
