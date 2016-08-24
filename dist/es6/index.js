@@ -205,8 +205,7 @@ export function getFormattedDate(date, format, interval){
   return seriesTypeConfig[interval].format(0, false, date, true);
 }
 
-function getLegendHtml(item) {
-  
+export function getLegendHtml(item) {
   let isDate = item.data.x.type && item.data.x.type.id === 'date';
   let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
   let svgBox = `

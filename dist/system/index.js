@@ -7,6 +7,8 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
 
   _export('getFormattedDate', getFormattedDate);
 
+  _export('getLegendHtml', getLegendHtml);
+
   _export('getDivisor', getDivisor);
 
   _export('getDivisorString', getDivisorString);
@@ -203,7 +205,6 @@ System.register(['paulirish/matchMedia.js', 'paulirish/matchMedia.js/matchMedia.
   }
 
   function getLegendHtml(item) {
-
     var isDate = item.data.x.type && item.data.x.type.id === 'date';
     var hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
     var svgBox = '\n    <svg width="12" height="12">\n      <line x1="1" y1="11" x2="11" y2="1" />\n    </svg>';
