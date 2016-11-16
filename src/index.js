@@ -313,16 +313,16 @@ function getContextHtml(item, chartistConfig) {
     if (chartistConfig.horizontalBars) {
       html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
     }
-    html += '<div class="q-chart__chartist-container s-color-gray-6"></div>';
+    html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
       html += `
         <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
-        <div class="q-chart__chartist-container s-color-gray-6"></div>
+        <div class="q-chart__chartist-container"></div>
       `;
     } else {
       html += `
-        <div class="q-chart__chartist-container s-color-gray-6"></div>
+        <div class="q-chart__chartist-container"></div>
         <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
       `;
     }
