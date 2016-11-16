@@ -31,7 +31,7 @@ var chartistClassNamesConfigLine = {
 var chartistClassNamesConfigBar = {
   chart: 'ct-chart-bar',
   horizontalBars: 'ct-horizontal-bars',
-  label: 'ct-label s-font-note-s s-font-note-s-light',
+  label: 'ct-label s-font-note-s s-font-note-s--light',
   labelGroup: 'ct-labels',
   series: 'ct-series',
   bar: 'ct-bar',
