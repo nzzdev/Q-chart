@@ -288,7 +288,7 @@ var chart4 = {
 
   },
   options: {
-    highlightDataSeries: 1,
+    highlightDataSeries: "1",
     isColumnChart:true
   },
   type: 'Bar'
