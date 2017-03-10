@@ -218,18 +218,26 @@ export function getLegendHtml(item) {
     <div class="q-chart__legend q-chart__legend--${item.type.toLowerCase()}">`;
 
   if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1 ) {
-    let highlightDataSeries = false;
+    let highlightDataSeries;
     if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
-      highlightDataSeries = item.options.highlightDataSeries;
+      highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
     }
-    let hasHighlighted = highlightDataSeries && !isNaN(highlightDataSeries);
+    let hasHighlighted = highlightDataSeries !== undefined;
     for (let i = 0; i < item.data.y.data.length; i++) {
+
       let serie = item.data.y.data[i];
-      let isActive = hasHighlighted && highlightDataSeries === i;
+
+      let colorClass = vizColorClasses[i];
+      let fontClasses = 's-font-note-s';
+      if (hasHighlighted && highlightDataSeries !== i) {
+        colorClass = brightVizColorClasses[i];
+        fontClasses += ' s-font-note-s--light';
+      }
+
       html += `
-      <div class="q-chart__legend__item ${hasHighlighted ? brightVizColorClasses[i] : vizColorClasses[i]} q-chart__legend__item--${chars[i]} ${isActive ? vizColorClasses[i] : ''}">
+      <div class="q-chart__legend__item ${colorClass} q-chart__legend__item--${chars[i]}">
         <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
-        <div class="q-chart__legend__item__text s-font-note-s ${isActive && hasHighlighted ? '' : 's-font-note-s--light'}">${serie.label}</div>
+        <div class="q-chart__legend__item__text ${fontClasses}">${serie.label}</div>
       </div>`;
     }
   }
@@ -438,9 +446,9 @@ export function display(item, element, rendererConfig, withoutContext = false) {
         // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);
         let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
-        
+
         shortenNumberLabels(chartistConfig, dataForChartist);
-        
+
         let { divisor } = getMinMaxAndDivisor(dataForChartist);
         chartistConfig.yValueDivisor = divisor;
 
