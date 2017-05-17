@@ -4,7 +4,7 @@ services:
 - docker
 language: node_js
 node_js:
-- '7.6'
+- '7.9'
 install:
 - npm install -g jspm
 - npm install
