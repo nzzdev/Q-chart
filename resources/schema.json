@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Titel",
+      "type": "string"
+    },
+    "sources": {
+      "title": "Quellen",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "title": "Quelle",
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "link": {
+            "Q:type": "link",
+            "title": "Link",
+            "type": "object",
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "isValid": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "title": "Anmerkungen",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
