@@ -4,7 +4,6 @@ import min from './min';
 
 export var types = {
   Bar: {
-    label: 'Bar',
     chartistType: 'Bar',
     modifyData: (config, data, size, rect) => {
       if (config.horizontalBars) {
@@ -19,9 +18,6 @@ export var types = {
     options: [
       {
         name: 'isColumnChart',      // false would produce a bar chart (aka horizontal bar chart)
-        type: 'oneOf',
-        labels: ['Säulen', 'Balken'],
-        defaultValue: true,
         modifyConfig: (config, value, data, size, rect) => {
           config.horizontalBars = !value;
           if (config.horizontalBars) {
@@ -41,9 +37,6 @@ export var types = {
       },
       {
         name: 'forceBarsOnSmall',
-        type: 'boolean',
-        label: 'Balken für Mobile',
-        defaultValue: true,
         modifyConfig: (config, value, data, size, rect) => {
           if (value && size === 'small') {
             config.horizontalBars = true;
@@ -64,7 +57,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value !== undefined) {
+          if (value !== null && value !== undefined) {
             config.plugins.push(
               ctHighlighting(value, !config.horizontalBars, data.series.length)
             )
@@ -132,7 +125,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value !== undefined) {
+          if (value !== null && value !== undefined) {
             config.plugins.push(
               ctHighlighting(value)
             )
@@ -176,7 +169,7 @@ export var types = {
         undefinedOptionLabel: 'keine',
         options: [],
         modifyConfig: (config, value, data, size, rect) => {
-          if (value !== undefined) {
+          if (value !== null && value !== undefined) {
             config.plugins.push(
               ctHighlighting(value, true, data.series.length)
             );

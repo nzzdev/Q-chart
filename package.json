@@ -31,6 +31,7 @@
     "url": "git+https://github.com/nzzdev/Q-renderer-skeleton.git"
   },
   "dependencies": {
+    "array2d": "0.0.5",
     "autoprefixer": "^6.7.7",
     "chai": "^3.5.0",
     "enjoi": "^2.2.3",

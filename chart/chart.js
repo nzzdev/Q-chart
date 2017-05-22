@@ -289,7 +289,13 @@ function getContextHtml(item, chartistConfig) {
   let axisExplanation = {x: '', y: ''};
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
-  let html = getLegendHtml(item);
+  const labels = {
+    x: item.data.labels[0],
+    y: item.yAxisLabel
+  }
+
+  // let html = getLegendHtml(item);
+  let html = '';
   if (!item.data.y) {
     item.data.y = {};
   }
@@ -298,23 +304,23 @@ function getContextHtml(item, chartistConfig) {
     axisNames.reverse();
   }
 
-  html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[0]].label || ''}${axisExplanation[axisNames[0]]}</div>`;
+  html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${labels[axisNames[0]] || ''}${axisExplanation[axisNames[0]]}</div>`;
 
   if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
     if (chartistConfig.horizontalBars) {
-      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>`;
+      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>`;
     }
     html += '<div class="q-chart__chartist-container"></div>';
   } else {
     if (chartistConfig.horizontalBars) {
       html += `
-        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>
         <div class="q-chart__chartist-container"></div>
       `;
     } else {
       html += `
         <div class="q-chart__chartist-container"></div>
-        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.data[axisNames[1]].label || ''}${axisExplanation[axisNames[1]]}</div>
+        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>
       `;
     }
   }
@@ -342,10 +348,10 @@ export function display(item, element, rendererConfig, withoutContext = false) {
       if (!element) throw 'Element is not defined';
       if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
-      if (!item.data || !item.data.x) {
-        reject('no data');
-        return;
-      }
+      // if (!item.data || !item.data.x) {
+      //   reject('no data');
+      //   return;
+      // }
 
       if (rendererConfig && typeof rendererConfig === 'object') {
         rendererConfig = Object.assign({}, rendererConfigDefaults, rendererConfig);
@@ -367,32 +373,34 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
         lastWidth = rect.width;
 
-        // prepare data
-        let dataForChartist = getChartDataForChartist(item);
-        if (!dataForChartist || dataForChartist === null) {
-          reject('data could not be prepared for chartist');
-          return;
-        }
+        // // prepare data
+        // let dataForChartist = getChartDataForChartist(item);
+        // if (!dataForChartist || dataForChartist === null) {
+        //   reject('data could not be prepared for chartist');
+        //   return;
+        // }
+
+        // console.log(item)
 
         // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);
-        let chartistConfig = getCombinedChartistConfig(item, dataForChartist, drawSize, rect);
+        let chartistConfig = getCombinedChartistConfig(item, item.data, drawSize, rect);
 
-        shortenNumberLabels(chartistConfig, dataForChartist);
+        shortenNumberLabels(chartistConfig, item.data);
 
-        let { divisor } = getMinMaxAndDivisor(dataForChartist);
+        let { divisor } = getMinMaxAndDivisor(item.data);
         chartistConfig.yValueDivisor = divisor;
 
-        modifyData(chartistConfig, item, dataForChartist, drawSize, rect);
+        modifyData(chartistConfig, item, item.data, drawSize, rect);
 
         // set Y axis offset after we have modified the data (date series label formatting)
-        setYAxisOffset(chartistConfig, item.type, dataForChartist);
+        setYAxisOffset(chartistConfig, item.type, item.data);
 
         try {
           if (withoutContext) {
-            chart = displayWithoutContext(item, element, chartistConfig, dataForChartist);
+            chart = displayWithoutContext(item, element, chartistConfig, item.data);
           } else {
-            chart = displayWithContext(item, element, chartistConfig, dataForChartist);
+            chart = displayWithContext(item, element, chartistConfig, item.data);
           }
         } catch (e) {
           reject(e);

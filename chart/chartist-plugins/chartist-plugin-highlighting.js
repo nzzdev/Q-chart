@@ -2,9 +2,7 @@ import Chartist from 'chartist';
 
 import {brightVizColorClasses} from '../resources/vizColors.js';
 
-export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength) {
-
-  let highLightedIndex = Number(highlightDataSeries);
+export function ctHighlighting(highlightedIndex, countAsc = true, dataLength) {
 
   return function ctHighlighting(chart) {
 
@@ -28,7 +26,7 @@ export function ctHighlighting(highlightDataSeries, countAsc = true, dataLength)
           if (chart instanceof Chartist.Bar || chart instanceof Chartist.Line) {
 
             let index = countAsc ? data.seriesIndex : dataLength - 1 - data.seriesIndex;
-            if (index === highLightedIndex) {
+            if (index === highlightedIndex) {
               data.element.addClass('ct-highlighted');
               data.element.removeClass(brightVizColorClasses[index]);
             } else {

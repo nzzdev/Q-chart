@@ -2,8 +2,11 @@ const fs = require('fs');
 const Enjoi = require('enjoi');
 const Joi = require('joi');
 const resourcesDir = __dirname + '/../../resources/';
+const helpersDir = __dirname + '/../../helpers/';
 const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
+
+const arrayToChartistModel = require(`${helpersDir}dataTransformer.js`).arrayToChartistModel;
 
 
 // POSTed item will be validated against given schema
@@ -41,6 +44,11 @@ module.exports = {
   handler: function(request, reply) {
 
     const id = request.payload.toolRuntimeConfig.id || Math.floor((Math.random() * 10 ** 16));
+
+    // prepare the data for client side rendering
+    let item = request.payload.item;
+    item.data = arrayToChartistModel(item.data);
+    item.type = 'Line';
 
     const data = {
       id: `q-chart-${id}`,      
