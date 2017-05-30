@@ -12,9 +12,9 @@ export var getLabelFontStyle = () => {
 
 export var getDigitLabelFontStyle = () => {
   if (window.matchMedia && window.matchMedia('(max-width: 413px)').matches) {
-    return '10px Lucida Sans Typewriter';
+    return '11px Arial';
   } else {
-    return '12px Lucida Sans Typewriter';
+    return '13px Arial';
   }
 }
 
