@@ -13,7 +13,7 @@ builder.config({
 let hashMap = {};
 
 return builder
-  .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: true, mangle: false })
+  .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: true, mangle: true })
   .then(bundle => {
     const hash = crypto.createHash('md5');
     hash.update(bundle.source);

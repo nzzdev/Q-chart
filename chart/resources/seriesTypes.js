@@ -25,7 +25,7 @@ export var seriesTypes = {
         modifyData: setLabelsBasedOnIntervalAndAvailableSpace,
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
-            let {prognosisStart} = item.data.x.type.options;
+            let {prognosisStart} = item.dataSeriesType.options;
             if (prognosisStart !== undefined) {
               let {labels} = data;
               let numLabels = labels.length;
@@ -47,7 +47,7 @@ export var seriesTypes = {
         },
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
-            let {prognosisStart} = item.data.x.type.options;
+            let {prognosisStart} = item.dataSeriesType.options;
             if (prognosisStart !== undefined) {
               config.plugins.push(ctPrognosisSplit({
                 prognosisStart: prognosisStart,
@@ -68,7 +68,7 @@ export var seriesTypes = {
         },
         modifyConfig: (config, type, data, size, rect, item) => {
           try {
-            let {prognosisStart} = item.data.x.type.options;
+            let {prognosisStart} = item.dataSeriesType.options;
             if (prognosisStart !== undefined) {
               config.plugins.push(ctPrognosisSplit({
                 prognosisStart: prognosisStart,
@@ -80,6 +80,5 @@ export var seriesTypes = {
         }
       }
     },
-
   }
 }

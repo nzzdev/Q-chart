@@ -23,18 +23,6 @@ var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
 var stylesLoaded = false;
 
-function getChartDataForChartist(item) {
-  if (!item.data || !item.data.x || !item.data.y) return null;
-
-  // we need to clone the arrays (with slice(0)) because chartist fumbles with the data
-  let data = {
-    labels: item.data.x.data.slice(0),
-    series: item.data.y.data.slice(0)
-      .map(serie => serie.data.slice(0))
-  };
-  return data;
-}
-
 function getExtent(data) {
   let flatDatapoints = getFlatDatapoints(data);
   if (flatDatapoints && flatDatapoints.length) {
@@ -97,24 +85,23 @@ function shortenNumberLabels(config, data) {
 function modifyData(config, item, data, size, rect) {
   // if there are detected series types
   // we need to let them modify the data
+  if (item.dataSeriesType) {
+    if (seriesTypes.hasOwnProperty(item.dataSeriesType.id)) {
 
-  if (item.data.x && item.data.x.type) {
-    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
-
-      if (seriesTypes[item.data.x.type.id].x.modifyData) {
-        seriesTypes[item.data.x.type.id].x.modifyData(config, item.data.x.type, data, size, rect);
+      if (seriesTypes[item.dataSeriesType.id].x.modifyData) {
+        seriesTypes[item.dataSeriesType.id].x.modifyData(config, item.dataSeriesType, data, size, rect);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size].modifyData(config, item.data.x.type, data, size, rect);
+      if (seriesTypes[item.dataSeriesType.id].x[size] && seriesTypes[item.dataSeriesType.id].x[size].modifyData) {
+        seriesTypes[item.dataSeriesType.id].x[size].modifyData(config, item.dataSeriesType, data, size, rect);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyData(config, item.data.x.type, data, size, rect);
+      if (seriesTypes[item.dataSeriesType.id].x[item.type] && seriesTypes[item.dataSeriesType.id].x[item.type].modifyData) {
+        seriesTypes[item.dataSeriesType.id].x[item.type].modifyData(config, item.dataSeriesType, data, size, rect);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyData) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyData(config, item.data.x.type, data, size, rect);
+      if (seriesTypes[item.dataSeriesType.id].x[size] && seriesTypes[item.dataSeriesType.id].x[size][item.type] && seriesTypes[item.dataSeriesType.id].x[size][item.type].modifyData) {
+        seriesTypes[item.dataSeriesType.id].x[size][item.type].modifyData(config, item.dataSeriesType, data, size, rect);
       }
     }
 
@@ -129,17 +116,10 @@ function getCombinedChartistConfig(item, data, size, rect) {
   let config = Object.assign(getChartistConfig(item, size), item.chartConfig);
 
   for (let option of chartTypes[item.type].options) {
-    switch (option.type) {
-      case 'number':
-      case 'oneOf':
-      case 'boolean':
-      case 'selection':
-        if (item.options && typeof item.options[option.name] !== undefined) {
-          option.modifyConfig(config, item.options[option.name], data, size, rect);
-        } else {
-          option.modifyConfig(config, option.defaultValue, data, size, rect);
-        }
-        break;
+    if (item.options && typeof item.options[option.name] !== undefined) {
+      option.modifyConfig(config, item.options[option.name], data, size, rect);
+    } else {
+      option.modifyConfig(config, option.defaultValue, data, size, rect);
     }
   }
 
@@ -150,23 +130,23 @@ function getCombinedChartistConfig(item, data, size, rect) {
 
   // if there are detected series types
   // we need to let them modify the config
-  if (item.data.x && item.data.x.type) {
-    if (seriesTypes.hasOwnProperty(item.data.x.type.id)) {
+  if (item.dataSeriesType) {
+    if (seriesTypes.hasOwnProperty(item.dataSeriesType.id)) {
 
-      if (seriesTypes[item.data.x.type.id].x.modifyConfig) {
-        seriesTypes[item.data.x.type.id].x.modifyConfig(config, item.data.x.type, data, size, rect, item);
+      if (seriesTypes[item.dataSeriesType.id].x.modifyConfig) {
+        seriesTypes[item.dataSeriesType.id].x.modifyConfig(config, item.dataSeriesType, data, size, rect, item);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size].modifyConfig(config, item.data.x.type, data, size, rect, item);
+      if (seriesTypes[item.dataSeriesType.id].x[size] && seriesTypes[item.dataSeriesType.id].x[size].modifyConfig) {
+        seriesTypes[item.dataSeriesType.id].x[size].modifyConfig(config, item.dataSeriesType, data, size, rect, item);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[item.type] && seriesTypes[item.data.x.type.id].x[item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
+      if (seriesTypes[item.dataSeriesType.id].x[item.type] && seriesTypes[item.dataSeriesType.id].x[item.type].modifyConfig) {
+        seriesTypes[item.dataSeriesType.id].x[item.type].modifyConfig(config, item.dataSeriesType, data, size, rect, item);
       }
 
-      if (seriesTypes[item.data.x.type.id].x[size] && seriesTypes[item.data.x.type.id].x[size][item.type] && seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig) {
-        seriesTypes[item.data.x.type.id].x[size][item.type].modifyConfig(config, item.data.x.type, data, size, rect, item);
+      if (seriesTypes[item.dataSeriesType.id].x[size] && seriesTypes[item.dataSeriesType.id].x[size][item.type] && seriesTypes[item.dataSeriesType.id].x[size][item.type].modifyConfig) {
+        seriesTypes[item.dataSeriesType.id].x[size][item.type].modifyConfig(config, item.dataSeriesType, data, size, rect, item);
       }
 
     }
@@ -197,8 +177,8 @@ export function getFormattedDate(date, format, interval){
 }
 
 export function getLegendHtml(item) {
-  let isDate = item.data.x.type && item.data.x.type.id === 'date';
-  let hasPrognosis = isDate && item.data.x.type.options && !isNaN(item.data.x.type.options.prognosisStart);
+  let isDate = item.dataSeriesType && item.dataSeriesType.id === 'date';
+  let hasPrognosis = isDate && item.dataSeriesType.options && !isNaN(item.dataSeriesType.options.prognosisStart);
   let svgBox = `
     <svg width="12" height="12">
       <line x1="1" y1="11" x2="11" y2="1" />
@@ -208,15 +188,14 @@ export function getLegendHtml(item) {
   let html = `
     <div class="q-chart__legend q-chart__legend--${item.type.toLowerCase()}">`;
 
-  if (item.data && item.data.y && item.data.y.data && item.data.y.data.length && item.data.y.data.length > 1 ) {
+  if (item.seriesLabels.length > 1) {
     let highlightDataSeries;
     if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
       highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
     }
-    let hasHighlighted = highlightDataSeries !== undefined;
-    for (let i = 0; i < item.data.y.data.length; i++) {
 
-      let serie = item.data.y.data[i];
+    let hasHighlighted = highlightDataSeries !== undefined && highlightDataSeries !== null;
+    for (let i = 0; i < item.seriesLabels.length; i++) {
 
       let colorClass = vizColorClasses[i];
       let fontClasses = 's-font-note-s';
@@ -228,14 +207,14 @@ export function getLegendHtml(item) {
       html += `
       <div class="q-chart__legend__item ${colorClass} q-chart__legend__item--${chars[i]}">
         <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
-        <div class="q-chart__legend__item__text ${fontClasses}">${serie.label}</div>
+        <div class="q-chart__legend__item__text ${fontClasses}">${item.seriesLabels[i]}</div>
       </div>`;
     }
   }
 
   if (hasPrognosis){
-    let {prognosisStart,interval} = item.data.x.type.options;
-    let date = getFormattedDate(item.data.x.data[prognosisStart], item.data.x.type.config.format, interval );
+    let {prognosisStart, interval} = item.dataSeriesType.options;
+    let date = getFormattedDate(item.data.labels[prognosisStart], item.dataSeriesType.config.format, interval );
     html += `
       <div class="q-chart__legend__item q-chart__legend__item--prognosis">
         <div class="q-chart__legend__item__box s-color-gray-5 ${isLine ? 'q-chart__legend__item__box--line' : ''}">${itemBox}</div>
@@ -290,15 +269,11 @@ function getContextHtml(item, chartistConfig) {
   axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
 
   const labels = {
-    x: item.data.labels[0],
+    x: item.xAxisLabel,
     y: item.yAxisLabel
   }
 
-  // let html = getLegendHtml(item);
-  let html = '';
-  if (!item.data.y) {
-    item.data.y = {};
-  }
+  let html = getLegendHtml(item);
   var axisNames = new Array('y', 'x');
   if (chartistConfig.horizontalBars) {
     axisNames.reverse();
@@ -306,7 +281,7 @@ function getContextHtml(item, chartistConfig) {
 
   html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${labels[axisNames[0]] || ''}${axisExplanation[axisNames[0]]}</div>`;
 
-  if (item.data.x && item.data.x.type && item.data.x.type.id === 'date') {
+  if (item.data.x && item.dataSeriesType && item.dataSeriesType.id === 'date') {
     if (chartistConfig.horizontalBars) {
       html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>`;
     }
@@ -373,34 +348,28 @@ export function display(item, element, rendererConfig, withoutContext = false) {
 
         lastWidth = rect.width;
 
-        // // prepare data
-        // let dataForChartist = getChartDataForChartist(item);
-        // if (!dataForChartist || dataForChartist === null) {
-        //   reject('data could not be prepared for chartist');
-        //   return;
-        // }
-
-        // console.log(item)
+        // copy to not mess with original data
+        const data = JSON.parse(JSON.stringify(item.data));
 
         // prepare config and modify data if necessary based on config
         let drawSize = getElementSize(rect);
-        let chartistConfig = getCombinedChartistConfig(item, item.data, drawSize, rect);
+        let chartistConfig = getCombinedChartistConfig(item, data, drawSize, rect);
 
-        shortenNumberLabels(chartistConfig, item.data);
+        shortenNumberLabels(chartistConfig, data);
 
-        let { divisor } = getMinMaxAndDivisor(item.data);
+        let { divisor } = getMinMaxAndDivisor(data);
         chartistConfig.yValueDivisor = divisor;
 
-        modifyData(chartistConfig, item, item.data, drawSize, rect);
+        modifyData(chartistConfig, item, data, drawSize, rect);
 
         // set Y axis offset after we have modified the data (date series label formatting)
-        setYAxisOffset(chartistConfig, item.type, item.data);
+        setYAxisOffset(chartistConfig, item.type, data);
 
         try {
           if (withoutContext) {
-            chart = displayWithoutContext(item, element, chartistConfig, item.data);
+            chart = displayWithoutContext(item, element, chartistConfig, data);
           } else {
-            chart = displayWithContext(item, element, chartistConfig, item.data);
+            chart = displayWithContext(item, element, chartistConfig, data);
           }
         } catch (e) {
           reject(e);

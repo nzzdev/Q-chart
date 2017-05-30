@@ -1,5 +1,6 @@
 const Boom = require('boom');
 const Joi = require('joi');
+const getFirstColumnSerie = require('../helpers/dateSeries.js').getFirstColumnSerie;
 
 function getHighlightEnum(item) {
   if (item.data.length < 1) {
@@ -16,6 +17,21 @@ function getHighlightEnumTitles(item) {
   return ['keine'].concat(item.data[0].slice(1));
 } 
 
+function getPrognosisStartEnum(item) {
+  try {
+    return [null].concat(Object.keys(getFirstColumnSerie(item.data).map(key => parseInt(key))));
+  } catch (e) {
+    return [null]
+  }
+}
+function getPrognosisStartEnumTitles(item) {
+  try {
+    return ['keine'].concat(getFirstColumnSerie(item.data));
+  } catch (e) {
+    return ['keine']
+  }
+}
+
 module.exports = {
   method: 'POST',
   path:'/dynamic-enum/{optionName}',
@@ -30,6 +46,13 @@ module.exports = {
       return reply({
         enum: getHighlightEnum(request.payload),
         enum_titles: getHighlightEnumTitles(request.payload)
+      }).type('application/json');
+    }
+
+    if (request.params.optionName === 'prognosisStart') {
+      return reply({
+        enum: getPrognosisStartEnum(request.payload),
+        enum_titles: getPrognosisStartEnumTitles(request.payload)
       }).type('application/json');
     }
 

@@ -6,7 +6,10 @@ const helpersDir = __dirname + '/../../helpers/';
 const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
 
-const arrayToChartistModel = require(`${helpersDir}dataTransformer.js`).arrayToChartistModel;
+const dataToChartistModel = require(`${helpersDir}itemTransformer.js`).dataToChartistModel;
+const optionsToLegacyModel = require(`${helpersDir}itemTransformer.js`).optionsToLegacyModel;
+const isDateSeries = require(`${helpersDir}dateSeries.js`).isDateSeries;
+const getFirstColumnSerie = require(`${helpersDir}dateSeries.js`).getFirstColumnSerie;
 
 
 // POSTed item will be validated against given schema
@@ -47,11 +50,18 @@ module.exports = {
 
     // prepare the data for client side rendering
     let item = request.payload.item;
-    item.data = arrayToChartistModel(item.data);
-    item.type = 'Line';
+    item.isDateSeries = isDateSeries(getFirstColumnSerie(item.data));
+
+    item = optionsToLegacyModel(item);
+
+    item.xAxisLabel = item.data[0][0];
+    item.seriesLabels = item.data[0].slice(1);
+
+    // finally transform the data to the model that chartist needs
+    item.data = dataToChartistModel(item.data);
 
     const data = {
-      id: `q-chart-${id}`,      
+      id: `q-chart-${id}`,
       item: request.payload.item
     };
 

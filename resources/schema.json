@@ -68,17 +68,96 @@
           },
           "default": "Line"
         },
-        "isColumnChart": {
-          "title": "Balken statt Säulen",
-          "type": "boolean",
+        "barOptions": {
+          "title": "Balkendiagramm Optionen",
+          "type": "object",
           "Q:options": {
             "availabilityChecks": [
               {
                 "type": "toolEndpoint",
                 "withData": true,
-                "endpoint": "option-availability/isColumnChart"
+                "endpoint": "option-availability/bar"
               }
             ]
+          },
+          "properties": {
+            "isBarChart": {
+              "title": "Balken statt Säulen",
+              "type": "boolean",
+              "default": false
+            },
+            "forceBarsOnSmall": {
+              "title": "Balken für Mobile",
+              "type": "boolean",
+              "default": true,
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "toolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/forceBarsOnSmall"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "dateSeriesOptions": {
+          "title": "Datumsreihe",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "toolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/dateseries"
+              }
+            ]
+          },
+          "properties": {
+            "interval": {
+              "title": "Angezeigtes Interval",
+              "type": "string",
+              "default": "year",
+              "enum": ["year", "quarter", "month", "day", "hour"],
+              "Q:options": {
+                "enum_titles": ["Jahre", "Quartale", "Monate", "Tage", "Stunden"]
+              }
+            },
+            "prognosisStart": {
+              "title": "Start Prognose",
+              "anyOf": ["number", "null"],
+              "Q:options": {
+                "dynamicEnum": {
+                  "type": "toolEndpoint",
+                  "withData": true,
+                  "endpoint": "dynamic-enum/prognosisStart"
+                }
+              }
+            }
+          }
+        },
+        "lineChartOptions": {
+          "title": "Liniendiagramm Optionen",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "toolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/line"
+              }
+            ]
+          },
+          "properties": {
+            "minValue": {
+              "title": "Minimaler Wert",
+              "type": "number"
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
+            }
           }
         },
         "highlightDataSeries": {
