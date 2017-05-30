@@ -55,7 +55,7 @@
       "type": "string"
     },
     "options": {
-      "title": "Optionen",
+      "title": "Allgemeine Optionen",
       "type": "object",
       "properties": {
         "chartType": {
@@ -67,6 +67,17 @@
             "enum_titles": ["Linien", "Säulen", "Gestapelte Säulen"]
           },
           "default": "Line"
+        },
+        "highlightDataSeries": {
+          "title": "Hervorhebung",
+          "anyOf": ["number", "null"],
+          "Q:options": {
+            "dynamicEnum": {
+              "type": "toolEndpoint",
+              "withData": true,
+              "endpoint": "dynamic-enum/highlightDataSeries"
+            }
+          }
         },
         "barOptions": {
           "title": "Balkendiagramm Optionen",
@@ -157,17 +168,6 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
-            }
-          }
-        },
-        "highlightDataSeries": {
-          "title": "Hervorhebung",
-          "anyOf": ["number", "null"],
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "toolEndpoint",
-              "withData": true,
-              "endpoint": "dynamic-enum/highlightDataSeries"
             }
           }
         }

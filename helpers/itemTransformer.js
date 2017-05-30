@@ -16,6 +16,7 @@ function dataToChartistModel(data) {
   }
 }
 
+// this is a hack to make the old code work with the new model
 function optionsToLegacyModel(item) {
   item.type = item.options.chartType;
 
