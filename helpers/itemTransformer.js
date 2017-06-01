@@ -1,11 +1,12 @@
 const array2d = require('array2d');
 const getFirstColumnSerie = require('./dateSeries.js').getFirstColumnSerie;
 const getFirstFormat = require('./dateSeries.js').getFirstFormat;
+const getDateFormatForValue = require('./dateSeries.js').getDateFormatForValue;
 
 // this is a hack to make the old code work with the new model
 function dataToChartistModel(data) {
   array2d.eachCell(data, (val, x, y) => {
-    if (!isNaN(parseFloat(val))) {
+    if (!isNaN(parseFloat(val)) && getDateFormatForValue(val) === undefined) {
       data[x][y] = parseFloat(data[x][y]);
     }
   })

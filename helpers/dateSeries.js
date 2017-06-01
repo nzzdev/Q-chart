@@ -74,5 +74,6 @@ function getFirstColumnSerie(data) {
 module.exports = {
   isDateSeries: isDateSeries,
   getFirstColumnSerie: getFirstColumnSerie,
-  getFirstFormat: getFirstFormat
+  getFirstFormat: getFirstFormat,
+  getDateFormatForValue: getDateFormatForValue
 }
