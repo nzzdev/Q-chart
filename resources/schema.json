@@ -61,12 +61,12 @@
         "chartType": {
           "title": "Diagrammtyp",
           "type": "string",
-          "enum": ["Line", "Bar", "StackedBar"],
+          "enum": ["Bar", "StackedBar", "Line"],
           "Q:options": {
             "selectType": "radio",
-            "enum_titles": ["Linien", "Säulen", "Gestapelte Säulen"]
+            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien"]
           },
-          "default": "Line"
+          "default": "Bar"
         },
         "highlightDataSeries": {
           "title": "Hervorhebung",

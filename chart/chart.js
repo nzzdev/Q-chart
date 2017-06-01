@@ -21,8 +21,6 @@ var sizeObserver = new SizeObserver();
 
 var chars = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'];
 
-var stylesLoaded = false;
-
 function getExtent(data) {
   let flatDatapoints = getFlatDatapoints(data);
   if (flatDatapoints && flatDatapoints.length) {
