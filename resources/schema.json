@@ -73,7 +73,7 @@
           "anyOf": ["number", "null"],
           "Q:options": {
             "dynamicEnum": {
-              "type": "toolEndpoint",
+              "type": "ToolEndpoint",
               "withData": true,
               "endpoint": "dynamic-enum/highlightDataSeries"
             }
@@ -140,7 +140,7 @@
               "anyOf": ["number", "null"],
               "Q:options": {
                 "dynamicEnum": {
-                  "type": "toolEndpoint",
+                  "type": "ToolEndpoint",
                   "withData": true,
                   "endpoint": "dynamic-enum/prognosisStart"
                 }
