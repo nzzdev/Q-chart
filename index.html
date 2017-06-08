@@ -1,143 +1,178 @@
+<!-- index.html to test what markup would look like locally (independent of target) -->
 <!doctype html>
-<html class="no-js">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>Q Chart Renderer</title>
+    <title>Q Renderer Skeleton</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@^1,sophie-font@^1,sophie-color@^1,sophie-viz-color@^1[general].css">
+    <script src="https://rawgit.com/filamentgroup/loadCSS/master/src/loadCSS.js"></script> 
   </head>
- <body>
+  <body>
+    <script src="node_modules/systemjs/dist/system.js"></script>    
+    <div id="container">
+      <div id="renderer"></div>
+    </div>
+    <script>
+      let data = {
+        "toolRuntimeConfig": {
+          id: "1221asdasd",
+          toolBaseUrl: 'http://localhost:3000'
+        },
+        "item": {
+          "_id": "725bfea0cfe08fb2fb975d94f24e2abe",
+          "_rev": "16-5bc831ebc5239b7293e8983e41aa6bde",
+          "department": "Storytelling",
+          "data": [
+            [
+              "Jahr",
+              "Volumen",
+              "asd"
+            ],
+            [
+              "2003",
+              "55",
+              "45"
+            ],
+            [
+              "2004",
+              "88",
+              "51"
+            ],
+            [
+              "2005",
+              "79",
+              "87"
+            ],
+            [
+              "2006",
+              "101",
+              "21"
+            ],
+            [
+              "2007",
+              "34",
+              "46"
+            ],
+            [
+              "2008",
+              "44",
+              "87"
+            ],
+            [
+              "2009",
+              "58",
+              "39"
+            ],
+            [
+              "2010",
+              "55",
+              "45"
+            ],
+            [
+              "2011",
+              "88",
+              "51"
+            ],
+            [
+              "2012",
+              "79",
+              "87"
+            ],
+            [
+              "2013",
+              "101",
+              "21"
+            ],
+            [
+              "2014",
+              "34",
+              "46"
+            ],
+            [
+              "2015",
+              "44",
+              "87"
+            ],
+            [
+              "2016",
+              "58",
+              "39"
+            ]
+          ],
+          "sources": [],
+          "options": {
+            "chartType": "Bar",
+            "barOptions": {
+              "isBarChart": false,
+              "forceBarsOnSmall": false
+            },
+            "dateSeriesOptions": {
+              "interval": "year",
+              "prognosisStart": 5
+            },
+            "lineChartOptions": {},
+            "highlightDataSeries": 0
+          },
+          "title": "chart",
+          "createdDate": "2017-05-29T10:33:20.067Z",
+          "createdBy": "beni.buess@nzz.ch",
+          "updatedDate": "2017-05-29T12:27:49.882Z",
+          "updatedBy": "beni.buess@nzz.ch"
+        }
+      };
 
-    <main class="l--main">
-      <div class="l--inner">
-        <div class="l--content">
-          <article class="content">
-            <section>
+      function loadAllScripts(scripts, index, callback) {
+        if (scripts[index] && scripts[index].url) {
+          loadJS(scripts[index].url, () => {
+            loadAllScripts(scripts, index + 1, callback)
+          })
+        } else {
+          callback();
+        }
+      }
 
-              <h1 class="title title--content"><div class="title__catchline">Abschuss eines russischen Kampfflugzeugs</div><div class="title__name">Moskau droht mit Handelskrieg</div></h1>
+      fetch(`http://localhost:3000/rendering-info/html-js`, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          data.stylesheets.forEach(stylesheet => {
+            if (stylesheet.name) {
+              stylesheet.url = `http://localhost:3000/stylesheet/${stylesheet.name}`
+            }
+            loadCSS(stylesheet.url)
+          })
+          document.getElementById('renderer').innerHTML = data.markup;
 
-              <div class="leadtext">Ein russischer Handelskrieg könnte die Türkei aufgrund der engen Verflechtung empfindlich treffen. Die ersten Folgen spürt allerdings die russische Bevölkerung – schon jetzt.</div>
+          data.scripts = data.scripts
+            .map(script => {
+              if (script.name) {
+                script.url = `http://${window.location.hostname}:3000/script/${script.name}`
+              }
+              return script;
+            })
 
-              <ul class="metainfo metainfo--content"><li class="metainfo__item"><span class="metainfo__item-author"><span class="metainfo__item-von">von</span>&nbsp;Benjamin Triebe, Moskau</span></li><li class="metainfo__item"><time class="metainfo__item-date" datetime="2015-11-26 07:00:00">26.11.2015, 07:00 Uhr</time></li><li class="metainfo__item"><a class="metainfo__item-comments" href="#kommentare"><span class="disqus-comment-count" data-disqus-identifier="1.18652797"><b></b></span></a></li></ul>
+          let urlScripts = data.scripts
+            .filter(script => script.url)
 
-              <ul class="sharebox"></ul>
+          let contentScripts = data.scripts
+            .filter(script => script.content)
 
-              <div>
-                <!-- <p>So schnell können sich politische Tonlagen ändern. Noch im September hatte der türkische Präsident Recep Erdogan bei einem Besuch in Moskau die Hoffnung geäussert, der Handel seines Landes mit Russland könne bis 2023 auf 100 Mrd. $ pro Jahr anwachsen. Doch seit Ankaras Luftwaffe am Dienstag <a href="http://www.nzz.ch/international/naher-osten-und-nordafrika/nur-wenige-sekunden-im-tuerkischen-luftraum-1.18652470">ein russisches Kampfflugzeug abgeschossen hat</a> , weht der Wind aus der Gegenrichtung: Russlands Regierungschef Dmitri Medwedew sagte am Mittwoch, Ankara müsse mit wirtschaftlichen Strafen rechnen. Moskau überlege, sich aus Projekten zurückzuziehen; türkische Unternehmen könnten Marktanteile in Russland einbüssen. Aussenminister Sergei Lawrow erklärte, man wolle Firmen nicht künstlich Probleme bereiten, aber der Abschuss verlange eine Antwort.</p>
-
-                <h2>Mehr Aufwand für die Ferien</h2>
-                <p>Moskau und Ankara pflegen enge Wirtschaftsbeziehungen, das Potenzial für Verwerfungen ist gross. Betrachtet man die 28 Länder der EU als Block, so war Russland 2014 der zweitwichtigste Handelspartner der Türkei. Der gemeinsame Warenumsatz belief sich auf umgerechnet 24 Mrd. $. Russland war das viertwichtigste Zielland türkischer Ausfuhren – und die zweitwichtigste Importquelle. Nach Deutschland kauft niemand in Europa so viel Gas von Russland wie die Türkei. Doch ähnlich wie bei Deutschland wird Moskau diese Beziehung wohl nicht aufs Spiel setzen.</p><p>Die Türkei exportiert vor allem Kleidung sowie Obst und Gemüse. Letzteres ist seit dem von Moskau <a href="http://www.nzz.ch/wirtschaft/russland-verbannt-auslaendische-lebensmittel-1.18358347">im Sommer 2014 verhängten Einfuhrstopp für viele westliche Lebensmittel</a> noch wichtiger geworden. Allerdings sind die türkischen Ausfuhren aufgrund der russischen Wirtschaftskrise von Januar bis September um rund 40% gesunken.</p>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1"></div>
-                <div class="smallborder"></div>
-
-                <p>Der relative Schaden eines Handelskrieges wäre für die Türkei wahrscheinlich grösser als für Russland. Doch auch die russische Bevölkerung könnte leiden, nicht nur wegen ausbleibender Konsumgüter. Die Türkei ist als eine der wenigen sommerlichen Destinationen beliebt, in die russische Touristen ohne Visum reisen dürfen. Von 4,4 Mio. russischen Besuchern im vergangenen Jahr waren gemäss Reuters rund 3,3 Mio. Feriengäste. Nur aus Deutschland kamen mehr Touristen. Doch Aussenminister Lawrow empfahl den Bürgern bereits, von Reisen in die Türkei abzusehen. Die terroristische Bedrohung sei dort <a href="http://www.nzz.ch/international/europa/russland-bestaetigt-terrorattacke-1.18647838">ebenso gross wie in Ägypten</a> . Der Verband der Reiseveranstalter erklärte, seine Firmen hätten den Verkauf von Flügen und Reisen eingestellt. Nun müssen Russen viel mehr Aufwand betreiben, um in der Türkei Ferien zu verbringen.</p> -->
-
-
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart2"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart3"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart4"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart5"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart6"></div>
-                <div class="smallborder"></div>
-
-                 <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7c"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7d"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart8"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart9"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart10"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart11"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart11b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart12"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart13"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart13b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart14"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart15"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart16"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart17"></div>
-                <div class="smallborder"></div>
-
-              </div>
-
-            </section>
-          </article>
-        </div>
-      </div>
-    </main>
-
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>System.import('dev-view');</script>
+          loadAllScripts(urlScripts, 0, () => {
+            contentScripts.forEach(script => {
+              let scriptElement = document.createElement('script');
+              scriptElement.innerHTML = script.content;
+              document.getElementById('container').appendChild(scriptElement);
+            })
+          })
+        })
+    </script>
   </body>
 </html>

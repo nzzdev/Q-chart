@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Diagramm",
+  "properties": {
+    "title": {
+      "title": "Titel",
+      "type": "string"
+    },
+    "data": {
+      "title": "Daten",
+      "type": "array",
+      "Q:type": "table",
+      "items": {
+        "type": "array",
+        "items": {
+          "anyOf": ["string", "null"]
+        }
+      }
+    },
+    "yAxisLabel": {
+      "title": "Y-Achsenbeschriftung",
+      "type": "string"
+    },
+    "sources": {
+      "title": "Quellen",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "title": "Quelle",
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "link": {
+            "Q:type": "link",
+            "title": "Link",
+            "type": "object",
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "isValid": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "title": "Anmerkungen",
+      "type": "string"
+    },
+    "options": {
+      "title": "Allgemeine Optionen",
+      "type": "object",
+      "properties": {
+        "chartType": {
+          "title": "Diagrammtyp",
+          "type": "string",
+          "enum": ["Bar", "StackedBar", "Line"],
+          "Q:options": {
+            "selectType": "radio",
+            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien"]
+          },
+          "default": "Bar"
+        },
+        "highlightDataSeries": {
+          "title": "Hervorhebung",
+          "anyOf": ["number", "null"],
+          "Q:options": {
+            "dynamicEnum": {
+              "type": "ToolEndpoint",
+              "withData": true,
+              "endpoint": "dynamic-enum/highlightDataSeries"
+            }
+          }
+        },
+        "barOptions": {
+          "title": "Balkendiagramm Optionen",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/bar"
+              }
+            ]
+          },
+          "properties": {
+            "isBarChart": {
+              "title": "Balken statt Säulen",
+              "type": "boolean",
+              "default": false
+            },
+            "forceBarsOnSmall": {
+              "title": "Balken für Mobile",
+              "type": "boolean",
+              "default": false,
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/forceBarsOnSmall"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "dateSeriesOptions": {
+          "title": "Datumsreihe",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/dateseries"
+              }
+            ]
+          },
+          "properties": {
+            "interval": {
+              "title": "Angezeigtes Interval",
+              "type": "string",
+              "default": "year",
+              "enum": ["year", "quarter", "month", "day", "hour"],
+              "Q:options": {
+                "enum_titles": ["Jahre", "Quartale", "Monate", "Tage", "Stunden"]
+              }
+            },
+            "prognosisStart": {
+              "title": "Start Prognose",
+              "anyOf": ["number", "null"],
+              "Q:options": {
+                "dynamicEnum": {
+                  "type": "ToolEndpoint",
+                  "withData": true,
+                  "endpoint": "dynamic-enum/prognosisStart"
+                }
+              }
+            }
+          }
+        },
+        "lineChartOptions": {
+          "title": "Liniendiagramm Optionen",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/line"
+              }
+            ]
+          },
+          "properties": {
+            "minValue": {
+              "title": "Minimaler Wert",
+              "type": "number"
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
