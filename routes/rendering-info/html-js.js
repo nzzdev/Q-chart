@@ -76,7 +76,7 @@ module.exports = {
     let loaderScript = `
         System.import('q-chart/chart.js')
           .then(function(module) {
-            return module.display(${JSON.stringify(request.payload.item)}, document.querySelector('#${data.id}'), ${JSON.stringify(request.payload.toolRuntimeConfig)})
+            return module.display(${JSON.stringify(item)}, document.querySelector('#${data.id}'), ${JSON.stringify(request.payload.toolRuntimeConfig)})
           })
           .catch(function(error) {
             console.log(error)

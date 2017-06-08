@@ -321,11 +321,6 @@ export function display(item, element, rendererConfig, withoutContext = false) {
       if (!element) throw 'Element is not defined';
       if (!Chartist.hasOwnProperty(types[item.type].chartistType)) throw `Chartist Type (${types[item.type].chartistType}) not available`;
 
-      // if (!item.data || !item.data.x) {
-      //   reject('no data');
-      //   return;
-      // }
-
       if (rendererConfig && typeof rendererConfig === 'object') {
         rendererConfig = Object.assign({}, rendererConfigDefaults, rendererConfig);
       } else {

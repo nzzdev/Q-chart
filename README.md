@@ -1,24 +1,6 @@
-# NZZ Storytelling Q Renderer Service Skeleton
+# NZZ Storytelling Q Chart
 
-Q tool skeleton to help you creating a new Q tool. Clone or download this repo, change it according to your needs and push to your own new remote repo.
-See also [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html)
+This is Q Chart. It is a hack taking the old Q-chart code and making it work as a service with some server side logic.
 
-## Docker setup
-Dockerfile already included in skeleton repo. Renderer service can be dockerized locally with:
-* `docker build -t q-renderer-name .`
-* `docker run -p 3000:3000 q-renderer-name`
-For more information see [Docker documentaion](https://docs.docker.com/)
-
-## Travis Setup
-Travis needs the following environment variables (can be set in Travis' GUI) to push docker image and update rancher accordingly:
-* `DOCKER_USERNAME`
-* `DOCKER_EMAIL`
-* `DOCKER_PASSWORD`
-* `RANCHER_URL`
-* `CATTLE_ACCESS_KEY`
-* `CATTLE_SECRET_KEY`
-* `RANCHER_SERVICE_ID_STAGING`
-
-To add slack notifications for your builds execute the following command with the suitable token:
-* `travis encrypt "nzzstorytelling:token" --add notifications.slack`
- 
+## Implementation details
+The tool structure follows the general structure of each Q tool. Further information can be found in [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html).
