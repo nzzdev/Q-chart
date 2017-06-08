@@ -100,7 +100,7 @@
             "forceBarsOnSmall": {
               "title": "Balken für Mobile",
               "type": "boolean",
-              "default": true,
+              "default": false,
               "Q:options": {
                 "availabilityChecks": [
                   {
