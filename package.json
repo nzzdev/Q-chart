@@ -1,14 +1,14 @@
 {
-  "name": "@nzz/q-renderer-skeleton",
+  "name": "@nzz/q-chart",
   "version": "1.0.0",
-  "description": "Q renderer skeleton",
+  "description": "Q Chart",
   "keywords": [
     "storytelling",
     "nzz"
   ],
-  "homepage": "https://github.com/nzzdev/Q-renderer-skeleton",
+  "homepage": "https://github.com/nzzdev/Q-chart",
   "bugs": {
-    "url": "https://github.com/nzzdev/Q-renderer-skeleton/issues"
+    "url": "https://github.com/nzzdev/Q-chart/issues"
   },
   "license": "",
   "contributors": [
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nzzdev/Q-renderer-skeleton.git"
+    "url": "git+https://github.com/nzzdev/Q-chart.git"
   },
   "dependencies": {
     "array2d": "0.0.5",
