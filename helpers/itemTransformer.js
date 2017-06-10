@@ -2,6 +2,7 @@ const array2d = require('array2d');
 const getFirstColumnSerie = require('./dateSeries.js').getFirstColumnSerie;
 const getFirstFormat = require('./dateSeries.js').getFirstFormat;
 const getDateFormatForValue = require('./dateSeries.js').getDateFormatForValue;
+const isDateSeries = require('./dateSeries.js').isDateSeries;
 
 // this is a hack to make the old code work with the new model
 function dataToChartistModel(data) {
