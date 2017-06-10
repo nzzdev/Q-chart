@@ -188,7 +188,7 @@ export function getLegendHtml(item) {
 
   if (item.seriesLabels.length > 1) {
     let highlightDataSeries;
-    if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries') && !!item.options.highlightDataSeries) {
       highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
     }
 
