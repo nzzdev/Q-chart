@@ -7,6 +7,10 @@
       "title": "Titel",
       "type": "string"
     },
+    "subtitle": {
+      "title": "Untertitel",
+      "type": "string"
+    },
     "data": {
       "title": "Daten",
       "type": "array",
@@ -17,10 +21,6 @@
           "anyOf": ["string", "null"]
         }
       }
-    },
-    "yAxisLabel": {
-      "title": "Y-Achsenbeschriftung",
-      "type": "string"
     },
     "sources": {
       "title": "Quellen",

@@ -247,13 +247,13 @@ export function getDivisorString(divisor) {
   let divisorString = '';
   switch (divisor) {
     case Math.pow(10,9):
-      divisorString = ' (Mrd.)';
+      divisorString = 'Mrd.';
       break;
     case Math.pow(10,6):
-      divisorString = ' (Mio.)';
+      divisorString = 'Mio.';
       break;
     case Math.pow(10,3):
-      divisorString = ' (Tsd.)';
+      divisorString = 'Tsd.';
       break;
     default:
       divisorString = '';
