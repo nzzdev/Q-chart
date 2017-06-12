@@ -113,13 +113,13 @@ function modifyData(config, item, data, size, rect) {
 function getCombinedChartistConfig(item, data, size, rect) {
   let config = Object.assign(getChartistConfig(item, size), item.chartConfig);
 
-  for (let option of chartTypes[item.type].options) {
+  chartTypes[item.type].options.forEach(option => {
     if (item.options && typeof item.options[option.name] !== undefined) {
       option.modifyConfig(config, item.options[option.name], data, size, rect);
     } else {
       option.modifyConfig(config, option.defaultValue, data, size, rect);
     }
-  }
+  });
 
   // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {

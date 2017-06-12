@@ -113,9 +113,9 @@ export default class SizeObserver {
   }
 
   invokeCallbacks() {
-    for (let cb of this.resizeCallbacks) {
+    this.resizeCallbacks.forEach(cb => {
       this.invokeCallback(cb);
-    }
+    });
   }
 
   invokeCallback(cb) {
