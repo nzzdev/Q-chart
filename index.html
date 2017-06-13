@@ -1,143 +1,569 @@
+<!-- index.html to test what markup would look like locally (independent of target) -->
 <!doctype html>
-<html class="no-js">
+<html>
   <head>
     <meta charset="utf-8">
-    <title>Q Chart Renderer</title>
+    <title>Q Renderer Skeleton</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://service.sophie.nzz.ch/bundle/sophie-q@^1,sophie-font@^1,sophie-color@^1,sophie-viz-color@^1[general].css">
+    <script src="https://rawgit.com/filamentgroup/loadCSS/master/src/loadCSS.js"></script> 
   </head>
- <body>
+  <body>
+    <script src="node_modules/systemjs/dist/system.js"></script>    
+    <div id="container">
+      <div id="renderer"></div>
+    </div>
+    <script>
+      let data = {
+        "toolRuntimeConfig": {
+          id: "1221asdasd",
+          toolBaseUrl: 'http://localhost:3000'
+        },
+        "item": {
+  "_id": "29aee9dcd77b766ea301518399fb5610",
+  "_rev": "3-9301508d60d4407244988ae938989fec",
+  "department": "Wirtschaft",
+  "annotations": "",
+  "title": "Zeit für eine Anhebung",
+  "subtitle": "Untertitle der sehr lang ist und auch mal umbrechen kann wenns denn noetig ist weil zu wenig Platz da ist",
+  "tool": "chart",
+  "data": [
+    [
+      "Date",
+      "Inflation in der Euro-Zone",
+      "Hauptrefinanzierungssatz der EZB",
+      "2-Prozent-Ziel der EZB"
+    ],
+    [
+      "31.12.1998",
+      "1000000000.7",
+      "3",
+      "2"
+    ],
+    [
+      "31.03.1999",
+      "0.9",
+      "3",
+      "2"
+    ],
+    [
+      "30.06.1999",
+      "0.9",
+      "2.5",
+      "2"
+    ],
+    [
+      "30.09.1999",
+      "1.2",
+      "2.5",
+      "2"
+    ],
+    [
+      "31.12.1999",
+      "1.7",
+      "3",
+      "2"
+    ],
+    [
+      "31.03.2000",
+      "2",
+      "3.5",
+      "2"
+    ],
+    [
+      "30.06.2000",
+      "2.1",
+      "4.25",
+      "2"
+    ],
+    [
+      "29.09.2000",
+      "2.4",
+      "4.5",
+      "2"
+    ],
+    [
+      "29.12.2000",
+      "2.5",
+      "4.75",
+      "2"
+    ],
+    [
+      "30.03.2001",
+      "2.2",
+      "4.75",
+      "2"
+    ],
+    [
+      "29.06.2001",
+      "2.9",
+      "4.5",
+      "2"
+    ],
+    [
+      "28.09.2001",
+      "2.2",
+      "3.75",
+      "2"
+    ],
+    [
+      "31.12.2001",
+      "2.1",
+      "3.25",
+      "2"
+    ],
+    [
+      "29.03.2002",
+      "2.5",
+      "3.25",
+      "2"
+    ],
+    [
+      "28.06.2002",
+      "1.9",
+      "3.25",
+      "2"
+    ],
+    [
+      "30.09.2002",
+      "2.1",
+      "3.25",
+      "2"
+    ],
+    [
+      "31.12.2002",
+      "2.3",
+      "2.75",
+      "2"
+    ],
+    [
+      "31.03.2003",
+      "2.4",
+      "2.5",
+      "2"
+    ],
+    [
+      "30.06.2003",
+      "2",
+      "2",
+      "2"
+    ],
+    [
+      "30.09.2003",
+      "2.1",
+      "2",
+      "2"
+    ],
+    [
+      "31.12.2003",
+      "2",
+      "2",
+      "2"
+    ],
+    [
+      "31.03.2004",
+      "1.7",
+      "2",
+      "2"
+    ],
+    [
+      "30.06.2004",
+      "2.4",
+      "2",
+      "2"
+    ],
+    [
+      "30.09.2004",
+      "2.1",
+      "2",
+      "2"
+    ],
+    [
+      "31.12.2004",
+      "2.3",
+      "2",
+      "2"
+    ],
+    [
+      "31.03.2005",
+      "2.2",
+      "2",
+      "2"
+    ],
+    [
+      "30.06.2005",
+      "2",
+      "2",
+      "2"
+    ],
+    [
+      "30.09.2005",
+      "2.6",
+      "2",
+      "2"
+    ],
+    [
+      "30.12.2005",
+      "2.3",
+      "2.25",
+      "2"
+    ],
+    [
+      "31.03.2006",
+      "2.2",
+      "2.5",
+      "2"
+    ],
+    [
+      "30.06.2006",
+      "2.5",
+      "2.75",
+      "2"
+    ],
+    [
+      "29.09.2006",
+      "1.8",
+      "3",
+      "2"
+    ],
+    [
+      "29.12.2006",
+      "1.9",
+      "3.5",
+      "2"
+    ],
+    [
+      "30.03.2007",
+      "1.9",
+      "3.75",
+      "2"
+    ],
+    [
+      "29.06.2007",
+      "1.9",
+      "4",
+      "2"
+    ],
+    [
+      "28.09.2007",
+      "2.1",
+      "4",
+      "2"
+    ],
+    [
+      "31.12.2007",
+      "3.1",
+      "4",
+      "2"
+    ],
+    [
+      "31.03.2008",
+      "3.6",
+      "4",
+      "2"
+    ],
+    [
+      "30.06.2008",
+      "4",
+      "4",
+      "2"
+    ],
+    [
+      "30.09.2008",
+      "3.6",
+      "4.25",
+      "2"
+    ],
+    [
+      "31.12.2008",
+      "1.6",
+      "2.5",
+      "2"
+    ],
+    [
+      "31.03.2009",
+      "0.6",
+      "1.5",
+      "2"
+    ],
+    [
+      "30.06.2009",
+      "-0.1",
+      "1",
+      "2"
+    ],
+    [
+      "30.09.2009",
+      "-0.3",
+      "1",
+      "2"
+    ],
+    [
+      "31.12.2009",
+      "0.9",
+      "1",
+      "2"
+    ],
+    [
+      "31.03.2010",
+      "1.6",
+      "1",
+      "2"
+    ],
+    [
+      "30.06.2010",
+      "1.5",
+      "1",
+      "2"
+    ],
+    [
+      "30.09.2010",
+      "1.9",
+      "1",
+      "2"
+    ],
+    [
+      "31.12.2010",
+      "2.2",
+      "1",
+      "2"
+    ],
+    [
+      "31.03.2011",
+      "2.7",
+      "1",
+      "2"
+    ],
+    [
+      "30.06.2011",
+      "2.7",
+      "1.25",
+      "2"
+    ],
+    [
+      "30.09.2011",
+      "3",
+      "1.5",
+      "2"
+    ],
+    [
+      "30.12.2011",
+      "2.8",
+      "1",
+      "2"
+    ],
+    [
+      "30.03.2012",
+      "2.7",
+      "1",
+      "2"
+    ],
+    [
+      "29.06.2012",
+      "2.4",
+      "1",
+      "2"
+    ],
+    [
+      "28.09.2012",
+      "2.6",
+      "0.75",
+      "2"
+    ],
+    [
+      "31.12.2012",
+      "2.2",
+      "0.75",
+      "2"
+    ],
+    [
+      "29.03.2013",
+      "1.7",
+      "0.75",
+      "2"
+    ],
+    [
+      "28.06.2013",
+      "1.6",
+      "0.5",
+      "2"
+    ],
+    [
+      "30.09.2013",
+      "1.1",
+      "0.5",
+      "2"
+    ],
+    [
+      "31.12.2013",
+      "0.8",
+      "0.25",
+      "2"
+    ],
+    [
+      "31.03.2014",
+      "0.5",
+      "0.25",
+      "2"
+    ],
+    [
+      "30.06.2014",
+      "0.5",
+      "0.15",
+      "2"
+    ],
+    [
+      "30.09.2014",
+      "0.3",
+      "0.05",
+      "2"
+    ],
+    [
+      "31.12.2014",
+      "-0.2",
+      "0.05",
+      "2"
+    ],
+    [
+      "31.03.2015",
+      "-0.1",
+      "0.05",
+      "2"
+    ],
+    [
+      "30.06.2015",
+      "0.2",
+      "0.05",
+      "2"
+    ],
+    [
+      "30.09.2015",
+      "-0.1",
+      "0.05",
+      "2"
+    ],
+    [
+      "31.12.2015",
+      "0.2",
+      "0.05",
+      "2"
+    ],
+    [
+      "31.03.2016",
+      "0",
+      "0",
+      "2"
+    ],
+    [
+      "30.06.2016",
+      "0.1",
+      "0",
+      "2"
+    ],
+    [
+      "30.09.2016",
+      "0.4",
+      "0",
+      "2"
+    ],
+    [
+      "30.12.2016",
+      "1.1",
+      "0",
+      "2"
+    ],
+    [
+      "31.03.2017",
+      "1.5",
+      "0",
+      "2"
+    ],
+    [
+      "07.06.2017",
+      "1.4",
+      "0",
+      "2"
+    ]
+  ],
+  "options": {
+    "chartType": "Line",
+    "barOptions": {},
+    "lineChartOptions": {},
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "highlightDataSeries": null
+  },
+  "sources": [
+    {
+      "text": "EZB, Eurostat",
+      "link": {
+        "url": "",
+        "isValid": false
+      }
+    }
+  ],
+  "createdDate": "2017-06-08T10:06:06.048Z",
+  "createdBy": "christian.steiner@nzz.ch",
+  "active": true,
+  "activateDate": "2017-06-08T10:08:25.657Z",
+  "updatedBy": "beni.buess@nzz.ch",
+  "updatedDate": "2017-06-10T15:49:04.477Z"
+}
+      };
 
-    <main class="l--main">
-      <div class="l--inner">
-        <div class="l--content">
-          <article class="content">
-            <section>
+      function loadAllScripts(scripts, index, callback) {
+        if (scripts[index] && scripts[index].url) {
+          loadJS(scripts[index].url, () => {
+            loadAllScripts(scripts, index + 1, callback)
+          })
+        } else {
+          callback();
+        }
+      }
 
-              <h1 class="title title--content"><div class="title__catchline">Abschuss eines russischen Kampfflugzeugs</div><div class="title__name">Moskau droht mit Handelskrieg</div></h1>
+      fetch(`http://localhost:3000/rendering-info/html-js`, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          data.stylesheets.forEach(stylesheet => {
+            if (stylesheet.name) {
+              stylesheet.url = `http://localhost:3000/stylesheet/${stylesheet.name}`
+            }
+            loadCSS(stylesheet.url)
+          })
+          document.getElementById('renderer').innerHTML = data.markup;
 
-              <div class="leadtext">Ein russischer Handelskrieg könnte die Türkei aufgrund der engen Verflechtung empfindlich treffen. Die ersten Folgen spürt allerdings die russische Bevölkerung – schon jetzt.</div>
+          data.scripts = data.scripts
+            .map(script => {
+              if (script.name) {
+                script.url = `http://${window.location.hostname}:3000/script/${script.name}`
+              }
+              return script;
+            })
 
-              <ul class="metainfo metainfo--content"><li class="metainfo__item"><span class="metainfo__item-author"><span class="metainfo__item-von">von</span>&nbsp;Benjamin Triebe, Moskau</span></li><li class="metainfo__item"><time class="metainfo__item-date" datetime="2015-11-26 07:00:00">26.11.2015, 07:00 Uhr</time></li><li class="metainfo__item"><a class="metainfo__item-comments" href="#kommentare"><span class="disqus-comment-count" data-disqus-identifier="1.18652797"><b></b></span></a></li></ul>
+          let urlScripts = data.scripts
+            .filter(script => script.url)
 
-              <ul class="sharebox"></ul>
+          let contentScripts = data.scripts
+            .filter(script => script.content)
 
-              <div>
-                <!-- <p>So schnell können sich politische Tonlagen ändern. Noch im September hatte der türkische Präsident Recep Erdogan bei einem Besuch in Moskau die Hoffnung geäussert, der Handel seines Landes mit Russland könne bis 2023 auf 100 Mrd. $ pro Jahr anwachsen. Doch seit Ankaras Luftwaffe am Dienstag <a href="http://www.nzz.ch/international/naher-osten-und-nordafrika/nur-wenige-sekunden-im-tuerkischen-luftraum-1.18652470">ein russisches Kampfflugzeug abgeschossen hat</a> , weht der Wind aus der Gegenrichtung: Russlands Regierungschef Dmitri Medwedew sagte am Mittwoch, Ankara müsse mit wirtschaftlichen Strafen rechnen. Moskau überlege, sich aus Projekten zurückzuziehen; türkische Unternehmen könnten Marktanteile in Russland einbüssen. Aussenminister Sergei Lawrow erklärte, man wolle Firmen nicht künstlich Probleme bereiten, aber der Abschuss verlange eine Antwort.</p>
-
-                <h2>Mehr Aufwand für die Ferien</h2>
-                <p>Moskau und Ankara pflegen enge Wirtschaftsbeziehungen, das Potenzial für Verwerfungen ist gross. Betrachtet man die 28 Länder der EU als Block, so war Russland 2014 der zweitwichtigste Handelspartner der Türkei. Der gemeinsame Warenumsatz belief sich auf umgerechnet 24 Mrd. $. Russland war das viertwichtigste Zielland türkischer Ausfuhren – und die zweitwichtigste Importquelle. Nach Deutschland kauft niemand in Europa so viel Gas von Russland wie die Türkei. Doch ähnlich wie bei Deutschland wird Moskau diese Beziehung wohl nicht aufs Spiel setzen.</p><p>Die Türkei exportiert vor allem Kleidung sowie Obst und Gemüse. Letzteres ist seit dem von Moskau <a href="http://www.nzz.ch/wirtschaft/russland-verbannt-auslaendische-lebensmittel-1.18358347">im Sommer 2014 verhängten Einfuhrstopp für viele westliche Lebensmittel</a> noch wichtiger geworden. Allerdings sind die türkischen Ausfuhren aufgrund der russischen Wirtschaftskrise von Januar bis September um rund 40% gesunken.</p>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1"></div>
-                <div class="smallborder"></div>
-
-                <p>Der relative Schaden eines Handelskrieges wäre für die Türkei wahrscheinlich grösser als für Russland. Doch auch die russische Bevölkerung könnte leiden, nicht nur wegen ausbleibender Konsumgüter. Die Türkei ist als eine der wenigen sommerlichen Destinationen beliebt, in die russische Touristen ohne Visum reisen dürfen. Von 4,4 Mio. russischen Besuchern im vergangenen Jahr waren gemäss Reuters rund 3,3 Mio. Feriengäste. Nur aus Deutschland kamen mehr Touristen. Doch Aussenminister Lawrow empfahl den Bürgern bereits, von Reisen in die Türkei abzusehen. Die terroristische Bedrohung sei dort <a href="http://www.nzz.ch/international/europa/russland-bestaetigt-terrorattacke-1.18647838">ebenso gross wie in Ägypten</a> . Der Verband der Reiseveranstalter erklärte, seine Firmen hätten den Verkauf von Flügen und Reisen eingestellt. Nun müssen Russen viel mehr Aufwand betreiben, um in der Türkei Ferien zu verbringen.</p> -->
-
-
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart1b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart2"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart3"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart4"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart5"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart6"></div>
-                <div class="smallborder"></div>
-
-                 <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7c"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart7d"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart8"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart9"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart10"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart11"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart11b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart12"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart13"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart13b"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart14"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart15"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart16"></div>
-                <div class="smallborder"></div>
-
-                <div class="smallborder"></div>
-                  <div class="ct-chart" id="chart17"></div>
-                <div class="smallborder"></div>
-
-              </div>
-
-            </section>
-          </article>
-        </div>
-      </div>
-    </main>
-
-    <script src="jspm_packages/system.js"></script>
-    <script src="config.js"></script>
-    <script>System.import('dev-view');</script>
+          loadAllScripts(urlScripts, 0, () => {
+            contentScripts.forEach(script => {
+              let scriptElement = document.createElement('script');
+              scriptElement.innerHTML = script.content;
+              document.getElementById('container').appendChild(scriptElement);
+            })
+          })
+        })
+    </script>
   </body>
 </html>
