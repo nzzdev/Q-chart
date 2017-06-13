@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Enjoi = require('enjoi');
 const Joi = require('joi');
+const Boom = require('boom');
 const resourcesDir = __dirname + '/../../resources/';
 const helpersDir = __dirname + '/../../helpers/';
 const viewsDir = __dirname + '/../../views/';
@@ -58,7 +59,11 @@ module.exports = {
     item.seriesLabels = item.data[0].slice(1);
 
     // finally transform the data to the model that chartist needs
-    item.data = dataToChartistModel(item.data);
+    try {
+      item.data = dataToChartistModel(item.data);
+    } catch (e) {
+      return reply(Boom.badRequest());
+    }
 
     const data = {
       id: `q-chart-${id}`,
