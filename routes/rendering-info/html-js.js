@@ -26,7 +26,7 @@ const hashMap = require(`${scriptsDir}/hashMap.json`);
 // we use svelte to build tool specific markup
 // first register it, second define the path of our core view template
 require('svelte/ssr/register');
-const staticTemplate = require(viewsDir + 'html-js.html');
+const staticTemplate = require(viewsDir + 'HtmlJs.html');
 
 module.exports = {
   method: 'POST',

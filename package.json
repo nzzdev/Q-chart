@@ -42,7 +42,7 @@
     "jspm": "^0.17.0-beta.41",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
-    "svelte": "1.6.3",
+    "svelte": "1.22.3",
     "systemjs": "0.19.47",
     "systemjs-builder": "^0.16.4"
   },
