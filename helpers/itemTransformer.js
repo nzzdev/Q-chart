@@ -2,6 +2,7 @@ const array2d = require('array2d');
 const getFirstColumnSerie = require('./dateSeries.js').getFirstColumnSerie;
 const getFirstFormat = require('./dateSeries.js').getFirstFormat;
 const getDateFormatForValue = require('./dateSeries.js').getDateFormatForValue;
+const isDateSeries = require('./dateSeries.js').isDateSeries;
 
 // this is a hack to make the old code work with the new model
 function dataToChartistModel(data) {
@@ -25,19 +26,23 @@ function optionsToLegacyModel(item) {
   item.options.forceBarsOnSmall = item.options.barOptions.forceBarsOnSmall;
   delete item.options.barOptions;
 
-  item.dataSeriesType = {
-    id: "date",
-    options: {
-      interval: item.options.dateSeriesOptions.interval
-    },
-    config: {
-      format: getFirstFormat(getFirstColumnSerie(item.data))
+  // check if we have a date serie
+  // and transform the config if so
+  if (isDateSeries(getFirstColumnSerie(item.data)) && item.options.dateSeriesOptions) {
+    item.dataSeriesType = {
+      id: "date",
+      options: {
+        interval: item.options.dateSeriesOptions.interval
+      },
+      config: {
+        format: getFirstFormat(getFirstColumnSerie(item.data))
+      }
     }
+    if (item.options.dateSeriesOptions.prognosisStart) {
+      item.dataSeriesType.options.prognosisStart = item.options.dateSeriesOptions.prognosisStart;
+    }
+    delete item.options.dateSeriesOptions;
   }
-  if (item.options.dateSeriesOptions.prognosisStart) {
-    item.dataSeriesType.options.prognosisStart = item.options.dateSeriesOptions.prognosisStart;
-  }
-  delete item.options.dateSeriesOptions;
 
   item.options.minValue = item.options.lineChartOptions.minValue;
   item.options.maxValue = item.options.lineChartOptions.maxValue;

@@ -113,13 +113,13 @@ function modifyData(config, item, data, size, rect) {
 function getCombinedChartistConfig(item, data, size, rect) {
   let config = Object.assign(getChartistConfig(item, size), item.chartConfig);
 
-  for (let option of chartTypes[item.type].options) {
+  chartTypes[item.type].options.forEach(option => {
     if (item.options && typeof item.options[option.name] !== undefined) {
       option.modifyConfig(config, item.options[option.name], data, size, rect);
     } else {
       option.modifyConfig(config, option.defaultValue, data, size, rect);
     }
-  }
+  });
 
   // let the chart type modify the config
   if (chartTypes[item.type].modifyConfig) {
@@ -188,7 +188,7 @@ export function getLegendHtml(item) {
 
   if (item.seriesLabels.length > 1) {
     let highlightDataSeries;
-    if (item.options && item.options.hasOwnProperty('highlightDataSeries')) {
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries') && !!item.options.highlightDataSeries) {
       highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
     }
 
@@ -247,13 +247,13 @@ export function getDivisorString(divisor) {
   let divisorString = '';
   switch (divisor) {
     case Math.pow(10,9):
-      divisorString = ' (Mrd.)';
+      divisorString = 'Mrd.';
       break;
     case Math.pow(10,6):
-      divisorString = ' (Mio.)';
+      divisorString = 'Mio.';
       break;
     case Math.pow(10,3):
-      divisorString = ' (Tsd.)';
+      divisorString = 'Tsd.';
       break;
     default:
       divisorString = '';

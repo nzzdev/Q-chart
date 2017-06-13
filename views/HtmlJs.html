@@ -1,5 +1,8 @@
 <div class="s-q-item q-chart" style="opacity: 0;">
   <h3 class="s-q-item__title">{{item.title}}</h3>
+  {{#if item.subtitle && item.subtitle !== ''}}
+  <div class="q-chart__subtitle s-font-note">{{item.subtitle}}</div>
+  {{/if}}
   
   <div class="q-chart-container" id="{{ id }}"></div>
   <div class="s-q-item__footer">

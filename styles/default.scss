@@ -20,6 +20,10 @@ $ct-include-classes: false;
   }
 }
 
+.q-chart__subtitle {
+  margin-bottom: 12px;
+}
+
 .q-chart__legend {
   @include clearfix;
   float: right;
