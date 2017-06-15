@@ -12,10 +12,28 @@ function dataToChartistModel(data) {
     }
   })
   data = array2d.transpose(data.slice(1));
-  return {
-    labels: data[0].map(label => ''+label),
-    series: data.slice(1)
+  
+  data = {
+    labels: data[0]
+      .map(label => {
+        if (label === null) {
+          return '';
+        }
+        return ''+label;
+      }),
+    series: data
+      .slice(1)
+      .map(col => {
+        return col
+          .map(cell => {
+            if(cell === null) {
+              return '';
+            }
+            return cell;
+          })
+      })
   }
+  return data;
 }
 
 // this is a hack to make the old code work with the new model
