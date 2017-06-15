@@ -21,17 +21,7 @@ function dataToChartistModel(data) {
         }
         return ''+label;
       }),
-    series: data
-      .slice(1)
-      .map(col => {
-        return col
-          .map(cell => {
-            if(cell === null) {
-              return '';
-            }
-            return cell;
-          })
-      })
+    series: data.slice(1)
   }
   return data;
 }
