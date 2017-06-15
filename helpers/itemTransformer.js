@@ -21,7 +21,16 @@ function dataToChartistModel(data) {
         }
         return ''+label;
       }),
-    series: data.slice(1)
+    series: data
+      .slice(1)
+      .map(col => {
+        return col.map(cell => {
+          if (cell === '') {
+            return null;
+          }
+          return cell;
+        });
+      })
   }
   return data;
 }
