@@ -4,10 +4,18 @@ const getFirstFormat = require('./dateSeries.js').getFirstFormat;
 const getDateFormatForValue = require('./dateSeries.js').getDateFormatForValue;
 const isDateSeries = require('./dateSeries.js').isDateSeries;
 
+// returns NaN if it is not a correct number
+function filterFloat(value) {
+    if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/
+      .test(value))
+      return Number(value);
+  return NaN;
+}
+
 // this is a hack to make the old code work with the new model
 function dataToChartistModel(data) {
   array2d.eachCell(data, (val, x, y) => {
-    if (!isNaN(parseFloat(val)) && getDateFormatForValue(val) === undefined) {
+    if (!isNaN(filterFloat(val)) && !isNaN(parseFloat(val)) && getDateFormatForValue(val) === undefined) {
       data[x][y] = parseFloat(data[x][y]);
     }
   })
@@ -32,6 +40,7 @@ function dataToChartistModel(data) {
         });
       })
   }
+
   return data;
 }
 
