@@ -26,7 +26,7 @@ export function ctColorOverwrite(colorOverwrites, isReversed) {
           colorOverwrites.forEach(colorOverwrite => {
             let groupElement;
             if (isReversed) {
-              groupElement = series.svgElements.reverse()[colorOverwrite.position - 1]; // -1 because the position option is 1 based not 0 based
+              groupElement = series.svgElements.slice(0).reverse()[colorOverwrite.position - 1]; // -1 because the position option is 1 based not 0 based
             } else {
               groupElement = series.svgElements[colorOverwrite.position - 1]; // -1 because the position option is 1 based not 0 based
             }

@@ -6,10 +6,6 @@ export function ctHighlighting(highlightedIndex, isReversed, dataLength) {
 
   return function ctHighlighting(chart) {
 
-      let moveToFront = function (el) {
-        el.parentNode.appendChild(el)
-      }
-
       chart.on('created', function(data) {
         try {
           // change the color classes attributes on all groups
@@ -25,16 +21,15 @@ export function ctHighlighting(highlightedIndex, isReversed, dataLength) {
             if (!seriesElements) {
               return;
             }
-            seriesElements.forEach((seriesElement, index) => {
+            seriesElements.forEach((groupElement, index) => {
               if (index === highlightedIndex) {
-                seriesElement.addClass('ct-highlighted');
-                seriesElement.addClass(vizColorClasses[index]);
-                seriesElement.removeClass(brightVizColorClasses[index]);
-                moveToFront(seriesElement.getNode());
+                groupElement.addClass('ct-highlighted');
+                groupElement.addClass(vizColorClasses[index]);
+                groupElement.removeClass(brightVizColorClasses[index]);
               } else {
-                seriesElement.removeClass('ct-highlighted');
-                seriesElement.removeClass(vizColorClasses[index]);
-                seriesElement.addClass(brightVizColorClasses[index]);
+                groupElement.removeClass('ct-highlighted');
+                groupElement.removeClass(vizColorClasses[index]);
+                groupElement.addClass(brightVizColorClasses[index]);
               }
             })
           }
