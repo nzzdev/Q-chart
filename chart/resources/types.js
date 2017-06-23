@@ -54,7 +54,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value, !config.horizontalBars, data.series.length)
+              ctHighlighting(value, !!config.horizontalBars, data.series.length)
             )
           }
         }
@@ -64,7 +64,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctColorOverwrite(value, !config.horizontalBars)
+              ctColorOverwrite(value, !!config.horizontalBars)
             )
           }
         }
@@ -132,7 +132,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value)
+              ctHighlighting(value, !!config.horizontalBars)
             )
           }
         }
@@ -142,7 +142,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctColorOverwrite(value, !config.horizontalBars)
+              ctColorOverwrite(value, !!config.horizontalBars)
             )
           }
         }
@@ -186,7 +186,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value, true, data.series.length)
+              ctHighlighting(value, false, data.series.length)
             );
           }
         }
@@ -196,7 +196,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctColorOverwrite(value, !config.horizontalBars)
+              ctColorOverwrite(value, false)
             )
           }
         }

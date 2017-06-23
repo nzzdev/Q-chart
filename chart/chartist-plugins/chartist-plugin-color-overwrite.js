@@ -4,7 +4,7 @@ function hasHighlighted(series) {
   let hasHighlighted = false;
   if (series && series.svgElements && series.svgElements.length && series.svgElements.length > 0) {
     series.svgElements.forEach(groupElement => {
-      if (groupElement.classes().indexOf('ct-highlighted-group') > -1) {
+      if (groupElement.classes().indexOf('ct-highlighted') > -1) {
         hasHighlighted = true;
       }
     })
@@ -33,7 +33,7 @@ export function ctColorOverwrite(colorOverwrites, isReversed) {
             if (!groupElement) {
               return;
             }
-            if (hasHighlightedGroup && groupElement.classes().indexOf('ct-highlighted-group') === -1) {
+            if (hasHighlightedGroup && groupElement.classes().indexOf('ct-highlighted') === -1) {
               groupElement.getNode().style.color = colorOverwrite.colorBright;
             } else {
               groupElement.getNode().style.color = colorOverwrite.color;
