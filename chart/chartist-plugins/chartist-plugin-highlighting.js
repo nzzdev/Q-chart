@@ -14,14 +14,18 @@ export function ctHighlighting(highlightedIndex, countAsc = true, dataLength) {
         try {
           data.svg.addClass('ct-contains-highlighted');
           let active = data.svg._node.querySelector('.ct-highlighted').parentNode;
+          active.classList.add('ct-highlighted-group');
           moveToFront(active);
         } catch(e) {
-
         }
       });
 
       chart.on('draw', function(data) {
         try {
+
+          if (data.seriesIndex === undefined) {
+            return;
+          }
 
           if (chart instanceof Chartist.Bar || chart instanceof Chartist.Line) {
 
@@ -37,7 +41,6 @@ export function ctHighlighting(highlightedIndex, countAsc = true, dataLength) {
           }
 
         } catch(e) {
-
         }
       });
   };
