@@ -132,7 +132,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value, !!config.horizontalBars)
+              ctHighlighting(value, false)
             )
           }
         }
@@ -142,7 +142,7 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctColorOverwrite(value, !!config.horizontalBars)
+              ctColorOverwrite(value, false)
             )
           }
         }
