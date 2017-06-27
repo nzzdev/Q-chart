@@ -188,7 +188,7 @@ export function getLegendHtml(item) {
 
   if (item.seriesLabels.length > 1) {
     let highlightDataSeries;
-    if (item.options && item.options.hasOwnProperty('highlightDataSeries') && !!item.options.highlightDataSeries) {
+    if (item.options && item.options.hasOwnProperty('highlightDataSeries') && item.options.highlightDataSeries !== null && item.options.highlightDataSeries !== undefined) {
       highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
     }
 
@@ -202,8 +202,22 @@ export function getLegendHtml(item) {
         fontClasses += ' s-font-note-s--light';
       }
 
+      // handle color overwrite
+      let styleAttribute = '';
+      if (item.options.hasOwnProperty('colorOverwrite') && item.options.colorOverwrite.length && item.options.colorOverwrite.length > 0) {
+        item.options.colorOverwrite.forEach(colorOverwrite => {
+          if (i === colorOverwrite.position - 1) { // -1 because colorOverwrite.position is 1 based not 0 based
+            if (hasHighlighted && highlightDataSeries !== i) {
+              styleAttribute = ` style="color: ${colorOverwrite.colorBright};"`
+            } else {
+              styleAttribute = ` style="color: ${colorOverwrite.color};"`
+            }
+          }
+        })
+      }
+
       html += `
-      <div class="q-chart__legend__item ${colorClass} q-chart__legend__item--${chars[i]}">
+      <div class="q-chart__legend__item ${colorClass} q-chart__legend__item--${chars[i]}"${styleAttribute}>
         <div class="q-chart__legend__item__box q-chart__legend__item__box--${item.type.toLowerCase()}">${itemBox}</div>
         <div class="q-chart__legend__item__text ${fontClasses}">${item.seriesLabels[i]}</div>
       </div>`;

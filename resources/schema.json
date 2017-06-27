@@ -171,6 +171,45 @@
               "type": "number"
             }
           }
+        },
+        "colorOverwrite": {
+          "title": "Farben",
+          "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "role": "expert-chart"
+              }
+            ],
+            "compact": true,
+            "expandable": {
+              "itemLabelProperty": "color"
+            }
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "title": "Farbe normal",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "colorBright": {
+                "title": "Farbe hell",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "position": {
+                "title": "Position",
+                "anyOf": ["number", "null"],
+                "enum": [null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+                "Q:options": {
+                  "enum_titles": ["", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+                }
+              }
+            }
+          }
         }
       }
     }
