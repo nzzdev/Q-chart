@@ -1,4 +1,5 @@
 import {getFlatDatapoints} from './helpers';
+import {ctSvgSeriesOrder} from '../chartist-plugins/chartist-plugin-svg-series-order.js';
 
 Number.isInteger = Number.isInteger || function(value) {
   return typeof value === "number" && 
@@ -85,4 +86,9 @@ export default function modifyChartistConfigBeforeRender(config, type, data, siz
   } catch (e) {
     // ignore errors;
   }
+
+  // load a plugin that moves any highlighted series to the front in the svg dom
+  config.plugins.push(
+    ctSvgSeriesOrder()
+  )
 }

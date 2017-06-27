@@ -1,5 +1,6 @@
-import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig';
-import {ctHighlighting} from '../chartist-plugins/chartist-plugin-highlighting';
+import {vertBarHeight, vertBarSetPadding, chartHeight} from './chartistConfig.js';
+import {ctHighlighting} from '../chartist-plugins/chartist-plugin-highlighting.js';
+import {ctColorOverwrite} from '../chartist-plugins/chartist-plugin-color-overwrite.js';
 import min from './min';
 
 export var types = {
@@ -50,16 +51,20 @@ export var types = {
       },
       {
         name: 'highlightDataSeries',
-        type: 'selection',
-        label: 'Hervorhebung',
-        defaultValue: undefined,
-        withUndefinedOption: true,
-        undefinedOptionLabel: 'keine',
-        options: [],
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value, !config.horizontalBars, data.series.length)
+              ctHighlighting(value, !!config.horizontalBars, data.series.length)
+            )
+          }
+        }
+      },
+      {
+        name: 'colorOverwrite',
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== null && value !== undefined) {
+            config.plugins.push(
+              ctColorOverwrite(value, !!config.horizontalBars)
             )
           }
         }
@@ -127,7 +132,17 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value)
+              ctHighlighting(value, false)
+            )
+          }
+        }
+      },
+      {
+        name: 'colorOverwrite',
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== null && value !== undefined) {
+            config.plugins.push(
+              ctColorOverwrite(value, false)
             )
           }
         }
@@ -171,8 +186,18 @@ export var types = {
         modifyConfig: (config, value, data, size, rect) => {
           if (value !== null && value !== undefined) {
             config.plugins.push(
-              ctHighlighting(value, true, data.series.length)
+              ctHighlighting(value, false, data.series.length)
             );
+          }
+        }
+      },
+      {
+        name: 'colorOverwrite',
+        modifyConfig: (config, value, data, size, rect) => {
+          if (value !== null && value !== undefined) {
+            config.plugins.push(
+              ctColorOverwrite(value, false)
+            )
           }
         }
       }
