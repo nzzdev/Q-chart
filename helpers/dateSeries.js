@@ -34,7 +34,6 @@ function getDateFormatForValue(value) {
 
 function getDateFormatForSerie(serie) {
   const detectedTypeFormatsCount = {};
-  let bestFormat;
 
   for (let datapoint of serie) {
     let dateFormat = getDateFormatForValue(datapoint);
