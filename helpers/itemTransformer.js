@@ -1,6 +1,6 @@
 const array2d = require('array2d');
 const getFirstColumnSerie = require('./dateSeries.js').getFirstColumnSerie;
-const getFirstFormat = require('./dateSeries.js').getFirstFormat;
+const getDateFormatForSerie = require('./dateSeries.js').getDateFormatForSerie;
 const getDateFormatForValue = require('./dateSeries.js').getDateFormatForValue;
 const isDateSeries = require('./dateSeries.js').isDateSeries;
 
@@ -61,7 +61,7 @@ function optionsToLegacyModel(item) {
         interval: item.options.dateSeriesOptions.interval
       },
       config: {
-        format: getFirstFormat(getFirstColumnSerie(item.data))
+        format: getDateFormatForSerie(getFirstColumnSerie(item.data))
       }
     }
     if (item.options.dateSeriesOptions.prognosisStart) {
