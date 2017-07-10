@@ -32,37 +32,38 @@ function getDateFormatForValue(value) {
   return undefined;
 }
 
-function getFirstFormat(serie) {
-  return getDateFormatForValue(serie[0]);
+function getDateFormatForSerie(serie) {
+  const detectedTypeFormatsCount = {};
+
+  for (let datapoint of serie) {
+    let dateFormat = getDateFormatForValue(datapoint);
+    // if we have a date format, count the occurences of each detected format
+    if (!detectedTypeFormatsCount.hasOwnProperty(dateFormat)) {
+      detectedTypeFormatsCount[dateFormat] = 0;
+    }
+    detectedTypeFormatsCount[dateFormat] = detectedTypeFormatsCount[dateFormat] + 1;
+  }
+
+  // sort based on counts
+  const sortedFormats = Object.keys(detectedTypeFormatsCount)
+    .sort((a, b) => {
+      return detectedTypeFormatsCount[b] - detectedTypeFormatsCount[a];
+    })
+
+  // return the format with most detections
+  return sortedFormats[0];
 }
 
 function isDateSeries(serie) {
-  const uniqueDetectedTypeFormats = [];
-  let dateFormat = null;
   for (let datapoint of serie) {
     let dateFormat = getDateFormatForValue(datapoint);
-    if (dateFormat) {
-      if (uniqueDetectedTypeFormats.indexOf(dateFormat) === -1) {
-        uniqueDetectedTypeFormats.push(dateFormat);
-      }
-    } else { // if any of the datapoints is not a detected date we return false immediately
+    // if any datapoint is not a detected date series, we fail here and return false.
+    if (!dateFormat) {
       return false;
     }
   }
-
-  // check if all the formats of the detected date are the same
-  // if not, we return false as we cannot handle different formats of dates for now
-  if (uniqueDetectedTypeFormats.length > 1) {
-    return false;
-  }
-
-  // we have detected exactly one unique date format
-  if (uniqueDetectedTypeFormats.length === 1) {
-    return true;
-  }
-
-  // default
-  return false;
+  // default: all datapoints match a date format
+  return true;
 }
 
 function getFirstColumnSerie(data) {
@@ -74,6 +75,6 @@ function getFirstColumnSerie(data) {
 module.exports = {
   isDateSeries: isDateSeries,
   getFirstColumnSerie: getFirstColumnSerie,
-  getFirstFormat: getFirstFormat,
+  getDateFormatForSerie: getDateFormatForSerie,
   getDateFormatForValue: getDateFormatForValue
 }
