@@ -6,6 +6,7 @@ const resourcesDir = __dirname + '/../../resources/';
 const helpersDir = __dirname + '/../../helpers/';
 const viewsDir = __dirname + '/../../views/';
 const scriptsDir  = __dirname + '/../../scripts/';
+const stylesDir  = __dirname + '/../../styles/';
 
 const dataToChartistModel = require(`${helpersDir}itemTransformer.js`).dataToChartistModel;
 const optionsToLegacyModel = require(`${helpersDir}itemTransformer.js`).optionsToLegacyModel;
@@ -21,7 +22,8 @@ const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
 // ... and let Enjoi convert it to a Joi schema for validation 
 const schema = Enjoi(schemaString);
 
-const hashMap = require(`${scriptsDir}/hashMap.json`);
+const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
+const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 // we use svelte to build tool specific markup
 // first register it, second define the path of our core view template
@@ -43,7 +45,8 @@ module.exports = {
         toolRuntimeConfig: Joi.object()
       }
     },
-    cors: true
+    cors: true,
+    cache: false // do not send cache control header to let it be added by Q Server
   },
   handler: function(request, reply) {
 
@@ -73,7 +76,7 @@ module.exports = {
     let systemConfigScript = `
         System.config({
           map: {
-            "q-chart/chart.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${hashMap['q-chart.js']}"
+            "q-chart/chart.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap['q-chart']}"
           }
         });
     `;
@@ -97,7 +100,7 @@ module.exports = {
         {
           // name of stylesheet will be used to call the correct stylesheet endpoint to load css
           // one can also specify a url instead which will result in loading css directly from that url
-          name: 'default'
+          name: styleHashMap.default
         }
       ],
       scripts: [

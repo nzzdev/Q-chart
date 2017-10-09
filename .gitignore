@@ -3,5 +3,5 @@ jspm_packages
 .idea
 .DS_STORE
 .env.json
-scripts/*.js
-scripts/*.json
+scripts
+styles
