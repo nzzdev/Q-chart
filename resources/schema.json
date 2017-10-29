@@ -80,6 +80,11 @@
             }
           }
         },
+        "hideAxisLabel": {
+          "title": "Achsenbeschriftung ausblenden",
+          "type": "boolean",
+          "default": false
+        },
         "barOptions": {
           "title": "Balkendiagramm Optionen",
           "type": "object",
