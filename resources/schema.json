@@ -80,6 +80,11 @@
             }
           }
         },
+        "hideAxisLabel": {
+          "title": "Achsenbeschriftung ausblenden",
+          "type": "boolean",
+          "default": false
+        },
         "barOptions": {
           "title": "Balkendiagramm Optionen",
           "type": "object",
@@ -128,7 +133,7 @@
           },
           "properties": {
             "interval": {
-              "title": "Angezeigtes Interval",
+              "title": "Angezeigtes Intervall",
               "type": "string",
               "default": "year",
               "enum": ["year", "quarter", "month", "day", "hour"],
