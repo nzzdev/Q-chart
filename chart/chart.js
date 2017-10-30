@@ -277,38 +277,20 @@ export function getDivisorString(divisor) {
 }
 
 function getContextHtml(item, chartistConfig) {
-  let axisExplanation = {x: '', y: ''};
-  axisExplanation.y = getDivisorString(chartistConfig.yValueDivisor);
-
-  const labels = {
-    x: item.xAxisLabel,
-    y: item.yAxisLabel
-  }
-
   let html = getLegendHtml(item);
-  var axisNames = new Array('y', 'x');
+
+
+  let chartistContainerMarkup = '<div class="q-chart__chartist-container"></div>';
+
   if (chartistConfig.horizontalBars) {
-    axisNames.reverse();
-  }
-
-  html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${labels[axisNames[0]] || ''}${axisExplanation[axisNames[0]]}</div>`;
-
-  if (item.data.x && item.dataSeriesType && item.dataSeriesType.id === 'date') {
-    if (chartistConfig.horizontalBars) {
-      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>`;
+    if (!item.options.hideAxisLabel) {
+      html += `<div class="q-chart__label-y-axis s-font-note-s s-font-note-s--light">${item.xAxisLabel || ''}</div>`;  
     }
-    html += '<div class="q-chart__chartist-container"></div>';
+    html += chartistContainerMarkup;
   } else {
-    if (chartistConfig.horizontalBars) {
-      html += `
-        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>
-        <div class="q-chart__chartist-container"></div>
-      `;
-    } else {
-      html += `
-        <div class="q-chart__chartist-container"></div>
-        <div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${labels[axisNames[1]] || ''}${axisExplanation[axisNames[1]]}</div>
-      `;
+    html += chartistContainerMarkup;
+    if (!item.options.hideAxisLabel) {
+      html += `<div class="q-chart__label-x-axis s-font-note-s s-font-note-s--light">${item.xAxisLabel || ''}</div>`;
     }
   }
   html += '</div>';
