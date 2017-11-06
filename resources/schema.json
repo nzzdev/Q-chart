@@ -18,9 +18,17 @@
       "items": {
         "type": "array",
         "items": {
-          "anyOf": ["string", "null"]
+          "oneOf": [
+            {
+            	"type": "string"
+          	},
+            {
+            	"type": "null"
+          	}
+          ]
         }
-      }
+      },
+      "minItems": 1
     },
     "sources": {
       "title": "Quellen",
@@ -71,7 +79,14 @@
         },
         "highlightDataSeries": {
           "title": "Hervorhebung",
-          "anyOf": ["number", "null"],
+          "oneOf": [
+            {
+            	"type": "number"
+          	},
+            {
+            	"type": "null"
+          	}
+          ],
           "Q:options": {
             "dynamicEnum": {
               "type": "ToolEndpoint",
@@ -143,7 +158,14 @@
             },
             "prognosisStart": {
               "title": "Start Prognose",
-              "anyOf": ["number", "null"],
+              "oneOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                }
+              ],
               "Q:options": {
                 "dynamicEnum": {
                   "type": "ToolEndpoint",
@@ -207,7 +229,14 @@
               },
               "position": {
                 "title": "Position",
-                "anyOf": ["number", "null"],
+                "oneOf": [
+                  {
+                      "type": "number"
+                  },
+                  {
+                      "type": "null"
+                  }
+                ],
                 "enum": [null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
                 "Q:options": {
                   "enum_titles": ["", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
@@ -220,6 +249,6 @@
     }
   },
   "required": [
-    "title"
+    "title", "data"
   ]
 }
