@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Joi = require('joi');
 const Boom = require('boom');
 
 const resourcesDir = __dirname + '/../../resources/';
