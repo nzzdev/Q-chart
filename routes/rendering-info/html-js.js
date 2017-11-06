@@ -1,7 +1,6 @@
 const fs = require('fs');
-const Enjoi = require('enjoi');
-const Joi = require('joi');
 const Boom = require('boom');
+
 const resourcesDir = __dirname + '/../../resources/';
 const helpersDir = __dirname + '/../../helpers/';
 const viewsDir = __dirname + '/../../views/';
@@ -13,15 +12,6 @@ const optionsToLegacyModel = require(`${helpersDir}itemTransformer.js`).optionsT
 const isDateSeries = require(`${helpersDir}dateSeries.js`).isDateSeries;
 const getFirstColumnSerie = require(`${helpersDir}dateSeries.js`).getFirstColumnSerie;
 
-
-// POSTed item will be validated against given schema
-// hence we fetch the JSON schema...
-const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
-  encoding: 'utf-8'
-}));
-// ... and let Enjoi convert it to a Joi schema for validation 
-const schema = Enjoi(schemaString);
-
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
@@ -29,6 +19,45 @@ const styleHashMap = require(`${stylesDir}/hashMap.json`);
 // first register it, second define the path of our core view template
 require('svelte/ssr/register');
 const staticTemplate = require(viewsDir + 'HtmlJs.html');
+
+
+// POSTed item will be validated against given schema
+// hence we fetch the JSON schema...
+const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
+  encoding: 'utf-8'
+}));
+const Ajv = require('ajv');
+const ajv = new Ajv();
+
+// add draft-04 support explicit
+ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+
+const validate = ajv.compile(schemaString);
+function validateAgainstSchema(item, options, next) {
+  if (validate(item)) {
+    next(null, item);
+  } else {
+    next(Boom.badRequest(JSON.stringify(validate.errors)));
+  }
+}
+
+function validatePayload(payload, options, next) {
+  if (typeof payload !== 'object') {
+    return next(Boom.badRequest(), payload);
+  }
+  if (typeof payload.item !== 'object') {
+    return next(Boom.badRequest(), payload);
+  }
+  if (typeof payload.toolRuntimeConfig !== 'object') {
+    return next(Boom.badRequest(), payload);
+  }
+  validateAgainstSchema(payload.item, options, (err, data) => {
+    if (err) {
+      return next(err, payload);
+    }
+    return next(null, payload);
+  });
+}
 
 module.exports = {
   method: 'POST',
@@ -38,12 +67,7 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        // item gets validated against given schema
-        item: schema,
-        // one can pass further runtime configuration
-        toolRuntimeConfig: Joi.object()
-      }
+      payload: validatePayload
     },
     cors: true,
     cache: false // do not send cache control header to let it be added by Q Server
