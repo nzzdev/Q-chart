@@ -80,7 +80,7 @@
           "title": "Hervorhebung",
           "oneOf": [
             {
-            	"type": "string"
+            	"type": "number"
           	},
             {
             	"type": "null"
@@ -159,7 +159,7 @@
               "title": "Start Prognose",
               "oneOf": [
                 {
-                    "type": "string"
+                    "type": "number"
                 },
                 {
                     "type": "null"
@@ -230,7 +230,7 @@
                 "title": "Position",
                 "oneOf": [
                   {
-                      "type": "string"
+                      "type": "number"
                   },
                   {
                       "type": "null"
