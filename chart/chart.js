@@ -279,8 +279,16 @@ export function getDivisorString(divisor) {
 function getContextHtml(item, chartistConfig) {
   let html = getLegendHtml(item);
 
+  const yAxisExplanation = getDivisorString(chartistConfig.yValueDivisor);
 
-  let chartistContainerMarkup = '<div class="q-chart__chartist-container"></div>';
+  let chartistContainerMarkup = '';
+  if (yAxisExplanation && !chartistConfig.horizontalBars) {
+    chartistContainerMarkup += `<div class="s-font-note-s s-font-note-s--light">${getDivisorString(chartistConfig.yValueDivisor)}</div>`;
+  } else if (yAxisExplanation && chartistConfig.horizontalBars) {
+    chartistContainerMarkup += `<div class="s-font-note-s s-font-note-s--light" style="text-align: right;">${getDivisorString(chartistConfig.yValueDivisor)}</div>`;
+  }
+  
+  chartistContainerMarkup += '<div class="q-chart__chartist-container"></div>';
 
   if (chartistConfig.horizontalBars) {
     if (!item.options.hideAxisLabel) {
