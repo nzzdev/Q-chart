@@ -64,7 +64,7 @@ function optionsToLegacyModel(item) {
         format: getDateFormatForSerie(getFirstColumnSerie(item.data))
       }
     }
-    if (item.options.dateSeriesOptions.prognosisStart) {
+    if (Number.isInteger(item.options.dateSeriesOptions.prognosisStart)) {
       item.dataSeriesType.options.prognosisStart = item.options.dateSeriesOptions.prognosisStart;
     }
     delete item.options.dateSeriesOptions;
