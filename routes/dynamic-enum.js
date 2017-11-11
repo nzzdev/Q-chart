@@ -19,7 +19,8 @@ function getHighlightEnumTitles(item) {
 
 function getPrognosisStartEnum(item) {
   try {
-    return [null].concat(Object.keys(getFirstColumnSerie(item.data).map(key => parseInt(key))));
+    // constructs an array like [null,0,1,2,3,...] with the indexes from the first data column
+    return [null].concat([...getFirstColumnSerie(item.data).keys()]);
   } catch (e) {
     return [null]
   }
