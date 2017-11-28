@@ -1,6 +1,6 @@
 {
   "name": "@nzz/q-chart",
-  "version": "1.3.3",
+  "version": "1.3.0",
   "description": "Q Chart",
   "keywords": [
     "storytelling",
@@ -24,7 +24,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js"
   },
   "repository": {
     "type": "git",

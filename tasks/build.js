@@ -10,6 +10,8 @@ const postcssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
+const createFixtureData = require('./createFixtureData.js');
+
 const stylesDir = __dirname + '/../styles_src/';
 
 builder.config({
@@ -36,7 +38,7 @@ function writeHashmap(hashmapPath, files, fileext) {
 
 async function buildScripts() {
   return builder
-    .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: true, mangle: false })
+    .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: false, mangle: false })
     .then(bundle => {
       const fileName = 'q-chart';
       fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
@@ -117,8 +119,20 @@ async function buildStyles() {
   writeHashmap('styles/hashMap.json', styleFiles, 'css');
 }
 
+// create fixture data
+function buildFixtures() {
+  fs.writeFileSync('resources/fixtures/data/basicLine.js', `module.exports = ${JSON.stringify(createFixtureData.basicLineChart())}`);
+  fs.writeFileSync('resources/fixtures/data/basicColumn.js', `module.exports = ${JSON.stringify(createFixtureData.basicColumnChart())}`); 
+  // create date series with values - best suitable for line chart
+  // create categories with values - best suitable for bar chart
+  // create different types of charts, i.e. with different options with
+  // given data sets
+}
+
+
 Promise.all(
   [
+    buildFixtures(),
     buildScripts(),
     buildStyles()
   ])
