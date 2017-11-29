@@ -120,15 +120,18 @@ async function buildStyles() {
 }
 
 // create fixture data
+// if new fixture data is added here, they have to be added in fixture data route as well
 function buildFixtures() {
   fs.writeFileSync('resources/fixtures/data/basicLine.js', `module.exports = ${JSON.stringify(createFixtureData.basicLineChart())}`);
-  fs.writeFileSync('resources/fixtures/data/basicColumn.js', `module.exports = ${JSON.stringify(createFixtureData.basicColumnChart())}`); 
-  // create date series with values - best suitable for line chart
-  // create categories with values - best suitable for bar chart
-  // create different types of charts, i.e. with different options with
-  // given data sets
+  fs.writeFileSync('resources/fixtures/data/linePrognosis.js', `module.exports = ${JSON.stringify(createFixtureData.lineChartPrognosis())}`);
+  fs.writeFileSync('resources/fixtures/data/lineHighlight.js', `module.exports = ${JSON.stringify(createFixtureData.lineChartHighlight())}`);
+  fs.writeFileSync('resources/fixtures/data/basicColumn.js', `module.exports = ${JSON.stringify(createFixtureData.basicColumnChart())}`);
+  fs.writeFileSync('resources/fixtures/data/basicBar.js', `module.exports = ${JSON.stringify(createFixtureData.basicBarChart())}`); 
+  fs.writeFileSync('resources/fixtures/data/mobileBar.js', `module.exports = ${JSON.stringify(createFixtureData.mobileBarChart())}`);
+  fs.writeFileSync('resources/fixtures/data/stackedMobileBar.js', `module.exports = ${JSON.stringify(createFixtureData.stackedMobileBarChart())}`);
+  fs.writeFileSync('resources/fixtures/data/transposedMobileBar.js', `module.exports = ${JSON.stringify(createFixtureData.transposedMobileBarChart())}`);
+  fs.writeFileSync('resources/fixtures/data/mobileBarHighlight.js', `module.exports = ${JSON.stringify(createFixtureData.mobileBarChartHighlight())}`);
 }
-
 
 Promise.all(
   [
