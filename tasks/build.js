@@ -38,7 +38,7 @@ function writeHashmap(hashmapPath, files, fileext) {
 
 async function buildScripts() {
   return builder
-    .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: false, mangle: false })
+    .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: true, mangle: false })
     .then(bundle => {
       const fileName = 'q-chart';
       fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
