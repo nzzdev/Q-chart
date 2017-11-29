@@ -5,5 +5,6 @@ module.exports = [
   require('./schema.js'),
   require('./option-availability.js'),
   require('./dynamic-enum.js'),
-  require('./health.js')
+  require('./health.js'),
+  require('./fixtures/data.js')
 ]
