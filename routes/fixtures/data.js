@@ -3,15 +3,15 @@ const fixtureDataDirectory = '../../resources/fixtures/data';
 // provide every fixture data file present in ../../resources/fixtures/data
 // has to be in sync with files created in build task - see ../../tasks/build.js
 const fixtureData = [
-  require(`${fixtureDataDirectory}/basicLine.js`),
-  require(`${fixtureDataDirectory}/linePrognosis.js`),
-  require(`${fixtureDataDirectory}/lineHighlight.js`),
-  require(`${fixtureDataDirectory}/basicColumn.js`),
-  require(`${fixtureDataDirectory}/basicBar.js`),
-  require(`${fixtureDataDirectory}/mobileBar.js`),
-  require(`${fixtureDataDirectory}/stackedMobileBar.js`),
-  require(`${fixtureDataDirectory}/transposedMobileBar.js`),
-  require(`${fixtureDataDirectory}/mobileBarHighlight.js`)
+  require(`${fixtureDataDirectory}/basicLine.json`),
+  require(`${fixtureDataDirectory}/linePrognosis.json`),
+  require(`${fixtureDataDirectory}/lineHighlight.json`),
+  require(`${fixtureDataDirectory}/basicColumn.json`),
+  require(`${fixtureDataDirectory}/basicBar.json`),
+  require(`${fixtureDataDirectory}/mobileBar.json`),
+  require(`${fixtureDataDirectory}/stackedMobileBar.json`),
+  require(`${fixtureDataDirectory}/transposedMobileBar.json`),
+  require(`${fixtureDataDirectory}/mobileBarHighlight.json`)
 ];
 
 module.exports = {
