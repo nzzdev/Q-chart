@@ -1,15 +1,19 @@
-const Hoek = require('hoek');
-const server = require('./server.js');
-const plugins = require('./server-plugins.js');
-const routes = require('./routes/routes.js')
+const Hapi = require('hapi');
 
-server.register(plugins, err => {
-  Hoek.assert(!err, err);
-
-  server.route(routes);
-
-  server.start(err => {
-    Hoek.assert(!err, err);
-    console.log('Server running at: ' + server.info.uri);
-  })
+const server = Hapi.server({
+  port: process.env.PORT || 3000,
+  routes: {
+    cors: true
+  }
 });
+
+const routes = require('./routes/routes.js');
+
+async function init() {
+  server.route(routes);
+  
+  await server.start();
+  console.log('server running ', server.info.uri)
+}
+
+init();

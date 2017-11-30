@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "padding": 5,
+  "scales": [
+      {
+          "name": "xScale",
+          "type": "point",
+          "range": "width",
+          "domain": {
+              "data": "table",
+              "field": "x"
+          }
+      },
+      {
+          "name": "yScale",
+          "type": "linear",
+          "range": "height",
+          "nice": true,
+          "zero": true,
+          "domain": {
+              "data": "table",
+              "field": "y"
+          }
+      },
+      {
+          "name": "color",
+          "type": "ordinal",
+          "range": "category",
+          "domain": {
+              "data": "table",
+              "field": "c"
+          }
+      }
+  ],
+  "axes": [
+      {
+          "orient": "bottom",
+          "scale": "xScale"
+      },
+      {
+          "orient": "left",
+          "scale": "yScale",
+          "grid": true
+      }
+  ],
+  "marks": [
+      {
+          "type": "group",
+          "from": {
+              "facet": {
+                  "name": "series",
+                  "data": "table",
+                  "groupby": "c"
+              }
+          },
+          "marks": [
+              {
+                  "type": "line",
+                  "from": {
+                      "data": "series"
+                  },
+                  "encode": {
+                      "enter": {
+                          "x": {
+                              "scale": "xScale",
+                              "field": "x"
+                          },
+                          "y": {
+                              "scale": "yScale",
+                              "field": "y"
+                          },
+                          "stroke": {
+                              "scale": "color",
+                              "field": "c"
+                          },
+                          "strokeWidth": {
+                              "value": 2
+                          }
+                      },
+                          "hover": {
+                          "fillOpacity": {
+                              "value": 0.5
+                          }
+                      }
+                  }
+              }
+          ]
+      }
+  ]
+}

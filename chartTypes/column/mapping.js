@@ -1,0 +1,29 @@
+module.exports = {
+  "data[]": {
+    key: 'data',
+    transform: function(itemData) {
+      let specData = [
+        {
+          name: "table",
+          values: itemData
+            .slice(1)                     // take the header row out of the array
+            .map(row => {
+              const x = row.shift();      // take the x axis value out of the row
+              return row
+                .map((val, index) => {    // generate one array entry for every data category on the same x value
+                  return {
+                    x: x,
+                    y: val,
+                    c: index
+                  }
+                })
+            })
+            .reduce(( acc, cur ) => {     // flatten the array
+              return acc.concat(cur);
+            }, [])
+        }
+      ]
+      return specData;
+    }
+  }
+};

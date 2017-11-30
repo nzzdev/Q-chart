@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "padding": 5,
+  "scales": [
+    {
+      "name": "xScale",
+      "type": "band",
+      "range": "width",
+      "padding": 0.5,
+      "domain": {
+        "data": "table",
+        "field": "x"
+      }
+    },
+    {
+      "name": "yScale",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {
+        "data": "table",
+        "field": "y"
+      }
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": "category",
+      "domain": {
+        "data": "table",
+        "field": "c"
+      }
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xScale"
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "grid": true
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "table",
+          "groupby": "x"
+        }
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "scale": "xScale",
+            "field": "x"
+          }
+        }
+      },
+      "signals": [
+        {
+          "name": "width",
+          "update": "bandwidth('xScale')"
+        }
+      ],
+      "scales": [
+        {
+          "name": "pos",
+          "type": "band",
+          "range": "width",
+          "domain": {
+            "data": "series",
+            "field": "c"
+          }
+        }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "from": {
+            "data": "series"
+          },
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "pos",
+                "field": "c"
+              },
+              "width": {
+                "scale": "pos",
+                "band": 1
+              },
+              "y": {
+                "scale": "yScale",
+                "field": "y"
+              },
+              "y2": {
+                "scale": "yScale",
+                "value": 0
+              },
+              "fill": {
+                "scale": "color",
+                "field": "c"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
