@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
+    "test": "./node_modules/mocha/bin/mocha",
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "",
   "dependencies": {
     "ajv": "^5.3.0",
     "array2d": "0.0.5",
