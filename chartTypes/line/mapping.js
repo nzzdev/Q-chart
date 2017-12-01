@@ -12,9 +12,9 @@ module.exports = {
               return row
                 .map((val, index) => {    // generate one array entry for every data category on the same x value
                   return {
-                    x: x,
-                    y: val,
-                    c: index
+                    xValue: x,
+                    yValue: val,
+                    cValue: index
                   }
                 })
             })

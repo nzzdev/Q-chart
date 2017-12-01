@@ -1,6 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-  "padding": 5,
+  "autosize": {
+    "type": "fit"
+  },
   "scales": [
       {
           "name": "xScale",
@@ -8,7 +10,7 @@
           "range": "width",
           "domain": {
               "data": "table",
-              "field": "x"
+              "field": "xValue"
           }
       },
       {
@@ -19,7 +21,7 @@
           "zero": true,
           "domain": {
               "data": "table",
-              "field": "y"
+              "field": "yValue"
           }
       },
       {
@@ -28,14 +30,15 @@
           "range": "category",
           "domain": {
               "data": "table",
-              "field": "c"
+              "field": "cValue"
           }
       }
   ],
   "axes": [
       {
           "orient": "bottom",
-          "scale": "xScale"
+          "scale": "xScale",
+          "labelOverlap": "parity"
       },
       {
           "orient": "left",
@@ -50,7 +53,7 @@
               "facet": {
                   "name": "series",
                   "data": "table",
-                  "groupby": "c"
+                  "groupby": "cValue"
               }
           },
           "marks": [
@@ -63,21 +66,21 @@
                       "enter": {
                           "x": {
                               "scale": "xScale",
-                              "field": "x"
+                              "field": "xValue"
                           },
                           "y": {
                               "scale": "yScale",
-                              "field": "y"
+                              "field": "yValue"
                           },
                           "stroke": {
                               "scale": "color",
-                              "field": "c"
+                              "field": "cValue"
                           },
                           "strokeWidth": {
                               "value": 2
                           }
                       },
-                          "hover": {
+                      "hover": {
                           "fillOpacity": {
                               "value": 0.5
                           }

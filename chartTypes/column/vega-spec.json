@@ -1,6 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-  "padding": 5,
+  "autosize": {
+    "type": "fit"
+  },
   "scales": [
     {
       "name": "xScale",
@@ -9,7 +11,7 @@
       "padding": 0.5,
       "domain": {
         "data": "table",
-        "field": "x"
+        "field": "xValue"
       }
     },
     {
@@ -20,7 +22,7 @@
       "zero": true,
       "domain": {
         "data": "table",
-        "field": "y"
+        "field": "yValue"
       }
     },
     {
@@ -29,7 +31,7 @@
       "range": "category",
       "domain": {
         "data": "table",
-        "field": "c"
+        "field": "cValue"
       }
     }
   ],
@@ -51,14 +53,14 @@
         "facet": {
           "name": "series",
           "data": "table",
-          "groupby": "x"
+          "groupby": "xValue"
         }
       },
       "encode": {
         "enter": {
           "x": {
             "scale": "xScale",
-            "field": "x"
+            "field": "xValue"
           }
         }
       },
@@ -75,7 +77,7 @@
           "range": "width",
           "domain": {
             "data": "series",
-            "field": "c"
+            "field": "cValue"
           }
         }
       ],
@@ -89,7 +91,7 @@
             "enter": {
               "x": {
                 "scale": "pos",
-                "field": "c"
+                "field": "cValue"
               },
               "width": {
                 "scale": "pos",
@@ -97,7 +99,7 @@
               },
               "y": {
                 "scale": "yScale",
-                "field": "y"
+                "field": "yValue"
               },
               "y2": {
                 "scale": "yScale",
@@ -105,7 +107,7 @@
               },
               "fill": {
                 "scale": "color",
-                "field": "c"
+                "field": "cValue"
               }
             }
           }
