@@ -1,5 +1,5 @@
 function getExactPixelWidth(toolRuntimeConfig) {
-  if (!Array.isArray(toolRuntimeConfig.size.width)) {
+  if (!toolRuntimeConfig.size || !Array.isArray(toolRuntimeConfig.size.width)) {
     return undefined;
   }
   for (let width of toolRuntimeConfig.size.width) {

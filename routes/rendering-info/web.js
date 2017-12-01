@@ -23,7 +23,10 @@ module.exports = {
   handler: async function(request, h) {
     const context = {
       item: request.payload.item,
+      id: 'q-chart-' + request.query._id + '-' + Math.floor(Math.random() * 100000)
     };
+
+    const renderingInfo = {};
 
     // if we have the width in toolRuntimeConfig.size
     // we can send the svg right away
@@ -38,11 +41,36 @@ module.exports = {
     } else {
       // return a script in rendering info
       // requesting the svg in width measured in the client
+      renderingInfo.scripts = [
+        {
+          content: `
+            var svgString = fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
+              method: 'POST',
+              body: JSON.stringify({
+                toolRuntimeConfig: {
+                  size: {
+                    width: [
+                      {
+                        value: document.getElementById("${context.id}").getBoundingClientRect().width,
+                        comparison: '='
+                      }
+                    ]
+                  }
+                }
+              })
+            })
+            .then(response => {
+              return response.json();
+            })
+            .then(renderingInfo => {
+              document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+            });
+          `
+        }
+      ]
     }
 
-    const renderingInfo = {
-      markup: nunjucksEnv.render(viewsDir + 'chart.html', context)
-    };
+    renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
 
     return renderingInfo;
   }

@@ -6,7 +6,7 @@ const getSpecWithMappedItem = require('../../helpers/itemVegaMapping.js').getSpe
 const getComputedColorRange = require('../../helpers/vegaConfig.js').getComputedColorRange;
 const getDataWithStringsCastedToFloats = require('../../helpers/data.js').getDataWithStringsCastedToFloats;
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
-
+const getChartTypeForItemAndWidth = require('../../helpers/chartType.js').getChartTypeForItemAndWidth;
 
 const vegaConfig = require('../../vega-configs/default.json');
 
@@ -29,8 +29,10 @@ module.exports = {
 
     // first and foremost: cast all the floats in strings to actual floats
     request.payload.item.data = getDataWithStringsCastedToFloats(request.payload.item.data);
+
+    const chartType = getChartTypeForItemAndWidth(request.payload.item, width);
     
-    const templateSpec = require(`../../chartTypes/${request.payload.item.options.chartType.toLowerCase()}/vega-spec.json`);
+    const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
     // add the config to the template vega spec to allow changes in the config through mappings
     templateSpec.config = vegaConfig;
@@ -46,7 +48,7 @@ module.exports = {
 
     let spec;
     try {
-      spec = getSpecWithMappedItem(request.payload.item, templateSpec);
+      spec = getSpecWithMappedItem(request.payload.item, chartType, templateSpec);
     } catch (err) {
       return Boom.notImplemented(err.message);
     }

@@ -1,5 +1,5 @@
-<div class="s-q-item q-chart" style="opacity: 1;">
+<div class="s-q-item q-chart" style="opacity: 1;" id="{{ id }}">
     {% include "./header.html" %}
-    {{ svg | safe }}
+    <div class="q-chart-svg-container">{{ svg | safe }}</div>
     {% include "./footer.html" %}
 </div>
