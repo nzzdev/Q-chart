@@ -49,7 +49,7 @@ function getYearlyDataSeries() {
 function getCategoricalDataSeries() {
   let data = [
     [
-      null
+      'Year'
     ]
   ];
   years.forEach(year => {

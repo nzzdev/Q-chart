@@ -3,91 +3,92 @@
   "autosize": {
     "type": "fit"
   },
+  "height": 300,
   "scales": [
-      {
-          "name": "xScale",
-          "type": "point",
-          "range": "width",
-          "domain": {
-              "data": "table",
-              "field": "xValue"
-          }
-      },
-      {
-          "name": "yScale",
-          "type": "linear",
-          "range": "height",
-          "nice": true,
-          "zero": true,
-          "domain": {
-              "data": "table",
-              "field": "yValue"
-          }
-      },
-      {
-          "name": "color",
-          "type": "ordinal",
-          "range": "category",
-          "domain": {
-              "data": "table",
-              "field": "cValue"
-          }
+    {
+      "name": "xScale",
+      "type": "point",
+      "range": "width",
+      "domain": {
+        "data": "table",
+        "field": "xValue"
       }
+    },
+    {
+      "name": "yScale",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {
+        "data": "table",
+        "field": "yValue"
+      }
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": "category",
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    }
   ],
   "axes": [
-      {
-          "orient": "bottom",
-          "scale": "xScale",
-          "labelOverlap": "parity"
-      },
-      {
-          "orient": "left",
-          "scale": "yScale",
-          "grid": true
-      }
+    {
+      "orient": "bottom",
+      "scale": "xScale",
+      "labelOverlap": "parity"
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "grid": true
+    }
   ],
   "marks": [
-      {
-          "type": "group",
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "table",
+          "groupby": "cValue"
+        }
+      },
+      "marks": [
+        {
+          "type": "line",
           "from": {
-              "facet": {
-                  "name": "series",
-                  "data": "table",
-                  "groupby": "cValue"
-              }
+            "data": "series"
           },
-          "marks": [
-              {
-                  "type": "line",
-                  "from": {
-                      "data": "series"
-                  },
-                  "encode": {
-                      "enter": {
-                          "x": {
-                              "scale": "xScale",
-                              "field": "xValue"
-                          },
-                          "y": {
-                              "scale": "yScale",
-                              "field": "yValue"
-                          },
-                          "stroke": {
-                              "scale": "color",
-                              "field": "cValue"
-                          },
-                          "strokeWidth": {
-                              "value": 2
-                          }
-                      },
-                      "hover": {
-                          "fillOpacity": {
-                              "value": 0.5
-                          }
-                      }
-                  }
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "xScale",
+                "field": "xValue"
+              },
+              "y": {
+                "scale": "yScale",
+                "field": "yValue"
+              },
+              "stroke": {
+                "scale": "color",
+                "field": "cValue"
+              },
+              "strokeWidth": {
+                "value": 2
               }
-          ]
-      }
+            },
+            "hover": {
+              "fillOpacity": {
+                "value": 0.5
+              }
+            }
+          }
+        }
+      ]
+    }
   ]
 }

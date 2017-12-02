@@ -1,3 +1,6 @@
+const clone = require('clone');
+const array2d = require('array2d');
+
 function getDataWithStringsCastedToFloats(data) {
   return data
     .map(row => {
@@ -17,6 +20,23 @@ function getDataWithStringsCastedToFloats(data) {
     })
 }
 
+function getLongestDataLabel(data, transposed = false) {
+  data = clone(data);
+  if (transposed) {
+    data = array2d.transpose(data);
+  }
+  const titleRow = data[0];
+  titleRow.shift();
+  return titleRow
+    .reduce((prev, current) => {
+      if (prev.length > current.length) {
+        return prev;
+      }
+      return current;
+    }, '')
+}
+
 module.exports = {
-  getDataWithStringsCastedToFloats: getDataWithStringsCastedToFloats
+  getDataWithStringsCastedToFloats: getDataWithStringsCastedToFloats,  
+  getLongestDataLabel: getLongestDataLabel
 };

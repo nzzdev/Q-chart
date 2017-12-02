@@ -1,0 +1,167 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "config": {
+    "axis": {
+      "labelLimit": 100,
+      "labelOverlap": false
+    }
+  },
+  "autosize": {
+    "type": "fit"
+  },
+  "scales": [
+    {
+      "name": "xScale",
+      "type": "linear",
+      "range": "width",
+      "nice": true,
+      "zero": true,
+      "domain": {
+        "data": "table", 
+        "field": "xValue"
+      }
+    },
+    {
+      "name": "yScale",
+      "type": "band",
+      "range": "height",
+      "paddingInner": 0.2,
+      "domain": {
+        "data": "table", 
+        "field": "yValue"
+      }
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": "category",
+      "domain": {
+        "data": "table", 
+        "field": "cValue"
+      }
+    }
+  ],
+  "axes": [
+    {
+      "orient": "top", 
+      "scale": "xScale", 
+      "domain": false,
+      "grid": true,
+      "labelOverlap": "parity",
+      "labelFlush": true,
+      "ticks": true,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+              "value": "right"
+            },
+            "baseline": {
+              "value": "bottom"
+            },
+            "x": {
+              "signal": "width"
+            },
+            "y": {
+              "value": -30
+            }
+          }
+        }
+      }
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": false,
+      "labelPadding": 5,
+      "ticks": false,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+                "value": "left"
+            },
+            "baseline": {
+                "value": "bottom"
+            },
+            "x": {
+                "value": -40
+            },
+            "y": {
+                "value": -10
+            }
+          }
+        }
+      }
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "facet":{
+          "name": "series",
+          "data": "table", 
+          "groupby": "yValue"  
+        }
+      },
+      "encode": {
+        "enter": {
+          "y": {
+            "scale": "yScale", 
+            "field": "yValue"
+          }
+        }
+      },
+      "signals": [
+        {
+          "name": "height", 
+          "update": "bandwidth('yScale')"
+        }
+      ],
+      "scales": [
+        {
+          "name": "groupScale",
+          "type": "band",
+          "range": "height",
+          "domain": {
+            "data": "series", 
+            "field": "cValue"
+          }
+        }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "name": "bars",
+          "from": {
+            "data":"series"
+          },
+          "encode": {
+            "enter": {
+              "y": {
+                "scale": "groupScale", 
+                "field": "cValue"
+              },
+              "height": {
+                "signal": "bandwidth('groupScale')"
+              },
+              "x": {
+                "scale": "xScale", 
+                "field": "xValue"
+              },
+              "x2": {
+                "scale": "xScale", 
+                "value": 0
+              },
+              "fill":{
+                "scale": "color", 
+                "field": "cValue"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

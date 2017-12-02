@@ -5,8 +5,6 @@ function getChartTypeForItemAndWidth(item, width) {
 
   if (item.options.chartType === 'Bar') {
     if (item.options.barOptions.isBarChart === false) {
-      return 'column';
-    } else {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
           return 'bar';
@@ -14,6 +12,9 @@ function getChartTypeForItemAndWidth(item, width) {
           return 'column';
         }
       }
+      return 'column';
+    } else {
+      return 'bar';
     }
   }
 }

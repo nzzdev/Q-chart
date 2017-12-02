@@ -2,6 +2,7 @@ const Joi = require('joi');
 const Boom = require('boom');
 const vega = require('vega');
 const clone = require('clone');
+const deepmerge = require('deepmerge');
 const getSpecWithMappedItem = require('../../helpers/itemVegaMapping.js').getSpecWithMappedItem;
 const getComputedColorRange = require('../../helpers/vegaConfig.js').getComputedColorRange;
 const getDataWithStringsCastedToFloats = require('../../helpers/data.js').getDataWithStringsCastedToFloats;
@@ -9,6 +10,14 @@ const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExac
 const getChartTypeForItemAndWidth = require('../../helpers/chartType.js').getChartTypeForItemAndWidth;
 
 const vegaConfig = require('../../vega-configs/default.json');
+
+// todo: get this from toolRuntimeConfig
+vega.formatLocale({
+  "decimal": ",",
+  "thousands": "'",
+  "grouping": [3],
+  // "currency": ["", "\u00a0CHF"]
+});
 
 module.exports = {
   method: 'POST',
@@ -35,7 +44,7 @@ module.exports = {
     const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
     // add the config to the template vega spec to allow changes in the config through mappings
-    templateSpec.config = vegaConfig;
+    templateSpec.config = deepmerge(vegaConfig, templateSpec.config || {});
 
     // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
     // item options into account (highlighting is an example of an option changing the range)
@@ -48,7 +57,9 @@ module.exports = {
 
     let spec;
     try {
-      spec = getSpecWithMappedItem(request.payload.item, chartType, templateSpec);
+      spec = getSpecWithMappedItem(request.payload.item, chartType, templateSpec, {
+        width: width
+      });
     } catch (err) {
       return Boom.notImplemented(err.message);
     }
@@ -56,10 +67,8 @@ module.exports = {
     // set the size to the spec
     spec.width = width;
 
-    //the height should be part
-    spec.height = 300;
-
     let svg;
+
     try {
       // create a new view instance for a given Vega JSON spec
       var view = new vega.View(vega.parse(spec))
