@@ -23,7 +23,7 @@ module.exports = {
   handler: async function(request, h) {
     const context = {
       item: request.payload.item,
-      id: 'q-chart-' + request.query._id + '-' + Math.floor(Math.random() * 100000)
+      id: 'q_chart_' + request.query._id + '_' + Math.floor(Math.random() * 100000)
     };
 
     const renderingInfo = {};
@@ -41,29 +41,47 @@ module.exports = {
     } else {
       // return a script in rendering info
       // requesting the svg in width measured in the client
+      const functionName = `loadSVG${context.id}`;
+      const dataObject = `${context.id}Data`;
       renderingInfo.scripts = [
         {
           content: `
-            var svgString = fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
-              method: 'POST',
-              body: JSON.stringify({
-                toolRuntimeConfig: {
-                  size: {
-                    width: [
-                      {
-                        value: document.getElementById("${context.id}").getBoundingClientRect().width,
-                        comparison: '='
-                      }
-                    ]
+            var ${dataObject} = {
+              width: document.getElementById("${context.id}").getBoundingClientRect().width
+            };
+            function ${functionName}() {
+              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
+                method: 'POST',
+                body: JSON.stringify({
+                  toolRuntimeConfig: {
+                    axis: ${JSON.stringify(request.payload.toolRuntimeConfig.axis || {})},
+                    size: {
+                      width: [
+                        {
+                          value: ${dataObject}.width,
+                          comparison: '='
+                        }
+                      ]
+                    }
                   }
-                }
+                })
               })
-            })
-            .then(response => {
-              return response.json();
-            })
-            .then(renderingInfo => {
-              document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+              .then(response => {
+                return response.json();
+              })
+              .then(renderingInfo => {
+                document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+              });
+            }
+            ${functionName}();
+            window.addEventListener('resize', () => {
+              requestAnimationFrame(() => {
+                var newWidth = document.getElementById("${context.id}").getBoundingClientRect().width;
+                if (newWidth !== ${dataObject}.width) {
+                  ${dataObject}.width = newWidth;
+                  ${functionName}();
+                }
+              });
             });
           `
         }
