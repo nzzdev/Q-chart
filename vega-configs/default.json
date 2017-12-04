@@ -18,5 +18,11 @@
     "fill": "#05032d",
     "fontSize": 13,
     "fontWeight": 300
+  },
+  "style": {
+    "prognosisLine": {
+      "strokeDash": [6, 2],
+      "strokeDashOffset": -2
+    }
   }
 }

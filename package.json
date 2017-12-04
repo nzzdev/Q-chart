@@ -19,7 +19,7 @@
     "hapi": "^17.0.1",
     "hoek": "^5.0.2",
     "nunjucks": "^3.0.1",
-    "object-mapper": "^4.2.0",
+    "object-path": "^0.11.4",
     "svelte": "^1.41.2",
     "vega": "^3.0.8"
   },
