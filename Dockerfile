@@ -6,10 +6,13 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
-
 # Copy package.json into work directory and install dependencies
 COPY package.json /app/package.json
-RUN npm install
+RUN npm install --production
+RUN npm install -g jspm
+
+COPY jspm.config.js /app/jspm.config.js
+RUN jspm install
 
 # Copy everthing else in work directory
 COPY . /app

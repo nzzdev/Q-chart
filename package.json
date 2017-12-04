@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
-    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js"
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js",
+    "test": "lab -a code -c -P tests --verbose --leaks"
   },
   "author": "",
   "license": "",
@@ -25,8 +25,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
+    "code": "^5.1.2",
     "cssnano": "^3.10.0",
     "jspm": "^0.17.0-beta.41",
+    "lab": "^15.1.2",
     "node-fetch": "^1.7.3",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.14",
