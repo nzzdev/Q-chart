@@ -6,3 +6,5 @@ jspm_packages
 scripts
 styles
 resources/fixtures
+resources/fonts/*.otf
+resources/fonts/*.ttf
