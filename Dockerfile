@@ -1,8 +1,10 @@
 # Use following version of Node as the base image
-FROM node:8.8
+FROM node:9.2
 
 # Set work directory for run/cmd
 WORKDIR /app
+
+RUN apt-get update && apt install libpango1.0-dev
 
 # Copy package.json into work directory and install dependencies
 COPY package.json /app/package.json

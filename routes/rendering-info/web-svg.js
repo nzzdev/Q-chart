@@ -46,6 +46,11 @@ module.exports = {
     // add the config to the template vega spec to allow changes in the config through mappings
     templateSpec.config = deepmerge(vegaConfig, templateSpec.config || {});
 
+    // add the config passed in toolRuntimeConfig
+    if (request.payload.toolRuntimeConfig.hasOwnProperty('axis')) {
+      templateSpec.config.axis = deepmerge(templateSpec.config.axis, request.payload.toolRuntimeConfig.axis);
+    }
+
     // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
     // item options into account (highlighting is an example of an option changing the range)
     const categoryRange = getComputedColorRange(request.payload.item, request.payload.toolRuntimeConfig);
@@ -78,7 +83,7 @@ module.exports = {
       // generate a static SVG image
       svg = await view.toSVG();
     } catch (err) {
-      console.log(err);
+      request.server.log(['error'], err);
       return err;
     }
 
