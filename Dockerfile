@@ -4,7 +4,8 @@ FROM node:9.2
 # Set work directory for run/cmd
 WORKDIR /app
 
-RUN apt-get update && apt install libpango1.0-dev
+RUN apt-get update && apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+
 
 # Copy package.json into work directory and install dependencies
 COPY package.json /app/package.json
