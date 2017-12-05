@@ -4,6 +4,6 @@ module.exports = {
   method: 'GET',
   path:'/schema.json',
   handler: function(request, h) {
-    h.file(resourcesDir + 'schema.json');
+    return h.file(resourcesDir + 'schema.json');
   }
 }
