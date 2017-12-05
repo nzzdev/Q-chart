@@ -4,10 +4,13 @@ const Joi = require('joi');
 const Boom = require('boom');
 
 const viewsDir = __dirname + '/../../views/';
+const stylesDir  = __dirname + '/../../styles/';
 
 // setup nunjucks environment
 const nunjucks = require('nunjucks');
 const nunjucksEnv = new nunjucks.Environment();
+
+const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
 
@@ -67,6 +70,9 @@ module.exports = {
       });
       context.svg = svgResponse.result.markup;
     } else {
+      // polyfill Promise
+      renderingInfo.polyfills = ['Promise'];
+
       // return a script in rendering info
       // requesting the svg in width measured in the client
       const functionName = `loadSVG${context.id}`;
@@ -115,9 +121,11 @@ module.exports = {
             });
           `
         }
-      ]
+      ];
     }
-    renderingInfo.polyfills = ['Promise'];
+    renderingInfo.stylesheets = [{
+      name: styleHashMap['q-chart']
+    }];
     renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
 
     return renderingInfo;

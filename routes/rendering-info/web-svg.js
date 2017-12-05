@@ -8,6 +8,7 @@ const getComputedColorRange = require('../../helpers/vegaConfig.js').getComputed
 const getDataWithStringsCastedToFloats = require('../../helpers/data.js').getDataWithStringsCastedToFloats;
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
 const getChartTypeForItemAndWidth = require('../../helpers/chartType.js').getChartTypeForItemAndWidth;
+const dateSeries = require('../../helpers/dateSeries.js');
 
 const vegaConfig = require('../../vega-configs/default.json');
 
@@ -17,6 +18,17 @@ vega.formatLocale({
   "thousands": "'",
   "grouping": [3],
   // "currency": ["", "\u00a0CHF"]
+});
+
+vega.timeFormatLocale({
+  "dateTime": "%A, der %e. %B %Y, %X",
+  "date": "%d.%m.%Y",
+  "time": "%H:%M:%S",
+  "periods": ["AM", "PM"],
+  "days": ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+  "shortDays": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+  "months": ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+  "shortMonths": ["Jan", "Feb", "Mrz", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
 });
 
 module.exports = {
@@ -31,15 +43,26 @@ module.exports = {
     }
   },
   handler: async function(request, h) {
+    const item = request.payload.item;
     const width = getExactPixelWidth(request.payload.toolRuntimeConfig);
     if (!width) {
       return Boom.badRequest('no exact pixel width given in toolRuntimeConfig.size.width');
     }
 
-    // first and foremost: cast all the floats in strings to actual floats
-    request.payload.item.data = getDataWithStringsCastedToFloats(request.payload.item.data);
+    const mappingConfig = {
+      width: width
+    }
 
-    const chartType = getChartTypeForItemAndWidth(request.payload.item, width);
+    // first and foremost: cast all the floats in strings to actual floats
+    item.data = getDataWithStringsCastedToFloats(item.data);
+
+    // if we have a date series, we change the date values to date objects
+    if (dateSeries.isDateSeriesData(item.data)) {
+      mappingConfig.dateFormat = dateSeries.getDateFormatForData(item.data)
+      item.data = dateSeries.getDataWithDateParsed(item.data);
+    }
+
+    const chartType = getChartTypeForItemAndWidth(item, width);
     
     const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
@@ -53,18 +76,16 @@ module.exports = {
 
     // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
     // item options into account (highlighting is an example of an option changing the range)
-    const categoryRange = getComputedColorRange(request.payload.item, request.payload.toolRuntimeConfig);
+    const categoryRange = getComputedColorRange(item, request.payload.toolRuntimeConfig);
     if (categoryRange) {
       templateSpec.config.range = {
-        category: getComputedColorRange(request.payload.item, request.payload.toolRuntimeConfig)
+        category: getComputedColorRange(item, request.payload.toolRuntimeConfig)
       }
     }
 
     let spec;
     try {
-      spec = getSpecWithMappedItem(request.payload.item, chartType, templateSpec, {
-        width: width
-      });
+      spec = getSpecWithMappedItem(item, chartType, templateSpec, mappingConfig);
     } catch (err) {
       return Boom.notImplemented(err.message);
     }

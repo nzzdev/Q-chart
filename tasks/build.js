@@ -109,6 +109,10 @@ async function buildStyles() {
     {
       name: 'default',
       content: await compileStylesheet('default')
+    },
+    {
+      name: 'q-chart',
+      content: await compileStylesheet('q-chart')
     }
   ];
 

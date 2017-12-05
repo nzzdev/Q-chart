@@ -47,11 +47,9 @@ const minValue = 0;
 const maxValue = 100000;
 
 function getMonthlyDataSeries(yearsPortion, categoriesPortion) {
-  console.log(yearsPortion);
-  console.log(categoriesPortion);
   let data = [
     [
-      null
+      'Month'
     ]
   ];
   // insert categories
@@ -108,7 +106,7 @@ function createBasicLineChart() {
   let item = {
     title: 'FIXTURE: line chart basic',
     subtitle: 'some subtitle here',
-    data: getMonthlyDataSeries(years.slice(years.length - 3), categories.slice(0, 4)), // last 3 of years array, first 4 of categories array
+    data: getMonthlyDataSeries(years.slice(years.length - 3), categories.slice(0, 1)), // last 3 of years array, first 4 of categories array
     sources: [
       {
         link: {},

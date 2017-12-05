@@ -39,7 +39,7 @@
     {
       "orient": "bottom",
       "scale": "xScale",
-      "labelOverlap": "parity"
+      "grid": true
     },
     {
       "orient": "left",
@@ -85,5 +85,14 @@
         }
       ]
     }
-  ]
+  ],
+  "config": {
+    "axis": {
+      "labels": true,
+      "labelAngle": 0,
+      "labelBound": true,
+      "labelFlush": true,
+      "labelFlushOffset": false
+    }
+  }
 }

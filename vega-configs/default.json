@@ -1,18 +1,4 @@
 {
-  "axis": {
-    "gridColor": "#b6b6be",
-    "domainColor": "#b6b6be",
-    "tickColor": "#ececf0",
-    "labelFont": "sans-serif",
-    "labelColor": "#6e6e7e",
-    "labelFontSize": 11,
-    "ticks": true,
-    "tickExtra": false,
-    "tickOffset": 0,
-    "tickRound": true,
-    "tickSize": 4,
-    "tickWidth": 1
-  },
   "text": {
     "font": "sans-serif",
     "fill": "#05032d",

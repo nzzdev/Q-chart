@@ -29,6 +29,13 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
+      path: 'data',
+      mapToSpec: function(item, spec) {
+        objectPath.set(spec,'scales.0.type', 'time');
+        objectPath.set(spec,'scales.0.nice', config.dateFormat.precision);
+      }
+    },
+    {
       path: 'options.lineChartOptions.minValue',
       mapToSpec: function(minValue, spec) {
         objectPath.set(spec, 'scales.1.domainMin', minValue);

@@ -1,31 +1,122 @@
 const array2d = require('array2d');
+const clone = require('clone');
 
 // thanks datawrapper.de for the format regexes
 // https://github.com/datawrapper/datawrapper/blob/9ddb90af4aab4b071b6cba195532edea0527b3be/dw.js/src/dw.column.types.js
-var dateFormats = {
-  'YYYY': /^ *(?:1[0-9]|2[0-9])\d{2} *$/,
-  'YYYY-H': /^ *[12]\d{3}[ \-\/]?[hH][12] *$/,
-  'H-YYYY': /^ *[hH][12][ \-\/][12]\d{3} *$/,
-  'YYYY-Q': /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
-  'Q-YYYY': /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
-  'YYYY-M': /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-  'M-YYYY': /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
-  'YYYY-WW': /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-  'MM/DD/YYYY': /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
-  'DD/MM/YYYY': /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
-  'YYYY-MM-DD': /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-  'YYYY-WW-d': /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
-  'MM/DD/YYYY HH:MM': /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-  'DD.MM.YYYY HH:MM': /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-  'YYYY-MM-DD HH:MM': /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-  'MM/DD/YYYY HH:MM:SS': /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-  'DD.MM.YYYY HH:MM:SS': /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-  'YYYY-MM-DD HH:MM:SS': /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+const dateFormats = {
+  'YYYY': {
+    match: /^ *(?:1[0-9]|2[0-9])\d{2} *$/,
+    parse: /^ *(\d{4}) *$/,
+    precision: 'year',
+    getDate: (parsed) => { return new Date(parsed[1], 0, 1); }
+  },
+  'YYYY-H': {
+    match: /^ *[12]\d{3}[ \-\/]?[hH][12] *$/,
+    parse: /^ *(\d{4})[ \-\/]?[hH]([12]) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1) * 6, 1); }
+  },
+  'H-YYYY': {
+    match: /^ *[hH][12][ \-\/][12]\d{3} *$/,
+    parse: /^ *[hH]([12])[ \-\/](\d{4}) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1) * 6, 1); }
+  },
+  'YYYY-Q': {
+    match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
+    parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1) * 3, 1); }
+  },
+  'Q-YYYY': {
+    match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
+    parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1) * 3, 1); }
+  },
+  'YYYY-M': {
+    match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
+    parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1), 1); }
+  },
+  'M-YYYY': {
+    match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
+    parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
+    precision: 'month',
+    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1), 1); }
+  },
+  'YYYY-WW': {
+    match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
+    parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
+    precision: 'week',
+    getDate: (parsed) => { return dateFromIsoWeek(parsed[1], parsed[2], 1); }
+  },
+  'YYYY-WW-d': {
+    match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
+    parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
+    precision: 'day',
+    getDate: (parsed) => { return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]); }
+  },
+  'MM/DD/YYYY': {
+    match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
+    parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
+    precision: 'day',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3]); }
+  },
+  'DD/MM/YYYY': {
+    match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
+    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
+    precision: 'day',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1]); }
+  },
+  'YYYY-MM-DD': {
+    match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
+    parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
+    precision: 'day',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4]); }
+  },
+  'MM/DD/YYYY HH:MM': {
+    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    precision: 'minutes',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
+  },
+  'DD.MM.YYYY HH:MM': {
+    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    precision: 'minutes',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1], parsed[5] || 0, parsed[6] || 0, 0); }
+  },
+  'YYYY-MM-DD HH:MM': {
+    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    precision: 'minutes',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4], parsed[5] || 0, parsed[6] || 0, 0); }
+  },
+  'MM/DD/YYYY HH:MM:SS': {
+    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    precision: 'seconds',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3], parsed[5] || 0, parsed[6] || 0, 0); }
+  },
+  'DD.MM.YYYY HH:MM:SS': {
+    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    precision: 'seconds',
+    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
+  },
+  'YYYY-MM-DD HH:MM:SS': {
+    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    precision: 'seconds',
+    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
+  },
 }
 
 function getDateFormatForValue(value) {
   for (let format in dateFormats) {
-    if (dateFormats[format].test(value)) {
+    if (dateFormats[format].match.test(value)) {
       return format;
     }
   }
@@ -66,15 +157,43 @@ function isDateSeries(serie) {
   return true;
 }
 
+function isDateSeriesData(data) {
+  return isDateSeries(getFirstColumnSerie(data));
+}
+
 function getFirstColumnSerie(data) {
-  return array2d.transpose(data)
+  return array2d.transpose(clone(data))
     .shift() // get the first column
     .slice(1) // get everything but the first cell
 }
 
+function getDateFormatForData(data) {
+  return dateFormats[getDateFormatForSerie(getFirstColumnSerie(data))];
+}
+
+function getDataWithDateParsed(data) {
+  const format = getDateFormatForData(data);
+  return data
+    .map((row, i) => {
+      if (i === 0) { // the first row is just the header
+        return row;
+      }
+      return row
+        .map((cell, ii) => {
+          if (ii !== 0) { // only the first cell of every row should be parsed
+            return cell;
+          }
+          return format.getDate(cell.match(format.parse));
+        })
+    });
+}
+
 module.exports = {
   isDateSeries: isDateSeries,
+  isDateSeriesData: isDateSeriesData,
   getFirstColumnSerie: getFirstColumnSerie,
   getDateFormatForSerie: getDateFormatForSerie,
-  getDateFormatForValue: getDateFormatForValue
+  getDateFormatForValue: getDateFormatForValue,
+  getDataWithDateParsed: getDataWithDateParsed,
+  getDateFormatForData: getDateFormatForData
 }
