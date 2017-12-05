@@ -2,7 +2,7 @@
 // and takes the option "highlightDataSeries" into account
 function getComputedColorRange(item, toolRuntimeConfig) {
   try {
-    if (!Number.isNaN(item.options.highlightDataSeries)) {
+    if (item.options.highlightDataSeries !== null && !Number.isNaN(item.options.highlightDataSeries)) {
       let range = toolRuntimeConfig.colorSchemes.category.light;
       range[item.options.highlightDataSeries] = toolRuntimeConfig.colorSchemes.category.default[item.options.highlightDataSeries];
       return range;
