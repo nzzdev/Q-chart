@@ -1,10 +1,12 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 async function loadFonts(fonts) {
+  console.log('loading fonts', fonts);
   if (!Array.isArray(fonts)) {
     return;
   }
   for (let font of fonts) {
+    console.log('loading font', font.name, font.url);
     const response = await fetch(font.url);
     if (!response.ok) {
       console.error(`failed to fetch font from ${font.url}`);
