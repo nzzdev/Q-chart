@@ -75,8 +75,9 @@ module.exports = {
         {
           content: `
             var ${dataObject} = {
-              width: document.getElementById("${context.id}").getBoundingClientRect().width
+              element: document.querySelector("#${context.id}")
             };
+            ${dataObject}.width: ${dataObject}.element.getBoundingClientRect().width
             function ${functionName}() {
               fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
                 method: 'POST',
@@ -105,7 +106,7 @@ module.exports = {
             ${functionName}();
             window.addEventListener('resize', () => {
               requestAnimationFrame(() => {
-                var newWidth = document.getElementById("${context.id}").getBoundingClientRect().width;
+                var newWidth = ${dataObject}.element.getBoundingClientRect().width;
                 if (newWidth !== ${dataObject}.width) {
                   ${dataObject}.width = newWidth;
                   ${functionName}();
