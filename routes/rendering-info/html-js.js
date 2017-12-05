@@ -33,15 +33,15 @@ const ajv = new Ajv();
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
 
 const validate = ajv.compile(schemaString);
-function validateAgainstSchema(item, options, next) {
+function validateAgainstSchema(item, options) {
   if (validate(item)) {
-    next(null, item);
+    return item;
   } else {
-    next(Boom.badRequest(JSON.stringify(validate.errors)));
+    throw Boom.badRequest(JSON.stringify(validate.errors));
   }
 }
 
-function validatePayload(payload, options, next) {
+async function validatePayload(payload, options, next) {
   if (typeof payload !== 'object') {
     return next(Boom.badRequest(), payload);
   }
@@ -51,12 +51,7 @@ function validatePayload(payload, options, next) {
   if (typeof payload.toolRuntimeConfig !== 'object') {
     return next(Boom.badRequest(), payload);
   }
-  validateAgainstSchema(payload.item, options, (err, data) => {
-    if (err) {
-      return next(err, payload);
-    }
-    return next(null, payload);
-  });
+  await validateAgainstSchema(payload.item, options);
 }
 
 module.exports = {
@@ -72,7 +67,7 @@ module.exports = {
     cors: true,
     cache: false // do not send cache control header to let it be added by Q Server
   },
-  handler: function(request, reply) {
+  handler: function(request, h) {
 
     const id = request.payload.toolRuntimeConfig.id || Math.floor((Math.random() * 10 ** 16));
 
@@ -89,7 +84,7 @@ module.exports = {
     try {
       item.data = dataToChartistModel(item.data);
     } catch (e) {
-      return reply(Boom.badRequest());
+      return Boom.badRequest();
     }
 
     const data = {
@@ -139,6 +134,6 @@ module.exports = {
       // pass the data object to svelte render function to get markup
       markup: staticTemplate.render(data)
     }
-    return reply(renderingInfo).type('application/json');
+    return renderingInfo;
   }
 }

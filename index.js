@@ -35,6 +35,8 @@ async function init() {
   process.env.FONTCONFIG_PATH = `${__dirname}/resources/fonts`;
   process.env.PANGOCAIRO_BACKEND = 'fontconfig';
 
+  await server.register(require('inert'));
+
   server.route(routes);
   
   await server.start();
