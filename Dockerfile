@@ -21,4 +21,4 @@ COPY . /app
 EXPOSE 3000
 
 # Run node
-CMD ["node", "/app/index.js"]
+CMD node index.js
