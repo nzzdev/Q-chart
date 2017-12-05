@@ -31,8 +31,22 @@ module.exports = function getMappings(config = {}) {
     {
       path: 'data',
       mapToSpec: function(item, spec) {
-        objectPath.set(spec,'scales.0.type', 'time');
-        objectPath.set(spec,'scales.0.nice', config.dateFormat.precision);
+        if (config.dateFormat) {
+          objectPath.set(spec,'scales.0.type', 'time');
+          objectPath.set(spec,'scales.0.nice', config.dateFormat.precision);
+        }
+      }
+    },
+    {
+      path: 'dateSeriesOptions.interval',
+      mapToSpec: function(interval, spec) {
+        // only use this option if we have a valid dateFormat
+        if (config.dateFormat) {
+          if (interval === 'quarter') {
+            interval = 'month';
+          }
+          objectPath.set(spec,'scales.0.nice', interval);
+        }
       }
     },
     {
