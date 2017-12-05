@@ -1,3 +1,5 @@
+const querystring = require('querystring');
+
 const Joi = require('joi');
 const Boom = require('boom');
 
@@ -8,6 +10,16 @@ const nunjucks = require('nunjucks');
 const nunjucksEnv = new nunjucks.Environment();
 
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
+
+// temp function until we have all chart types implemented with the new vega renderer
+// determines if we go with the new or old renderer
+function shouldUseLegacyRenderingInfo(request) {
+  const item = request.payload.item;
+  if (item.options.chartType === 'Line') {
+    return false;
+  }
+  return true;
+}
 
 module.exports = {
   method: 'POST',
@@ -21,6 +33,22 @@ module.exports = {
     }
   },
   handler: async function(request, h) {
+    // temp code to redirect to legacy rendering-info if item not supported by new one yet
+    if (shouldUseLegacyRenderingInfo(request)) {
+      try {
+        const response = await request.server.inject({
+          method: 'POST',
+          url: `/rendering-info/html-js?${querystring.stringify(request.query)}`,
+          payload: request.payload
+        });
+        return response.payload;
+      } catch (err) {
+        server.log(['error'], err);
+        return Boom.internal();
+      }
+    }
+    // end temp code
+
     const context = {
       item: request.payload.item,
       id: 'q_chart_' + request.query._id + '_' + Math.floor(Math.random() * 100000)
@@ -55,6 +83,7 @@ module.exports = {
                 body: JSON.stringify({
                   toolRuntimeConfig: {
                     axis: ${JSON.stringify(request.payload.toolRuntimeConfig.axis || {})},
+                    colorSchemes: ${JSON.stringify(request.payload.toolRuntimeConfig.colorSchemes || {})},
                     size: {
                       width: [
                         {
@@ -87,7 +116,7 @@ module.exports = {
         }
       ]
     }
-
+    renderingInfo.polyfills = ['Promise'];
     renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
 
     return renderingInfo;
