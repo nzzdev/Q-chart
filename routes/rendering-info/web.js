@@ -77,7 +77,7 @@ module.exports = {
             var ${dataObject} = {
               element: document.querySelector("#${context.id}")
             };
-            ${dataObject}.width: ${dataObject}.element.getBoundingClientRect().width
+            ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
             function ${functionName}() {
               fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
                 method: 'POST',
