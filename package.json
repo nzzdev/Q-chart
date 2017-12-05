@@ -20,6 +20,7 @@
     "hoek": "^5.0.2",
     "inert": "^5.0.1",
     "nunjucks": "^3.0.1",
+    "node-fetch": "^1.7.3",
     "object-path": "^0.11.4",
     "svelte": "^1.41.2",
     "vega": "^3.0.8"
@@ -30,7 +31,6 @@
     "cssnano": "^3.10.0",
     "jspm": "^0.17.0-beta.41",
     "lab": "^15.1.2",
-    "node-fetch": "^1.7.3",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.14",
     "postcss-import": "^11.0.0"
