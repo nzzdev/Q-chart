@@ -29,6 +29,9 @@ module.exports = {
   path: '/rendering-info/web',
   options: {
     validate: {
+      options: {
+        allowUnknown: true
+      },
       payload: {
         item: Joi.object(),
         toolRuntimeConfig: Joi.object()

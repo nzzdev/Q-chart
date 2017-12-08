@@ -36,6 +36,9 @@ module.exports = {
   path: '/rendering-info/web-svg',
   options: {
     validate: {
+      options: {
+        allowUnknown: true
+      },
       payload: {
         item: Joi.object(),
         toolRuntimeConfig: Joi.object()
