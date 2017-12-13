@@ -80,6 +80,12 @@ module.exports = {
       // requesting the svg in width measured in the client
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
+
+      let queryString = '';
+      if (request.payload.itemStateInDb) {
+        queryString = `?appendItemToPayload=${request.query._id}`;
+      }
+
       renderingInfo.scripts = [
         {
           content: `
@@ -88,9 +94,10 @@ module.exports = {
             };
             ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
             function ${functionName}() {
-              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?appendItemToPayload=${request.query._id}", {
+              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg${queryString}", {
                 method: 'POST',
                 body: JSON.stringify({
+                  ${request.payload.itemStateInDb ? '' : 'item:' + JSON.stringify(request.payload.item) + ','}
                   toolRuntimeConfig: {
                     axis: ${JSON.stringify(request.payload.toolRuntimeConfig.axis || {})},
                     colorSchemes: ${JSON.stringify(request.payload.toolRuntimeConfig.colorSchemes || {})},
