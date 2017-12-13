@@ -194,19 +194,19 @@ const intervals = {
     vegaAxisTickCount: { interval: 'year' }
   },
   'quarter': {
-    d3format: '%b',
+    d3format: '%b %Y',
     vegaAxisTickCount: { interval: 'month' }
   },
   'month': {
-    d3format: '%b',
+    d3format: '%b %Y',
     vegaAxisTickCount: { interval: 'month' }
   },
   'day': {
-    d3format: '%d',
+    d3format: '%d.%m.%Y',
     vegaAxisTickCount: { interval: 'day' }
   },
   'hour': {
-    d3format: '%H',
+    d3format: '%d.%m.%Y %H Uhr',
     vegaAxisTickCount: { interval: 'hour' }
   }
 }
