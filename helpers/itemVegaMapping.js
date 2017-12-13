@@ -11,7 +11,7 @@ function getSpecWithMappedItem(item, chartType, spec, config = {}) {
       if (itemValue === undefined) {
         continue;
       }
-      mapping.mapToSpec(itemValue, modifiedSpec);
+      mapping.mapToSpec(itemValue, modifiedSpec, item);
     }
   } catch (err) {
     console.log(err);

@@ -1,12 +1,13 @@
 const clone = require('clone');
 const objectPath = require('object-path');
+const intervals = require('../../helpers/dateSeries.js').intervals;
 
 module.exports = function getMappings(config = {}) {
   return [
     {
       path: 'data',
       mapToSpec: function(itemData, spec) {
-        spec.data = {
+        spec.data = [{
           name: "table",
           values: itemData
             .slice(1)                     // take the header row out of the array
@@ -25,7 +26,7 @@ module.exports = function getMappings(config = {}) {
             .reduce(( acc, cur ) => {     // flatten the array
               return acc.concat(cur);
             }, [])
-        };
+        }];
       }
     },
     {
@@ -33,19 +34,16 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(item, spec) {
         if (config.dateFormat) {
           objectPath.set(spec,'scales.0.type', 'time');
-          objectPath.set(spec,'scales.0.nice', config.dateFormat.precision);
         }
       }
     },
     {
-      path: 'dateSeriesOptions.interval',
+      path: 'options.dateSeriesOptions.interval',
       mapToSpec: function(interval, spec) {
         // only use this option if we have a valid dateFormat
         if (config.dateFormat) {
-          if (interval === 'quarter') {
-            interval = 'month';
-          }
-          objectPath.set(spec,'scales.0.nice', interval);
+          objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
+          objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaAxisTickCount);
         }
       }
     },

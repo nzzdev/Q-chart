@@ -25,13 +25,13 @@ const dateFormats = {
   'YYYY-Q': {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
-    precision: 'month',
+    precision: 'quarter',
     getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1) * 3, 1); }
   },
   'Q-YYYY': {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
-    precision: 'month',
+    precision: 'quarter',
     getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1) * 3, 1); }
   },
   'YYYY-M': {
@@ -188,6 +188,29 @@ function getDataWithDateParsed(data) {
     });
 }
 
+const intervals = {
+  'year': {
+    d3format: '%Y',
+    vegaAxisTickCount: { interval: 'year' }
+  },
+  'quarter': {
+    d3format: '%b',
+    vegaAxisTickCount: { interval: 'month' }
+  },
+  'month': {
+    d3format: '%b',
+    vegaAxisTickCount: { interval: 'month' }
+  },
+  'day': {
+    d3format: '%d',
+    vegaAxisTickCount: { interval: 'day' }
+  },
+  'hour': {
+    d3format: '%H',
+    vegaAxisTickCount: { interval: 'hour' }
+  }
+}
+
 module.exports = {
   isDateSeries: isDateSeries,
   isDateSeriesData: isDateSeriesData,
@@ -195,5 +218,6 @@ module.exports = {
   getDateFormatForSerie: getDateFormatForSerie,
   getDateFormatForValue: getDateFormatForValue,
   getDataWithDateParsed: getDataWithDateParsed,
-  getDateFormatForData: getDateFormatForData
+  getDateFormatForData: getDateFormatForData,
+  intervals: intervals
 }
