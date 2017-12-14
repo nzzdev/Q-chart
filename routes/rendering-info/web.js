@@ -59,7 +59,7 @@ module.exports = {
     const context = {
       item: request.payload.item,
       legend: legend.getLegendModel(request.payload.item, request.payload.toolRuntimeConfig.colorSchemes.category),
-      id: 'q_chart_' + request.query._id + '_' + Math.floor(Math.random() * 100000)
+      id: 'q_chart_' + request.query._id + '_' + Math.floor(Math.random() * 100000).replace(/-/g, '')
     };
 
     const renderingInfo = {};
@@ -81,7 +81,7 @@ module.exports = {
       // return a script in rendering info
       // requesting the svg in width measured in the client
       const functionName = `loadSVG${context.id}`;
-      const dataObject = `${context.id.replace(/-/g, '')}Data`;
+      const dataObject = `${context.id}Data`;
 
       let queryString = '';
       if (request.payload.itemStateInDb) {
