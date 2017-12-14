@@ -81,7 +81,7 @@ module.exports = {
       // return a script in rendering info
       // requesting the svg in width measured in the client
       const functionName = `loadSVG${context.id}`;
-      const dataObject = `${context.id}Data`;
+      const dataObject = `${context.id.replace(/-/g, '')}Data`;
 
       let queryString = '';
       if (request.payload.itemStateInDb) {
