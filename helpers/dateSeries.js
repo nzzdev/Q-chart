@@ -183,7 +183,10 @@ function getDataWithDateParsed(data) {
           if (ii !== 0) { // only the first cell of every row should be parsed
             return cell;
           }
-          return format.getDate(cell.match(format.parse));
+          if (cell.match) { // check if cell is actually a string that has .match function
+            return format.getDate(cell.match(format.parse));
+          }
+          return cell;
         })
     });
 }
