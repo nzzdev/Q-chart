@@ -48,7 +48,7 @@ module.exports = {
           url: `/rendering-info/html-js?${querystring.stringify(request.query)}`,
           payload: request.payload
         });
-        return response.payload;
+        return response.result;
       } catch (err) {
         server.log(['error'], err);
         return Boom.internal();
