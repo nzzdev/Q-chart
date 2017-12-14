@@ -32,6 +32,7 @@ function getLegendModel(item, colorScheme, vizColor) {
     const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart];
     const intervalConfig = dateSeries.intervals[interval];
 
+    d3timeFormat.timeFormatDefaultLocale(dateSeries.d3timeFormatLocale);
     const formatDate = d3timeFormat.timeFormat(intervalConfig.d3format);
 
     let legendLabel = 'Prognose ';
