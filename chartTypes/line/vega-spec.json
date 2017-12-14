@@ -41,6 +41,7 @@
       "scale": "xScale",
       "grid": true,
       "labelFlush": true,
+      "labelBound": true,
       "labelFlushOffset": false
     },
     {
