@@ -3,7 +3,7 @@
   "autosize": {
     "type": "fit"
   },
-  "height": 300,
+  "height": 200,
   "scales": [
     {
       "name": "xScale",
