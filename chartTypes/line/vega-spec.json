@@ -47,7 +47,9 @@
     {
       "orient": "left",
       "scale": "yScale",
-      "grid": true
+      "grid": true,
+      "nice": 4,
+      "tickCount": 4
     }
   ],
   "marks": [
