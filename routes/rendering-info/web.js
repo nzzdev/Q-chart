@@ -13,6 +13,7 @@ const nunjucksEnv = new nunjucks.Environment();
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
+const legend = require('../../helpers/legend.js');
 
 // temp function until we have all chart types implemented with the new vega renderer
 // determines if we go with the new or old renderer
@@ -57,6 +58,7 @@ module.exports = {
 
     const context = {
       item: request.payload.item,
+      legend: legend.getLegendModel(request.payload.item, request.payload.toolRuntimeConfig.colorSchemes.category),
       id: 'q_chart_' + request.query._id + '_' + Math.floor(Math.random() * 100000)
     };
 

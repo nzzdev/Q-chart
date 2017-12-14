@@ -19,8 +19,8 @@ const years = [
 ];
 
 const categories = [
-  'Land A', 
-  'Land Ä', 
+  'Land A Unglaublich langer Ländername', 
+  'Land Ä Unglaublich langer Ländername', 
   'Land B', 
   'Unglaublich langer Ländername C - nicht gut für mobile',
   'Land D', 
