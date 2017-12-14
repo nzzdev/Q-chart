@@ -46,3 +46,19 @@ async function init() {
 }
 
 init();
+
+async function gracefullyStop() {
+  console.log('stopping hapi server');
+  try {
+    await server.stop({ timeout: 10000 });
+    console.log('hapi server stopped');
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
+// listen on SIGINT and SIGTERM signal and gracefully stop the server
+process.on('SIGINT', gracefullyStop);
+process.on('SIGTERM', gracefullyStop);
