@@ -34,6 +34,7 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(item, spec) {
         if (config.dateFormat) {
           objectPath.set(spec,'scales.0.type', 'time');
+          objectPath.set(spec,'axes.0.labelOverlap', 'parity'); // use parity label overlap strategy if we have a date series
         }
       }
     },

@@ -39,7 +39,9 @@
     {
       "orient": "bottom",
       "scale": "xScale",
-      "grid": true
+      "grid": true,
+      "labelFlush": true,
+      "labelFlushOffset": false
     },
     {
       "orient": "left",
@@ -89,10 +91,7 @@
   "config": {
     "axis": {
       "labels": true,
-      "labelAngle": 0,
-      "labelBound": true,
-      "labelFlush": true,
-      "labelFlushOffset": false
+      "labelAngle": 0
     }
   }
 }
