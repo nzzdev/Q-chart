@@ -7,17 +7,24 @@ function getLegendModel(item, toolRuntimeConfig) {
   const legendModel = {};
 
   legendModel.type = item.options.chartType.toLowerCase();
-  legendModel.series = item.data[0].slice(1)
-    .map((label, index) => {
-      return {
-        label: label,
-        color: colorRange[index]
-      } 
-    });
+
+  legendModel.legendItems = [];
+
+  // only add the series if we have more than one
+  if (item.data[0].slice(1).length > 1) {
+    const dataSeries = item.data[0].slice(1)
+      .map((label, index) => {
+        return {
+          label: label,
+          color: colorRange[index]
+        } 
+      });
+    legendModel.legendItems.push(dataSeries);
+  }
 
   // prognosis
-  const hasPrognosis = item.options.dateSeriesOptions && item.options.dateSeriesOptions.prognosisStart && !isNaN(item.options.dateSeriesOptions.prognosisStart);
-  if (hasPrognosis) {
+  legendModel.hasPrognosis = item.options.dateSeriesOptions && item.options.dateSeriesOptions.prognosisStart && !isNaN(item.options.dateSeriesOptions.prognosisStart);
+  if (legendModel.hasPrognosis) {
     const {prognosisStart, interval} = item.options.dateSeriesOptions;
 
     const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
@@ -35,7 +42,7 @@ function getLegendModel(item, toolRuntimeConfig) {
     }
     legendLabel += `${formatDate(prognosisStartDate[0])})`
 
-    legendModel.series.push({
+    legendModel.legendItems.push({
       isPrognosis: true,
       label: legendLabel
     });
