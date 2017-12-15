@@ -1,4 +1,5 @@
 const dateSeries = require('./dateSeries.js');
+const d3config = require('../config/d3.js');
 const d3timeFormat = require('d3-time-format');
 const getComputedColorRange = require('./vegaConfig.js').getComputedColorRange;
 
@@ -31,7 +32,7 @@ function getLegendModel(item, toolRuntimeConfig) {
     const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart];
     const intervalConfig = dateSeries.intervals[interval];
 
-    d3timeFormat.timeFormatDefaultLocale(dateSeries.d3timeFormatLocale);
+    d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
     const formatDate = d3timeFormat.timeFormat(intervalConfig.d3format);
 
     let legendLabel = 'Prognose ';
