@@ -297,6 +297,20 @@ function createLineChartHighlight() {
   return item;
 }
 
+function createLineChartCustomColors() {
+  let item = createBasicLineChart(3);
+  item.title = 'FIXTURE: line chart custom colors';
+  item.options.colorOverwrite = [
+    {
+      color: 'green',
+      colorBright: 'lightgreen',
+      position: 0
+    }
+  ];
+  
+  return item;
+}
+
 function createMobileBarChart() {
   let item = createBasicColumnChart();
   item.title = 'FIXTURE: bar chart mobile';
@@ -367,6 +381,7 @@ module.exports = {
   lineChartAllCategories: createLineChartAllCategories,
   lineChartPrognosis: createLineChartPrognosis,
   lineChartHighlight: createLineChartHighlight,
+  lineChartCustomColors: createLineChartCustomColors,
   basicColumnChart: createBasicColumnChart,
   basicBarChart: createBarChart,
   mobileBarChart: createMobileBarChart,
