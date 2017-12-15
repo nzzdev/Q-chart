@@ -8,6 +8,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/linePrognosis.json`),
   require(`${fixtureDataDirectory}/lineHighlight.json`),
   require(`${fixtureDataDirectory}/lineCustomColors.json`),
+  require(`${fixtureDataDirectory}/lineChartMinMax.json`),
   require(`${fixtureDataDirectory}/basicColumn.json`),
   require(`${fixtureDataDirectory}/basicBar.json`),
   require(`${fixtureDataDirectory}/mobileBar.json`),

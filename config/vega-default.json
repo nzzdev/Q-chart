@@ -3,12 +3,15 @@
     "font": "sans-serif",
     "fill": "#05032d",
     "fontSize": 13,
-    "fontWeight": 300
+    "fontWeight": 100
   },
   "style": {
     "prognosisLine": {
       "strokeDash": [6, 2],
       "strokeDashOffset": -2
     }
+  },
+  "axis": {
+    "titleFontWeight": 100
   }
 }

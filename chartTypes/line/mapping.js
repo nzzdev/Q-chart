@@ -59,16 +59,22 @@ module.exports = function getMappings(config = {}) {
     },
     {
       path: 'options.lineChartOptions.minValue',
-      mapToSpec: function(minValue, spec) {
+      mapToSpec: function(minValue, spec, item) {
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(item.data);
+
         objectPath.set(spec, 'scales.1.nice', false);
-        objectPath.set(spec, 'scales.1.domainMin', minValue);
+        objectPath.set(spec, 'scales.1.domainMin', minValue / divisor);
       }
     },
     {
       path: 'options.lineChartOptions.maxValue',
-      mapToSpec: function(maxValue, spec) {
+      mapToSpec: function(maxValue, spec, item) {
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(item.data);
+
         objectPath.set(spec, 'scales.1.nice', false);
-        objectPath.set(spec, 'scales.1.domainMax', maxValue);
+        objectPath.set(spec, 'scales.1.domainMax', maxValue / divisor);
       }
     },
     {

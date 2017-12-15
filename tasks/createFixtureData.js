@@ -311,6 +311,14 @@ function createLineChartCustomColors() {
   return item;
 }
 
+function createLineChartMinMax() {
+  let item = createBasicLineChart(3);
+  item.title = 'FIXTURE: line chart min max axis';
+  item.options.lineChartOptions.minValue = 10000;
+  item.options.lineChartOptions.maxValue = 80000;
+  return item;
+}
+
 function createMobileBarChart() {
   let item = createBasicColumnChart();
   item.title = 'FIXTURE: bar chart mobile';
@@ -382,6 +390,7 @@ module.exports = {
   lineChartPrognosis: createLineChartPrognosis,
   lineChartHighlight: createLineChartHighlight,
   lineChartCustomColors: createLineChartCustomColors,
+  lineChartMinMax: createLineChartMinMax,
   basicColumnChart: createBasicColumnChart,
   basicBarChart: createBarChart,
   mobileBarChart: createMobileBarChart,

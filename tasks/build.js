@@ -131,6 +131,7 @@ function buildFixtures() {
   fs.writeFileSync('resources/fixtures/data/linePrognosis.json', JSON.stringify(createFixtureData.lineChartPrognosis()));
   fs.writeFileSync('resources/fixtures/data/lineHighlight.json', JSON.stringify(createFixtureData.lineChartHighlight()));
   fs.writeFileSync('resources/fixtures/data/lineCustomColors.json', JSON.stringify(createFixtureData.lineChartCustomColors()));
+  fs.writeFileSync('resources/fixtures/data/lineChartMinMax.json', JSON.stringify(createFixtureData.lineChartMinMax()));
   fs.writeFileSync('resources/fixtures/data/basicColumn.json', JSON.stringify(createFixtureData.basicColumnChart()));
   fs.writeFileSync('resources/fixtures/data/basicBar.json', JSON.stringify(createFixtureData.basicBarChart())); 
   fs.writeFileSync('resources/fixtures/data/mobileBar.json', JSON.stringify(createFixtureData.mobileBarChart()));
