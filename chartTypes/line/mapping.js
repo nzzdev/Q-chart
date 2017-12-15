@@ -43,8 +43,9 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(interval, spec) {
         // only use this option if we have a valid dateFormat
         if (config.dateFormat) {
+          objectPath.set(spec,'scales.0.nice', intervals[interval].vegaInterval);
           objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
-          objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaAxisTickCount);
+          objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaInterval);
         }
       }
     },
