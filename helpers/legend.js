@@ -19,7 +19,7 @@ function getLegendModel(item, toolRuntimeConfig) {
           color: colorRange[index]
         } 
       });
-    legendModel.legendItems.push(dataSeries);
+    legendModel.legendItems = legendModel.legendItems.concat(dataSeries);
   }
 
   // prognosis

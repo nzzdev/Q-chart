@@ -77,16 +77,16 @@ function getDivisorForValue(value) {
 }
 
 function getDivisor(data) {
-  // try {
-    const dataOnly = array2d.crop(data, 1, 1, array2d.width(data) - 1, array2d.height(data) - 1);
+  try {
+    const dataOnly = array2d.crop(clone(data), 1, 1, array2d.width(data) - 1, array2d.height(data) - 1);
     const flatData = array2d.flatten(dataOnly);
     const minValue = d3.array.min(flatData);
     const maxValue = d3.array.max(flatData);
     return Math.max(getDivisorForValue(maxValue), getDivisorForValue(Math.abs(minValue)));
-  // } catch (err) {
-  //   // if something goes wrong, the divisor is just 1
-  //   return 1;
-  // }
+  } catch (err) {
+    // if something goes wrong, the divisor is just 1
+    return 1;
+  }
 }
 
 module.exports = {
