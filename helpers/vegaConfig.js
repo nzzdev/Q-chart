@@ -26,7 +26,8 @@ function getComputedColorRange(item, toolRuntimeConfig) {
       if (hasHighlight(item)) {
         color = colorOverwrite.colorBright;
       }
-      range[colorOverwrite.position] = color;
+      // the position is a 1 based index, therefore we need to do -1
+      range[colorOverwrite.position - 1] = color;
     }
   }
 

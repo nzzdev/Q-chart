@@ -292,8 +292,8 @@ function createLineChartPrognosis() {
 
 function createLineChartHighlight() {
   let item = createBasicLineChart(3);
-  item.title = 'FIXTURE: line chart highlight first';
-  item.options.highlightDataSeries = 0;
+  item.title = 'FIXTURE: line chart highlight second';
+  item.options.highlightDataSeries = 1;
   return item;
 }
 
@@ -304,7 +304,12 @@ function createLineChartCustomColors() {
     {
       color: 'green',
       colorBright: 'lightgreen',
-      position: 0
+      position: 1
+    },
+    {
+      color: 'red',
+      colorBright: 'orange',
+      position: 2
     }
   ];
   
