@@ -102,11 +102,11 @@ function getCategoricalDataSeries(yearsPortion, categoriesPortion) {
   return array2d.transpose(data);
 }
 
-function createBasicLineChart() {
+function createBasicLineChart(numberOfCategories = 1) {
   let item = {
     title: 'FIXTURE: line chart basic',
     subtitle: 'some subtitle here',
-    data: getMonthlyDataSeries(years.slice(years.length - 3), categories.slice(0, 1)), // last 3 of years array, first 4 of categories array
+    data: getMonthlyDataSeries(years.slice(years.length - 3), categories.slice(0, numberOfCategories)), // last 3 of years array, first 4 of categories array
     sources: [
       {
         link: {},
@@ -291,7 +291,7 @@ function createLineChartPrognosis() {
 }
 
 function createLineChartHighlight() {
-  let item = createBasicLineChart();
+  let item = createBasicLineChart(3);
   item.title = 'FIXTURE: line chart highlight first';
   item.options.highlightDataSeries = 0;
   return item;

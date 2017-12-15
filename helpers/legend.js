@@ -5,23 +5,29 @@ function getLegendModel(item, colorScheme, vizColor) {
   const legendModel = {};
 
   legendModel.type = item.options.chartType.toLowerCase();
+
+  // we need to check if there is a highlighted data serie as this will have influence on the colors used
+  let highlightDataSeries;
+  if (item.options && item.options.hasOwnProperty('highlightDataSeries') && item.options.highlightDataSeries !== null && item.options.highlightDataSeries !== undefined) {
+    highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
+  }
+
+  let colorSchemeKey = 'default';
+  if (highlightDataSeries) {
+    colorSchemeKey = 'light';
+  }
+
   legendModel.series = item.data[0].slice(1)
     .map((label, index) => {
+      let color = colorScheme[colorSchemeKey][index];
+      if (highlightDataSeries === index) {
+        color = colorScheme.default[index];
+      }
       return {
         label: label,
-        color: colorScheme.default[index]
+        color: color
       } 
     });
-
-  // compile colors
-  // let highlightDataSeries;
-  // if (item.options && item.options.hasOwnProperty('highlightDataSeries') && item.options.highlightDataSeries !== null && item.options.highlightDataSeries !== undefined) {
-  //   highlightDataSeries = parseInt(item.options.highlightDataSeries, 10);
-  // }
-  // if (highlightDataSeries) {
-
-  // }
-
 
   // prognosis
   const hasPrognosis = item.options.dateSeriesOptions && item.options.dateSeriesOptions.prognosisStart && !isNaN(item.options.dateSeriesOptions.prognosisStart);
