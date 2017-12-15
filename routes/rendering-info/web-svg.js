@@ -9,18 +9,14 @@ const getDataWithStringsCastedToFloats = require('../../helpers/data.js').getDat
 const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
 const getChartTypeForItemAndWidth = require('../../helpers/chartType.js').getChartTypeForItemAndWidth;
 const dateSeries = require('../../helpers/dateSeries.js');
+const d3config = require('../../config/d3.js');
 
-const vegaConfig = require('../../vega-configs/default.json');
+const vegaConfig = require('../../config/vega-default.json');
 
 // todo: get this from toolRuntimeConfig
-vega.formatLocale({
-  "decimal": ".",
-  "thousands": "'",
-  "grouping": [3],
-  // "currency": ["", "\u00a0CHF"]
-});
+vega.formatLocale(d3config.formatLocale);
 
-vega.timeFormatLocale(dateSeries.d3timeFormatLocale);
+vega.timeFormatLocale(d3config.timeFormatLocale);
 
 module.exports = {
   method: 'POST',

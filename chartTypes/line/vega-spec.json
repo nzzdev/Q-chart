@@ -18,7 +18,7 @@
       "name": "yScale",
       "type": "linear",
       "range": "height",
-      "nice": true,
+      "nice": 4,
       "zero": true,
       "domain": {
         "data": "table",
@@ -48,8 +48,26 @@
       "orient": "left",
       "scale": "yScale",
       "grid": true,
-      "nice": 4,
-      "tickCount": 4
+      "tickCount": 4,
+      "encode": {
+        "title": {
+          "update": {
+            "angle": {"value": 0},
+            "align": {
+              "value": "right"
+            },
+            "baseline": {
+              "value": "bottom"
+            },
+            "x": {
+              "value": -6
+            },
+            "y": {
+              "value": -10
+            }
+          }
+        }
+      }
     }
   ],
   "marks": [

@@ -1,15 +1,23 @@
 const clone = require('clone');
 const objectPath = require('object-path');
 const intervals = require('../../helpers/dateSeries.js').intervals;
+const dataHelpers = require('../../helpers/data.js');
 
 module.exports = function getMappings(config = {}) {
   return [
     {
       path: 'data',
       mapToSpec: function(itemData, spec) {
+
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(itemData);
+        if (divisor > 1) {
+          objectPath.set(spec, 'axes.1.title', dataHelpers.getDivisorString(divisor));
+        }
+
         spec.data = [{
           name: "table",
-          values: itemData
+          values: clone(itemData)
             .slice(1)                     // take the header row out of the array
             .map((row, rowIndex) => {
               const x = row.shift();      // take the x axis value out of the row
@@ -18,7 +26,7 @@ module.exports = function getMappings(config = {}) {
                   return {
                     xValue: x,
                     xIndex: rowIndex,
-                    yValue: val,
+                    yValue: val / divisor,
                     cValue: index
                   }
                 })
@@ -30,8 +38,8 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: 'data',
-      mapToSpec: function(item, spec) {
+      path: 'data', // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec) {
         if (config.dateFormat) {
           objectPath.set(spec,'scales.0.type', 'time');
           objectPath.set(spec,'axes.0.labelOverlap', 'parity'); // use parity label overlap strategy if we have a date series
