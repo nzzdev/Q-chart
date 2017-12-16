@@ -43,32 +43,31 @@
       "grid": true,
       "labelFlush": true,
       "labelBound": true,
-      "labelFlushOffset": false
+      "labelFlushOffset": false,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+              "value": "right"
+            },
+            "baseline": {
+              "value": "top"
+            },
+            "x": {
+              "signal": "width"
+            },
+            "y": {
+              "value": 30
+            }
+          }
+        }
+      }
     },
     {
       "orient": "left",
       "scale": "yScale",
       "grid": true,
-      "tickCount": 4,
-      "encode": {
-        "title": {
-          "update": {
-            "angle": {"value": 0},
-            "align": {
-              "value": "right"
-            },
-            "baseline": {
-              "value": "bottom"
-            },
-            "x": {
-              "value": -6
-            },
-            "y": {
-              "value": -10
-            }
-          }
-        }
-      }
+      "tickCount": 4
     }
   ],
   "marks": [

@@ -7,13 +7,13 @@ module.exports = function getMappings(config = {}) {
   return [
     {
       path: 'data',
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, item) {
+
+        // set the x axis title
+        objectPath.set(spec, 'axes.0.title', itemData[0][0]);
 
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
-        if (divisor > 1) {
-          objectPath.set(spec, 'axes.1.title', dataHelpers.getDivisorString(divisor));
-        }
 
         spec.data = [{
           name: "table",
@@ -51,12 +51,11 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: 'options.dateSeriesOptions.interval',
-      mapToSpec: function(interval, spec) {
-        // only use this option if we have a valid dateFormat
-        if (config.dateFormat) {
-          objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
-          objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaInterval);
+      path: 'options.hideAxisLabel',
+      mapToSpec: function(hideAxisLabel, spec, item) {
+        if (hideAxisLabel === true) {
+          // unset the x axis label
+          objectPath.set(spec, 'axes.0.title', false);
         }
       }
     },
@@ -78,6 +77,16 @@ module.exports = function getMappings(config = {}) {
 
         objectPath.set(spec, 'scales.1.nice', false);
         objectPath.set(spec, 'scales.1.domainMax', maxValue / divisor);
+      }
+    },
+    {
+      path: 'options.dateSeriesOptions.interval',
+      mapToSpec: function(interval, spec) {
+        // only use this option if we have a valid dateFormat
+        if (config.dateFormat) {
+          objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
+          objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaInterval);
+        }
       }
     },
     {
