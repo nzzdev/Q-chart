@@ -1,3 +1,4 @@
+const clone = require('clone');
 const dateSeries = require('./dateSeries.js');
 const d3config = require('../config/d3.js');
 const d3timeFormat = require('d3-time-format');
@@ -28,12 +29,12 @@ function getLegendModel(item, toolRuntimeConfig) {
   if (legendModel.hasPrognosis) {
     const {prognosisStart, interval} = item.options.dateSeriesOptions;
 
+    const dateFormat = dateSeries.getDateFormatForValue(clone(item.data).slice(1)[prognosisStart][0]);
     const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
-    const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart];
-    const intervalConfig = dateSeries.intervals[interval];
+    const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
 
     d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
-    const formatDate = d3timeFormat.timeFormat(intervalConfig.d3format);
+    const formatDate = d3timeFormat.timeFormat(dateSeries.dateFormats[dateFormat].d3format);
 
     let legendLabel = 'Prognose ';
     if (prognosisStart !== dataWithDateParsed.slice(1).length + 1) { // if the prognosis is not the last label
@@ -41,7 +42,7 @@ function getLegendModel(item, toolRuntimeConfig) {
     } else {
       legendLabel += '(';
     }
-    legendLabel += `${formatDate(prognosisStartDate[0])})`
+    legendLabel += `${formatDate(prognosisStartDate)})`
 
     legendModel.legendItems.push({
       isPrognosis: true,

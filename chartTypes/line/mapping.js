@@ -55,7 +55,7 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(hideAxisLabel, spec, item) {
         if (hideAxisLabel === true) {
           // unset the x axis label
-          objectPath.set(spec, 'axes.0.title', false);
+          objectPath.set(spec, 'axes.0.title', undefined);
         }
       }
     },

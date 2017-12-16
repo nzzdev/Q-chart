@@ -40,10 +40,11 @@
     {
       "orient": "bottom",
       "scale": "xScale",
+      "domain": false,
       "grid": true,
       "labelFlush": true,
       "labelBound": true,
-      "labelFlushOffset": false,
+      "labelFlushOffset": 0,
       "encode": {
         "title": {
           "update": {
@@ -66,6 +67,7 @@
     {
       "orient": "left",
       "scale": "yScale",
+      "domain": false,
       "grid": true,
       "tickCount": 4
     }
