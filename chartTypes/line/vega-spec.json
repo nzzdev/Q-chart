@@ -103,6 +103,9 @@
               },
               "strokeWidth": {
                 "value": 2
+              },
+              "defined": {
+                "signal": "datum.yValue !== null"
               }
             }
           }

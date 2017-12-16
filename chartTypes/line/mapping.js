@@ -23,10 +23,14 @@ module.exports = function getMappings(config = {}) {
               const x = row.shift();      // take the x axis value out of the row
               return row
                 .map((val, index) => {    // generate one array entry for every data category on the same x value
+                  let value = null;
+                  if (!Number.isNaN(parseFloat(val))) {
+                    value = val / divisor;
+                  }
                   return {
                     xValue: x,
                     xIndex: rowIndex,
-                    yValue: val / divisor,
+                    yValue: value,
                     cValue: index
                   }
                 })
