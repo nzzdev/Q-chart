@@ -44,13 +44,13 @@ function getDivisorString(divisor) {
   let divisorString = '';
   switch (divisor) {
     case Math.pow(10,9):
-      divisorString = 'Mrd.';
+      divisorString = 'Milliarden';
       break;
     case Math.pow(10,6):
-      divisorString = 'Mio.';
+      divisorString = 'Millionen';
       break;
     case Math.pow(10,3):
-      divisorString = 'Tsd.';
+      divisorString = 'Tausend';
       break;
     default:
       divisorString = '';

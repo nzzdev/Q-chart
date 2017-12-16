@@ -3,6 +3,8 @@ const querystring = require('querystring');
 const Joi = require('joi');
 const Boom = require('boom');
 
+const dataHelpers = require('../../helpers/data.js');
+
 const viewsDir = __dirname + '/../../views/';
 const stylesDir  = __dirname + '/../../styles/';
 
@@ -56,9 +58,17 @@ module.exports = {
     }
     // end temp code
 
+    const item = request.payload.item;
+
+    // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
+    const divisor = dataHelpers.getDivisor(item.data);
+    if (divisor > 1) {
+      item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
+    }
+
     const context = {
-      item: request.payload.item,
-      legend: legend.getLegendModel(request.payload.item, request.payload.toolRuntimeConfig),
+      item: item,
+      legend: legend.getLegendModel(item, request.payload.toolRuntimeConfig),
       id: `q_chart_${request.query._id}_${Math.floor(Math.random() * 100000)}`.replace(/-/g, '')
     };
 
