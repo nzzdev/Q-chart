@@ -194,7 +194,7 @@ function getDataWithDateParsed(data) {
 const intervals = {
   'year': {
     d3format: '%Y',
-    vegaInterval: { interval: 'year', step: 3 }
+    vegaInterval: { interval: 'year', step: 1 }
   },
   'quarter': {
     d3format: '%b %Y',
@@ -202,15 +202,15 @@ const intervals = {
   },
   'month': {
     d3format: '%b %Y',
-    vegaInterval: { interval: 'month', step: 4 }
+    vegaInterval: { interval: 'month', step: 1 }
   },
   'day': {
     d3format: '%d.%m.%Y',
-    vegaInterval: { interval: 'day', step: 7 }
+    vegaInterval: { interval: 'day', step: 1 }
   },
   'hour': {
     d3format: '%d.%m.%Y %H Uhr',
-    vegaInterval: { interval: 'hour', step: 6 }
+    vegaInterval: { interval: 'hour', step: 1 }
   }
 }
 

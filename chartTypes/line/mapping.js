@@ -41,7 +41,7 @@ module.exports = function getMappings(config = {}) {
       path: 'data', // various settings that are not tied to an option
       mapToSpec: function(itemData, spec) {
         if (config.dateFormat) {
-          objectPath.set(spec,'scales.0.type', 'time');
+          objectPath.set(spec,'scales.0.type', 'time'); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec,'axes.0.labelOverlap', 'parity'); // use parity label overlap strategy if we have a date series
         }
       }
@@ -51,7 +51,6 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(interval, spec) {
         // only use this option if we have a valid dateFormat
         if (config.dateFormat) {
-          objectPath.set(spec,'scales.0.nice', intervals[interval].vegaInterval);
           objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
           objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaInterval);
         }
