@@ -87,12 +87,11 @@ module.exports = {
     let svg;
 
     try {
-      // create a new view instance for a given Vega JSON spec
-      var view = new vega.View(vega.parse(spec))
+      const dataflow = vega.parse(spec);
+      const view = new vega.View(dataflow)
         .renderer('none')
         .initialize();
 
-      // generate a static SVG image
       svg = await view.toSVG();
     } catch (err) {
       request.server.log(['error'], err);
