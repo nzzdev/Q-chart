@@ -196,6 +196,11 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
+            },
+            "reverseYScale": {
+              "title": "Y Achse invertieren",
+              "type": "boolean",
+              "default": false
             }
           }
         },

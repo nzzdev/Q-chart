@@ -56,6 +56,7 @@ module.exports = function getMappings(config = {}) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, 'axes.0.title', undefined);
+          objectPath.set(spec, 'height', spec.height - 20); // decrease the height because we do not need space for the axis title
         }
       }
     },
@@ -77,6 +78,14 @@ module.exports = function getMappings(config = {}) {
 
         objectPath.set(spec, 'scales.1.nice', false);
         objectPath.set(spec, 'scales.1.domainMax', maxValue / divisor);
+      }
+    },
+    {
+      path: 'options.lineChartOptions.reverseYScale',
+      mapToSpec: function(reverseYScale, spec, item) {
+        if (reverseYScale === true) {
+          objectPath.set(spec, 'scales.1.reverse', true);
+        }
       }
     },
     {

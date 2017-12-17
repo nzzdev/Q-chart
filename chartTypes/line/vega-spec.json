@@ -3,7 +3,7 @@
   "autosize": {
     "type": "fit"
   },
-  "height": 200,
+  "height": 220,
   "scales": [
     {
       "name": "xScale",
@@ -45,6 +45,7 @@
       "labelFlush": true,
       "labelBound": true,
       "labelFlushOffset": 0,
+      "labelPadding": 3,
       "encode": {
         "title": {
           "update": {
