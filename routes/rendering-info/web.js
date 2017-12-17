@@ -124,16 +124,16 @@ module.exports = {
                   }
                 })
               })
-              .then(response => {
+              .then(function(response) {
                 return response.json();
               })
-              .then(renderingInfo => {
+              .then(function(renderingInfo) {
                 document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
               });
             }
             ${functionName}();
-            window.addEventListener('resize', () => {
-              requestAnimationFrame(() => {
+            window.addEventListener('resize', function() {
+              requestAnimationFrame(function() {
                 var newWidth = ${dataObject}.element.getBoundingClientRect().width;
                 if (newWidth !== ${dataObject}.width) {
                   ${dataObject}.width = newWidth;
