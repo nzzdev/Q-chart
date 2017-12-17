@@ -150,6 +150,10 @@ module.exports = {
     }];
     renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
 
+    renderingInfo.loaderConfig = {
+      polyfills: ['fetch', 'Promise'],
+    };
+
     return renderingInfo;
   }
 }
