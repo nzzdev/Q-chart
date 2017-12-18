@@ -98,9 +98,31 @@ module.exports = {
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
 
-      let queryString = '';
+      const queryParams = {};
+      // add the item id to appendItemToPayload if it's state is in the db (aka not preview)
       if (request.payload.itemStateInDb) {
-        queryString = `?appendItemToPayload=${request.query._id}`;
+        queryParams.appendItemToPayload = request.query._id;
+      }
+
+      let toolRuntimeConfigForWebSVG = {
+        axis: request.payload.toolRuntimeConfig.axis,
+        colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
+      };
+
+      let requestMethod;
+      let requestBodyString;
+
+      // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
+      if (request.payload.itemStateInDb === true) {
+        requestMethod = 'GET';
+        queryParams.toolRuntimeConfig = JSON.stringify(toolRuntimeConfigForWebSVG);
+        queryParams.appendItemToPayload = request.query._id;
+      } else {
+        requestMethod = 'POST';
+        requestBodyString = JSON.stringify({
+          item: request.payload.item,
+          toolRuntimeConfig: toolRuntimeConfigForWebSVG
+        });
       }
 
       renderingInfo.scripts = [
@@ -111,23 +133,9 @@ module.exports = {
             };
             ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
             function ${functionName}() {
-              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg${queryString}", {
-                method: 'POST',
-                body: JSON.stringify({
-                  ${request.payload.itemStateInDb ? '' : 'item:' + JSON.stringify(request.payload.item) + ','}
-                  toolRuntimeConfig: {
-                    axis: ${JSON.stringify(request.payload.toolRuntimeConfig.axis || {})},
-                    colorSchemes: ${JSON.stringify(request.payload.toolRuntimeConfig.colorSchemes || {})},
-                    size: {
-                      width: [
-                        {
-                          value: ${dataObject}.width,
-                          comparison: '='
-                        }
-                      ]
-                    }
-                  }
-                })
+              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?${querystring.stringify(queryParams)}&width=" + ${dataObject}.width, {
+                method: "${requestMethod}",
+                ${requestBodyString ? "body: '" + requestBodyString + "'": ''}
               })
               .then(function(response) {
                 return response.json();
