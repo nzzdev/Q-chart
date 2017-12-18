@@ -1,7 +1,6 @@
 const clone = require('clone');
 const array2d = require('array2d');
 const d3 = {
-  format: require('d3-format'),
   array: require('d3-array')
 }
 
