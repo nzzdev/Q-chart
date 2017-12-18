@@ -76,10 +76,26 @@ function getDivisorForValue(value) {
   return divisor;
 }
 
+function getFlatData(data) {
+  const dataOnly = array2d.crop(clone(data), 1, 1, array2d.width(data) - 1, array2d.height(data) - 1);
+  const flatData = array2d.flatten(dataOnly);
+  return flatData;
+}
+
+
+function getMaxValue(data) {
+  const flatData = getFlatData(data);
+  return d3.array.max(flatData);
+}
+
+function getMinValue(data) {
+  const flatData = getFlatData(data);
+  return d3.array.min(flatData);
+}
+
 function getDivisor(data) {
   try {
-    const dataOnly = array2d.crop(clone(data), 1, 1, array2d.width(data) - 1, array2d.height(data) - 1);
-    const flatData = array2d.flatten(dataOnly);
+    const flatData = getFlatData(data);
     const minValue = d3.array.min(flatData);
     const maxValue = d3.array.max(flatData);
     return Math.max(getDivisorForValue(maxValue), getDivisorForValue(Math.abs(minValue)));
@@ -94,5 +110,8 @@ module.exports = {
   getLongestDataLabel: getLongestDataLabel,
   getDivisorString: getDivisorString,
   getDivisorForValue: getDivisorForValue,
+  getFlatData: getFlatData,
+  getMaxValue: getMaxValue,
+  getMinValue: getMinValue,
   getDivisor: getDivisor
 };

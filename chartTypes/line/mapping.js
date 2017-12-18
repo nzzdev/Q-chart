@@ -66,6 +66,11 @@ module.exports = function getMappings(config = {}) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(item.data);
 
+        const dataMinValue = dataHelpers.getMinValue(item.data);
+        if (dataMinValue < minValue) {
+          minValue = dataMinValue;
+        }
+
         objectPath.set(spec, 'scales.1.nice', false);
         objectPath.set(spec, 'scales.1.domainMin', minValue / divisor);
       }
@@ -75,6 +80,11 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(maxValue, spec, item) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(item.data);
+
+        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        if (dataMaxValue > maxValue) {
+          maxValue = dataMaxValue;
+        }
 
         objectPath.set(spec, 'scales.1.nice', false);
         objectPath.set(spec, 'scales.1.domainMax', maxValue / divisor);
