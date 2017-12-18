@@ -7,7 +7,7 @@
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js",
     "test": "lab -a code -c -P tests --verbose --leaks"
   },
-  "author": "",
+  "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "",
   "dependencies": {
     "ajv": "^5.5.0",
@@ -22,6 +22,7 @@
     "hapi": "^17.0.1",
     "hoek": "^5.0.2",
     "inert": "^5.0.1",
+    "jsdom": "^11.5.1",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",

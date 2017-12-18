@@ -141,7 +141,9 @@ module.exports = {
                 return response.json();
               })
               .then(function(renderingInfo) {
-                document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+                if (renderingInfo.markup) {
+                  document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+                }
               });
             }
             ${functionName}();

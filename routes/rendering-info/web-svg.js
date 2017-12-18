@@ -73,6 +73,15 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
       .initialize();
 
     svg = await view.toSVG();
+
+    // post processing
+    try {
+      const postprocessing = require(`../../chartTypes/${chartType}/postprocessing.js`);
+      svg = postprocessing.process(svg, item, toolRuntimeConfig);
+    } catch (err) {
+      // we probably do not have postprocessing for this chartType
+    }
+    
   } catch (err) {
     request.server.log(['error'], err);
     return err;
