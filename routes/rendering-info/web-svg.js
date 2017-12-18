@@ -100,6 +100,7 @@ module.exports = {
       },
       query: {
         width: Joi.number().required(),
+        noCache: Joi.boolean(),
         toolRuntimeConfig: Joi.object().optional()
       },
       payload: {
@@ -111,9 +112,15 @@ module.exports = {
   handler: async function(request, h) {
     const item = request.payload.item;
     const toolRuntimeConfig = request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
-    return {
+    const webSvg = {
       markup: await getSvg(item, request.query.width, toolRuntimeConfig, request)
+    };
+
+    const response = h.response(webSvg);
+    if (!request.query.noCache) {
+      response.header('cache-control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=86400, stale-if-error=86400')
     }
+    return response;
   }
 };
 

@@ -119,6 +119,7 @@ module.exports = {
         queryParams.appendItemToPayload = request.query._id;
       } else {
         requestMethod = 'POST';
+        queryParams.noCache = true; // set this if we do not have item state in DB as it will probably change
         requestBodyString = JSON.stringify({
           item: request.payload.item,
           toolRuntimeConfig: toolRuntimeConfigForWebSVG
