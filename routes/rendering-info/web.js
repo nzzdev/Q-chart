@@ -63,7 +63,11 @@ module.exports = {
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
     const divisor = dataHelpers.getDivisor(item.data);
     if (divisor > 1) {
-      item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
+      if (item.subtitle && item.subtitle !== '') {
+        item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
+      } else {
+        item.subtitleSuffix = `in ${dataHelpers.getDivisorString(divisor)}`;
+      }
     }
 
     const context = {
