@@ -43,7 +43,7 @@ module.exports = {
   },
   handler: async function(request, h) {
     // temp code to redirect to legacy rendering-info if item not supported by new one yet
-    if (shouldUseLegacyRenderingInfo(request)) {
+    if (shouldUseLegacyRenderingInfo(request) || !process.env.FEAT_VEGA_RENDERER) {
       try {
         const response = await request.server.inject({
           method: 'POST',
