@@ -1,0 +1,65 @@
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.q-chart {
+  opacity: 1 !important;
+  svg {
+    overflow: visible;
+  }
+}
+
+.q-chart__subtitle {
+  margin-bottom: 12px;
+}
+
+.q-chart__legend {
+  @include clearfix;
+  float: right;
+  margin: 0 0 6px 0;
+}
+
+.q-chart__legend__item {
+  @include clearfix;
+  float: left;
+  margin: 0 8px 0 0;
+  &:last-child {
+    margin-right: 0;
+  }
+
+  display: flex;
+  align-items: center;
+}
+
+.q-chart__legend__item__box {
+  margin-right: 4px;
+}
+
+.q-chart__legend--bar .q-chart__legend__item__box {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.q-chart__legend--line {
+  line {
+    stroke-width: 2px;
+    stroke: currentColor;
+  }
+
+  .q-chart__legend__item--prognosis {
+    .q-chart__legend__item__box {
+      background: transparent;
+      line {
+        stroke-dasharray: 2px 2px;
+      }
+    }
+  }
+}
+
+@import 'vega.scss';

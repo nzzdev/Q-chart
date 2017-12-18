@@ -1,0 +1,28 @@
+<div class="s-q-item__footer">
+  {%- if item.notes %}
+    <span>{{ item.notes }}&nbsp;&ndash;&nbsp;</span>
+  {%- endif %}
+  {%- if item.sources.length > 0 %}
+    {%- if item.sources.length > 1 %}
+      Quellen:
+    {%- else %}
+      Quelle:
+    {%- endif %}
+    
+    {%- for source in item.sources %}
+      
+      {%- if source.text !== "" %}
+        {%- if source.link and source.link.isValid %}
+          <a href="{{ source.link.url }}" target="blank" rel="noopener noreferrer">{{ source.text }}</a>
+        {%- else %}
+          {{ source.text }}
+        {%- endif %}
+        {% if not loop.last %}, {% endif %}
+      {%- endif %}
+
+    {%- endfor %}
+
+  {%- else %}
+    Quelle: nicht angegeben
+  {%- endif %}
+</div>

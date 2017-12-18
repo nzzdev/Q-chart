@@ -1,0 +1,119 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "height": 300,
+  "autosize": {
+    "type": "fit"
+  },
+  "scales": [
+    {
+      "name": "xScale",
+      "type": "band",
+      "range": "width",
+      "padding": 0.5,
+      "domain": {
+        "data": "table",
+        "field": "xValue"
+      }
+    },
+    {
+      "name": "yScale",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {
+        "data": "table",
+        "field": "yValue"
+      }
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": "category",
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xScale"
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "grid": true
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "table",
+          "groupby": "xValue"
+        }
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "scale": "xScale",
+            "field": "xValue"
+          }
+        }
+      },
+      "signals": [
+        {
+          "name": "width",
+          "update": "bandwidth('xScale')"
+        }
+      ],
+      "scales": [
+        {
+          "name": "pos",
+          "type": "band",
+          "range": "width",
+          "domain": {
+            "data": "series",
+            "field": "cValue"
+          }
+        }
+      ],
+      "marks": [
+        {
+          "type": "rect",
+          "from": {
+            "data": "series"
+          },
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "pos",
+                "field": "cValue"
+              },
+              "width": {
+                "scale": "pos",
+                "band": 1
+              },
+              "y": {
+                "scale": "yScale",
+                "field": "yValue"
+              },
+              "y2": {
+                "scale": "yScale",
+                "value": 0
+              },
+              "fill": {
+                "scale": "color",
+                "field": "cValue"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

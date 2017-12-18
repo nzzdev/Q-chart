@@ -1,16 +1,16 @@
 SystemJS.config({
   paths: {
-    "npm:": "jspm_packages/npm/",
-    "q-chart/": "chart/"
+    "npm:": "jspm_packages/npm/"
+  },
+  browserConfig: {
+    "baseURL": "/",
+    "paths": {
+      "q-chart/": "src/"
+    }
   },
   nodeConfig: {
     "paths": {
       "q-chart/": "chart/"
-    }
-  },
-  devConfig: {
-    "map": {
-      "plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
     }
   },
   transpiler: "plugin-babel",
@@ -23,6 +23,9 @@ SystemJS.config({
         }
       }
     }
+  },
+  map: {
+    "plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
   }
 });
 
@@ -32,7 +35,8 @@ SystemJS.config({
     "npm:*.json"
   ],
   map: {
-    "chartist": "npm:chartist@0.11.0"
+    "chartist": "npm:chartist@0.11.0",
+    "systemjs-plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
   },
   packages: {}
 });
