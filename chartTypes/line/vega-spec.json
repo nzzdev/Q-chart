@@ -42,7 +42,7 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
-      "labelFlush": true,
+      "labelFlush": false,
       "labelBound": true,
       "labelFlushOffset": 0,
       "labelPadding": 3,
