@@ -14,6 +14,7 @@ You can set the following env variables
   }
 ]
 ```
+- `FEAT_VEGA_RENDERER` set this to true to actually use the new renderer if possible.
 
 ## toolRuntimeConfig
 There is various runtime configuration that can be passed to the rendering-info endpoints. pass a JSON object in the payload:
