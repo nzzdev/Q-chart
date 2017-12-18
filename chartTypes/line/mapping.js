@@ -99,6 +99,14 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
+      path: 'options.lineChartOptions.lineInterpolation',
+      mapToSpec: function(interpolation, spec, item) {
+        if (interpolation) {
+          objectPath.set(spec, 'marks.0.marks.0.encode.enter.interpolate.value', interpolation);
+        }
+      }
+    },
+    {
       path: 'options.dateSeriesOptions.interval',
       mapToSpec: function(interval, spec) {
         // only use this option if we have a valid dateFormat
