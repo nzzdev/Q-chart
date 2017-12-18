@@ -20,16 +20,58 @@ You can set the following env variables
 There is various runtime configuration that can be passed to the rendering-info endpoints. pass a JSON object in the payload:
 ```
 {
-  toolRuntimeConfig: {
-    axis: {
-      labelFont: 'nzz-sans-serif',
-      labelFontSize: 11,
-      labelColor: '#CCCCCC',
-      titleFont: '',
-      titleFontSize: 12,
-      titleColor: '#CCCCCC',
-      titleFontWeight: 400
+  "toolRuntimeConfig": {
+    "colorSchemes": {
+      "category": {
+        "default": [
+          "#191D63",
+          "#D6B222",
+          "#656565",
+          "#E08B63",
+          "#2E6E71",
+          "#DD5B6C",
+          "#1EAFC7",
+          "#9A8700",
+          "#1F9877",
+          "#A3A189",
+          "#B37490",
+          "#B23C39"
+        ],
+        "light": [
+          "#DCDDE7",
+          "#FDF4D1",
+          "#C7C7C7",
+          "#F7E2D9",
+          "#A3CFD1",
+          "#F5CED3",
+          "#CBECF2",
+          "#E7DA7C",
+          "#B5E1D5",
+          "#E7E7E0",
+          "#F0E3E9",
+          "#F5B8B7"
+        ]
+      }
     }
+  },
+  "axis": {
+    "gridColor": "#e9e9ee",
+    "domainColor": "#e9e9ee",
+    "tickColor": "#e9e9ee",
+    "labelFont": "nzz-sans-serif",
+    "labelColor": "#05032d",
+    "labelFontSize": 11,
+    "labelFontWeight": 100,
+    "ticks": true,
+    "tickExtra": false,
+    "tickOffset": 0,
+    "tickRound": true,
+    "tickSize": 4,
+    "tickWidth": 1,
+    "titleFont": "nzz-sans-serif",
+    "titleFontSize": 11,
+    "titleColor": "#05032d",
+    "titleFontWeight": 100
   }
 }
 ```
