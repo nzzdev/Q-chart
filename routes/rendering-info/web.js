@@ -68,6 +68,7 @@ module.exports = {
 
     const context = {
       item: item,
+      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
       legend: legend.getLegendModel(item, request.payload.toolRuntimeConfig),
       id: `q_chart_${request.query._id}_${Math.floor(Math.random() * 100000)}`.replace(/-/g, '')
     };

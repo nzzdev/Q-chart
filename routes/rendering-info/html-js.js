@@ -89,7 +89,8 @@ module.exports = {
 
     const data = {
       id: `q-chart-${id}`,
-      item: request.payload.item
+      item: request.payload.item,
+      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {} 
     };
 
     let systemConfigScript = `
