@@ -209,6 +209,8 @@ function getDataWithDateParsed(data) {
     });
 }
 
+// intervals are used to set the tickCount and format the date on the X axis
+// the user chooses a specific interval via an option
 const intervals = {
   'year': {
     d3format: '%Y',
@@ -227,7 +229,7 @@ const intervals = {
     vegaInterval: { interval: 'day', step: 1 }
   },
   'hour': {
-    d3format: '%d.%m.%Y %H Uhr',
+    d3format: '%d.%m %H Uhr',
     vegaInterval: { interval: 'hour', step: 1 }
   }
 }
