@@ -1,3 +1,5 @@
+const resourcesDir = __dirname + '/../resources/';
+
 module.exports = [
   {
     method: 'GET',
