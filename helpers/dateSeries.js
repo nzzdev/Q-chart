@@ -229,7 +229,7 @@ const intervals = {
     vegaInterval: { interval: 'day', step: 1 }
   },
   'hour': {
-    d3format: '%d.%m %H Uhr',
+    d3format: '%d.%m. %H Uhr',
     vegaInterval: { interval: 'hour', step: 1 }
   }
 }
