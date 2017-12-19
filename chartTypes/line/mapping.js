@@ -112,24 +112,26 @@ module.exports = function getMappings(config = {}) {
       mapToSpec: function(interval, spec, item) {
         // only use this option if we have a valid dateFormat
         if (config.dateFormat) {
-          let step = 1;
-          // if we have hour interval and potentially to many ticks (so they become messy because they do not map to pixels nicely)
-          // use step: 2, otherwise step: 1 in tickCount
-          if (interval === 'hour') {
-            const minDate = item.data[1][0];
-            const maxDate = item.data[item.data.length - 1][0];
-            const diffHours = Math.abs(maxDate.getTime() - minDate.getTime()) / 1000 / 60 / 60;
 
-            // todo: this should ideally take the label width into account but is hardcoded to 200 for now
-            const thresholdHours = (spec.width - 200);
+          if (process.env.FEAT_VARIABLE_HOUR_STEP === true) {
+            let step = 1;
+            // if we have hour interval and potentially to many ticks (so they become messy because they do not map to pixels nicely)
+            // use step: 2, otherwise step: 1 in tickCount
+            if (interval === 'hour') {
+              const minDate = item.data[1][0];
+              const maxDate = item.data[item.data.length - 1][0];
+              const diffHours = Math.abs(maxDate.getTime() - minDate.getTime()) / 1000 / 60 / 60;
 
-            // we do not want more than a tick per 5 pixels
-            if (maxDate > thresholdHours * 5) {
-              step = 2;
+              // todo: this should ideally take the label width into account but is hardcoded to 200 for now
+              const thresholdHours = (spec.width - 200);
+
+              // we do not want more than a tick per 5 pixels
+              if (maxDate > thresholdHours * 5) {
+                step = 2;
+              }
             }
+            intervals[interval].vegaInterval.step = step;
           }
-
-          intervals[interval].vegaInterval.step = step;
 
           objectPath.set(spec,'axes.0.format', intervals[interval].d3format);
           objectPath.set(spec,'axes.0.tickCount', intervals[interval].vegaInterval);
