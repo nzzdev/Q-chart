@@ -1,8 +1,5 @@
 const clone = require('clone');
 const array2d = require('array2d');
-const d3 = {
-  array: require('d3-array')
-}
 
 function getDataWithStringsCastedToFloats(data) {
   return data
@@ -84,19 +81,18 @@ function getFlatData(data) {
 
 function getMaxValue(data) {
   const flatData = getFlatData(data);
-  return d3.array.max(flatData);
+  return Math.max.apply(null, flatData);
 }
 
 function getMinValue(data) {
   const flatData = getFlatData(data);
-  return d3.array.min(flatData);
+  return Math.min.apply(null, flatData);
 }
 
 function getDivisor(data) {
   try {
-    const flatData = getFlatData(data);
-    const minValue = d3.array.min(flatData);
-    const maxValue = d3.array.max(flatData);
+    const minValue = getMinValue(data);
+    const maxValue = getMaxValue(data);
     return Math.max(getDivisorForValue(maxValue), getDivisorForValue(Math.abs(minValue)));
   } catch (err) {
     // if something goes wrong, the divisor is just 1
