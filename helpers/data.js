@@ -3,9 +3,15 @@ const array2d = require('array2d');
 
 function getDataWithStringsCastedToFloats(data) {
   return data
-    .map(row => {
+    .map((row, i) => {
+      if (i === 0) { // the first row is just the header
+        return row;
+      }
       return row
-        .map(cell => {
+        .map((cell, ii) => {
+          if (ii === 0) { // the first cell is the x axis and should not get casted
+            return cell;
+          }
           if (cell === null) {
             return null;
           }
