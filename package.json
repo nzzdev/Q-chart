@@ -1,62 +1,51 @@
 {
-  "name": "@nzz/q-chart",
-  "version": "1.3.3",
-  "description": "Q Chart",
-  "keywords": [
-    "storytelling",
-    "nzz"
-  ],
-  "homepage": "https://github.com/nzzdev/Q-chart",
-  "bugs": {
-    "url": "https://github.com/nzzdev/Q-chart/issues"
-  },
-  "license": "",
-  "contributors": [
-    {
-      "name": "Beni Buess",
-      "email": "beni.buess@nzz.ch"
-    },
-    {
-      "name": "Sharon Funke",
-      "email": "sharon.funke@nzz.ch"
-    }
-  ],
+  "name": "q-chart",
+  "version": "1.4.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
-    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js"
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js",
+    "test": "lab -a code -c -P tests --verbose --leaks"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nzzdev/Q-chart.git"
-  },
+  "author": "Beni Buess <beni.buess@nzz.ch>",
+  "license": "",
   "dependencies": {
-    "ajv": "^5.3.0",
+    "ajv": "^5.5.0",
     "array2d": "0.0.5",
+    "boom": "^7.1.1",
+    "canvas": "^1.6.7",
+    "clone": "^2.1.1",
+    "d3-array": "^1.2.1",
+    "d3-format": "^1.2.1",
+    "d3-time-format": "^2.1.1",
+    "deepmerge": "^2.0.1",
+    "hapi": "^17.0.1",
+    "hoek": "^5.0.2",
+    "inert": "^5.0.1",
+    "jsdom": "^11.5.1",
+    "node-fetch": "^1.7.3",
+    "nunjucks": "^3.0.1",
+    "object-path": "^0.11.4",
+    "svelte": "1.41.2",
+    "vega": "^3.0.8"
+  },
+  "devDependencies": {
     "autoprefixer": "^7.1.6",
-    "chai": "^4.1.2",
+    "code": "^5.1.2",
     "cssnano": "^3.10.0",
-    "hapi": "^16.6.2",
-    "hoek": "^5.0.1",
-    "inert": "^4.1.0",
-    "joi": "^12.0.0",
-    "json-schema-faker": "^0.4.6",
     "jspm": "^0.17.0-beta.41",
-    "mocha": "^3.2.0",
-    "node-sass": "^4.5.3",
-    "postcss-import": "^11.0.0",
-    "svelte": "^1.41.2",
-    "systemjs": "0.19.47",
-    "systemjs-builder": "0.16.4"
+    "lab": "^15.1.2",
+    "node-sass": "^4.7.2",
+    "postcss": "^6.0.14",
+    "postcss-import": "^11.0.0"
   },
   "jspm": {
-    "name": "@nzz/q-chart",
-    "main": "@nzz/q-chart.js",
+    "name": "q-chart",
+    "main": "q-chart.js",
     "dependencies": {
-      "chartist": "npm:chartist@^0.11.0"
+      "chartist": "npm:chartist@0.11.0",
+      "systemjs-plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
     },
-    "devDependencies": {
-      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.21"
-    }
+    "devDependencies": {}
   }
 }

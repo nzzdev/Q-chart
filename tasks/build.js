@@ -10,6 +10,8 @@ const postcssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
+const createFixtureData = require('./createFixtureData.js');
+
 const stylesDir = __dirname + '/../styles_src/';
 
 builder.config({
@@ -107,6 +109,10 @@ async function buildStyles() {
     {
       name: 'default',
       content: await compileStylesheet('default')
+    },
+    {
+      name: 'q-chart',
+      content: await compileStylesheet('q-chart')
     }
   ];
 
@@ -117,8 +123,32 @@ async function buildStyles() {
   writeHashmap('styles/hashMap.json', styleFiles, 'css');
 }
 
+// create fixture data
+// if new fixture data is added here, they have to be added in fixture data route as well
+function buildFixtures() {
+  fs.writeFileSync('resources/fixtures/data/basicLine.json', JSON.stringify(createFixtureData.basicLineChart()));
+  fs.writeFileSync('resources/fixtures/data/lineAllCat.json', JSON.stringify(createFixtureData.lineChartAllCategories()));
+  fs.writeFileSync('resources/fixtures/data/linePrognosis.json', JSON.stringify(createFixtureData.lineChartPrognosis()));
+  fs.writeFileSync('resources/fixtures/data/lineHighlight.json', JSON.stringify(createFixtureData.lineChartHighlight()));
+  fs.writeFileSync('resources/fixtures/data/lineCustomColors.json', JSON.stringify(createFixtureData.lineChartCustomColors()));
+  fs.writeFileSync('resources/fixtures/data/lineChartMinMax.json', JSON.stringify(createFixtureData.lineChartMinMax()));
+  fs.writeFileSync('resources/fixtures/data/basicColumn.json', JSON.stringify(createFixtureData.basicColumnChart()));
+  fs.writeFileSync('resources/fixtures/data/basicBar.json', JSON.stringify(createFixtureData.basicBarChart())); 
+  fs.writeFileSync('resources/fixtures/data/mobileBar.json', JSON.stringify(createFixtureData.mobileBarChart()));
+  fs.writeFileSync('resources/fixtures/data/stackedMobileBar.json', JSON.stringify(createFixtureData.stackedMobileBarChart()));
+  fs.writeFileSync('resources/fixtures/data/transposedMobileBar.json', JSON.stringify(createFixtureData.transposedMobileBarChart()));
+  fs.writeFileSync('resources/fixtures/data/mobileBarHighlight.json', JSON.stringify(createFixtureData.mobileBarChartHighlight()));
+  fs.writeFileSync('resources/fixtures/data/columnAllYears.json', JSON.stringify(createFixtureData.columnChartAllTime()));
+  fs.writeFileSync('resources/fixtures/data/columnAllCat.json', JSON.stringify(createFixtureData.columnChartAllCat()));
+  fs.writeFileSync('resources/fixtures/data/barAll.json', JSON.stringify(createFixtureData.barChartAll()));
+  fs.writeFileSync('resources/fixtures/data/barAllYears.json', JSON.stringify(createFixtureData.barChartAllTime()));
+  fs.writeFileSync('resources/fixtures/data/barAllCat.json', JSON.stringify(createFixtureData.barChartAllCat()));
+  fs.writeFileSync('resources/fixtures/data/stackedBarAll.json', JSON.stringify(createFixtureData.stackedBarChartAll()));
+}
+
 Promise.all(
   [
+    buildFixtures(),
     buildScripts(),
     buildStyles()
   ])

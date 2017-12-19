@@ -196,6 +196,25 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
+            },
+            "reverseYScale": {
+              "title": "Y Achse invertieren",
+              "type": "boolean",
+              "default": false
+            },
+            "lineInterpolation": {
+              "title": "Interpolation",
+              "type": "string",
+              "default": "linear",
+              "enum": ["linear", "step-before", "step-after", "monotone"],
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "UserHasRole",
+                    "role": "expert-chart"
+                  }
+                ]
+              }
             }
           }
         },

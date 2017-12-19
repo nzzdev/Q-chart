@@ -1,0 +1,4 @@
+{% if displayOptions.hideTitle !== true %}<h3 class="s-q-item__title">{{ item.title }}</h3>{% endif %}
+{%- if (item.subtitle and item.subtitle !== '') or (item.subtitleSuffix and item.subtitleSuffix !== '')%}
+  <div class="q-chart__subtitle s-font-note">{{ item.subtitle }}{% if item.subtitleSuffix%}{{ item.subtitleSuffix }}{% endif %}</div>
+{%- endif %}

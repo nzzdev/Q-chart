@@ -36,27 +36,27 @@ function getPrognosisStartEnumTitles(item) {
 module.exports = {
   method: 'POST',
   path:'/dynamic-enum/{optionName}',
-  config: {
+  options: {
     validate: {
       payload: Joi.object()
     },
     cors: true
   },
-  handler: function(request, reply) {
+  handler: function(request, h) {
     if (request.params.optionName === 'highlightDataSeries') {
-      return reply({
+      return {
         enum: getHighlightEnum(request.payload),
         enum_titles: getHighlightEnumTitles(request.payload)
-      }).type('application/json');
+      };
     }
 
     if (request.params.optionName === 'prognosisStart') {
-      return reply({
+      return {
         enum: getPrognosisStartEnum(request.payload),
         enum_titles: getPrognosisStartEnumTitles(request.payload)
-      }).type('application/json');
+      };
     }
 
-    return reply(Boom.badRequest());
+    return Boom.badRequest();
   }
 }

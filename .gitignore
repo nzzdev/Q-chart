@@ -5,3 +5,6 @@ jspm_packages
 .env.json
 scripts
 styles
+resources/fixtures
+resources/fonts/*.otf
+resources/fonts/*.ttf

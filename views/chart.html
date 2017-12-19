@@ -1,0 +1,6 @@
+<div class="s-q-item q-chart" style="opacity: 0;" id="{{ id }}">
+    {% include "./header.html" %}
+    {% if item.data[0].slice(1).length > 1 or legend.hasPrognosis %}{% include "./legend.html" %}{% endif %}
+    <div class="q-chart-svg-container">{{ svg | safe }}</div>
+    {% include "./footer.html" %}
+</div>

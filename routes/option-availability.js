@@ -14,29 +14,29 @@ function isLineChart(item) {
 module.exports = {
   method: 'POST',
   path:'/option-availability/{optionName}',
-  config: {
+  options: {
     validate: {
       payload: Joi.object()
     },
     cors: true
   },
-  handler: function(request, reply) {
+  handler: function(request, h) {
     if (request.params.optionName === 'bar') {
-      return reply({
+      return {
         available: isBarChart(request.payload)
-      }).type('application/json');
+      };
     }
 
     if (request.params.optionName === 'forceBarsOnSmall') {
-      return reply({
+      return {
         available: isBarChart(request.payload) && !request.payload.options.barOptions.isBarChart
-      }).type('application/json');
+      };
     }
 
     if (request.params.optionName === 'line') {
-      return reply({
+      return {
         available: isLineChart(request.payload)
-      }).type('application/json');
+      };
     }
 
     if (request.params.optionName === 'dateseries') {
@@ -49,9 +49,9 @@ module.exports = {
         isAvailable = false;
       }
 
-      return reply({
+      return {
         available: isAvailable
-      }).type('application/json');
+      };
     }
 
     return reply(Boom.badRequest());
