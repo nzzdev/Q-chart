@@ -54,15 +54,16 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     }
   }
 
+  // set the size to the spec
+  templateSpec.width = width;
+
+  // this will be the compiled spec from template and mapping
   let spec;
   try {
     spec = getSpecWithMappedItem(item, chartType, templateSpec, mappingConfig);
   } catch (err) {
     return Boom.notImplemented(err.message);
   }
-
-  // set the size to the spec
-  spec.width = width;
 
   let svg;
 
