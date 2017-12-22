@@ -136,7 +136,7 @@ module.exports = {
             function ${functionName}() {
               fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?${querystring.stringify(queryParams)}&width=" + ${dataObject}.width, {
                 method: "${requestMethod}",
-                ${requestBodyString ? "body: '" + requestBodyString + "'": ''}
+                ${requestBodyString ? "body: " + JSON.stringify(requestBodyString) : ''}
               })
               .then(function(response) {
                 return response.json();
