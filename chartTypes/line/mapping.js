@@ -47,7 +47,6 @@ module.exports = function getMappings(config = {}) {
         if (config.dateFormat) {
           objectPath.set(spec,'scales.0.type', 'time'); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec,'axes.0.labelOverlap', 'parity'); // use parity label overlap strategy if we have a date series
-          objectPath.set(spec,'axes.0.labelFlush', true); // flush the labels on the X axis if we have a date series
         }
       }
     },
