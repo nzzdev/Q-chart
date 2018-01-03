@@ -93,6 +93,27 @@ module.exports = {
       displayOptions: request.payload.toolRuntimeConfig.displayOptions || {} 
     };
 
+    let domReadyScript = `
+      if (!window.q_domready) {
+        window.q_domready = new Promise((resolve) => {
+          if (document.readyState && (document.readyState === 'interactive' || document.readyState === 'complete')) {
+            resolve();
+          } else {
+            function onReady() {
+              resolve();
+              document.removeEventListener('DOMContentLoaded', onReady, true);
+            }
+            document.addEventListener('DOMContentLoaded', onReady, true);
+            document.onreadystatechange = () => {
+              if (document.readyState === "interactive") {
+                resolve();
+              }
+            }
+          }
+        });
+      }
+    `
+
     let systemConfigScript = `
         System.config({
           map: {
@@ -104,7 +125,10 @@ module.exports = {
     let loaderScript = `
         System.import('q-chart/chart.js')
           .then(function(module) {
-            return module.display(${JSON.stringify(item)}, document.querySelector('#${data.id}'), ${JSON.stringify(request.payload.toolRuntimeConfig)})
+            window.q_domready
+              .then(function() {
+                return module.display(${JSON.stringify(item)}, document.querySelector('#${data.id}'), ${JSON.stringify(request.payload.toolRuntimeConfig)});
+              })
           })
           .catch(function(error) {
             console.log(error)
@@ -124,6 +148,10 @@ module.exports = {
         }
       ],
       scripts: [
+        {
+          content: domReadyScript,
+          loadOnce: true
+        },
         {
           content: systemConfigScript,
           loadOnce: true

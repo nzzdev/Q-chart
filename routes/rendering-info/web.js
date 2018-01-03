@@ -129,10 +129,27 @@ module.exports = {
       renderingInfo.scripts = [
         {
           content: `
+            if (!window.q_domready) {
+              window.q_domready = new Promise((resolve) => {
+                if (document.readyState && (document.readyState === 'interactive' || document.readyState === 'complete')) {
+                  resolve();
+                } else {
+                  function onReady() {
+                    resolve();
+                    document.removeEventListener('DOMContentLoaded', onReady, true);
+                  }
+                  document.addEventListener('DOMContentLoaded', onReady, true);
+                  document.onreadystatechange = () => {
+                    if (document.readyState === "interactive") {
+                      resolve();
+                    }
+                  }
+                }
+              });
+            }
             var ${dataObject} = {
               element: document.querySelector("#${context.id}")
             };
-            ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
             function ${functionName}() {
               fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?${querystring.stringify(queryParams)}&width=" + ${dataObject}.width, {
                 method: "${requestMethod}",
@@ -147,7 +164,10 @@ module.exports = {
                 }
               });
             }
-            ${functionName}();
+            window.q_domready.then(function() {
+              ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
+              ${functionName}();
+            });
             window.addEventListener('resize', function() {
               requestAnimationFrame(function() {
                 var newWidth = ${dataObject}.element.getBoundingClientRect().width;
@@ -167,7 +187,7 @@ module.exports = {
     renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
 
     renderingInfo.loaderConfig = {
-      polyfills: ['fetch', 'Promise'],
+      polyfills: ['Promise', 'fetch'],
     };
 
     return renderingInfo;
