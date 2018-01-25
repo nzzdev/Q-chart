@@ -1,24 +1,28 @@
 function getChartTypeForItemAndWidth(item, width) {
-  if (item.options.chartType === 'Line') {
-    return 'line';
+  // any custom vegaSpec overrules the chartType setting
+  if (item.vegaSpec !== undefined && item.vegaSpec !== "") {
+    return null;
+  }
+  if (item.options.chartType === "Line") {
+    return "line";
   }
 
-  if (item.options.chartType === 'Bar') {
+  if (item.options.chartType === "Bar") {
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
-          return 'bar';
+          return "bar";
         } else {
-          return 'column';
+          return "column";
         }
       }
-      return 'column';
+      return "column";
     } else {
-      return 'bar';
+      return "bar";
     }
   }
 }
 
 module.exports = {
   getChartTypeForItemAndWidth: getChartTypeForItemAndWidth
-}
+};

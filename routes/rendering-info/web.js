@@ -16,16 +16,16 @@ const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;
+const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
+  .getChartTypeForItemAndWidth;
 const legend = require("../../helpers/legend.js");
 
 // temp function until we have all chart types implemented with the new vega renderer
 // determines if we go with the new or old renderer
 function shouldUseLegacyRenderingInfo(request) {
   const item = request.payload.item;
-  if (
-    item.options.chartType === "Bar" ||
-    item.options.chartType === "StackedBar"
-  ) {
+  const chartType = getChartTypeForItemAndWidth(request.payload.item, 500);
+  if (chartType === "Bar" || chartType === "StackedBar") {
     return true;
   }
   return false;
