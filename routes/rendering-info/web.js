@@ -1,35 +1,39 @@
-const querystring = require('querystring');
+const querystring = require("querystring");
 
-const Joi = require('joi');
-const Boom = require('boom');
+const Joi = require("joi");
+const Boom = require("boom");
 
-const dataHelpers = require('../../helpers/data.js');
+const dataHelpers = require("../../helpers/data.js");
 
-const viewsDir = __dirname + '/../../views/';
-const stylesDir  = __dirname + '/../../styles/';
+const viewsDir = __dirname + "/../../views/";
+const stylesDir = __dirname + "/../../styles/";
 
 // setup nunjucks environment
-const nunjucks = require('nunjucks');
+const nunjucks = require("nunjucks");
 const nunjucksEnv = new nunjucks.Environment();
 
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
-const getExactPixelWidth = require('../../helpers/toolRuntimeConfig.js').getExactPixelWidth;
-const legend = require('../../helpers/legend.js');
+const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
+  .getExactPixelWidth;
+const legend = require("../../helpers/legend.js");
 
 // temp function until we have all chart types implemented with the new vega renderer
 // determines if we go with the new or old renderer
 function shouldUseLegacyRenderingInfo(request) {
   const item = request.payload.item;
-  if (item.options.chartType === 'Line') {
-    return false;
+  if (
+    item.options.chartType === "Bar" ||
+    item.options.chartType === "StackedBar"
+  ) {
+    return true;
   }
-  return true;
+  return false;
 }
 
 module.exports = {
-  method: 'POST',
-  path: '/rendering-info/web',
+  method: "POST",
+  path: "/rendering-info/web",
   options: {
     validate: {
       options: {
@@ -43,16 +47,21 @@ module.exports = {
   },
   handler: async function(request, h) {
     // temp code to redirect to legacy rendering-info if item not supported by new one yet
-    if (shouldUseLegacyRenderingInfo(request) || !process.env.FEAT_VEGA_RENDERER) {
+    if (
+      shouldUseLegacyRenderingInfo(request) ||
+      !process.env.FEAT_VEGA_RENDERER
+    ) {
       try {
         const response = await request.server.inject({
-          method: 'POST',
-          url: `/rendering-info/html-js?${querystring.stringify(request.query)}`,
+          method: "POST",
+          url: `/rendering-info/html-js?${querystring.stringify(
+            request.query
+          )}`,
           payload: request.payload
         });
         return response.result;
       } catch (err) {
-        server.log(['error'], err);
+        server.log(["error"], err);
         return Boom.internal();
       }
     }
@@ -63,7 +72,7 @@ module.exports = {
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
     const divisor = dataHelpers.getDivisor(item.data);
     if (divisor > 1) {
-      if (item.subtitle && item.subtitle !== '') {
+      if (item.subtitle && item.subtitle !== "") {
         item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
       } else {
         item.subtitleSuffix = `in ${dataHelpers.getDivisorString(divisor)}`;
@@ -74,24 +83,28 @@ module.exports = {
       item: item,
       displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
       legend: legend.getLegendModel(item, request.payload.toolRuntimeConfig),
-      id: `q_chart_${request.query._id}_${Math.floor(Math.random() * 100000)}`.replace(/-/g, '')
+      id: `q_chart_${request.query._id}_${Math.floor(
+        Math.random() * 100000
+      )}`.replace(/-/g, "")
     };
 
     const renderingInfo = {};
 
     // if we have the width in toolRuntimeConfig.size
     // we can send the svg right away
-    const exactPixelWidth = getExactPixelWidth(request.payload.toolRuntimeConfig);
+    const exactPixelWidth = getExactPixelWidth(
+      request.payload.toolRuntimeConfig
+    );
     if (Number.isInteger(exactPixelWidth)) {
       const svgResponse = await request.server.inject({
-        method: 'POST',
+        method: "POST",
         url: `/rendering-info/web-svg?width=${exactPixelWidth}`,
         payload: request.payload
       });
       context.svg = svgResponse.result.markup;
     } else {
       // polyfill Promise
-      renderingInfo.polyfills = ['Promise'];
+      renderingInfo.polyfills = ["Promise"];
 
       // return a script in rendering info
       // requesting the svg in width measured in the client
@@ -114,11 +127,13 @@ module.exports = {
 
       // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
       if (request.payload.itemStateInDb === true) {
-        requestMethod = 'GET';
-        queryParams.toolRuntimeConfig = JSON.stringify(toolRuntimeConfigForWebSVG);
+        requestMethod = "GET";
+        queryParams.toolRuntimeConfig = JSON.stringify(
+          toolRuntimeConfigForWebSVG
+        );
         queryParams.appendItemToPayload = request.query._id;
       } else {
-        requestMethod = 'POST';
+        requestMethod = "POST";
         queryParams.noCache = true; // set this if we do not have item state in DB as it will probably change
         requestBodyString = JSON.stringify({
           item: request.payload.item,
@@ -151,16 +166,26 @@ module.exports = {
               element: document.querySelector("#${context.id}")
             };
             function ${functionName}() {
-              fetch("${request.payload.toolRuntimeConfig.toolBaseUrl}/rendering-info/web-svg?${querystring.stringify(queryParams)}&width=" + ${dataObject}.width, {
+              fetch("${
+                request.payload.toolRuntimeConfig.toolBaseUrl
+              }/rendering-info/web-svg?${querystring.stringify(
+            queryParams
+          )}&width=" + ${dataObject}.width, {
                 method: "${requestMethod}",
-                ${requestBodyString ? "body: " + JSON.stringify(requestBodyString) : ''}
+                ${
+                  requestBodyString
+                    ? "body: " + JSON.stringify(requestBodyString)
+                    : ""
+                }
               })
               .then(function(response) {
                 return response.json();
               })
               .then(function(renderingInfo) {
                 if (renderingInfo.markup) {
-                  document.querySelector("#${context.id} .q-chart-svg-container").innerHTML = renderingInfo.markup;
+                  document.querySelector("#${
+                    context.id
+                  } .q-chart-svg-container").innerHTML = renderingInfo.markup;
                 }
               });
             }
@@ -181,15 +206,17 @@ module.exports = {
         }
       ];
     }
-    renderingInfo.stylesheets = [{
-      name: styleHashMap['q-chart']
-    }];
-    renderingInfo.markup = nunjucksEnv.render(viewsDir + 'chart.html', context);
+    renderingInfo.stylesheets = [
+      {
+        name: styleHashMap["q-chart"]
+      }
+    ];
+    renderingInfo.markup = nunjucksEnv.render(viewsDir + "chart.html", context);
 
     renderingInfo.loaderConfig = {
-      polyfills: ['Promise', 'fetch'],
+      polyfills: ["Promise", "fetch"]
     };
 
     return renderingInfo;
   }
-}
+};
