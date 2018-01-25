@@ -20,8 +20,8 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/barAll.json`),
   require(`${fixtureDataDirectory}/barAllYears.json`),
   require(`${fixtureDataDirectory}/barAllCat.json`),
-  require(`${fixtureDataDirectory}/stackedBarAll.json`),
-  require(`${fixtureDataDirectory}/vegaSpec.json`)
+  require(`${fixtureDataDirectory}/stackedBarAll.json`)
+  // require(`${fixtureDataDirectory}/vegaSpec.json`)
 ];
 
 module.exports = {
