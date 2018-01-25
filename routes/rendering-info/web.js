@@ -154,7 +154,7 @@ module.exports = {
                     document.removeEventListener('DOMContentLoaded', onReady, true);
                   }
                   document.addEventListener('DOMContentLoaded', onReady, true);
-                  document.onreadystatechange = () => {
+                  document.onreadystatechange = function() {
                     if (document.readyState === "interactive") {
                       resolve();
                     }
