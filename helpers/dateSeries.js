@@ -1,136 +1,220 @@
-const array2d = require('array2d');
-const clone = require('clone');
+const array2d = require("array2d");
+const clone = require("clone");
+
+function dateFromIsoWeek(year, week, day) {
+  var d = new Date(Date.UTC(year, 0, 3));
+  d.setUTCDate(3 - d.getUTCDay() + (week - 1) * 7 + parseInt(day, 10));
+  return d;
+}
 
 // thanks datawrapper.de for the format regexes
 // https://github.com/datawrapper/datawrapper/blob/9ddb90af4aab4b071b6cba195532edea0527b3be/dw.js/src/dw.column.types.js
 const dateFormats = {
-  'YYYY': {
+  YYYY: {
     match: /^ *(?:1[0-9]|2[0-9])\d{2} *$/,
     parse: /^ *(\d{4}) *$/,
-    precision: 'year',
-    d3format: '%Y',
-    getDate: (parsed) => { return new Date(parsed[1], 0, 1); }
+    precision: "year",
+    d3format: "%Y",
+    getDate: parsed => {
+      return new Date(parsed[1], 0, 1);
+    }
   },
-  'YYYY-H': {
+  "YYYY-H": {
     match: /^ *[12]\d{3}[ \-\/]?[hH][12] *$/,
     parse: /^ *(\d{4})[ \-\/]?[hH]([12]) *$/,
-    precision: 'month',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1) * 6, 1); }
+    precision: "month",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[1], (parsed[2] - 1) * 6, 1);
+    }
   },
-  'H-YYYY': {
+  "H-YYYY": {
     match: /^ *[hH][12][ \-\/][12]\d{3} *$/,
     parse: /^ *[hH]([12])[ \-\/](\d{4}) *$/,
-    precision: 'month',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1) * 6, 1); }
+    precision: "month",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[2], (parsed[1] - 1) * 6, 1);
+    }
   },
-  'YYYY-Q': {
+  "YYYY-Q": {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
-    precision: 'quarter',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1) * 3, 1); }
+    precision: "quarter",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[1], (parsed[2] - 1) * 3, 1);
+    }
   },
-  'Q-YYYY': {
+  "Q-YYYY": {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
-    precision: 'quarter',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1) * 3, 1); }
+    precision: "quarter",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[2], (parsed[1] - 1) * 3, 1);
+    }
   },
-  'YYYY-M': {
+  "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-    precision: 'month',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[2]-1), 1); }
+    precision: "month",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[1], parsed[2] - 1, 1);
+    }
   },
-  'M-YYYY': {
+  "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
-    precision: 'month',
-    d3format: '%B %Y',
-    getDate: (parsed) => { return new Date(parsed[2], (parsed[1]-1), 1); }
+    precision: "month",
+    d3format: "%B %Y",
+    getDate: parsed => {
+      return new Date(parsed[2], parsed[1] - 1, 1);
+    }
   },
-  'YYYY-WW': {
+  "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    precision: 'week',
-    d3format: '%d.%m.%Y',
-    getDate: (parsed) => { return dateFromIsoWeek(parsed[1], parsed[2], 1); }
+    precision: "week",
+    d3format: "%d.%m.%Y",
+    getDate: parsed => {
+      return dateFromIsoWeek(parsed[1], parsed[2], 1);
+    }
   },
-  'YYYY-WW-d': {
+  "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    precision: 'day',
-    d3format: '%d.%m.%Y',
-    getDate: (parsed) => { return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]); }
+    precision: "day",
+    d3format: "%d.%m.%Y",
+    getDate: parsed => {
+      return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
+    }
   },
-  'MM/DD/YYYY': {
+  "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    precision: 'day',
-    d3format: '%d.%m.%Y',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3]); }
+    precision: "day",
+    d3format: "%d.%m.%Y",
+    getDate: parsed => {
+      return new Date(parsed[4], parsed[1] - 1, parsed[3]);
+    }
   },
-  'DD/MM/YYYY': {
+  "DD/MM/YYYY": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    precision: 'day',
-    d3format: '%d.%m.%Y',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1]); }
+    precision: "day",
+    d3format: "%d.%m.%Y",
+    getDate: parsed => {
+      return new Date(parsed[4], parsed[3] - 1, parsed[1]);
+    }
   },
-  'YYYY-MM-DD': {
+  "YYYY-MM-DD": {
     match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    precision: 'day',
-    d3format: '%d.%m.%Y',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4]); }
+    precision: "day",
+    d3format: "%d.%m.%Y",
+    getDate: parsed => {
+      return new Date(parsed[1], parsed[3] - 1, parsed[4]);
+    }
   },
-  'MM/DD/YYYY HH:MM': {
+  "MM/DD/YYYY HH:MM": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: 'minutes',
-    d3format: '%d.%m.%Y %H:%M',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
+    precision: "minutes",
+    d3format: "%d.%m.%Y %H:%M",
+    getDate: parsed => {
+      return new Date(
+        parsed[4],
+        parsed[1] - 1,
+        parsed[3],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        parsed[7] || 0
+      );
+    }
   },
-  'DD.MM.YYYY HH:MM': {
+  "DD.MM.YYYY HH:MM": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: 'minutes',
-    d3format: '%d.%m.%Y %H:%M',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1], parsed[5] || 0, parsed[6] || 0, 0); }
+    precision: "minutes",
+    d3format: "%d.%m.%Y %H:%M",
+    getDate: parsed => {
+      return new Date(
+        parsed[4],
+        parsed[3] - 1,
+        parsed[1],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        0
+      );
+    }
   },
-  'YYYY-MM-DD HH:MM': {
+  "YYYY-MM-DD HH:MM": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: 'minutes',
-    d3format: '%d.%m.%Y %H:%M',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4], parsed[5] || 0, parsed[6] || 0, 0); }
+    precision: "minutes",
+    d3format: "%d.%m.%Y %H:%M",
+    getDate: parsed => {
+      return new Date(
+        parsed[1],
+        parsed[3] - 1,
+        parsed[4],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        0
+      );
+    }
   },
-  'MM/DD/YYYY HH:MM:SS': {
+  "MM/DD/YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: 'seconds',
-    d3format: '%d.%m.%Y %H:%M:S',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[1]-1), parsed[3], parsed[5] || 0, parsed[6] || 0, 0); }
+    precision: "seconds",
+    d3format: "%d.%m.%Y %H:%M:S",
+    getDate: parsed => {
+      return new Date(
+        parsed[4],
+        parsed[1] - 1,
+        parsed[3],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        0
+      );
+    }
   },
-  'DD.MM.YYYY HH:MM:SS': {
+  "DD.MM.YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: 'seconds',
-    d3format: '%d.%m.%Y %H:%M:S',
-    getDate: (parsed) => { return new Date(parsed[4], (parsed[3]-1), parsed[1], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
+    precision: "seconds",
+    d3format: "%d.%m.%Y %H:%M:S",
+    getDate: parsed => {
+      return new Date(
+        parsed[4],
+        parsed[3] - 1,
+        parsed[1],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        parsed[7] || 0
+      );
+    }
   },
-  'YYYY-MM-DD HH:MM:SS': {
+  "YYYY-MM-DD HH:MM:SS": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: 'seconds',
-    d3format: '%d.%m.%Y %H:%M:S',
-    getDate: (parsed) => { return new Date(parsed[1], (parsed[3]-1), parsed[4], parsed[5] || 0, parsed[6] || 0, parsed[7] || 0); }
-  },
-}
+    precision: "seconds",
+    d3format: "%d.%m.%Y %H:%M:S",
+    getDate: parsed => {
+      return new Date(
+        parsed[1],
+        parsed[3] - 1,
+        parsed[4],
+        parsed[5] || 0,
+        parsed[6] || 0,
+        parsed[7] || 0
+      );
+    }
+  }
+};
 
 function getDateFormatForValue(value) {
   for (let format in dateFormats) {
@@ -150,14 +234,14 @@ function getDateFormatForSerie(serie) {
     if (!detectedTypeFormatsCount.hasOwnProperty(dateFormat)) {
       detectedTypeFormatsCount[dateFormat] = 0;
     }
-    detectedTypeFormatsCount[dateFormat] = detectedTypeFormatsCount[dateFormat] + 1;
+    detectedTypeFormatsCount[dateFormat] =
+      detectedTypeFormatsCount[dateFormat] + 1;
   }
 
   // sort based on counts
-  const sortedFormats = Object.keys(detectedTypeFormatsCount)
-    .sort((a, b) => {
-      return detectedTypeFormatsCount[b] - detectedTypeFormatsCount[a];
-    })
+  const sortedFormats = Object.keys(detectedTypeFormatsCount).sort((a, b) => {
+    return detectedTypeFormatsCount[b] - detectedTypeFormatsCount[a];
+  });
 
   // return the format with most detections
   return sortedFormats[0];
@@ -180,9 +264,10 @@ function isDateSeriesData(data) {
 }
 
 function getFirstColumnSerie(data) {
-  return array2d.transpose(clone(data))
+  return array2d
+    .transpose(clone(data))
     .shift() // get the first column
-    .slice(1) // get everything but the first cell
+    .slice(1); // get everything but the first cell
 }
 
 function getDateFormatForData(data) {
@@ -191,49 +276,49 @@ function getDateFormatForData(data) {
 
 function getDataWithDateParsed(data) {
   const format = getDateFormatForData(data);
-  return data
-    .map((row, i) => {
-      if (i === 0) { // the first row is just the header
-        return row;
+  return data.map((row, i) => {
+    if (i === 0) {
+      // the first row is just the header
+      return row;
+    }
+    return row.map((cell, ii) => {
+      if (ii !== 0) {
+        // only the first cell of every row should be parsed
+        return cell;
       }
-      return row
-        .map((cell, ii) => {
-          if (ii !== 0) { // only the first cell of every row should be parsed
-            return cell;
-          }
-          if (cell.match) { // check if cell is actually a string that has .match function
-            return format.getDate(cell.match(format.parse));
-          }
-          return cell;
-        })
+      if (cell.match) {
+        // check if cell is actually a string that has .match function
+        return format.getDate(cell.match(format.parse));
+      }
+      return cell;
     });
+  });
 }
 
 // intervals are used to set the tickCount and format the date on the X axis
 // the user chooses a specific interval via an option
 const intervals = {
-  'year': {
-    d3format: '%Y',
-    vegaInterval: { interval: 'year', step: 1 }
+  year: {
+    d3format: "%Y",
+    vegaInterval: { interval: "year", step: 1 }
   },
-  'quarter': {
-    d3format: '%b %Y',
-    vegaInterval: { interval: 'month', step: 3 }
+  quarter: {
+    d3format: "%b %Y",
+    vegaInterval: { interval: "month", step: 3 }
   },
-  'month': {
-    d3format: '%b %Y',
-    vegaInterval: { interval: 'month', step: 1 }
+  month: {
+    d3format: "%b %Y",
+    vegaInterval: { interval: "month", step: 1 }
   },
-  'day': {
-    d3format: '%d.%m.%Y',
-    vegaInterval: { interval: 'day', step: 1 }
+  day: {
+    d3format: "%d.%m.%Y",
+    vegaInterval: { interval: "day", step: 1 }
   },
-  'hour': {
-    d3format: '%d.%m. %H Uhr',
-    vegaInterval: { interval: 'hour', step: 1 }
+  hour: {
+    d3format: "%d.%m. %H Uhr",
+    vegaInterval: { interval: "hour", step: 1 }
   }
-}
-
+};
 
 module.exports = {
   dateFormats: dateFormats,
@@ -245,4 +330,4 @@ module.exports = {
   getDataWithDateParsed: getDataWithDateParsed,
   getDateFormatForData: getDateFormatForData,
   intervals: intervals
-}
+};
