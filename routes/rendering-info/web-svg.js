@@ -20,6 +20,25 @@ const vegaConfig = require("../../config/vega-default.json");
 
 // todo: get this from toolRuntimeConfig
 vega.formatLocale(d3config.formatLocale);
+const Joi = require("joi");
+const Boom = require("boom");
+const vega = require("vega");
+const clone = require("clone");
+const deepmerge = require("deepmerge");
+const getSpecWithMappedItem = require("../../helpers/itemVegaMapping.js")
+  .getSpecWithMappedItem;
+const getComputedColorRange = require("../../helpers/vegaConfig.js")
+  .getComputedColorRange;
+const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
+  .getDataWithStringsCastedToFloats;
+const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
+  .getExactPixelWidth;
+const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
+  .getChartTypeForItemAndWidth;
+const dateSeries = require("../../helpers/dateSeries.js");
+const d3config = require("../../config/d3.js");
+
+const vegaConfig = require("../../config/vega-default.json");
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
@@ -109,6 +128,14 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
 
   try {
     const dataflow = vega.parse(spec);
+
+    try {
+      const prerender = require(`../../chartTypes/${chartType}/prerender.js`);
+      prerender(item, toolRuntimeConfig, spec, vega);
+    } catch (err) {
+      // we probably do not have prerender for this chartType
+    }
+
     const view = new vega.View(dataflow).renderer("none").initialize();
 
     svg = await view.toSVG();
