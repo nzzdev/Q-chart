@@ -27,7 +27,7 @@
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",
     "svelte": "1.41.2",
-    "vega": "git+https://git@github.com/benib/vega.git#feature-autosize-fitx"
+    "vega": "git+https://git@github.com/benib/vega.git#v3.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
