@@ -20,6 +20,9 @@ const vegaConfig = require("../../config/vega-default.json");
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
+// thats the default and might get overwritten by a prerender function of a chart type
+vega.formatLocale(d3config.formatLocale);
+
 function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config to the template vega spec to allow changes in the config through mappings
   let config = deepmerge(vegaConfig, baseConfig || {});
