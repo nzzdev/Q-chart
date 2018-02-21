@@ -112,7 +112,14 @@
               "type": "ToolEndpoint",
               "withData": true,
               "endpoint": "dynamic-enum/highlightDataSeries"
-            }
+            },
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/highlightDataSeries"
+              }
+            ]
           }
         },
         "hideAxisLabel": {
@@ -255,6 +262,11 @@
               {
                 "type": "UserHasRole",
                 "role": "expert-chart"
+              },
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/colorOverwrite"
               }
             ],
             "compact": true,

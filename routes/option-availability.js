@@ -70,7 +70,9 @@ module.exports = {
     if (
       request.params.optionName === "highlightDataSeries" ||
       request.params.optionName === "hideAxisLabel" ||
-      request.params.optionName === "chartType"
+      request.params.optionName === "chartType" ||
+      request.params.optionName === "highlightDataSeries" ||
+      request.params.optionName === "colorOverwrite"
     ) {
       return {
         available: hasNoCustomVegaSpec(request.payload)
