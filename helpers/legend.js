@@ -6,7 +6,7 @@ const getComputedColorRange = require("./vegaConfig.js").getComputedColorRange;
 
 function getLegendModel(item, toolRuntimeConfig) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
-  if (!item.options.chartType && item.vegaSpec) {
+  if (!item.options.chartType || item.vegaSpec) {
     return null;
   }
   const colorRange = getComputedColorRange(item, toolRuntimeConfig);
