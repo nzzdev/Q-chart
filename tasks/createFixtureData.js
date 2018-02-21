@@ -1206,7 +1206,7 @@ const vegaSpecFixtures = [
 function createVegaSpec() {
   let item = vegaSpecFixtures[0];
   item.title = "FIXTURE: custom vegaSpec";
-  item.title = "subtitle";
+  item.subtitle = "subtitle";
   item.options = {};
   return item;
 }

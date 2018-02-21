@@ -87,13 +87,8 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
   const chartType = getChartTypeForItemAndWidth(item, width);
 
   let spec;
-  if (chartType) {
-    spec = await getSpec(item, width, toolRuntimeConfig);
-  } else if (item.vegaSpec) {
+  if (item.vegaSpec) {
     spec = item.vegaSpec;
-
-    // apply the styleguide config
-    spec.config = getSpecConfig(item, spec.config, toolRuntimeConfig);
 
     // the width is given in the request
     spec.width = width;
@@ -101,6 +96,8 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     // set the data from the item
     // all data transforms are part of the spec
     spec.data[0].values = clone(item.data);
+  } else if (item.chartType) {
+    spec = await getSpec(item, width, toolRuntimeConfig);
   } else {
     throw new Error("no spec");
   }
@@ -118,7 +115,6 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     }
 
     const view = new vega.View(dataflow).renderer("none").initialize();
-
     svg = await view.toSVG();
 
     // post processing

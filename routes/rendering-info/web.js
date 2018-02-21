@@ -117,10 +117,17 @@ module.exports = {
         queryParams.appendItemToPayload = request.query._id;
       }
 
-      let toolRuntimeConfigForWebSVG = {
-        axis: request.payload.toolRuntimeConfig.axis,
-        colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
-      };
+      let toolRuntimeConfigForWebSVG = {};
+
+      // we only want to send the vega spec if we need it
+      // if we will render a vegaSpec, we will not apply any config
+      // so no need to send it along here
+      if (!item.vegaSpec) {
+        toolRuntimeConfigForWebSVG = {
+          axis: request.payload.toolRuntimeConfig.axis,
+          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
+        };
+      }
 
       let requestMethod;
       let requestBodyString;
