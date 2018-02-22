@@ -96,7 +96,7 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     // set the data from the item
     // all data transforms are part of the spec
     spec.data[0].values = clone(item.data);
-  } else if (item.chartType) {
+  } else if (item.options.chartType) {
     spec = await getSpec(item, width, toolRuntimeConfig);
   } else {
     throw new Error("no spec");
@@ -155,6 +155,7 @@ module.exports = {
     const item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
     const webSvg = {
       markup: await getSvg(
         item,
