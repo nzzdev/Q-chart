@@ -111,12 +111,6 @@ module.exports = {
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
 
-      const queryParams = {};
-      // add the item id to appendItemToPayload if it's state is in the db (aka not preview)
-      if (request.payload.itemStateInDb) {
-        queryParams.appendItemToPayload = request.query._id;
-      }
-
       let toolRuntimeConfigForWebSVG = {};
 
       // we only want to send the vega spec if we need it
@@ -132,12 +126,14 @@ module.exports = {
       let requestMethod;
       let requestBodyString;
 
+      const queryParams = {};
       // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
       if (request.payload.itemStateInDb === true) {
         requestMethod = "GET";
         queryParams.toolRuntimeConfig = JSON.stringify(
           toolRuntimeConfigForWebSVG
         );
+        // add the item id to appendItemToPayload if it's state is in the db (aka not preview)
         queryParams.appendItemToPayload = request.query._id;
       } else {
         requestMethod = "POST";
