@@ -25,7 +25,7 @@ const legend = require("../../helpers/legend.js");
 function shouldUseLegacyRenderingInfo(request) {
   const item = request.payload.item;
   const chartType = getChartTypeForItemAndWidth(request.payload.item, 500);
-  if (chartType === "Bar" || chartType === "StackedBar") {
+  if (chartType === "bar" || chartType === "column") {
     return true;
   }
   return false;
