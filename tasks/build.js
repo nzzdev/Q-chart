@@ -1,22 +1,23 @@
-const fs = require('fs');
-const crypto = require('crypto');
+const fs = require("fs");
+const crypto = require("crypto");
 
-const Builder = require('systemjs-builder');
-const builder = new Builder('', 'jspm.config.js');
+const Builder = require("systemjs-builder");
+const builder = new Builder("", "jspm.config.js");
 
-const sass = require('node-sass');
-const postcss = require('postcss');
-const postcssImport = require('postcss-import');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
+const sass = require("node-sass");
+const postcss = require("postcss");
+const postcssImport = require("postcss-import");
+const autoprefixer = require("autoprefixer");
+const cssnano = require("cssnano");
 
-const createFixtureData = require('./createFixtureData.js');
+const createFixtureData = require("./createFixtureData.js");
 
-const stylesDir = __dirname + '/../styles_src/';
+const stylesDir = __dirname + "/../styles_src/";
 
 builder.config({
   map: {
-    'systemjs-babel-build': 'jspm_packages/npm/systemjs-plugin-babel@0.0.20/systemjs-babel-node.js'
+    "systemjs-babel-build":
+      "jspm_packages/npm/systemjs-plugin-babel@0.0.20/systemjs-babel-node.js"
   }
 });
 
@@ -24,13 +25,16 @@ function writeHashmap(hashmapPath, files, fileext) {
   const hashMap = {};
   files
     .map(file => {
-      const hash = crypto.createHash('md5');
-      hash.update(file.content, { encoding: 'utf8'} );
-      file.hash = hash.digest('hex');
+      const hash = crypto.createHash("md5");
+      hash.update(file.content, { encoding: "utf8" });
+      file.hash = hash.digest("hex");
       return file;
     })
     .map(file => {
-      hashMap[file.name] = `${file.name}.${file.hash.substring(0, 8)}.${fileext}`;
+      hashMap[file.name] = `${file.name}.${file.hash.substring(
+        0,
+        8
+      )}.${fileext}`;
     });
 
   fs.writeFileSync(hashmapPath, JSON.stringify(hashMap));
@@ -38,27 +42,34 @@ function writeHashmap(hashmapPath, files, fileext) {
 
 async function buildScripts() {
   return builder
-    .bundle('q-chart/chart.js', { normalize: true, runtime: false, minify: true, mangle: false })
-    .then(bundle => {
-      const fileName = 'q-chart';
-      fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
-      return [{
-        name: fileName,
-        content: bundle.source
-      }];
+    .bundle("q-chart/chart.js", {
+      normalize: true,
+      runtime: false,
+      minify: true,
+      mangle: false
     })
-    .then((files) => {
-      writeHashmap('scripts/hashMap.json', files, 'js');
+    .then(bundle => {
+      const fileName = "q-chart";
+      fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
+      return [
+        {
+          name: fileName,
+          content: bundle.source
+        }
+      ];
+    })
+    .then(files => {
+      writeHashmap("scripts/hashMap.json", files, "js");
     })
     .then(() => {
       /* eslint-disable */
-      console.log('Build complete');
+      console.log("Build complete");
       /* eslint-enable */
       process.exit(0);
     })
-    .catch((err) => {
+    .catch(err => {
       /* eslint-disable */
-      console.log('Build error', err);
+      console.log("Build error", err);
       /* eslint-enable */
       process.exit(1);
     });
@@ -67,7 +78,7 @@ async function buildScripts() {
 async function compileStylesheet(name) {
   return new Promise((resolve, reject) => {
     const filePath = stylesDir + `${name}.scss`;
-    fs.exists(filePath, (exists) => {
+    fs.exists(filePath, exists => {
       if (!exists) {
         reject(`stylesheet not found ${filePath}`);
         process.exit(1);
@@ -75,8 +86,8 @@ async function compileStylesheet(name) {
       sass.render(
         {
           file: filePath,
-          includePaths: ['jspm_packages/github/', 'jspm_packages/npm/'],
-          outputStyle: 'compressed'
+          includePaths: ["jspm_packages/github/", "jspm_packages/npm/"],
+          outputStyle: "compressed"
         },
         (err, sassResult) => {
           if (err) {
@@ -107,12 +118,12 @@ async function buildStyles() {
   // compile styles
   const styleFiles = [
     {
-      name: 'default',
-      content: await compileStylesheet('default')
+      name: "default",
+      content: await compileStylesheet("default")
     },
     {
-      name: 'q-chart',
-      content: await compileStylesheet('q-chart')
+      name: "q-chart",
+      content: await compileStylesheet("q-chart")
     }
   ];
 
@@ -120,40 +131,93 @@ async function buildStyles() {
     fs.writeFileSync(`styles/${file.name}.css`, file.content);
   });
 
-  writeHashmap('styles/hashMap.json', styleFiles, 'css');
+  writeHashmap("styles/hashMap.json", styleFiles, "css");
 }
 
 // create fixture data
 // if new fixture data is added here, they have to be added in fixture data route as well
 function buildFixtures() {
-  fs.writeFileSync('resources/fixtures/data/basicLine.json', JSON.stringify(createFixtureData.basicLineChart()));
-  fs.writeFileSync('resources/fixtures/data/lineAllCat.json', JSON.stringify(createFixtureData.lineChartAllCategories()));
-  fs.writeFileSync('resources/fixtures/data/linePrognosis.json', JSON.stringify(createFixtureData.lineChartPrognosis()));
-  fs.writeFileSync('resources/fixtures/data/lineHighlight.json', JSON.stringify(createFixtureData.lineChartHighlight()));
-  fs.writeFileSync('resources/fixtures/data/lineCustomColors.json', JSON.stringify(createFixtureData.lineChartCustomColors()));
-  fs.writeFileSync('resources/fixtures/data/lineChartMinMax.json', JSON.stringify(createFixtureData.lineChartMinMax()));
-  fs.writeFileSync('resources/fixtures/data/basicColumn.json', JSON.stringify(createFixtureData.basicColumnChart()));
-  fs.writeFileSync('resources/fixtures/data/basicBar.json', JSON.stringify(createFixtureData.basicBarChart())); 
-  fs.writeFileSync('resources/fixtures/data/mobileBar.json', JSON.stringify(createFixtureData.mobileBarChart()));
-  fs.writeFileSync('resources/fixtures/data/stackedMobileBar.json', JSON.stringify(createFixtureData.stackedMobileBarChart()));
-  fs.writeFileSync('resources/fixtures/data/transposedMobileBar.json', JSON.stringify(createFixtureData.transposedMobileBarChart()));
-  fs.writeFileSync('resources/fixtures/data/mobileBarHighlight.json', JSON.stringify(createFixtureData.mobileBarChartHighlight()));
-  fs.writeFileSync('resources/fixtures/data/columnAllYears.json', JSON.stringify(createFixtureData.columnChartAllTime()));
-  fs.writeFileSync('resources/fixtures/data/columnAllCat.json', JSON.stringify(createFixtureData.columnChartAllCat()));
-  fs.writeFileSync('resources/fixtures/data/barAll.json', JSON.stringify(createFixtureData.barChartAll()));
-  fs.writeFileSync('resources/fixtures/data/barAllYears.json', JSON.stringify(createFixtureData.barChartAllTime()));
-  fs.writeFileSync('resources/fixtures/data/barAllCat.json', JSON.stringify(createFixtureData.barChartAllCat()));
-  fs.writeFileSync('resources/fixtures/data/stackedBarAll.json', JSON.stringify(createFixtureData.stackedBarChartAll()));
+  fs.writeFileSync(
+    "resources/fixtures/data/basicLine.json",
+    JSON.stringify(createFixtureData.basicLineChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/lineAllCat.json",
+    JSON.stringify(createFixtureData.lineChartAllCategories())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/linePrognosis.json",
+    JSON.stringify(createFixtureData.lineChartPrognosis())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/lineHighlight.json",
+    JSON.stringify(createFixtureData.lineChartHighlight())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/lineCustomColors.json",
+    JSON.stringify(createFixtureData.lineChartCustomColors())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/lineChartMinMax.json",
+    JSON.stringify(createFixtureData.lineChartMinMax())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/basicColumn.json",
+    JSON.stringify(createFixtureData.basicColumnChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/basicBar.json",
+    JSON.stringify(createFixtureData.basicBarChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/mobileBar.json",
+    JSON.stringify(createFixtureData.mobileBarChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/stackedMobileBar.json",
+    JSON.stringify(createFixtureData.stackedMobileBarChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/transposedMobileBar.json",
+    JSON.stringify(createFixtureData.transposedMobileBarChart())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/mobileBarHighlight.json",
+    JSON.stringify(createFixtureData.mobileBarChartHighlight())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/columnAllYears.json",
+    JSON.stringify(createFixtureData.columnChartAllTime())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/columnAllCat.json",
+    JSON.stringify(createFixtureData.columnChartAllCat())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/barAll.json",
+    JSON.stringify(createFixtureData.barChartAll())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/barAllYears.json",
+    JSON.stringify(createFixtureData.barChartAllTime())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/barAllCat.json",
+    JSON.stringify(createFixtureData.barChartAllCat())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/stackedBarAll.json",
+    JSON.stringify(createFixtureData.stackedBarChartAll())
+  );
+  fs.writeFileSync(
+    "resources/fixtures/data/vegaSpec.json",
+    JSON.stringify(createFixtureData.vegaSpec())
+  );
 }
 
-Promise.all(
-  [
-    buildFixtures(),
-    buildScripts(),
-    buildStyles()
-  ])
+Promise.all([buildFixtures(), buildScripts(), buildStyles()])
   .then(res => {
-    console.log('build complete');
+    console.log("build complete");
   })
   .catch(err => {
     console.log(err);

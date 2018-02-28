@@ -20,13 +20,36 @@ const vegaConfig = require("../../config/vega-default.json");
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
-async function getSvg(item, width, toolRuntimeConfig, request) {
+// thats the default and might get overwritten by a prerender function of a chart type
+vega.formatLocale(d3config.formatLocale);
+
+function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
+  // add the config to the template vega spec to allow changes in the config through mappings
+  let config = deepmerge(vegaConfig, baseConfig || {});
+
+  // add the config passed in toolRuntimeConfig
+  if (toolRuntimeConfig.hasOwnProperty("axis")) {
+    config.axis = deepmerge(config.axis || {}, toolRuntimeConfig.axis);
+  }
+
+  // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
+  // item options into account (highlighting is an example of an option changing the range)
+  const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
+  if (categoryRange) {
+    config.range = {
+      category: getComputedColorRange(item, toolRuntimeConfig)
+    };
+  }
+  return config;
+}
+
+async function getSpec(item, width, toolRuntimeConfig) {
+  // first we need to know if there is a chartType and which one
+  const chartType = getChartTypeForItemAndWidth(item, width);
+
   const mappingConfig = {
     width: width
   };
-
-  // first and foremost: cast all the floats in strings to actual floats
-  item.data = getDataWithStringsCastedToFloats(item.data);
 
   // if we have a date series, we change the date values to date objects
   // and set the detected dateFormat to the mappingConfig to be used within the mapping functions
@@ -35,29 +58,13 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     item.data = dateSeries.getDataWithDateParsed(item.data);
   }
 
-  const chartType = getChartTypeForItemAndWidth(item, width);
-
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
-  // add the config to the template vega spec to allow changes in the config through mappings
-  templateSpec.config = deepmerge(vegaConfig, templateSpec.config || {});
-
-  // add the config passed in toolRuntimeConfig
-  if (toolRuntimeConfig.hasOwnProperty("axis")) {
-    templateSpec.config.axis = deepmerge(
-      templateSpec.config.axis,
-      toolRuntimeConfig.axis
-    );
-  }
-
-  // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
-  // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
-  if (categoryRange) {
-    templateSpec.config.range = {
-      category: getComputedColorRange(item, toolRuntimeConfig)
-    };
-  }
+  templateSpec.config = getSpecConfig(
+    item,
+    templateSpec.config,
+    toolRuntimeConfig
+  );
 
   // set the size to the spec
   templateSpec.width = width;
@@ -68,6 +75,31 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     spec = getSpecWithMappedItem(item, chartType, templateSpec, mappingConfig);
   } catch (err) {
     return Boom.notImplemented(err.message);
+  }
+  return spec;
+}
+
+async function getSvg(item, width, toolRuntimeConfig, request) {
+  // first and foremost: cast all the floats in strings to actual floats
+  item.data = getDataWithStringsCastedToFloats(item.data);
+
+  // first we need to know if there is a chartType and which one
+  const chartType = getChartTypeForItemAndWidth(item, width);
+
+  let spec;
+  if (item.vegaSpec) {
+    spec = item.vegaSpec;
+
+    // the width is given in the request
+    spec.width = width;
+
+    // set the data from the item
+    // all data transforms are part of the spec
+    spec.data[0].values = clone(item.data);
+  } else if (item.options.chartType) {
+    spec = await getSpec(item, width, toolRuntimeConfig);
+  } else {
+    throw new Error("no spec");
   }
 
   let svg;
@@ -83,7 +115,6 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     }
 
     const view = new vega.View(dataflow).renderer("none").initialize();
-
     svg = await view.toSVG();
 
     // post processing
@@ -124,6 +155,7 @@ module.exports = {
     const item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
     const webSvg = {
       markup: await getSvg(
         item,
