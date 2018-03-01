@@ -7,7 +7,10 @@ function getChartTypeForItemAndWidth(item, width) {
     return "line";
   }
 
-  if (item.options.chartType === "Bar") {
+  if (
+    item.options.chartType === "Bar" ||
+    item.options.chartType === "StackedBar"
+  ) {
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
