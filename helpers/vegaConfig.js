@@ -1,5 +1,10 @@
 function hasHighlight(item) {
-  return item.options.highlightDataSeries !== null && !Number.isNaN(item.options.highlightDataSeries);
+  return (
+    item.options !== undefined &&
+    item.options.highlightDataSeries !== undefined &&
+    item.options.highlightDataSeries !== null &&
+    !Number.isNaN(item.options.highlightDataSeries)
+  );
 }
 
 // this computes the color range based on the color ranges given in toolRuntimeConfig
@@ -10,7 +15,10 @@ function getComputedColorRange(item, toolRuntimeConfig) {
   // handle highlightDataSeries option
   if (hasHighlight(item)) {
     range = toolRuntimeConfig.colorSchemes.category.light;
-    range[item.options.highlightDataSeries] = toolRuntimeConfig.colorSchemes.category.default[item.options.highlightDataSeries];
+    range[item.options.highlightDataSeries] =
+      toolRuntimeConfig.colorSchemes.category.default[
+        item.options.highlightDataSeries
+      ];
   }
 
   // handle custom colors
@@ -22,7 +30,7 @@ function getComputedColorRange(item, toolRuntimeConfig) {
       }
 
       let color = colorOverwrite.color;
-      // if we have highlightDataSeries, we use bright, otherwise default color      
+      // if we have highlightDataSeries, we use bright, otherwise default color
       if (hasHighlight(item)) {
         color = colorOverwrite.colorBright;
       }

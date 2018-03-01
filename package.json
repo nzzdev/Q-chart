@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "1.4.6",
+  "version": "1.5.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",
     "svelte": "1.41.2",
-    "vega": "^3.0.8"
+    "vega": "^3.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

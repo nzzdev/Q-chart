@@ -30,6 +30,19 @@
       },
       "minItems": 1
     },
+    "vegaSpec": {
+      "title": "Vega Spezifikation",
+      "type": "object",
+      "Q:type": "json",
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "UserHasRole",
+            "role": "expert-chart"
+          }
+        ]
+      }
+    },
     "sources": {
       "title": "Quellen",
       "type": "array",
@@ -73,7 +86,14 @@
           "enum": ["Bar", "StackedBar", "Line"],
           "Q:options": {
             "selectType": "radio",
-            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien"]
+            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien"],
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/chartType"
+              }
+            ]
           },
           "default": "Bar"
         },
@@ -92,13 +112,29 @@
               "type": "ToolEndpoint",
               "withData": true,
               "endpoint": "dynamic-enum/highlightDataSeries"
-            }
+            },
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/highlightDataSeries"
+              }
+            ]
           }
         },
         "hideAxisLabel": {
           "title": "Achsenbeschriftung ausblenden",
           "type": "boolean",
-          "default": false
+          "default": false,
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/hideAxisLabel"
+              }
+            ]
+          }
         },
         "barOptions": {
           "title": "Balkendiagramm Optionen",
@@ -226,6 +262,11 @@
               {
                 "type": "UserHasRole",
                 "role": "expert-chart"
+              },
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/colorOverwrite"
               }
             ],
             "compact": true,
