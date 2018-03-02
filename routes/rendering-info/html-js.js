@@ -1,36 +1,40 @@
-const fs = require('fs');
-const Boom = require('boom');
+const fs = require("fs");
+const Boom = require("boom");
 
-const resourcesDir = __dirname + '/../../resources/';
-const helpersDir = __dirname + '/../../helpers/';
-const viewsDir = __dirname + '/../../views/';
-const scriptsDir  = __dirname + '/../../scripts/';
-const stylesDir  = __dirname + '/../../styles/';
+const resourcesDir = __dirname + "/../../resources/";
+const helpersDir = __dirname + "/../../helpers/";
+const viewsDir = __dirname + "/../../views/";
+const scriptsDir = __dirname + "/../../scripts/";
+const stylesDir = __dirname + "/../../styles/";
 
-const dataToChartistModel = require(`${helpersDir}itemTransformer.js`).dataToChartistModel;
-const optionsToLegacyModel = require(`${helpersDir}itemTransformer.js`).optionsToLegacyModel;
+const dataToChartistModel = require(`${helpersDir}itemTransformer.js`)
+  .dataToChartistModel;
+const optionsToLegacyModel = require(`${helpersDir}itemTransformer.js`)
+  .optionsToLegacyModel;
 const isDateSeries = require(`${helpersDir}dateSeries.js`).isDateSeries;
-const getFirstColumnSerie = require(`${helpersDir}dateSeries.js`).getFirstColumnSerie;
+const getFirstColumnSerie = require(`${helpersDir}dateSeries.js`)
+  .getFirstColumnSerie;
 
 const scriptHashMap = require(`${scriptsDir}/hashMap.json`);
 const styleHashMap = require(`${stylesDir}/hashMap.json`);
 
 // we use svelte to build tool specific markup
 // first register it, second define the path of our core view template
-require('svelte/ssr/register');
-const staticTemplate = require(viewsDir + 'HtmlJs.html');
-
+require("svelte/ssr/register");
+const staticTemplate = require(viewsDir + "HtmlJs.html");
 
 // POSTed item will be validated against given schema
 // hence we fetch the JSON schema...
-const schemaString = JSON.parse(fs.readFileSync(resourcesDir + 'schema.json', {
-  encoding: 'utf-8'
-}));
-const Ajv = require('ajv');
+const schemaString = JSON.parse(
+  fs.readFileSync(resourcesDir + "schema.json", {
+    encoding: "utf-8"
+  })
+);
+const Ajv = require("ajv");
 const ajv = new Ajv();
 
 // add draft-04 support explicit
-ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-04.json"));
 
 const validate = ajv.compile(schemaString);
 function validateAgainstSchema(item, options) {
@@ -42,21 +46,21 @@ function validateAgainstSchema(item, options) {
 }
 
 async function validatePayload(payload, options, next) {
-  if (typeof payload !== 'object') {
+  if (typeof payload !== "object") {
     return next(Boom.badRequest(), payload);
   }
-  if (typeof payload.item !== 'object') {
+  if (typeof payload.item !== "object") {
     return next(Boom.badRequest(), payload);
   }
-  if (typeof payload.toolRuntimeConfig !== 'object') {
+  if (typeof payload.toolRuntimeConfig !== "object") {
     return next(Boom.badRequest(), payload);
   }
   await validateAgainstSchema(payload.item, options);
 }
 
 module.exports = {
-  method: 'POST',
-  path: '/rendering-info/html-js',
+  method: "POST",
+  path: "/rendering-info/html-js",
   config: {
     validate: {
       options: {
@@ -68,8 +72,9 @@ module.exports = {
     cache: false // do not send cache control header to let it be added by Q Server
   },
   handler: function(request, h) {
-
-    const id = request.payload.toolRuntimeConfig.id || Math.floor((Math.random() * 10 ** 16));
+    const id =
+      request.payload.toolRuntimeConfig.id ||
+      Math.floor(Math.random() * 10 ** 16);
 
     // prepare the data for client side rendering
     let item = request.payload.item;
@@ -90,7 +95,7 @@ module.exports = {
     const data = {
       id: `q-chart-${id}`,
       item: request.payload.item,
-      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {} 
+      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
     };
 
     let domReadyScript = `
@@ -112,12 +117,14 @@ module.exports = {
           }
         });
       }
-    `
+    `;
 
     let systemConfigScript = `
         System.config({
           map: {
-            "q-chart/chart.js": "${request.payload.toolRuntimeConfig.toolBaseUrl}/script/${scriptHashMap['q-chart']}"
+            "q-chart/chart.js": "${
+              request.payload.toolRuntimeConfig.toolBaseUrl
+            }/script/${scriptHashMap["q-chart"]}"
           }
         });
     `;
@@ -127,7 +134,11 @@ module.exports = {
           .then(function(module) {
             window.q_domready
               .then(function() {
-                return module.display(${JSON.stringify(item)}, document.querySelector('#${data.id}'), ${JSON.stringify(request.payload.toolRuntimeConfig)});
+                return module.display(${JSON.stringify(
+                  item
+                )}, document.querySelector('#${data.id}'), ${JSON.stringify(
+      request.payload.toolRuntimeConfig
+    )});
               })
           })
           .catch(function(error) {
@@ -137,8 +148,8 @@ module.exports = {
 
     let renderingInfo = {
       loaderConfig: {
-        polyfills: ['Promise', 'Object.assign'],
-        loadSystemJs: 'full'
+        polyfills: ["Promise", "Object.assign"],
+        loadSystemJs: "full"
       },
       stylesheets: [
         {
@@ -162,7 +173,7 @@ module.exports = {
       ],
       // pass the data object to svelte render function to get markup
       markup: staticTemplate.render(data)
-    }
+    };
     return renderingInfo;
   }
-}
+};
