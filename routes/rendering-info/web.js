@@ -148,7 +148,7 @@ module.exports = {
         {
           content: `
             if (!window.q_domready) {
-              window.q_domready = new Promise((resolve) => {
+              window.q_domready = new Promise(function(resolve) {
                 if (document.readyState && (document.readyState === 'interactive' || document.readyState === 'complete')) {
                   resolve();
                 } else {
@@ -197,13 +197,15 @@ module.exports = {
               ${functionName}();
             });
             window.addEventListener('resize', function() {
-              requestAnimationFrame(function() {
-                var newWidth = ${dataObject}.element.getBoundingClientRect().width;
-                if (newWidth !== ${dataObject}.width) {
-                  ${dataObject}.width = newWidth;
-                  ${functionName}();
-                }
-              });
+              if (requestAnimationFrame) {
+                requestAnimationFrame(function() {
+                  var newWidth = ${dataObject}.element.getBoundingClientRect().width;
+                  if (newWidth !== ${dataObject}.width) {
+                    ${dataObject}.width = newWidth;
+                    ${functionName}();
+                  }
+                });
+              }
             });
           `
         }
