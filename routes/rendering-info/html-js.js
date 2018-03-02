@@ -100,7 +100,7 @@ module.exports = {
 
     let domReadyScript = `
       if (!window.q_domready) {
-        window.q_domready = new Promise((resolve) => {
+        window.q_domready = new Promise(function(resolve) {
           if (document.readyState && (document.readyState === 'interactive' || document.readyState === 'complete')) {
             resolve();
           } else {
@@ -109,7 +109,7 @@ module.exports = {
               document.removeEventListener('DOMContentLoaded', onReady, true);
             }
             document.addEventListener('DOMContentLoaded', onReady, true);
-            document.onreadystatechange = () => {
+            document.onreadystatechange = function() {
               if (document.readyState === "interactive") {
                 resolve();
               }
