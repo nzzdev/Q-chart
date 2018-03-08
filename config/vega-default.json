@@ -12,6 +12,7 @@
     }
   },
   "axis": {
-    "titleFontWeight": 100
+    "titleFontWeight": 100,
+    "labelPadding": 8
   }
 }

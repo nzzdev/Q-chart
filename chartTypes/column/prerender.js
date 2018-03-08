@@ -11,22 +11,19 @@ module.exports = function(item, toolRuntimeConfig, spec, vega) {
   try {
     const divisor = dataHelpers.getDivisor(item.data);
 
-    const minDataValue =
+    const minValue =
       spec.scales[1].maxValue ||
       dataHelpers
         .getFlatData(item.data)
         .sort((a, b) => b - a)
         .pop();
 
-    const maxDataValue =
+    const maxValue =
       spec.scales[1].maxValue ||
       dataHelpers
         .getFlatData(item.data)
         .sort((a, b) => a - b)
         .pop();
-
-    const minValue = spec.scales[1].minValue || minDataValue;
-    const maxValue = spec.scales[1].maxValue || maxDataValue;
 
     // at NZZ we only group if we have 5 digits numbers
     const needsGrouping = d3.array

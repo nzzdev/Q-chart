@@ -1,33 +1,66 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-  "height": 300,
-  "autosize": {
-    "type": "fit"
-  },
+  "height": 450,
+  "signals": [
+    {
+      "name": "const___compactBarWidth",
+      "value": 28
+    },
+    {
+      "name": "const___maxBarWidth",
+      "value": 44
+    },
+    {
+      "name": "const___maxBarGroupWidth",
+      "value": 220
+    },
+    {
+      "name": "columnMargin",
+      "value": 1
+    },
+    {
+      "name": "groupMargin",
+      "update": "const___compactBarWidth / 2"
+    },
+    {
+      "name": "numberOfColumns",
+      "value": null
+    },
+    {
+      "name": "groupMarginTotal",
+      "update": "(groupMargin * numberOfColumns) / (numberOfColumns > 1 ? numberOfColumns - 1 : 1)"
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": []
+    }
+  ],
   "scales": [
     {
       "name": "xScale",
       "type": "band",
       "range": "width",
-      "padding": 0.5,
       "domain": {
         "data": "table",
         "field": "xValue"
-      }
+      },
+      "padding": 0
     },
     {
       "name": "yScale",
       "type": "linear",
       "range": "height",
-      "nice": true,
-      "zero": true,
       "domain": {
         "data": "table",
         "field": "yValue"
-      }
+      },
+      "nice": true,
+      "zero": true
     },
     {
-      "name": "color",
+      "name": "colorScale",
       "type": "ordinal",
       "range": "category",
       "domain": {
@@ -36,84 +69,133 @@
       }
     }
   ],
-  "axes": [
-    {
-      "orient": "bottom",
-      "scale": "xScale"
-    },
-    {
-      "orient": "left",
-      "scale": "yScale",
-      "grid": true
-    }
-  ],
   "marks": [
     {
       "type": "group",
-      "from": {
-        "facet": {
-          "name": "series",
-          "data": "table",
-          "groupby": "xValue"
-        }
-      },
+      "name": "wrapper-group",
       "encode": {
-        "enter": {
-          "x": {
-            "scale": "xScale",
-            "field": "xValue"
+        "update": {
+          "width": {
+            "signal": "width"
+          },
+          "height": {
+            "signal": "height"
           }
         }
       },
-      "signals": [
-        {
-          "name": "width",
-          "update": "bandwidth('xScale')"
-        }
-      ],
-      "scales": [
-        {
-          "name": "pos",
-          "type": "band",
-          "range": "width",
-          "domain": {
-            "data": "series",
-            "field": "cValue"
-          }
-        }
-      ],
       "marks": [
         {
-          "type": "rect",
+          "type": "group",
           "from": {
-            "data": "series"
+            "facet": {
+              "name": "series",
+              "data": "table",
+              "groupby": "xValue"
+            }
           },
           "encode": {
-            "enter": {
+            "update": {
               "x": {
-                "scale": "pos",
-                "field": "cValue"
-              },
-              "width": {
-                "scale": "pos",
-                "band": 1
-              },
-              "y": {
-                "scale": "yScale",
-                "field": "yValue"
-              },
-              "y2": {
-                "scale": "yScale",
-                "value": 0
-              },
-              "fill": {
-                "scale": "color",
-                "field": "cValue"
+                "scale": "xScale",
+                "field": "xValue"
               }
             }
-          }
+          },
+          "signals": [
+            {
+              "name": "columnWidth",
+              "update": "min((bandwidth('xScale') - groupMargin) / numberOfColumns, const___maxBarGroupWidth / numberOfColumns, const___maxBarWidth)"
+            },
+            {
+              "name": "width",
+              "update": "(columnWidth + columnMargin) * numberOfColumns + groupMargin - groupMarginTotal"
+            },
+            {
+              "name": "marginLeft",
+              "update": "(bandwidth('xScale') - width) / 2"
+            }
+          ],
+          "scales": [
+            {
+              "name": "barPositionScale",
+              "type": "band",
+              "range": "width",
+              "paddingInner": 0,
+              "paddingOuter": 0,
+              "domain": {
+                "data": "series",
+                "field": "yValue"
+              }
+            }
+          ],
+          "marks": [
+            {
+              "type": "rect",
+              "name": "bar",
+              "from": {
+                "data": "series"
+              },
+              "encode": {
+                "update": {
+                  "x": {
+                    "signal": "marginLeft + scale('barPositionScale', datum.yValue)"
+                  },
+                  "y": {
+                    "scale": "yScale",
+                    "field": "yValue"
+                  },
+                  "y2": {
+                    "scale": "yScale",
+                    "value": 0
+                  },
+                  "width": {
+                    "signal": "bandwidth('barPositionScale') - columnMargin"
+                  },
+                  "fill": {
+                    "scale": "colorScale",
+                    "signal": "datum.cValue"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "xScale",
+          "grid": false,
+          "domain": true,
+          "ticks": false,
+          "offset": 0
+        },
+        {
+          "orient": "left",
+          "scale": "yScale",
+          "domain": false,
+          "grid": true
         }
       ]
     }
-  ]
+  ],
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "axis": {
+      "bandPosition": 0,
+      "padding": 0.4,
+      "zero": true,
+      "grid": true,
+      "gridColor": "#e9e9ee",
+      "labels": true,
+      "labelAngle": 0,
+      "labelBound": false,
+      "labelFlush": false,
+      "labelFlushOffset": false,
+      "ticks": true
+    }
+  }
 }
