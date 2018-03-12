@@ -1,0 +1,148 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "height": 450,
+  "signals": [
+    {
+      "name": "const___compactBarWidth",
+      "value": 28
+    },
+    {
+      "name": "const___maxBarWidth",
+      "value": 44
+    },
+    {
+      "name": "const___maxBarGroupWidth",
+      "value": 220
+    },
+    {
+      "name": "columnMargin",
+      "value": 1
+    },
+    {
+      "name": "groupMargin",
+      "update": "const___compactBarWidth / 2"
+    },
+    {
+      "name": "numberOfColumns",
+      "value": null
+    },
+    {
+      "name": "groupMarginTotal",
+      "update": "(groupMargin * numberOfColumns) / (numberOfColumns > 1 ? numberOfColumns - 1 : 1)"
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [],
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": ["xValue"],
+          "sort": {
+            "field": "cValue"
+          },
+          "field": "yValue",
+          "as": ["startY", "endY"]
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "xScale",
+      "type": "band",
+      "range": "width",
+      "domain": {
+        "data": "table",
+        "field": "xValue"
+      },
+      "padding": 0
+    },
+    {
+      "name": "yScale",
+      "type": "linear",
+      "range": "height",
+      "domain": {
+        "data": "table",
+        "field": "endY"
+      },
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "colorScale",
+      "type": "ordinal",
+      "range": "category",
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": {
+        "data": "table"
+      },
+      "encode": {
+        "enter": {
+          "xc": {
+            "signal": "scale('xScale', datum.xValue) + bandwidth('xScale')/2"
+          },
+          "width": {
+            "signal": "min(bandwidth('xScale'), const___maxBarWidth)"
+          },
+          "y": {
+            "scale": "yScale",
+            "field": "startY"
+          },
+          "y2": {
+            "scale": "yScale",
+            "field": "endY"
+          },
+          "fill": {
+            "scale": "colorScale",
+            "signal": "datum.cValue"
+          }
+        }
+      }
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xScale",
+      "grid": false,
+      "domain": true,
+      "ticks": false,
+      "labelOverlap": false
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": false,
+      "grid": true
+    }
+  ],
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "axis": {
+      "bandPosition": 0,
+      "padding": 0.4,
+      "zero": true,
+      "grid": true,
+      "gridColor": "#e9e9ee",
+      "labels": true,
+      "labelAngle": 0,
+      "labelBound": false,
+      "labelFlush": false,
+      "labelFlushOffset": false,
+      "ticks": true
+    }
+  }
+}

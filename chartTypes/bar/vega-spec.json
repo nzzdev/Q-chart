@@ -1,167 +1,275 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-  "config": {
-    "axis": {
-      "labelLimit": 100,
-      "labelOverlap": false
+  "signals": [
+    {
+      "name": "numberOfDataSeries",
+      "value": 3
+    },
+    {
+      "name": "labelHeight",
+      "value": 0
+    },
+    {
+      "name": "barWidth",
+      "value": 30
+    },
+    {
+      "name": "groupHeight",
+      "update": "(barWidth * numberOfDataSeries) + labelHeight"
+    },
+    {
+      "name": "debugView",
+      "value": false
     }
-  },
-  "autosize": {
-    "type": "fit"
-  },
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {
+          "xValue": "Land A Unglaublich langer Ländername",
+          "xIndex": 0,
+          "yValue": 369,
+          "cValue": 0
+        },
+        {
+          "xValue": "Land B Unglaublich langer Ländername",
+          "xIndex": 1,
+          "yValue": 2343,
+          "cValue": 0
+        },
+        {
+          "xValue": "Land A Unglaublich langer Ländername",
+          "xIndex": 0,
+          "yValue": 457,
+          "cValue": 1
+        },
+        {
+          "xValue": "Land B Unglaublich langer Ländername",
+          "xIndex": 1,
+          "yValue": 321,
+          "cValue": 1
+        },{
+          "xValue": "Land A Unglaublich langer Ländername",
+          "xIndex": 0,
+          "yValue": 457,
+          "cValue": 2
+        },
+        {
+          "xValue": "Land B Unglaublich langer Ländername",
+          "xIndex": 1,
+          "yValue": 321,
+          "cValue": 2
+        }
+      ]
+    }
+  ],
   "scales": [
     {
       "name": "xScale",
       "type": "linear",
       "range": "width",
-      "nice": true,
-      "zero": true,
       "domain": {
-        "data": "table", 
-        "field": "xValue"
-      }
+        "data": "table",
+        "field": "yValue"
+      },
+      "nice": true,
+      "zero": true
     },
     {
       "name": "yScale",
       "type": "band",
-      "range": "height",
-      "paddingInner": 0.2,
+      "range": {
+        "step": {
+          "signal": "groupHeight"
+        }
+      },
       "domain": {
-        "data": "table", 
-        "field": "yValue"
-      }
+        "data": "table",
+        "field": "xValue"
+      },
+      "paddingInner": 0,
+      "paddingOuter": 0
     },
     {
-      "name": "color",
+      "name": "colorScale",
       "type": "ordinal",
       "range": "category",
       "domain": {
-        "data": "table", 
+        "data": "table",
         "field": "cValue"
-      }
-    }
-  ],
-  "axes": [
-    {
-      "orient": "top", 
-      "scale": "xScale", 
-      "domain": false,
-      "grid": true,
-      "labelOverlap": "parity",
-      "labelFlush": true,
-      "ticks": true,
-      "encode": {
-        "title": {
-          "update": {
-            "align": {
-              "value": "right"
-            },
-            "baseline": {
-              "value": "bottom"
-            },
-            "x": {
-              "signal": "width"
-            },
-            "y": {
-              "value": -30
-            }
-          }
-        }
-      }
-    },
-    {
-      "orient": "left",
-      "scale": "yScale",
-      "domain": false,
-      "labelPadding": 5,
-      "ticks": false,
-      "encode": {
-        "title": {
-          "update": {
-            "align": {
-                "value": "left"
-            },
-            "baseline": {
-                "value": "bottom"
-            },
-            "x": {
-                "value": -40
-            },
-            "y": {
-                "value": -10
-            }
-          }
-        }
       }
     }
   ],
   "marks": [
     {
       "type": "group",
+      "name": "blocks",
       "from": {
-        "facet":{
+        "facet": {
           "name": "series",
-          "data": "table", 
-          "groupby": "yValue"  
+          "data": "table",
+          "groupby": "xValue"
         }
       },
       "encode": {
         "enter": {
           "y": {
-            "scale": "yScale", 
-            "field": "yValue"
-          }
+            "signal": "scale('yScale', datum.xValue)"
+          },
+          "x": [
+            {
+              "test": "debugView === true",
+              "value": -10
+            },
+            {
+              "value": 0
+            }
+          ],
+          "width": {
+            "value": 20
+          },
+          "height": {
+            "signal": "bandwidth('yScale')"
+          },
+          "fill": [
+            {
+              "test": "debugView === true",
+              "value": "red"
+            },
+            {
+              "value": null
+            }
+          ]
         }
       },
       "signals": [
         {
-          "name": "height", 
-          "update": "bandwidth('yScale')"
-        }
-      ],
-      "scales": [
-        {
-          "name": "groupScale",
-          "type": "band",
-          "range": "height",
-          "domain": {
-            "data": "series", 
-            "field": "cValue"
-          }
+          "name": "height",
+          "update": "bandwidth('yScale') - labelHeight"
         }
       ],
       "marks": [
         {
-          "type": "rect",
-          "name": "bars",
-          "from": {
-            "data":"series"
-          },
+          "type": "group",
           "encode": {
             "enter": {
               "y": {
-                "scale": "groupScale", 
-                "field": "cValue"
+                "signal": "labelHeight"
+              },
+              "x": [
+                {
+                  "test": "debugView === true",
+                  "value": 5
+                },
+                {
+                  "value": 0
+                }
+              ],
+              "width": {
+                "signal": "width"
               },
               "height": {
-                "signal": "bandwidth('groupScale')"
+                "signal": "height"
               },
-              "x": {
-                "scale": "xScale", 
-                "field": "xValue"
-              },
-              "x2": {
-                "scale": "xScale", 
-                "value": 0
-              },
-              "fill":{
-                "scale": "color", 
+              "fill": [
+                {
+                  "test": "debugView === true",
+                  "value": "purple"
+                },
+                {
+                  "value": null
+                }
+              ]
+            }
+          },
+          "scales": [
+            {
+              "name": "barPositionBand",
+              "type": "band",
+              "range": "height",
+              "domain": {
+                "data": "series",
                 "field": "cValue"
+              },
+              "paddingInner": {
+                "signal": "2 / height * (numberOfDataSeries - 1)" 
+              },
+              "paddingOuter": 0
+            }
+          ],
+          "data": [
+            {
+              "name": "xValues",
+              "source": "series",
+              "transform": [
+                {
+                  "type": "aggregate",
+                  "groupby": ["xValue"]
+                }
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "type": "rect",
+              "name": "bar",
+              "from": {
+                "data": "series"
+              },
+              "encode": {
+                "enter": {
+                  "y": {
+                    "scale": "barPositionBand",
+                    "field": "cValue"
+                  },
+                  "height": {
+                    "signal": "bandwidth('barPositionBand')"
+                  },
+                  "x": {
+                    "scale": "xScale",
+                    "field": "yValue"
+                  },
+                  "x2": [
+                    {
+                      "test": "debugView === true",
+                      "value": 10
+                    },
+                    {
+                      "value": 0
+                    }
+                  ],
+                  "fill": {
+                    "scale": "colorScale",
+                    "field": "cValue"
+                  }
+                }
               }
             }
-          }
+          ]
         }
       ]
     }
-  ]
+  ],
+  "axes": [
+    {
+      "orient": "top",
+      "scale": "xScale",
+      "domain": false,
+      "ticks": true
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": true,
+      "grid": false,
+      "labels": true,
+      "ticks": false
+    }
+  ],
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "config": {},
+  "width": 629
 }

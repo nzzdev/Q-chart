@@ -23,12 +23,12 @@
       "update": "const___compactBarWidth / 2"
     },
     {
-      "name": "numberOfColumns",
-      "value": null
+      "name": "groupMarginTotal",
+      "update": "(groupMargin * numberOfDataSeries) / (numberOfDataSeries > 1 ? numberOfDataSeries - 1 : 1)"
     },
     {
-      "name": "groupMarginTotal",
-      "update": "(groupMargin * numberOfColumns) / (numberOfColumns > 1 ? numberOfColumns - 1 : 1)"
+      "name": "numberOfDataSeries",
+      "value": null
     }
   ],
   "data": [
@@ -72,111 +72,94 @@
   "marks": [
     {
       "type": "group",
-      "name": "wrapper-group",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "table",
+          "groupby": "xValue"
+        }
+      },
       "encode": {
         "update": {
-          "width": {
-            "signal": "width"
-          },
-          "height": {
-            "signal": "height"
+          "x": {
+            "scale": "xScale",
+            "field": "xValue"
           }
         }
       },
+      "signals": [
+        {
+          "name": "columnWidth",
+          "update": "min((bandwidth('xScale') - groupMargin) / numberOfDataSeries, const___maxBarGroupWidth / numberOfDataSeries, const___maxBarWidth)"
+        },
+        {
+          "name": "width",
+          "update": "(columnWidth + columnMargin) * numberOfDataSeries + groupMargin - groupMarginTotal"
+        },
+        {
+          "name": "marginLeft",
+          "update": "(bandwidth('xScale') - width) / 2"
+        }
+      ],
+      "scales": [
+        {
+          "name": "barPositionScale",
+          "type": "band",
+          "range": "width",
+          "paddingInner": 0,
+          "paddingOuter": 0,
+          "domain": {
+            "data": "series",
+            "field": "yValue"
+          }
+        }
+      ],
       "marks": [
         {
-          "type": "group",
+          "type": "rect",
+          "name": "bar",
           "from": {
-            "facet": {
-              "name": "series",
-              "data": "table",
-              "groupby": "xValue"
-            }
+            "data": "series"
           },
           "encode": {
             "update": {
               "x": {
-                "scale": "xScale",
-                "field": "xValue"
-              }
-            }
-          },
-          "signals": [
-            {
-              "name": "columnWidth",
-              "update": "min((bandwidth('xScale') - groupMargin) / numberOfColumns, const___maxBarGroupWidth / numberOfColumns, const___maxBarWidth)"
-            },
-            {
-              "name": "width",
-              "update": "(columnWidth + columnMargin) * numberOfColumns + groupMargin - groupMarginTotal"
-            },
-            {
-              "name": "marginLeft",
-              "update": "(bandwidth('xScale') - width) / 2"
-            }
-          ],
-          "scales": [
-            {
-              "name": "barPositionScale",
-              "type": "band",
-              "range": "width",
-              "paddingInner": 0,
-              "paddingOuter": 0,
-              "domain": {
-                "data": "series",
-                "field": "yValue"
-              }
-            }
-          ],
-          "marks": [
-            {
-              "type": "rect",
-              "name": "bar",
-              "from": {
-                "data": "series"
+                "signal": "marginLeft + scale('barPositionScale', datum.yValue)"
               },
-              "encode": {
-                "update": {
-                  "x": {
-                    "signal": "marginLeft + scale('barPositionScale', datum.yValue)"
-                  },
-                  "y": {
-                    "scale": "yScale",
-                    "field": "yValue"
-                  },
-                  "y2": {
-                    "scale": "yScale",
-                    "value": 0
-                  },
-                  "width": {
-                    "signal": "bandwidth('barPositionScale') - columnMargin"
-                  },
-                  "fill": {
-                    "scale": "colorScale",
-                    "signal": "datum.cValue"
-                  }
-                }
+              "y": {
+                "scale": "yScale",
+                "field": "yValue"
+              },
+              "y2": {
+                "scale": "yScale",
+                "value": 0
+              },
+              "width": {
+                "signal": "bandwidth('barPositionScale') - columnMargin"
+              },
+              "fill": {
+                "scale": "colorScale",
+                "signal": "datum.cValue"
               }
             }
-          ]
-        }
-      ],
-      "axes": [
-        {
-          "orient": "bottom",
-          "scale": "xScale",
-          "grid": false,
-          "domain": true,
-          "ticks": false,
-          "offset": 0
-        },
-        {
-          "orient": "left",
-          "scale": "yScale",
-          "domain": false,
-          "grid": true
+          }
         }
       ]
+    }
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xScale",
+      "grid": false,
+      "domain": true,
+      "ticks": false
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": false,
+      "grid": true
     }
   ],
   "autosize": {
@@ -189,9 +172,7 @@
       "padding": 0.4,
       "zero": true,
       "grid": true,
-      "gridColor": "#e9e9ee",
       "labels": true,
-      "labelAngle": 0,
       "labelBound": false,
       "labelFlush": false,
       "labelFlushOffset": false,

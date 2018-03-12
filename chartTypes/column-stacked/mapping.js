@@ -8,6 +8,8 @@ module.exports = function getMapping(config = {}) {
     {
       path: "data",
       mapToSpec: function(itemData, spec) {
+        // spec.data[0].values = itemData;
+
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
@@ -34,10 +36,10 @@ module.exports = function getMapping(config = {}) {
             return acc.concat(cur);
           }, []);
 
-        const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
+        const numberOfColumnsSignal = spec.signals.find(
+          signal => signal.name === "numberOfColumns"
         );
-        numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
+        numberOfColumnsSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     }
   ];
