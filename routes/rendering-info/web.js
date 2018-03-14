@@ -25,7 +25,12 @@ const legend = require("../../helpers/legend.js");
 function shouldUseLegacyRenderingInfo(request) {
   const item = request.payload.item;
   const chartType = getChartTypeForItemAndWidth(request.payload.item, 500);
-  if (chartType === "bar") {
+  if (
+    chartType !== "line" &&
+    item.options.dateSeriesOptions.prognosisStart !== null &&
+    item.options.dateSeriesOptions.prognosisStart !== undefined &&
+    !Number.isNaN(item.options.dateSeriesOptions.prognosisStart)
+  ) {
     return true;
   }
   return false;
@@ -119,6 +124,7 @@ module.exports = {
       if (!item.vegaSpec) {
         toolRuntimeConfigForWebSVG = {
           axis: request.payload.toolRuntimeConfig.axis,
+          text: request.payload.toolRuntimeConfig.text,
           colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
         };
       }
