@@ -2,7 +2,7 @@
   "signals": [
     {
       "name": "numberOfDataSeries",
-      "value": 3
+      "value": 0
     },
     {
       "name": "labelHeight",
@@ -10,7 +10,7 @@
     },
     {
       "name": "barWidth",
-      "value": 30
+      "value": 24
     },
     {
       "name": "groupHeight",
@@ -24,43 +24,7 @@
   "data": [
     {
       "name": "table",
-      "values": [
-        {
-          "xValue": "Land A Unglaublich langer Ländername",
-          "xIndex": 0,
-          "yValue": 369,
-          "cValue": 0
-        },
-        {
-          "xValue": "Land B Unglaublich langer Ländername",
-          "xIndex": 1,
-          "yValue": 2343,
-          "cValue": 0
-        },
-        {
-          "xValue": "Land A Unglaublich langer Ländername",
-          "xIndex": 0,
-          "yValue": 457,
-          "cValue": 1
-        },
-        {
-          "xValue": "Land B Unglaublich langer Ländername",
-          "xIndex": 1,
-          "yValue": 321,
-          "cValue": 1
-        },{
-          "xValue": "Land A Unglaublich langer Ländername",
-          "xIndex": 0,
-          "yValue": 457,
-          "cValue": 2
-        },
-        {
-          "xValue": "Land B Unglaublich langer Ländername",
-          "xIndex": 1,
-          "yValue": 321,
-          "cValue": 2
-        }
-      ]
+      "values": []
     }
   ],
   "scales": [
@@ -87,7 +51,9 @@
         "data": "table",
         "field": "xValue"
       },
-      "paddingInner": 0,
+      "paddingInner": {
+        "signal": "16 / groupHeight" 
+      },
       "paddingOuter": 0
     },
     {
@@ -170,16 +136,8 @@
               },
               "height": {
                 "signal": "height"
-              },
-              "fill": [
-                {
-                  "test": "debugView === true",
-                  "value": "purple"
-                },
-                {
-                  "value": null
-                }
-              ]
+              }
+              
             }
           },
           "scales": [
@@ -255,12 +213,13 @@
       "orient": "top",
       "scale": "xScale",
       "domain": false,
+      "grid": true,
       "ticks": true
     },
     {
       "orient": "left",
       "scale": "yScale",
-      "domain": true,
+      "domain": false,
       "grid": false,
       "labels": true,
       "ticks": false
@@ -270,6 +229,8 @@
     "type": "fit-x",
     "contains": "padding"
   },
-  "config": {},
+  "config": {
+    
+  },
   "width": 629
 }

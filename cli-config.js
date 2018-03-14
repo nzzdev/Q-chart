@@ -100,7 +100,7 @@ async function getAxisConfig(target) {
     domainColor: sophieColorVars.general["s-color-gray-3"],
     tickColor: sophieColorVars.general["s-color-gray-3"],
     labelFont: fontFamilyPerTarget[target],
-    labelColor: sophieColorVars.general["s-color-gray-7"],
+    labelColor: sophieColorVars.general["s-color-gray-8"],
     labelFontSize: 11,
     labelFontWeight: 100,
     ticks: true,
@@ -111,14 +111,27 @@ async function getAxisConfig(target) {
     tickWidth: 1,
     titleFont: fontFamilyPerTarget[target],
     titleFontSize: 11,
-    titleColor: sophieColorVars.general["s-color-gray-7"],
+    titleColor: sophieColorVars.general["s-color-gray-8"],
     titleFontWeight: 100
+  };
+}
+
+async function getTextConfig(target) {
+  const sophieVars = await loadSophieModules(target);
+  const sophieColorVars = sophieVars[sophieModulesPerTarget[target].color.name];
+
+  return {
+    fontSize: 11,
+    fontWeight: 100,
+    fill: sophieColorVars.general["s-color-gray-8"],
+    font: fontFamilyPerTarget[target]
   };
 }
 
 async function getConfig() {
   const nzz_ch_colorSchemes = await getColorSchemes("nzz_ch");
   const nzz_ch_axisConfig = await getAxisConfig("nzz_ch");
+  const nzz_ch_textConfig = await getTextConfig("nzz_ch");
 
   return {
     nzz_ch: {
@@ -143,6 +156,7 @@ async function getConfig() {
       },
       toolRuntimeConfig: {
         axis: nzz_ch_axisConfig,
+        text: nzz_ch_textConfig,
         colorSchemes: nzz_ch_colorSchemes
       }
     }

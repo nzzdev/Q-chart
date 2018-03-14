@@ -39,7 +39,7 @@
   margin-right: 4px;
 }
 
-.q-chart__legend--bar .q-chart__legend__item__box {
+.q-chart__legend--bar .q-chart__legend__item__box, .q-chart__legend--stackedbar .q-chart__legend__item__box {
   width: 10px;
   height: 10px;
   border-radius: 50%;

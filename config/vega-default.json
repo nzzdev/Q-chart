@@ -1,8 +1,6 @@
 {
   "text": {
-    "font": "sans-serif",
-    "fill": "#05032d",
-    "fontSize": 13,
+    "fontSize": 11,
     "fontWeight": 100
   },
   "style": {

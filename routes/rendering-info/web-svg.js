@@ -32,6 +32,11 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.axis = deepmerge(config.axis || {}, toolRuntimeConfig.axis);
   }
 
+  // add the config passed in toolRuntimeConfig
+  if (toolRuntimeConfig.hasOwnProperty("text")) {
+    config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
+  }
+
   // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
   // item options into account (highlighting is an example of an option changing the range)
   const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
@@ -115,6 +120,7 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     }
 
     const view = new vega.View(dataflow).renderer("none").initialize();
+    view.logLevel(vega.Warn);
     svg = await view.toSVG();
 
     // post processing
@@ -125,6 +131,7 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
       // we probably do not have postprocessing for this chartType
     }
   } catch (err) {
+    debugger;
     request.server.log(["error"], err);
     return err;
   }
