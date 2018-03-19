@@ -1,6 +1,10 @@
 {
   "signals": [
     {
+      "name": "height",
+      "update": "span(range('yScale'))"
+    },
+    {
       "name": "numberOfDataSeries",
       "value": 0
     },
@@ -80,7 +84,8 @@
       "encode": {
         "enter": {
           "y": {
-            "signal": "scale('yScale', datum.xValue)"
+            "scale": "yScale",
+            "field": "xValue"
           },
           "x": [
             {

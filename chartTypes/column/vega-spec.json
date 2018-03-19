@@ -3,32 +3,16 @@
   "height": 450,
   "signals": [
     {
-      "name": "const___compactBarWidth",
-      "value": 28
-    },
-    {
-      "name": "const___maxBarWidth",
-      "value": 44
-    },
-    {
-      "name": "const___maxBarGroupWidth",
-      "value": 220
-    },
-    {
       "name": "columnMargin",
       "value": 1
     },
     {
-      "name": "groupMargin",
-      "update": "const___compactBarWidth / 2"
-    },
-    {
-      "name": "groupMarginTotal",
-      "update": "(groupMargin * numberOfDataSeries) / (numberOfDataSeries > 1 ? numberOfDataSeries - 1 : 1)"
+      "name": "minGroupMargin",
+      "value": 4
     },
     {
       "name": "numberOfDataSeries",
-      "value": null
+      "value": 0
     }
   ],
   "data": [
@@ -90,14 +74,18 @@
       "signals": [
         {
           "name": "columnWidth",
-          "update": "min((bandwidth('xScale') - groupMargin) / numberOfDataSeries, const___maxBarGroupWidth / numberOfDataSeries, const___maxBarWidth)"
+          "update": "bandwidth('xScale') / numberOfDataSeries"
+        },
+        {
+          "name": "binnedColumnWidth",
+          "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
         },
         {
           "name": "width",
-          "update": "(columnWidth + columnMargin) * numberOfDataSeries + groupMargin - groupMarginTotal"
+          "update": "binnedColumnWidth * numberOfDataSeries"
         },
         {
-          "name": "marginLeft",
+          "name": "groupMargin",
           "update": "(bandwidth('xScale') - width) / 2"
         }
       ],
@@ -124,7 +112,7 @@
           "encode": {
             "update": {
               "x": {
-                "signal": "marginLeft + scale('barPositionScale', datum.yValue)"
+                "signal": "groupMargin + scale('barPositionScale', datum.yValue)"
               },
               "y": {
                 "scale": "yScale",
@@ -166,17 +154,6 @@
     "type": "fit",
     "contains": "padding"
   },
-  "config": {
-    "axis": {
-      "bandPosition": 0,
-      "padding": 0.4,
-      "zero": true,
-      "grid": true,
-      "labels": true,
-      "labelBound": false,
-      "labelFlush": false,
-      "labelFlushOffset": false,
-      "ticks": true
-    }
-  }
+  "config": {},
+  "width": 728
 }

@@ -3,32 +3,24 @@
   "height": 450,
   "signals": [
     {
-      "name": "const___compactBarWidth",
-      "value": 28
-    },
-    {
-      "name": "const___maxBarWidth",
-      "value": 44
-    },
-    {
-      "name": "const___maxBarGroupWidth",
-      "value": 220
-    },
-    {
       "name": "columnMargin",
       "value": 1
     },
     {
-      "name": "groupMargin",
-      "update": "const___compactBarWidth / 2"
+      "name": "minGroupMargin",
+      "value": 4
     },
     {
-      "name": "numberOfColumns",
+      "name": "numberOfDataSeries",
       "value": null
     },
     {
-      "name": "groupMarginTotal",
-      "update": "(groupMargin * numberOfColumns) / (numberOfColumns > 1 ? numberOfColumns - 1 : 1)"
+      "name": "columnWidth",
+      "update": "bandwidth('xScale')"
+    },
+    {
+      "name": "binnedColumnWidth",
+      "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
     }
   ],
   "data": [
@@ -92,7 +84,7 @@
             "signal": "scale('xScale', datum.xValue) + bandwidth('xScale')/2"
           },
           "width": {
-            "signal": "min(bandwidth('xScale'), const___maxBarWidth)"
+            "signal": "binnedColumnWidth"
           },
           "y": {
             "scale": "yScale",

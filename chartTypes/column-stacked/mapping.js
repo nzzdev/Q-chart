@@ -36,10 +36,10 @@ module.exports = function getMapping(config = {}) {
             return acc.concat(cur);
           }, []);
 
-        const numberOfColumnsSignal = spec.signals.find(
-          signal => signal.name === "numberOfColumns"
+        const numberOfDataSeriesSignal = spec.signals.find(
+          signal => signal.name === "numberOfDataSeries"
         );
-        numberOfColumnsSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
+        numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     }
   ];
