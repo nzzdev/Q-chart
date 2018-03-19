@@ -27,6 +27,7 @@ function shouldUseLegacyRenderingInfo(request) {
   const chartType = getChartTypeForItemAndWidth(request.payload.item, 500);
   if (
     chartType !== "line" &&
+    item.options.dateSeriesOptions &&
     item.options.dateSeriesOptions.prognosisStart !== null &&
     item.options.dateSeriesOptions.prognosisStart !== undefined &&
     !Number.isNaN(item.options.dateSeriesOptions.prognosisStart)
