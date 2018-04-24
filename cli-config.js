@@ -100,7 +100,7 @@ async function getAxisConfig(target) {
     domainColor: sophieColorVars.general["s-color-gray-3"],
     tickColor: sophieColorVars.general["s-color-gray-3"],
     labelFont: fontFamilyPerTarget[target],
-    labelColor: sophieColorVars.general["s-color-gray-8"],
+    labelColor: sophieColorVars.general["s-color-gray-9"],
     labelFontSize: 11,
     labelFontWeight: 100,
     ticks: true,
@@ -111,7 +111,7 @@ async function getAxisConfig(target) {
     tickWidth: 1,
     titleFont: fontFamilyPerTarget[target],
     titleFontSize: 11,
-    titleColor: sophieColorVars.general["s-color-gray-8"],
+    titleColor: sophieColorVars.general["s-color-gray-9"],
     titleFontWeight: 100
   };
 }
@@ -123,7 +123,7 @@ async function getTextConfig(target) {
   return {
     fontSize: 11,
     fontWeight: 100,
-    fill: sophieColorVars.general["s-color-gray-8"],
+    fill: sophieColorVars.general["s-color-gray-9"],
     font: fontFamilyPerTarget[target]
   };
 }
