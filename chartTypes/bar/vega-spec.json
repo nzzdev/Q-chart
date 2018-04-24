@@ -219,7 +219,8 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
-      "ticks": true
+      "ticks": true,
+      "tickCount": 4
     },
     {
       "orient": "left",

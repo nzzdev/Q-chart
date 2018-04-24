@@ -108,14 +108,14 @@
       "scale": "xScale",
       "grid": false,
       "domain": true,
-      "ticks": false,
-      "labelOverlap": false
+      "ticks": false
     },
     {
       "orient": "left",
       "scale": "yScale",
       "domain": false,
-      "grid": true
+      "grid": true,
+      "tickCount": 4
     }
   ],
   "autosize": {
