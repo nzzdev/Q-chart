@@ -18,15 +18,13 @@
 }
 
 .q-chart__legend {
-  @include clearfix;
-  float: right;
+  display: flex;
+  flex-wrap: wrap;
   margin: 0 0 6px 0;
 }
 
 .q-chart__legend__item {
-  @include clearfix;
-  float: left;
-  margin: 0 8px 0 0;
+  margin: 0 8px 4px 0;
   &:last-child {
     margin-right: 0;
   }
