@@ -3,8 +3,8 @@ const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 
-const getDateSeriesHandlingMappings = require("../commonMappings.js")
-  .getDateSeriesHandlingMappings;
+const getColumnDateSeriesHandlingMappings = require("../commonMappings.js")
+  .getColumnDateSeriesHandlingMappings;
 
 module.exports = function getMapping(config = {}) {
   return [
@@ -45,5 +45,5 @@ module.exports = function getMapping(config = {}) {
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     }
-  ].concat(getDateSeriesHandlingMappings(config));
+  ].concat(getColumnDateSeriesHandlingMappings(config));
 };

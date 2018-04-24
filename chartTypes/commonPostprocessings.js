@@ -3,11 +3,6 @@ const { JSDOM } = jsdom;
 
 const highlightTicksWithVisibleValues = {
   process: function(svg, spec, item, toolRuntimeConfig) {
-    // do this only if we have a times series
-    if (spec.scales[0].type !== "time") {
-      return svg;
-    }
-
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
 
@@ -19,22 +14,35 @@ const highlightTicksWithVisibleValues = {
     const textNodes = labelGroup.querySelectorAll("text");
     const tickNodes = tickGroup.querySelectorAll("line");
 
+    // first run to return if we have no hidden labels
+    const visibleLabelsIndexes = [];
+    let hasHiddenLabels = false;
     for (let i = 0; i < textNodes.length; i++) {
       const textNode = textNodes.item(i);
       // if the textNode is visible
       if (textNode.getAttribute("style").includes("opacity: 1")) {
-        // change the color of the corresponding tick
-        tickNodes.item(i).setAttribute(
-          "style",
-          tickNodes
-            .item(i)
-            .getAttribute("style")
-            .replace(
-              `stroke: ${toolRuntimeConfig.axis.tickColor}`,
-              `stroke: ${toolRuntimeConfig.axis.labelColor}`
-            )
-        );
+        visibleLabelsIndexes.push(i);
+      } else {
+        hasHiddenLabels = true;
       }
+    }
+
+    // if there are no labels hidden, we do not highlight the ticks
+    if (visibleLabelsIndexes.length === textNodes.length) {
+      return svg;
+    }
+
+    for (let visibleLabelIndex of visibleLabelsIndexes) {
+      tickNodes.item(visibleLabelIndex).setAttribute(
+        "style",
+        tickNodes
+          .item(visibleLabelIndex)
+          .getAttribute("style")
+          .replace(
+            `stroke: ${toolRuntimeConfig.axis.tickColor}`,
+            `stroke: ${toolRuntimeConfig.axis.labelColor}`
+          )
+      );
     }
     return document.body.innerHTML;
   }
