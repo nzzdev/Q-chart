@@ -33,19 +33,9 @@
     "autoprefixer": "^7.1.6",
     "code": "^5.1.2",
     "cssnano": "^3.10.0",
-    "jspm": "^0.17.0-beta.41",
     "lab": "^15.1.2",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.14",
     "postcss-import": "^11.0.0"
-  },
-  "jspm": {
-    "name": "q-chart",
-    "main": "q-chart.js",
-    "dependencies": {
-      "chartist": "npm:chartist@0.11.0",
-      "systemjs-plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
-    },
-    "devDependencies": {}
   }
 }

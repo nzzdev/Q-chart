@@ -1,9 +1,6 @@
 const fs = require("fs");
 const crypto = require("crypto");
 
-const Builder = require("systemjs-builder");
-const builder = new Builder("", "jspm.config.js");
-
 const sass = require("node-sass");
 const postcss = require("postcss");
 const postcssImport = require("postcss-import");
@@ -13,13 +10,6 @@ const cssnano = require("cssnano");
 const createFixtureData = require("./createFixtureData.js");
 
 const stylesDir = __dirname + "/../styles_src/";
-
-builder.config({
-  map: {
-    "systemjs-babel-build":
-      "jspm_packages/npm/systemjs-plugin-babel@0.0.20/systemjs-babel-node.js"
-  }
-});
 
 function writeHashmap(hashmapPath, files, fileext) {
   const hashMap = {};
@@ -38,41 +28,6 @@ function writeHashmap(hashmapPath, files, fileext) {
     });
 
   fs.writeFileSync(hashmapPath, JSON.stringify(hashMap));
-}
-
-async function buildScripts() {
-  return builder
-    .bundle("q-chart/chart.js", {
-      normalize: true,
-      runtime: false,
-      minify: true,
-      mangle: false
-    })
-    .then(bundle => {
-      const fileName = "q-chart";
-      fs.writeFileSync(`scripts/${fileName}.js`, bundle.source);
-      return [
-        {
-          name: fileName,
-          content: bundle.source
-        }
-      ];
-    })
-    .then(files => {
-      writeHashmap("scripts/hashMap.json", files, "js");
-    })
-    .then(() => {
-      /* eslint-disable */
-      console.log("Build complete");
-      /* eslint-enable */
-      process.exit(0);
-    })
-    .catch(err => {
-      /* eslint-disable */
-      console.log("Build error", err);
-      /* eslint-enable */
-      process.exit(1);
-    });
 }
 
 async function compileStylesheet(name) {
@@ -215,7 +170,7 @@ function buildFixtures() {
   );
 }
 
-Promise.all([buildFixtures(), buildScripts(), buildStyles()])
+Promise.all([buildFixtures(), buildStyles()])
   .then(res => {
     console.log("build complete");
   })
