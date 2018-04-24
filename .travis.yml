@@ -7,9 +7,7 @@ node_js:
 - '9.2'
 install:
 - sudo apt-key update && sudo apt-get update && sudo apt-get -y install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
-- npm install -g jspm
 - npm install
-- jspm install
 before_script:
 - DOCKER_IMAGE_NAME="q-chart"
 - DOCKER_TAG=$TRAVIS_BRANCH
