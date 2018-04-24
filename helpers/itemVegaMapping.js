@@ -1,7 +1,7 @@
-const clone = require('clone');
+const clone = require("clone");
 const objectPath = require("object-path");
 
-function getSpecWithMappedItem(item, chartType, spec, config = {}) {
+function getSpecWithMappedItem(item, id, chartType, spec, config = {}) {
   const modifiedSpec = clone(spec);
   try {
     const mappings = require(`../chartTypes/${chartType}/mapping.js`)(config);
@@ -11,11 +11,13 @@ function getSpecWithMappedItem(item, chartType, spec, config = {}) {
       if (itemValue === undefined) {
         continue;
       }
-      mapping.mapToSpec(itemValue, modifiedSpec, item);
+      mapping.mapToSpec(itemValue, modifiedSpec, item, id);
     }
   } catch (err) {
     console.log(err);
-    throw new Error(`no or no valid type mapping implemented for type ${chartType}`);
+    throw new Error(
+      `no or no valid type mapping implemented for type ${chartType}`
+    );
   }
   return modifiedSpec;
 }

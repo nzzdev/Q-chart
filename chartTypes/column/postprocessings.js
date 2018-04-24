@@ -1,4 +1,7 @@
 const highlightTicksWithVisibleValues = require("../commonPostprocessings.js")
   .highlightTicksWithVisibleValues;
 
-module.exports = [highlightTicksWithVisibleValues];
+const addPrognosisPattern = require("../commonPostprocessings.js")
+  .addPrognosisPattern;
+
+module.exports = [highlightTicksWithVisibleValues, addPrognosisPattern];

@@ -1,4 +1,5 @@
 const objectPath = require("object-path");
+const clone = require("clone");
 const intervals = require("../helpers/dateSeries.js").intervals;
 
 function getDateSeriesHandlingMappings(config = {}) {
@@ -50,35 +51,49 @@ function getDateSeriesHandlingMappings(config = {}) {
           );
         }
       }
-    },
+    }
+  ];
+}
+
+function getColumnPrognosisMappings(config) {
+  return [
     {
       path: "options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec) {
+      mapToSpec: function(prognosisStart, spec, item, id) {
         if (prognosisStart === null) {
           return;
         }
-        // add the signal
+        // add the signal with prognosisStart value
         objectPath.push(spec, "signals", {
           name: "prognosisStart",
           value: prognosisStart
         });
 
-        // split the marks at the prognosisStart index
-        const lineMark = clone(spec.marks[0].marks[0]);
-        lineMark.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex <= prognosisStart"
+        // add the data for prognosis
+        objectPath.push(spec, "data", {
+          name: "prognosis",
+          source: "table",
+          transform: [
+            {
+              type: "filter",
+              expr: "datum.xIndex >= prognosisStart"
+            }
+          ]
+        });
+
+        const prognosisMarks = clone(spec.marks[0]);
+        prognosisMarks.from.facet.data = "prognosis";
+        prognosisMarks.marks[0].encode.update.fill = {
+          value: `url(#prognosisPattern${id})`
         };
-        const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
-        lineMarkPrognosis.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex >= prognosisStart"
-        };
-        lineMarkPrognosis.style = "prognosisLine";
-        spec.marks[0].marks = [lineMark, lineMarkPrognosis];
+
+        objectPath.push(spec, "marks", prognosisMarks);
       }
     }
   ];
 }
 
 module.exports = {
-  getDateSeriesHandlingMappings: getDateSeriesHandlingMappings
+  getDateSeriesHandlingMappings: getDateSeriesHandlingMappings,
+  getColumnPrognosisMappings: getColumnPrognosisMappings
 };

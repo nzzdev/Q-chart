@@ -68,6 +68,9 @@
           "x": {
             "scale": "xScale",
             "field": "xValue"
+          },
+          "width": {
+            "signal": "bandwidth('xScale')"
           }
         }
       },
