@@ -26,14 +26,14 @@ function getChartTypeForItemAndWidth(item, width) {
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
-          return "bar";
+          return "bar-stacked";
         } else {
           return "column-stacked";
         }
       }
       return "column-stacked";
     } else {
-      return "bar";
+      return "bar-stacked";
     }
   }
 }

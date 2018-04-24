@@ -6,7 +6,7 @@
     },
     {
       "name": "numberOfDataSeries",
-      "value": 0
+      "value": 1
     },
     {
       "name": "labelHeight",
@@ -18,7 +18,7 @@
     },
     {
       "name": "groupHeight",
-      "update": "(barWidth * numberOfDataSeries) + labelHeight"
+      "update": "barWidth + labelHeight"
     },
     {
       "name": "debugView",
@@ -28,7 +28,18 @@
   "data": [
     {
       "name": "table",
-      "values": []
+      "values": [],
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": ["xValue"],
+          "sort": {
+            "field": "cValue"
+          },
+          "field": "yValue",
+          "as": ["startY", "endY"]
+        }
+      ]
     }
   ],
   "scales": [
@@ -38,7 +49,7 @@
       "range": "width",
       "domain": {
         "data": "table",
-        "field": "yValue"
+        "field": "endY"
       },
       "nice": true,
       "zero": true
@@ -56,7 +67,7 @@
         "field": "xValue"
       },
       "paddingInner": {
-        "signal": "16 / groupHeight"
+        "signal": "16 / groupHeight" 
       },
       "paddingOuter": 0
     },
@@ -87,30 +98,12 @@
             "scale": "yScale",
             "field": "xValue"
           },
-          "x": [
-            {
-              "test": "debugView === true",
-              "value": -10
-            },
-            {
-              "value": 0
-            }
-          ],
-          "width": {
-            "value": 20
+          "x": {
+            "value": 0
           },
           "height": {
             "signal": "bandwidth('yScale')"
-          },
-          "fill": [
-            {
-              "test": "debugView === true",
-              "value": "red"
-            },
-            {
-              "value": null
-            }
-          ]
+          }
         }
       },
       "signals": [
@@ -127,15 +120,9 @@
               "y": {
                 "signal": "labelHeight"
               },
-              "x": [
-                {
-                  "test": "debugView === true",
-                  "value": 5
-                },
-                {
-                  "value": 0
-                }
-              ],
+              "x": {
+                "value": 0
+              },
               "width": {
                 "signal": "width"
               },
@@ -152,10 +139,7 @@
               "range": "height",
               "domain": {
                 "data": "series",
-                "field": "cValue"
-              },
-              "paddingInner": {
-                "signal": "2 / height * (numberOfDataSeries - 1)" 
+                "field": "xValue"
               },
               "paddingOuter": 0
             }
@@ -183,24 +167,19 @@
                 "enter": {
                   "y": {
                     "scale": "barPositionBand",
-                    "field": "cValue"
+                    "field": "xValue"
                   },
                   "height": {
                     "signal": "bandwidth('barPositionBand')"
                   },
                   "x": {
                     "scale": "xScale",
-                    "field": "yValue"
+                    "field": "startY"
                   },
-                  "x2": [
-                    {
-                      "test": "debugView === true",
-                      "value": 10
-                    },
-                    {
-                      "value": 0
-                    }
-                  ],
+                  "x2": {
+                    "scale": "xScale",
+                    "field": "endY"
+                  },
                   "fill": {
                     "scale": "colorScale",
                     "field": "cValue"
