@@ -72,7 +72,6 @@ function getColumnDateSeriesHandlingMappings(config = {}) {
           });
 
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
-          objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
         }
       }
     }
