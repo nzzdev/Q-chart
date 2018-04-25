@@ -35,6 +35,7 @@
 
 .q-chart__legend__item__box {
   margin-right: 4px;
+  flex-shrink: 0;
 }
 
 .q-chart__legend--bar .q-chart__legend__item__box, .q-chart__legend--stackedbar .q-chart__legend__item__box {
