@@ -62,10 +62,10 @@ const addPrognosisPattern = {
     const patternElement = document.createElement("pattern");
     patternElement.setAttribute("id", `prognosisPattern${id}`);
     patternElement.setAttribute("patternUnits", "userSpaceOnUse");
-    patternElement.setAttribute("width", "4");
-    patternElement.setAttribute("height", "4");
+    patternElement.setAttribute("width", "5");
+    patternElement.setAttribute("height", "5");
 
-    patternElement.innerHTML = `<path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" style="stroke: white; stroke-width:1; stroke-opacity: 0.5;"/>`;
+    patternElement.innerHTML = `<path d="M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z" style="stroke: white; stroke-width:1; stroke-opacity: 0.5;"/>`;
 
     document.querySelector("svg").appendChild(patternElement);
 

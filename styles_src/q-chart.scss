@@ -45,6 +45,19 @@
   background: currentColor;
 }
 
+.q-chart__legend--bar {
+  .q-chart__legend__item--prognosis {
+    .q-chart__legend__item__box {
+      // <svg xmlns='http://www.w3.org/2000/svg' width='5' height='5'>
+      //   <rect width="5" height="5" fill="#FFF" />
+      //   <path d='M0 5L5 0ZM6 4L4 6ZM-1 1L1 -1Z' stroke='#787878' stroke-opacity="1" stroke-width='1'/>
+      // </svg>
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjRkZGIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiM3ODc4NzgiIHN0cm9rZS1vcGFjaXR5PSIxIiBzdHJva2Utd2lkdGg9IjEiPjwvcGF0aD4KPC9zdmc+");
+      background-color: currentColor;
+    }
+  }
+}
+
 .q-chart__legend--line {
   line {
     stroke-width: 2px;
