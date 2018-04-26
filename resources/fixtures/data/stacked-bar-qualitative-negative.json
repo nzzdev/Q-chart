@@ -1,0 +1,33 @@
+{
+  "title": "FIXTURE: StackedBar - qualitative - negative",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Cat",
+      "A",
+      "B"
+    ],
+    [
+      "A very long label so it's on top of bars",
+      "-1000",
+      "-200"
+    ],
+    [
+      "B",
+      "200",
+      "50"
+    ]
+  ],
+  "options": {
+    "chartType": "StackedBar",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}
