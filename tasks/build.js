@@ -7,8 +7,6 @@ const postcssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 
-const createFixtureData = require("./createFixtureData.js");
-
 const stylesDir = __dirname + "/../styles_src/";
 
 function writeHashmap(hashmapPath, files, fileext) {
