@@ -1,0 +1,51 @@
+{
+  "title": "FIXTURE: StackedBar - dates - days - prognosis",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Quartal",
+      "Umsatz Desktop",
+      "Umsatz Mobile"
+    ],
+    [
+      "01.01.2018",
+      "731000000",
+      "0"
+    ],
+    [
+      "02.01.2018",
+      "895000000",
+      "0"
+    ],
+    [
+      "03.01.2018",
+      "954000000",
+      "0"
+    ],
+    [
+      "04.01.2018",
+      "1131000000",
+      "0"
+    ],
+    [
+      "05.01.2018",
+      "1047420000",
+      "10580000"
+    ]
+  ],
+  "options": {
+    "chartType": "StackedBar",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": true
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": 3
+    },
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}
