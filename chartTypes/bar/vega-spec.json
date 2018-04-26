@@ -195,9 +195,11 @@
                   "x2": [
                     {
                       "test": "debugView === true",
-                      "value": 10
+                      "scale": "xScale",
+                      "value": 0
                     },
                     {
+                      "scale": "xScale",
                       "value": 0
                     }
                   ],
