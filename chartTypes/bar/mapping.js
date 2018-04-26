@@ -69,7 +69,7 @@ module.exports = function getMapping(config = {}) {
           const labelHeightSignal = spec.signals.find(
             signal => signal.name === "labelHeight"
           );
-          labelHeightSignal.value = 25;
+          labelHeightSignal.value = 16;
 
           // if we have a date series, we need to format the label accordingly
           // otherwise we use the exact xValue as the label
