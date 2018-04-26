@@ -3,6 +3,8 @@ const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 
+const intervals = require("../../helpers/dateSeries.js").intervals;
+
 const getBarDateSeriesHandlingMappings = require("../commonMappings.js")
   .getBarDateSeriesHandlingMappings;
 
