@@ -17,8 +17,12 @@
       "value": 24
     },
     {
+      "name": "groupPadding",
+      "value": 16
+    },
+    {
       "name": "groupHeight",
-      "update": "barWidth + labelHeight"
+      "update": "barWidth + labelHeight + groupPadding"
     },
     {
       "name": "debugView",
@@ -67,7 +71,7 @@
         "field": "xValue"
       },
       "paddingInner": {
-        "signal": "16 / groupHeight" 
+        "signal": "groupPadding / groupHeight" 
       },
       "paddingOuter": 0
     },
