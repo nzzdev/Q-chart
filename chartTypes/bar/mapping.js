@@ -7,6 +7,9 @@ const intervals = require("../../helpers/dateSeries.js").intervals;
 const getBarDateSeriesHandlingMappings = require("../commonMappings.js")
   .getBarDateSeriesHandlingMappings;
 
+const getBarPrognosisMappings = require("../commonMappings.js")
+  .getBarPrognosisMappings;
+
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
@@ -101,5 +104,7 @@ module.exports = function getMapping(config = {}) {
         }
       }
     }
-  ].concat(getBarDateSeriesHandlingMappings(config));
+  ]
+    .concat(getBarDateSeriesHandlingMappings(config))
+    .concat(getBarPrognosisMappings(config));
 };

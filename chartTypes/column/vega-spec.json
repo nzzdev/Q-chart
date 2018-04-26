@@ -113,7 +113,7 @@
             "data": "series"
           },
           "encode": {
-            "update": {
+            "enter": {
               "x": {
                 "signal": "groupMargin + scale('barPositionScale', datum.yValue)"
               },

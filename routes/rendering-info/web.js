@@ -12,7 +12,7 @@ const stylesDir = __dirname + "/../../styles/";
 const nunjucks = require("nunjucks");
 const nunjucksEnv = new nunjucks.Environment();
 
-const styleHashMap = require(`${stylesDir}/hashMap.json`);
+const styleHashMap = require(`${stylesDir}hashMap.json`);
 
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;

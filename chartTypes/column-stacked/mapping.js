@@ -6,6 +6,9 @@ const dataHelpers = require("../../helpers/data.js");
 const getColumnDateSeriesHandlingMappings = require("../commonMappings.js")
   .getColumnDateSeriesHandlingMappings;
 
+const getColumnPrognosisMappings = require("../commonMappings.js")
+  .getColumnPrognosisMappings;
+
 module.exports = function getMapping(config = {}) {
   return [
     {
@@ -45,5 +48,7 @@ module.exports = function getMapping(config = {}) {
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     }
-  ].concat(getColumnDateSeriesHandlingMappings(config));
+  ]
+    .concat(getColumnDateSeriesHandlingMappings(config))
+    .concat(getColumnPrognosisMappings(config));
 };

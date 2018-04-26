@@ -8,6 +8,9 @@ const intervals = require("../../helpers/dateSeries.js").intervals;
 const getBarDateSeriesHandlingMappings = require("../commonMappings.js")
   .getBarDateSeriesHandlingMappings;
 
+const getBarPrognosisMappings = require("../commonMappings.js")
+  .getBarPrognosisMappings;
+
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
@@ -29,7 +32,7 @@ module.exports = function getMapping(config = {}) {
   return [
     {
       path: "data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, item) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
@@ -102,5 +105,7 @@ module.exports = function getMapping(config = {}) {
         }
       }
     }
-  ].concat(getBarDateSeriesHandlingMappings(config));
+  ]
+    .concat(getBarDateSeriesHandlingMappings(config))
+    .concat(getBarPrognosisMappings(config));
 };

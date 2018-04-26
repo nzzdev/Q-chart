@@ -143,8 +143,9 @@ function getColumnPrognosisMappings(config) {
         });
 
         const prognosisMarks = clone(spec.marks[0]);
+        prognosisMarks.name = "prognosisColumn";
         prognosisMarks.from.facet.data = "prognosis";
-        prognosisMarks.marks[0].encode.update.fill = {
+        prognosisMarks.marks[0].encode.enter.fill = {
           value: `url(#prognosisPattern${id})`
         };
 
@@ -154,9 +155,57 @@ function getColumnPrognosisMappings(config) {
   ];
 }
 
+function getBarPrognosisMappings(config) {
+  return [
+    {
+      path: "options.dateSeriesOptions.prognosisStart",
+      mapToSpec: function(prognosisStart, spec, item, id) {
+        if (!Number.isInteger(prognosisStart)) {
+          return;
+        }
+        // add the signal with prognosisStart value
+        objectPath.push(spec, "signals", {
+          name: "prognosisStart",
+          value: prognosisStart
+        });
+
+        // add the data for prognosis
+        objectPath.push(spec, "data", {
+          name: "prognosis",
+          source: "table",
+          transform: [
+            {
+              type: "filter",
+              expr: "datum.xIndex >= prognosisStart"
+            }
+          ]
+        });
+
+        const prognosisMarks = clone(spec.marks[0]);
+        prognosisMarks.name = "prognosisBlocks";
+        prognosisMarks.from.facet.data = "prognosis";
+
+        prognosisMarks.marks[0].marks[0].encode.enter.fill = {
+          value: `url(#prognosisPattern${id})`
+        };
+
+        // take only the first rect mark
+        prognosisMarks.marks[0].marks = [
+          prognosisMarks.marks[0].marks.find(mark => mark.type === "rect")
+        ];
+
+        prognosisMarks.marks[0].marks[0].name = "prognosisBar";
+
+        spec.marks.push(prognosisMarks);
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
   getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
-  getColumnPrognosisMappings: getColumnPrognosisMappings
+  getColumnPrognosisMappings: getColumnPrognosisMappings,
+  getBarPrognosisMappings: getBarPrognosisMappings
 };
