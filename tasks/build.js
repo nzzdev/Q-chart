@@ -71,10 +71,6 @@ async function buildStyles() {
   // compile styles
   const styleFiles = [
     {
-      name: "default",
-      content: await compileStylesheet("default")
-    },
-    {
       name: "q-chart",
       content: await compileStylesheet("q-chart")
     }
