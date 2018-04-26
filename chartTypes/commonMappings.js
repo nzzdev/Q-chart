@@ -64,11 +64,20 @@ function getColumnDateSeriesHandlingMappings(config = {}) {
       path: "data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, item) {
         if (config.dateFormat) {
-          // set the labels to the formatted values
-          const formatDate = d3.timeFormat(config.dateFormat.d3format);
-          spec.data[0].values = spec.data[0].values.map(row => {
-            row.xValue = formatDate(row.xValue);
-            return row;
+          const d3format =
+            intervals[item.options.dateSeriesOptions.interval].d3format;
+
+          // format the labels for the X axis according to the interval d3format
+          spec.axes[0].encode = Object.assign({}, spec.axes[0].encode, {
+            labels: {
+              update: {
+                text: {
+                  signal: `timeFormat(datum.value, '${
+                    intervals[item.options.dateSeriesOptions.interval].d3format
+                  }')`
+                }
+              }
+            }
           });
 
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
