@@ -87,6 +87,35 @@ function getColumnDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
+function getBarDateSeriesHandlingMappings(config = {}) {
+  return [
+    {
+      path: "data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, item) {
+        if (config.dateFormat) {
+          const d3format =
+            intervals[item.options.dateSeriesOptions.interval].d3format;
+
+          // format the labels for the X axis according to the interval d3format
+          spec.axes[1].encode = Object.assign({}, spec.axes[0].encode, {
+            labels: {
+              update: {
+                text: {
+                  signal: `timeFormat(datum.value, '${
+                    intervals[item.options.dateSeriesOptions.interval].d3format
+                  }')`
+                }
+              }
+            }
+          });
+
+          objectPath.set(spec, "axes.1.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
+        }
+      }
+    }
+  ];
+}
+
 function getColumnPrognosisMappings(config) {
   return [
     {
@@ -128,5 +157,6 @@ function getColumnPrognosisMappings(config) {
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
+  getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
   getColumnPrognosisMappings: getColumnPrognosisMappings
 };

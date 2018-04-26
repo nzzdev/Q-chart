@@ -2,9 +2,10 @@ const objectPath = require("object-path");
 const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
+const intervals = require("../../helpers/dateSeries.js").intervals;
 
-const getColumnDateSeriesHandlingMappings = require("../commonMappings.js")
-  .getColumnDateSeriesHandlingMappings;
+const getBarDateSeriesHandlingMappings = require("../commonMappings.js")
+  .getBarDateSeriesHandlingMappings;
 
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
@@ -27,7 +28,7 @@ module.exports = function getMapping(config = {}) {
   return [
     {
       path: "data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, item) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
@@ -67,6 +68,19 @@ module.exports = function getMapping(config = {}) {
           );
           labelHeightSignal.value = 25;
 
+          // if we have a date series, we need to format the label accordingly
+          // otherwise we use the exact xValue as the label
+          const labelText = {};
+          if (config.dateFormat) {
+            const d3format =
+              intervals[item.options.dateSeriesOptions.interval].d3format;
+            labelText.signal = `timeFormat(datum.xValue, '${
+              intervals[item.options.dateSeriesOptions.interval].d3format
+            }')`;
+          } else {
+            labelText.field = "xValue";
+          }
+
           spec.marks[0].marks[0].marks.push({
             type: "text",
             from: {
@@ -74,9 +88,7 @@ module.exports = function getMapping(config = {}) {
             },
             encode: {
               update: {
-                text: {
-                  field: "xValue"
-                },
+                text: labelText,
                 y: {
                   signal: "-labelHeight/2"
                 },
@@ -89,5 +101,5 @@ module.exports = function getMapping(config = {}) {
         }
       }
     }
-  ].concat(getColumnDateSeriesHandlingMappings(config));
+  ].concat(getBarDateSeriesHandlingMappings(config));
 };
