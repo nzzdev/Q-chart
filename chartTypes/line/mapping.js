@@ -2,8 +2,8 @@ const clone = require("clone");
 const objectPath = require("object-path");
 const intervals = require("../../helpers/dateSeries.js").intervals;
 const dataHelpers = require("../../helpers/data.js");
-const getLineDateSeriesHandlingMappings = require("../commonMappings.js")
-  .getLineDateSeriesHandlingMappings;
+
+const commonMappings = require("../commonMappings.js");
 
 module.exports = function getMappings(config = {}) {
   return [
@@ -130,5 +130,5 @@ module.exports = function getMappings(config = {}) {
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];
       }
     }
-  ].concat(getLineDateSeriesHandlingMappings(config));
+  ].concat(commonMappings.getLineDateSeriesHandlingMappings(config));
 };

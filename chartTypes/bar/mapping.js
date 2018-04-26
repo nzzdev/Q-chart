@@ -4,11 +4,7 @@ const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 const intervals = require("../../helpers/dateSeries.js").intervals;
 
-const getBarDateSeriesHandlingMappings = require("../commonMappings.js")
-  .getBarDateSeriesHandlingMappings;
-
-const getBarPrognosisMappings = require("../commonMappings.js")
-  .getBarPrognosisMappings;
+const commonMappings = require("../commonMappings.js");
 
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
@@ -105,6 +101,7 @@ module.exports = function getMapping(config = {}) {
       }
     }
   ]
-    .concat(getBarDateSeriesHandlingMappings(config))
-    .concat(getBarPrognosisMappings(config));
+    .concat(commonMappings.getBarDateSeriesHandlingMappings(config))
+    .concat(commonMappings.getBarPrognosisMappings(config))
+    .concat(commonMappings.getBarLabelColorMappings(config));
 };

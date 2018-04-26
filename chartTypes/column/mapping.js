@@ -2,11 +2,8 @@ const objectPath = require("object-path");
 const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
-const getColumnDateSeriesHandlingMappings = require("../commonMappings.js")
-  .getColumnDateSeriesHandlingMappings;
 
-const getColumnPrognosisMappings = require("../commonMappings.js")
-  .getColumnPrognosisMappings;
+const commonMappings = require("../commonMappings.js");
 
 module.exports = function getMapping(config = {}) {
   return [
@@ -46,6 +43,7 @@ module.exports = function getMapping(config = {}) {
       }
     }
   ]
-    .concat(getColumnDateSeriesHandlingMappings(config))
-    .concat(getColumnPrognosisMappings(config));
+    .concat(commonMappings.getColumnDateSeriesHandlingMappings(config))
+    .concat(commonMappings.getColumnPrognosisMappings(config))
+    .concat(commonMappings.getColumnLabelColorMappings(config));
 };

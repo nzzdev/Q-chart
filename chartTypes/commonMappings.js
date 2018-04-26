@@ -202,10 +202,48 @@ function getBarPrognosisMappings(config) {
   ];
 }
 
+function getColumnLabelColorMappings(config) {
+  return [
+    {
+      path: "data",
+      mapToSpec: function(itemData, spec, item, id) {
+        if (!spec.config.axis.labelColorDark) {
+          return;
+        }
+        objectPath.set(
+          spec,
+          "axes.0.encode.labels.update.fill.value",
+          spec.config.axis.labelColorDark
+        ); // use the dark color for categorical bar/column labels
+      }
+    }
+  ];
+}
+
+function getBarLabelColorMappings(config) {
+  return [
+    {
+      path: "data",
+      mapToSpec: function(itemData, spec, item, id) {
+        if (!spec.config.axis.labelColorDark) {
+          return;
+        }
+        objectPath.set(
+          spec,
+          "axes.1.encode.labels.update.fill.value",
+          spec.config.axis.labelColorDark
+        ); // use the dark color for categorical bar/column labels
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
   getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
   getColumnPrognosisMappings: getColumnPrognosisMappings,
-  getBarPrognosisMappings: getBarPrognosisMappings
+  getBarPrognosisMappings: getBarPrognosisMappings,
+  getColumnLabelColorMappings: getColumnLabelColorMappings,
+  getBarLabelColorMappings: getBarLabelColorMappings
 };
