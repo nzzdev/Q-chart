@@ -1,4 +1,6 @@
-const addPrognosisPattern = require("../commonPostprocessings.js")
-  .addPrognosisPattern;
+const commonPostprocessings = require("../commonPostprocessings.js");
 
-module.exports = [addPrognosisPattern];
+module.exports = [
+  commonPostprocessings.addPrognosisPattern,
+  commonPostprocessings.hideRepeatingTickLabels
+];

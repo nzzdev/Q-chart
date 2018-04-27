@@ -1,6 +1,45 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
+const hideRepeatingTickLabels = {
+  process: function(svg, spec, item, toolRuntimeConfig) {
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    const labelGroups = document.querySelectorAll(".role-axis-label");
+    for (const labelGroup of labelGroups) {
+      const textNodes = labelGroup.querySelectorAll("text");
+      // loop over all the textNodes, if the text is the same as the one before, hide it
+      // start with the 2nd textNode
+      for (let i = 1; i < textNodes.length; i++) {
+        if (textNodes.item(i).innerHTML === textNodes.item(i - 1).innerHTML) {
+          textNodes.item(i).style.opacity = "0";
+        }
+      }
+    }
+    return document.body.innerHTML;
+  }
+};
+
+const hideRepeatingBarTopLabels = {
+  process: function(svg, spec, item, toolRuntimeConfig) {
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    const barTopLabels = document.querySelectorAll(".bar-top-label");
+    // loop over all the barTopLabels, if the text is the same as the one before, hide it
+    // start with the 2nd barTopLabel
+    for (let i = 1; i < barTopLabels.length; i++) {
+      if (
+        barTopLabels.item(i).innerHTML === barTopLabels.item(i - 1).innerHTML
+      ) {
+        barTopLabels.item(i).style.opacity = "0";
+      }
+    }
+    return document.body.innerHTML;
+  }
+};
+
 const highlightTicksWithVisibleValues = {
   process: function(svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
@@ -74,6 +113,8 @@ const addPrognosisPattern = {
 };
 
 module.exports = {
+  hideRepeatingTickLabels: hideRepeatingTickLabels,
+  hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
   highlightTicksWithVisibleValues: highlightTicksWithVisibleValues,
   addPrognosisPattern: addPrognosisPattern
 };

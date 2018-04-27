@@ -82,6 +82,7 @@ module.exports = function getMapping(config = {}) {
 
           spec.marks[0].marks[0].marks.push({
             type: "text",
+            name: "bar-top-label",
             from: {
               data: "xValues"
             },

@@ -1,4 +1,6 @@
-const highlightTicksWithVisibleValues = require("../commonPostprocessings.js")
-  .highlightTicksWithVisibleValues;
+const commonPostprocessings = require("../commonPostprocessings.js");
 
-module.exports = [highlightTicksWithVisibleValues];
+module.exports = [
+  commonPostprocessings.hideRepeatingTickLabels,
+  commonPostprocessings.highlightTicksWithVisibleValues
+];

@@ -129,14 +129,21 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
     svg = await view.toSVG();
 
     // post processing
+    let postprocessings;
     try {
-      const postprocessings = require(`../../chartTypes/${chartType}/postprocessings.js`);
-      for (let postprocessing of postprocessings) {
-        svg = postprocessing.process(svg, spec, item, toolRuntimeConfig, id);
-      }
+      postprocessings = require(`../../chartTypes/${chartType}/postprocessings.js`);
     } catch (err) {
       // we do not have postprocessing for this chartType
       // as we do not need to have them, we just silently ignore the error here
+    }
+    try {
+      if (postprocessings) {
+        for (let postprocessing of postprocessings) {
+          svg = postprocessing.process(svg, spec, item, toolRuntimeConfig, id);
+        }
+      }
+    } catch (err) {
+      request.server.log(["error"], err);
     }
   } catch (err) {
     request.server.log(["error"], err);
