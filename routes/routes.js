@@ -1,5 +1,4 @@
 module.exports = [
-  require("./rendering-info/html-js.js"),
   require("./rendering-info/web.js"),
   require("./rendering-info/web-svg.js"),
   require("./stylesheet.js"),

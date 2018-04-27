@@ -12,24 +12,13 @@ const stylesDir = __dirname + "/../../styles/";
 const nunjucks = require("nunjucks");
 const nunjucksEnv = new nunjucks.Environment();
 
-const styleHashMap = require(`${stylesDir}/hashMap.json`);
+const styleHashMap = require(`${stylesDir}hashMap.json`);
 
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const legend = require("../../helpers/legend.js");
-
-// temp function until we have all chart types implemented with the new vega renderer
-// determines if we go with the new or old renderer
-function shouldUseLegacyRenderingInfo(request) {
-  const item = request.payload.item;
-  const chartType = getChartTypeForItemAndWidth(request.payload.item, 500);
-  if (chartType === "bar" || chartType === "column") {
-    return true;
-  }
-  return false;
-}
 
 module.exports = {
   method: "POST",
@@ -46,27 +35,6 @@ module.exports = {
     }
   },
   handler: async function(request, h) {
-    // temp code to redirect to legacy rendering-info if item not supported by new one yet
-    if (
-      shouldUseLegacyRenderingInfo(request) ||
-      !process.env.FEAT_VEGA_RENDERER
-    ) {
-      try {
-        const response = await request.server.inject({
-          method: "POST",
-          url: `/rendering-info/html-js?${querystring.stringify(
-            request.query
-          )}`,
-          payload: request.payload
-        });
-        return response.result;
-      } catch (err) {
-        server.log(["error"], err);
-        return Boom.internal();
-      }
-    }
-    // end temp code
-
     const item = request.payload.item;
 
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
@@ -98,7 +66,9 @@ module.exports = {
     if (Number.isInteger(exactPixelWidth)) {
       const svgResponse = await request.server.inject({
         method: "POST",
-        url: `/rendering-info/web-svg?width=${exactPixelWidth}`,
+        url: `/rendering-info/web-svg?width=${exactPixelWidth}&id=${
+          context.id
+        }`,
         payload: request.payload
       });
       context.svg = svgResponse.result.markup;
@@ -119,6 +89,7 @@ module.exports = {
       if (!item.vegaSpec) {
         toolRuntimeConfigForWebSVG = {
           axis: request.payload.toolRuntimeConfig.axis,
+          text: request.payload.toolRuntimeConfig.text,
           colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
         };
       }
@@ -126,7 +97,9 @@ module.exports = {
       let requestMethod;
       let requestBodyString;
 
-      const queryParams = {};
+      const queryParams = {
+        id: context.id
+      };
       // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
       if (request.payload.itemStateInDb === true) {
         requestMethod = "GET";

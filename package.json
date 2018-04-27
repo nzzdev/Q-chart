@@ -1,10 +1,10 @@
 {
   "name": "q-chart",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && rm -rf resources/fixtures && mkdir -p resources/fixtures/data && node tasks/build.js",
+    "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js",
     "test": "lab -a code -c -P tests --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
@@ -26,26 +26,15 @@
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",
-    "svelte": "1.41.2",
-    "vega": "^3.1.0"
+    "vega": "^3.3.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "code": "^5.1.2",
     "cssnano": "^3.10.0",
-    "jspm": "^0.17.0-beta.41",
     "lab": "^15.1.2",
     "node-sass": "^4.7.2",
     "postcss": "^6.0.14",
     "postcss-import": "^11.0.0"
-  },
-  "jspm": {
-    "name": "q-chart",
-    "main": "q-chart.js",
-    "dependencies": {
-      "chartist": "npm:chartist@0.11.0",
-      "systemjs-plugin-babel": "npm:systemjs-plugin-babel@0.0.21"
-    },
-    "devDependencies": {}
   }
 }

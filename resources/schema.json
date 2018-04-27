@@ -167,6 +167,10 @@
                   }
                 ]
               }
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
             }
           }
         },

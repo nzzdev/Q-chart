@@ -32,6 +32,11 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.axis = deepmerge(config.axis || {}, toolRuntimeConfig.axis);
   }
 
+  // add the config passed in toolRuntimeConfig
+  if (toolRuntimeConfig.hasOwnProperty("text")) {
+    config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
+  }
+
   // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
   // item options into account (highlighting is an example of an option changing the range)
   const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
@@ -43,10 +48,7 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   return config;
 }
 
-async function getSpec(item, width, toolRuntimeConfig) {
-  // first we need to know if there is a chartType and which one
-  const chartType = getChartTypeForItemAndWidth(item, width);
-
+async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
   const mappingConfig = {
     width: width
   };
@@ -72,14 +74,20 @@ async function getSpec(item, width, toolRuntimeConfig) {
   // this will be the compiled spec from template and mapping
   let spec;
   try {
-    spec = getSpecWithMappedItem(item, chartType, templateSpec, mappingConfig);
+    spec = getSpecWithMappedItem(
+      item,
+      id,
+      chartType,
+      templateSpec,
+      mappingConfig
+    );
   } catch (err) {
-    return Boom.notImplemented(err.message);
+    throw new Boom.internal(err.message);
   }
   return spec;
 }
 
-async function getSvg(item, width, toolRuntimeConfig, request) {
+async function getSvg(item, width, toolRuntimeConfig, id, request) {
   // first and foremost: cast all the floats in strings to actual floats
   item.data = getDataWithStringsCastedToFloats(item.data);
 
@@ -90,14 +98,13 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
   if (item.vegaSpec) {
     spec = item.vegaSpec;
 
-    // the width is given in the request
     spec.width = width;
 
     // set the data from the item
     // all data transforms are part of the spec
     spec.data[0].values = clone(item.data);
   } else if (item.options.chartType) {
-    spec = await getSpec(item, width, toolRuntimeConfig);
+    spec = await getSpec(item, width, toolRuntimeConfig, chartType, id);
   } else {
     throw new Error("no spec");
   }
@@ -115,14 +122,25 @@ async function getSvg(item, width, toolRuntimeConfig, request) {
     }
 
     const view = new vega.View(dataflow).renderer("none").initialize();
+    view.logLevel(vega.Warn);
     svg = await view.toSVG();
 
     // post processing
+    let postprocessings;
     try {
-      const postprocessing = require(`../../chartTypes/${chartType}/postprocessing.js`);
-      svg = postprocessing.process(svg, item, toolRuntimeConfig);
+      postprocessings = require(`../../chartTypes/${chartType}/postprocessings.js`);
     } catch (err) {
-      // we probably do not have postprocessing for this chartType
+      // we do not have postprocessing for this chartType
+      // as we do not need to have them, we just silently ignore the error here
+    }
+    try {
+      if (postprocessings) {
+        for (let postprocessing of postprocessings) {
+          svg = postprocessing.process(svg, spec, item, toolRuntimeConfig, id);
+        }
+      }
+    } catch (err) {
+      request.server.log(["error"], err);
     }
   } catch (err) {
     request.server.log(["error"], err);
@@ -143,7 +161,8 @@ module.exports = {
       query: {
         width: Joi.number().required(),
         noCache: Joi.boolean(),
-        toolRuntimeConfig: Joi.object().optional()
+        toolRuntimeConfig: Joi.object().optional(),
+        id: Joi.string().required()
       },
       payload: {
         item: Joi.object().required(),
@@ -161,6 +180,7 @@ module.exports = {
         item,
         request.query.width,
         toolRuntimeConfig,
+        request.query.id,
         request
       )
     };

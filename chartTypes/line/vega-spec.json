@@ -27,7 +27,7 @@
       }
     },
     {
-      "name": "color",
+      "name": "colorScale",
       "type": "ordinal",
       "range": "category",
       "domain": {
@@ -45,7 +45,6 @@
       "labelFlush": true,
       "labelBound": true,
       "labelFlushOffset": 0,
-      "labelPadding": 3,
       "encode": {
         "title": {
           "update": {
@@ -100,7 +99,7 @@
                 "field": "yValue"
               },
               "stroke": {
-                "scale": "color",
+                "scale": "colorScale",
                 "field": "cValue"
               },
               "strokeWidth": {

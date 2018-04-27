@@ -2,6 +2,7 @@ const objectPath = require("object-path");
 const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
+
 const intervals = require("../../helpers/dateSeries.js").intervals;
 
 const commonMappings = require("../commonMappings.js");

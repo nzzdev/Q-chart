@@ -1,7 +1,7 @@
 <div class="q-chart__legend q-chart__legend--{{ legend.type }}">
   {%- for item in legend.legendItems %}
   <div class="q-chart__legend__item {% if item.isPrognosis %}q-chart__legend__item--prognosis s-color-gray-5{% endif %}">
-    <div class="q-chart__legend__item__box" style="color: {{ item.color }}">
+    <div class="q-chart__legend__item__box" style="color: {{ item.color }};">
       {%- if legend.type === 'line' %}
         <svg width="12" height="12">
           <line x1="1" y1="11" x2="11" y2="1" />

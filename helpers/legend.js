@@ -30,8 +30,7 @@ function getLegendModel(item, toolRuntimeConfig) {
   // prognosis
   legendModel.hasPrognosis =
     item.options.dateSeriesOptions &&
-    item.options.dateSeriesOptions.prognosisStart &&
-    !isNaN(item.options.dateSeriesOptions.prognosisStart);
+    Number.isInteger(item.options.dateSeriesOptions.prognosisStart);
   if (legendModel.hasPrognosis) {
     const { prognosisStart, interval } = item.options.dateSeriesOptions;
 
@@ -57,7 +56,8 @@ function getLegendModel(item, toolRuntimeConfig) {
 
     legendModel.legendItems.push({
       isPrognosis: true,
-      label: legendLabel
+      label: legendLabel,
+      color: "transparent"
     });
   }
   return legendModel;
