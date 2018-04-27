@@ -12,6 +12,8 @@
   "axis": {
     "titleFontWeight": 100,
     "labelPadding": 8,
-    "labelLimit": false
+    "labelLimit": false,
+    "tickOffset": -1,
+    "tickRound": true
   }
 }

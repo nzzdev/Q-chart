@@ -1,0 +1,85 @@
+{
+  "title": "FIXTURE: Bar - dates - year",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Jahr",
+      "Weissrussland",
+      "Bulgarien",
+      "Tschechien",
+      "Ungarn"
+    ],
+    [
+      "1989",
+      "10190 ",
+      "8897 ",
+      "10336 ",
+      "10402 "
+    ],
+    [
+      "1990",
+      "10217 ",
+      "8841 ",
+      "10341 ",
+      "10378 "
+    ],
+    [
+      "1991",
+      "10226 ",
+      "8767 ",
+      "10347 ",
+      "10364 "
+    ],
+    [
+      "1992",
+      "10220 ",
+      "8676 ",
+      "10353 ",
+      "10359 "
+    ],
+    [
+      "1993",
+      "10201 ",
+      "8576 ",
+      "10359 ",
+      "10360 "
+    ],
+    [
+      "1994",
+      "10173 ",
+      "8475 ",
+      "10361 ",
+      "10358 "
+    ],
+    [
+      "1995",
+      "10142 ",
+      "8379 ",
+      "10358 ",
+      "10350 "
+    ],
+    [
+      "1996",
+      "10109 ",
+      "8292 ",
+      "10351 ",
+      "10333 "
+    ]
+  ],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": true,
+      "maxValue": 14000
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}

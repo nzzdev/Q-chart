@@ -30,7 +30,8 @@
         "data": "table",
         "field": "xValue"
       },
-      "padding": 0
+      "padding": 0,
+      "round": true
     },
     {
       "name": "yScale",
@@ -41,7 +42,8 @@
         "field": "yValue"
       },
       "nice": true,
-      "zero": true
+      "zero": true,
+      "round": true
     },
     {
       "name": "colorScale",

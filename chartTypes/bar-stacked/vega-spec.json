@@ -56,7 +56,8 @@
         "field": "endY"
       },
       "nice": true,
-      "zero": true
+      "zero": true,
+      "round": true
     },
     {
       "name": "yScale",
@@ -73,7 +74,8 @@
       "paddingInner": {
         "signal": "groupPadding / groupHeight" 
       },
-      "paddingOuter": 0
+      "paddingOuter": 0,
+      "round": true
     },
     {
       "name": "colorScale",

@@ -106,8 +106,6 @@ async function getAxisConfig(target) {
     labelFontWeight: 100,
     ticks: true,
     tickExtra: false,
-    tickOffset: 0,
-    tickRound: true,
     tickSize: 4,
     tickWidth: 1,
     titleFont: fontFamilyPerTarget[target],

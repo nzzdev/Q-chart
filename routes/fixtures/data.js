@@ -5,6 +5,7 @@ const fixtureDataDirectory = "../../resources/fixtures/data";
 const fixtureData = [
   require(`${fixtureDataDirectory}/bar-dates-days-prognosis.json`),
   require(`${fixtureDataDirectory}/bar-dates-quarter.json`),
+  require(`${fixtureDataDirectory}/bar-dates-years.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-single-serie.json`),
   require(`${fixtureDataDirectory}/stacked-bar-days-prognosis.json`),
