@@ -221,6 +221,8 @@
     "contains": "padding"
   },
   "config": {
-    
+    "axis": {
+      "tickOffset": -1
+    }
   }
 }

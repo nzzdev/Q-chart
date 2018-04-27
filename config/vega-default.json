@@ -13,7 +13,6 @@
     "titleFontWeight": 100,
     "labelPadding": 8,
     "labelLimit": false,
-    "tickOffset": -1,
     "tickRound": true
   }
 }
