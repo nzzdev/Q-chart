@@ -144,10 +144,20 @@ function getColumnPrognosisMappings(config) {
 
         const prognosisMarks = clone(spec.marks[0]);
         prognosisMarks.name = "prognosisColumn";
-        prognosisMarks.from.facet.data = "prognosis";
-        prognosisMarks.marks[0].encode.enter.fill = {
-          value: `url(#prognosisPattern${id})`
-        };
+        if (prognosisMarks.from.facet) {
+          prognosisMarks.from.facet.data = "prognosis";
+        } else {
+          prognosisMarks.from.data = "prognosis";
+        }
+        if (prognosisMarks.marks) {
+          prognosisMarks.marks[0].encode.enter.fill = {
+            value: `url(#prognosisPattern${id})`
+          };
+        } else {
+          prognosisMarks.encode.enter.fill = {
+            value: `url(#prognosisPattern${id})`
+          };
+        }
 
         objectPath.push(spec, "marks", prognosisMarks);
       }

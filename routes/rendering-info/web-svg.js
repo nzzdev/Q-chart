@@ -85,7 +85,7 @@ async function getSpec(item, width, toolRuntimeConfig, id) {
       mappingConfig
     );
   } catch (err) {
-    return Boom.notImplemented(err.message);
+    throw Boom.notImplemented(err.message);
   }
   return spec;
 }
