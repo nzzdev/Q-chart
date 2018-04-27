@@ -52,7 +52,7 @@ const addPrognosisPattern = {
   process: function(svg, spec, item, toolRuntimeConfig, id) {
     if (
       !item.options.dateSeriesOptions ||
-      item.options.dateSeriesOptions.prognosisStart === undefined
+      !Number.isInteger(item.options.dateSeriesOptions.prognosisStart)
     ) {
       return svg;
     }
