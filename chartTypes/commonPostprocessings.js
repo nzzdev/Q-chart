@@ -8,12 +8,18 @@ const hideRepeatingTickLabels = {
 
     const labelGroups = document.querySelectorAll(".role-axis-label");
     for (const labelGroup of labelGroups) {
-      const textNodes = labelGroup.querySelectorAll("text");
-      // loop over all the textNodes, if the text is the same as the one before, hide it
+      const visibleTextNodes = Array.prototype.slice
+        .call(labelGroup.querySelectorAll("text"))
+        .filter(textNode => {
+          return textNode.getAttribute("style").includes("opacity: 1");
+        });
+      // loop over all the visible textNodes, if the text is the same as the one before, hide it
       // start with the 2nd textNode
-      for (let i = 1; i < textNodes.length; i++) {
-        if (textNodes.item(i).innerHTML === textNodes.item(i - 1).innerHTML) {
-          textNodes.item(i).style.opacity = "0";
+      for (let i = 1; i < visibleTextNodes.length; i++) {
+        if (
+          visibleTextNodes[i].innerHTML === visibleTextNodes[i - 1].innerHTML
+        ) {
+          visibleTextNodes[i].style.opacity = "0";
         }
       }
     }
