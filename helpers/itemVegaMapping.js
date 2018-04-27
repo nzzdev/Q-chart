@@ -14,7 +14,6 @@ function getSpecWithMappedItem(item, id, chartType, spec, config = {}) {
       mapping.mapToSpec(itemValue, modifiedSpec, item, id);
     }
   } catch (err) {
-    console.log(err);
     throw new Error(
       `no or no valid type mapping implemented for type ${chartType}`
     );

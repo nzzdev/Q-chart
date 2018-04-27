@@ -135,10 +135,10 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
         svg = postprocessing.process(svg, spec, item, toolRuntimeConfig, id);
       }
     } catch (err) {
-      // we probably do not have postprocessing for this chartType
+      // we do not have postprocessing for this chartType
+      // as we do not need to have them, we just silently ignore the error here
     }
   } catch (err) {
-    debugger;
     request.server.log(["error"], err);
     return err;
   }
