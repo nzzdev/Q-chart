@@ -2,7 +2,6 @@ const d3config = require("../config/d3.js");
 const dataHelpers = require("../helpers/data.js");
 
 const d3 = {
-  format: require("d3-format"),
   array: require("d3-array")
 };
 

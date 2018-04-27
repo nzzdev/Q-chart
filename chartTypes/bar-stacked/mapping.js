@@ -11,8 +11,8 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
-function shouldHaveLabelsOnTopOfBar(itemData, config) {
-  const longestLabel = getLongestDataLabel(itemData, true);
+function shouldHaveLabelsOnTopOfBar(item, config) {
+  const longestLabel = getLongestDataLabel(item, config, true);
   const item = {
     text: longestLabel
   };
@@ -63,7 +63,7 @@ module.exports = function getMapping(config = {}) {
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
 
-        if (shouldHaveLabelsOnTopOfBar(itemData, config)) {
+        if (shouldHaveLabelsOnTopOfBar(item, config)) {
           spec.axes[1].labels = false;
 
           // flush the X axis labels if we have the labels on top of the bar
