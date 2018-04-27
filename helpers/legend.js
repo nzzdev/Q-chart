@@ -56,7 +56,8 @@ function getLegendModel(item, toolRuntimeConfig) {
 
     legendModel.legendItems.push({
       isPrognosis: true,
-      label: legendLabel
+      label: legendLabel,
+      color: "transparent"
     });
   }
   return legendModel;
