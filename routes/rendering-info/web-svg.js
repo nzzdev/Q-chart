@@ -48,10 +48,7 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   return config;
 }
 
-async function getSpec(item, width, toolRuntimeConfig, id) {
-  // first we need to know if there is a chartType and which one
-  const chartType = getChartTypeForItemAndWidth(item, width);
-
+async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
   const mappingConfig = {
     width: width
   };
@@ -107,7 +104,7 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
     // all data transforms are part of the spec
     spec.data[0].values = clone(item.data);
   } else if (item.options.chartType) {
-    spec = await getSpec(item, width, toolRuntimeConfig, id);
+    spec = await getSpec(item, width, toolRuntimeConfig, chartType, id);
   } else {
     throw new Error("no spec");
   }
