@@ -43,6 +43,21 @@ module.exports = function getMapping(config = {}) {
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
+    },
+    {
+      path: "options.barOptions.maxValue",
+      mapToSpec: function(maxValue, spec, item) {
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(item.data);
+
+        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        if (dataMaxValue > maxValue) {
+          maxValue = dataMaxValue;
+        }
+
+        objectPath.set(spec, "scales.1.nice", false);
+        objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
+      }
     }
   ]
     .concat(commonMappings.getColumnDateSeriesHandlingMappings(config))

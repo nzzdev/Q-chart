@@ -100,6 +100,21 @@ module.exports = function getMapping(config = {}) {
           });
         }
       }
+    },
+    {
+      path: "options.barOptions.maxValue",
+      mapToSpec: function(maxValue, spec, item) {
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(item.data);
+
+        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        if (dataMaxValue > maxValue) {
+          maxValue = dataMaxValue;
+        }
+
+        objectPath.set(spec, "scales.0.nice", false);
+        objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
+      }
     }
   ]
     .concat(commonMappings.getBarDateSeriesHandlingMappings(config))
