@@ -28,6 +28,9 @@ module.exports = function getMapping(config = {}) {
     {
       path: "data",
       mapToSpec: function(itemData, spec, item) {
+        // set the x axis title
+        objectPath.set(spec, "axes.1.title", itemData[0][0]);
+
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
@@ -61,6 +64,9 @@ module.exports = function getMapping(config = {}) {
 
         if (shouldHaveLabelsOnTopOfBar(itemData, config)) {
           spec.axes[1].labels = false;
+
+          // flush the X axis labels if we have the labels on top of the bar
+          spec.axes[0].labelFlush = true;
 
           const labelHeightSignal = spec.signals.find(
             signal => signal.name === "labelHeight"
@@ -98,6 +104,16 @@ module.exports = function getMapping(config = {}) {
               }
             }
           });
+        }
+      }
+    },
+    {
+      path: "options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec, item) {
+        if (hideAxisLabel === true) {
+          // unset the x axis label
+          objectPath.set(spec, "axes.1.title", undefined);
+          objectPath.set(spec, "height", spec.height - 30); // decrease the height because we do not need space for the axis title
         }
       }
     },

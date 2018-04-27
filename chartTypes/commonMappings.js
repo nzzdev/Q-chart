@@ -97,7 +97,7 @@ function getBarDateSeriesHandlingMappings(config = {}) {
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
           // format the labels for the X axis according to the interval d3format
-          spec.axes[1].encode = Object.assign({}, spec.axes[0].encode, {
+          spec.axes[1].encode = Object.assign({}, spec.axes[1].encode, {
             labels: {
               update: {
                 text: {

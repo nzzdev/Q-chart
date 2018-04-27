@@ -110,7 +110,25 @@
       "scale": "xScale",
       "grid": false,
       "domain": true,
-      "ticks": false
+      "ticks": false,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+              "value": "right"
+            },
+            "baseline": {
+              "value": "top"
+            },
+            "x": {
+              "signal": "width"
+            },
+            "y": {
+              "value": 30
+            }
+          }
+        }
+      }
     },
     {
       "orient": "left",

@@ -10,6 +10,9 @@ module.exports = function getMapping(config = {}) {
     {
       path: "data",
       mapToSpec: function(itemData, spec) {
+        // set the x axis title
+        objectPath.set(spec, "axes.0.title", itemData[0][0]);
+
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
@@ -40,6 +43,16 @@ module.exports = function getMapping(config = {}) {
           signal => signal.name === "numberOfDataSeries"
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
+      }
+    },
+    {
+      path: "options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec, item) {
+        if (hideAxisLabel === true) {
+          // unset the x axis label
+          objectPath.set(spec, "axes.0.title", undefined);
+          objectPath.set(spec, "height", spec.height - 20); // decrease the height because we do not need space for the axis title
+        }
       }
     },
     {

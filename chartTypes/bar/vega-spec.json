@@ -236,7 +236,28 @@
       "domain": false,
       "grid": false,
       "labels": true,
-      "ticks": false
+      "ticks": false,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+              "value": "top"
+            },
+            "angle": {
+              "value": 0
+            },
+            "baseline": {
+              "value": "bottom"
+            },
+            "x": {
+              "value": 0
+            },
+            "y": {
+              "value": -30
+            }
+          }
+        }
+      }
     }
   ],
   "autosize": {
