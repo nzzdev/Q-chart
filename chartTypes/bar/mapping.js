@@ -68,6 +68,9 @@ module.exports = function getMapping(config = {}) {
           // flush the X axis labels if we have the labels on top of the bar
           spec.axes[0].labelFlush = true;
 
+          // align the axis alignment to the left if the labels are inside the chart
+          spec.axes[1].encode.title.update.align = "left";
+
           const labelHeightSignal = spec.signals.find(
             signal => signal.name === "labelHeight"
           );

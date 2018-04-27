@@ -82,7 +82,7 @@ async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
       mappingConfig
     );
   } catch (err) {
-    throw Boom.notImplemented(err.message);
+    throw new Boom.internal(err.message);
   }
   return spec;
 }

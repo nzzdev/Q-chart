@@ -148,7 +148,6 @@
               "height": {
                 "signal": "height"
               }
-              
             }
           },
           "scales": [
@@ -161,7 +160,7 @@
                 "field": "cValue"
               },
               "paddingInner": {
-                "signal": "2 / height * (numberOfDataSeries - 1)" 
+                "signal": "2 / height * (numberOfDataSeries - 1)"
               },
               "paddingOuter": 0
             }
@@ -173,7 +172,9 @@
               "transform": [
                 {
                   "type": "aggregate",
-                  "groupby": ["xValue"]
+                  "groupby": [
+                    "xValue"
+                  ]
                 }
               ]
             }
@@ -241,7 +242,7 @@
         "title": {
           "update": {
             "align": {
-              "value": "top"
+              "value": "right"
             },
             "angle": {
               "value": 0
