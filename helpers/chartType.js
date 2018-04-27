@@ -7,10 +7,7 @@ function getChartTypeForItemAndWidth(item, width) {
     return "line";
   }
 
-  if (
-    item.options.chartType === "Bar" ||
-    item.options.chartType === "StackedBar"
-  ) {
+  if (item.options.chartType === "Bar") {
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
@@ -22,6 +19,21 @@ function getChartTypeForItemAndWidth(item, width) {
       return "column";
     } else {
       return "bar";
+    }
+  }
+
+  if (item.options.chartType === "StackedBar") {
+    if (item.options.barOptions.isBarChart === false) {
+      if (item.options.barOptions.forceBarsOnSmall) {
+        if (width < 500) {
+          return "bar-stacked";
+        } else {
+          return "column-stacked";
+        }
+      }
+      return "column-stacked";
+    } else {
+      return "bar-stacked";
     }
   }
 }

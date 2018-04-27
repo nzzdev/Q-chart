@@ -1,50 +1,58 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v3.0.json",
-  "height": 300,
-  "autosize": {
-    "type": "fit"
-  },
+  "height": 220,
+  "signals": [
+    {
+      "name": "columnMargin",
+      "value": 1
+    },
+    {
+      "name": "minGroupMargin",
+      "value": 4
+    },
+    {
+      "name": "numberOfDataSeries",
+      "value": 0
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": []
+    }
+  ],
   "scales": [
     {
       "name": "xScale",
       "type": "band",
       "range": "width",
-      "padding": 0.5,
       "domain": {
         "data": "table",
         "field": "xValue"
-      }
+      },
+      "padding": 0,
+      "round": true
     },
     {
       "name": "yScale",
       "type": "linear",
       "range": "height",
-      "nice": true,
-      "zero": true,
       "domain": {
         "data": "table",
         "field": "yValue"
-      }
+      },
+      "nice": true,
+      "zero": true,
+      "round": true
     },
     {
-      "name": "color",
+      "name": "colorScale",
       "type": "ordinal",
       "range": "category",
       "domain": {
         "data": "table",
         "field": "cValue"
       }
-    }
-  ],
-  "axes": [
-    {
-      "orient": "bottom",
-      "scale": "xScale"
-    },
-    {
-      "orient": "left",
-      "scale": "yScale",
-      "grid": true
     }
   ],
   "marks": [
@@ -58,45 +66,58 @@
         }
       },
       "encode": {
-        "enter": {
+        "update": {
           "x": {
             "scale": "xScale",
             "field": "xValue"
+          },
+          "width": {
+            "signal": "bandwidth('xScale')"
           }
         }
       },
       "signals": [
         {
+          "name": "columnWidth",
+          "update": "bandwidth('xScale') / numberOfDataSeries"
+        },
+        {
+          "name": "binnedColumnWidth",
+          "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
+        },
+        {
           "name": "width",
-          "update": "bandwidth('xScale')"
+          "update": "binnedColumnWidth * numberOfDataSeries"
+        },
+        {
+          "name": "groupMargin",
+          "update": "(bandwidth('xScale') - width) / 2"
         }
       ],
       "scales": [
         {
-          "name": "pos",
+          "name": "barPositionScale",
           "type": "band",
           "range": "width",
+          "paddingInner": 0,
+          "paddingOuter": 0,
           "domain": {
             "data": "series",
-            "field": "cValue"
+            "field": "yValue"
           }
         }
       ],
       "marks": [
         {
           "type": "rect",
+          "name": "bar",
           "from": {
             "data": "series"
           },
           "encode": {
             "enter": {
               "x": {
-                "scale": "pos",
-                "field": "cValue"
-              },
-              "width": {
-                "scale": "pos",
-                "band": 1
+                "signal": "groupMargin + scale('barPositionScale', datum.yValue)"
               },
               "y": {
                 "scale": "yScale",
@@ -106,14 +127,39 @@
                 "scale": "yScale",
                 "value": 0
               },
+              "width": {
+                "signal": "bandwidth('barPositionScale') - columnMargin"
+              },
               "fill": {
-                "scale": "color",
-                "field": "cValue"
+                "scale": "colorScale",
+                "signal": "datum.cValue"
               }
             }
           }
         }
       ]
     }
-  ]
+  ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xScale",
+      "grid": false,
+      "domain": true,
+      "ticks": false
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": false,
+      "grid": true,
+      "tickCount": 4
+    }
+  ],
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {},
+  "width": 728
 }

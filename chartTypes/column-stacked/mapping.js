@@ -10,6 +10,8 @@ module.exports = function getMapping(config = {}) {
     {
       path: "data",
       mapToSpec: function(itemData, spec) {
+        // spec.data[0].values = itemData;
+
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 

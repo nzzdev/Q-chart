@@ -1,0 +1,34 @@
+{
+  "title": "FIXTURE: Bar - qualitative - single serie",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Cat",
+      "A"
+    ],
+    [
+      "A very long label so it's on top of bars",
+      "1000"
+    ],
+    [
+      "B",
+      "200"
+    ],
+    [
+      "C",
+      "-200"
+    ]
+  ],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}
