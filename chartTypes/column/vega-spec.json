@@ -103,7 +103,7 @@
           "paddingOuter": 0,
           "domain": {
             "data": "series",
-            "field": "yValue"
+            "field": "cValue"
           }
         }
       ],
@@ -117,7 +117,7 @@
           "encode": {
             "enter": {
               "x": {
-                "signal": "groupMargin + scale('barPositionScale', datum.yValue)"
+                "signal": "groupMargin + scale('barPositionScale', datum.cValue)"
               },
               "y": {
                 "scale": "yScale",
