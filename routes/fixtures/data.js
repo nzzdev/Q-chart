@@ -4,6 +4,7 @@ const fixtureDataDirectory = "../../resources/fixtures/data";
 // has to be in sync with files created in build task - see ../../tasks/build.js
 const fixtureData = [
   require(`${fixtureDataDirectory}/bar-dates-days-prognosis.json`),
+  require(`${fixtureDataDirectory}/bar-dates-null-values.json`),
   require(`${fixtureDataDirectory}/bar-dates-quarter.json`),
   require(`${fixtureDataDirectory}/bar-dates-years.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative.json`),
