@@ -18,6 +18,8 @@ const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
+const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
+  .getDataWithStringsCastedToFloats;
 const legend = require("../../helpers/legend.js");
 
 module.exports = {
@@ -36,6 +38,9 @@ module.exports = {
   },
   handler: async function(request, h) {
     const item = request.payload.item;
+
+    // first and foremost: cast all the floats in strings to actual floats
+    item.data = getDataWithStringsCastedToFloats(item.data);
 
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
     const divisor = dataHelpers.getDivisor(item.data);
