@@ -145,7 +145,7 @@
       "orient": "bottom",
       "scale": "xScale",
       "grid": false,
-      "domain": true,
+      "domain": false,
       "ticks": false,
       "encode": {
         "title": {
