@@ -136,6 +136,37 @@
             ]
           }
         },
+        "annotations": {
+          "title": "Beschriftungen",
+          "type": "object",
+          "properties": {
+            "first": {
+              "title": "erster Wert",
+              "type": "boolean"
+            },
+            "last": {
+              "title": "letzter Wert",
+              "type": "boolean"
+            },
+            "max": {
+              "title": "höchster Wert",
+              "type": "boolean"
+            },
+            "min": {
+              "title": "tiefster Wert",
+              "type": "boolean"
+            }
+          },
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/annotations"
+              }
+            ]
+          }
+        },
         "barOptions": {
           "title": "Balkendiagramm Optionen",
           "type": "object",
