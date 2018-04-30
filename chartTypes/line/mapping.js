@@ -54,8 +54,11 @@ module.exports = function getMappings(config = {}) {
           return a.yValue - b.yValue;
         });
 
-        const firstValue = spec.data[0].values.slice(0).shift();
-        const lastValue = spec.data[0].values.slice(0).pop();
+        const originalCopy = spec.data[0].values.slice(0);
+        const firstValue = originalCopy.shift();
+        const secondValue = originalCopy.shift();
+        const lastValue = originalCopy.pop();
+        const secondLastValue = originalCopy.pop();
         const maxValue = sortedValues.pop();
         const minValue = sortedValues.shift();
 
@@ -65,14 +68,15 @@ module.exports = function getMappings(config = {}) {
             value: firstValue,
             dataName: "onlyFirst",
             align: "left",
-            baseline: "top"
+            baseline: firstValue.yValue > secondValue.yValue ? "top" : "bottom"
           },
           {
             optionName: "last",
             value: lastValue,
             dataName: "onlyLast",
             align: "right",
-            baseline: "top"
+            baseline:
+              lastValue.yValue > secondLastValue.yValue ? "top" : "bottom"
           },
           {
             optionName: "max",
