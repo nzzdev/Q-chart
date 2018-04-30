@@ -1,0 +1,56 @@
+{
+  "title": "FIXTURE: line - annotation - min - max",
+  "data": [
+    [
+      "Day",
+      "A"
+    ],
+    [
+      "01.01.2018",
+      "499"
+    ],
+    [
+      "02.01.2018",
+      "250"
+    ],
+    [
+      "03.01.2018",
+      "465"
+    ],
+    [
+      "04.01.2018",
+      "430"
+    ],
+    [
+      "05.01.2018",
+      "540"
+    ],
+    [
+      "06.01.2018",
+      "560"
+    ],
+    [
+      "07.01.2018",
+      "570"
+    ]
+  ],
+  "options": {
+    "maxValue": "",
+    "chartType": "Line",
+    "barOptions": {},
+    "lineChartOptions": {
+      "lineInterpolation": "linear"
+    },
+    "annotations": {
+      "max": true,
+      "min": true,
+      "first": true,
+      "last": true
+    },
+    "dateSeriesOptions": {
+      "interval": "day",
+      "prognosisStart": null
+    },
+    "highlightDataSeries": null
+  }
+}
