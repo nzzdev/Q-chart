@@ -82,14 +82,24 @@ module.exports = function getMappings(config = {}) {
             optionName: "max",
             value: maxValue,
             dataName: "onlyMax",
-            align: "center",
+            align:
+              maxValue.xValue.toString() === firstValue.xValue.toString()
+                ? "left"
+                : maxValue.xValue.toString() === lastValue.xValue.toString()
+                  ? "right"
+                  : "center",
             baseline: "top"
           },
           {
             optionName: "min",
             value: minValue,
             dataName: "onlyMin",
-            align: "center",
+            align:
+              minValue.xValue.toString() === firstValue.xValue.toString()
+                ? "left"
+                : minValue.xValue.toString() === lastValue.xValue.toString()
+                  ? "right"
+                  : "center",
             baseline: "bottom"
           }
         ]
