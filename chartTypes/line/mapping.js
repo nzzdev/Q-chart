@@ -50,6 +50,11 @@ module.exports = function getMappings(config = {}) {
     {
       path: "options.annotations",
       mapToSpec: function(annotationOptions, spec, item) {
+        // this option is only available if we have exactly one data series
+        if (item.data[0].length !== 2) {
+          return;
+        }
+
         const sortedValues = spec.data[0].values.slice(0).sort((a, b) => {
           return a.yValue - b.yValue;
         });
