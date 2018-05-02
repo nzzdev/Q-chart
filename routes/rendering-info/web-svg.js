@@ -82,7 +82,7 @@ async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
       mappingConfig
     );
   } catch (err) {
-    throw new Boom.internal(err.message);
+    throw new Boom(err);
   }
   return spec;
 }
@@ -104,7 +104,12 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
     // all data transforms are part of the spec
     spec.data[0].values = clone(item.data);
   } else if (item.options.chartType) {
-    spec = await getSpec(item, width, toolRuntimeConfig, chartType, id);
+    try {
+      spec = await getSpec(item, width, toolRuntimeConfig, chartType, id);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   } else {
     throw new Error("no spec");
   }

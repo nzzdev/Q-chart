@@ -79,6 +79,15 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "annotations") {
+      return {
+        available:
+          isLineChart(request.payload) &&
+          hasNoCustomVegaSpec(request.payload) &&
+          request.payload.data[0].length === 2 // only if there is just one data series
+      };
+    }
+
     return Boom.badRequest();
   }
 };
