@@ -9,8 +9,10 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-dates-years.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-single-serie.json`),
-  require(`${fixtureDataDirectory}/stacked-bar-days-prognosis.json`),
-  require(`${fixtureDataDirectory}/stacked-bar-qualitative-negative.json`),
+  require(`${fixtureDataDirectory}/bar-stacked-days-prognosis.json`),
+  require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
+  require(`${fixtureDataDirectory}/line-annotation-min-max.json`),
+  require(`${fixtureDataDirectory}/line-dates-days.json`),
   require(`${fixtureDataDirectory}/vegaSpec.json`)
 ];
 

@@ -5,6 +5,8 @@ const dataHelpers = require("../../helpers/data.js");
 
 const commonMappings = require("../commonMappings.js");
 
+const annotation = require("./annotation.js");
+
 module.exports = function getMappings(config = {}) {
   return [
     {
@@ -43,6 +45,103 @@ module.exports = function getMappings(config = {}) {
               }, [])
           }
         ];
+      }
+    },
+    {
+      path: "options.annotations",
+      mapToSpec: function(annotationOptions, spec, item) {
+        // this option is only available if we have exactly one data series
+        if (item.data[0].length !== 2) {
+          return;
+        }
+
+        const sortedValues = spec.data[0].values.slice(0).sort((a, b) => {
+          return a.yValue - b.yValue;
+        });
+
+        const originalCopy = spec.data[0].values.slice(0);
+        const firstValue = originalCopy.shift();
+        const secondValue = originalCopy.shift();
+        const lastValue = originalCopy.pop();
+        const secondLastValue = originalCopy.pop();
+        const maxValue = sortedValues.pop();
+        const minValue = sortedValues.shift();
+
+        const valuesToAnnotate = [
+          {
+            optionName: "first",
+            value: firstValue,
+            dataName: "onlyFirst",
+            align: "left",
+            verticalAlign:
+              firstValue.yValue > secondValue.yValue ? "top" : "bottom"
+          },
+          {
+            optionName: "last",
+            value: lastValue,
+            dataName: "onlyLast",
+            align: "right",
+            verticalAlign:
+              lastValue.yValue > secondLastValue.yValue ? "top" : "bottom"
+          },
+          {
+            optionName: "max",
+            value: maxValue,
+            dataName: "onlyMax",
+            align:
+              maxValue.xValue.toString() === firstValue.xValue.toString()
+                ? "left"
+                : maxValue.xValue.toString() === lastValue.xValue.toString()
+                  ? "right"
+                  : "center",
+            verticalAlign: "top"
+          },
+          {
+            optionName: "min",
+            value: minValue,
+            dataName: "onlyMin",
+            align:
+              minValue.xValue.toString() === firstValue.xValue.toString()
+                ? "left"
+                : minValue.xValue.toString() === lastValue.xValue.toString()
+                  ? "right"
+                  : "center",
+            verticalAlign: "bottom"
+          }
+        ]
+          .filter(annotation => {
+            return annotationOptions[annotation.optionName] === true;
+          })
+          .reduce((annotations, testAnnotation) => {
+            // make the annotations unique by xValue
+            if (
+              !annotations.find(annotation => {
+                return (
+                  testAnnotation.value.xValue.toString() ===
+                  annotation.value.xValue.toString()
+                );
+              })
+            ) {
+              annotations.push(testAnnotation);
+            }
+            return annotations;
+          }, []);
+
+        for (const valueToAnnotate of valuesToAnnotate) {
+          objectPath.push(spec, "data", {
+            name: valueToAnnotate.dataName,
+            values: [valueToAnnotate.value]
+          });
+
+          const symbol = annotation.getSymbol(valueToAnnotate.dataName);
+          const label = annotation.getLabel(
+            valueToAnnotate.dataName,
+            valueToAnnotate.align,
+            valueToAnnotate.verticalAlign
+          );
+          objectPath.push(spec, "marks", symbol);
+          objectPath.push(spec, "marks", label);
+        }
       }
     },
     {

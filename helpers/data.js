@@ -17,8 +17,8 @@ function getDataWithStringsCastedToFloats(data) {
         // the first cell is the x axis and should not get casted
         return cell;
       }
-      if (cell === null) {
-        return null;
+      if (typeof cell !== "string") {
+        return cell;
       }
       // if we do not have a valid floating point number format in the cell, return it's original value
       if (cell.match(/^[+-]?\d+(\.\d+)?$/) === null) {
@@ -112,12 +112,16 @@ function getFlatData(data) {
 }
 
 function getMaxValue(data) {
-  const flatData = getFlatData(data);
+  const flatData = getFlatData(data).filter(value => {
+    return value !== null && value !== undefined;
+  });
   return Math.max.apply(null, flatData);
 }
 
 function getMinValue(data) {
-  const flatData = getFlatData(data);
+  const flatData = getFlatData(data).filter(value => {
+    return value !== null && value !== undefined;
+  });
   return Math.min.apply(null, flatData);
 }
 
