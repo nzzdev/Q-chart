@@ -37,7 +37,7 @@ const labelTemplate = {
         field: "yValue"
       },
       fontWeight: {
-        value: "bold"
+        value: "100"
       },
       x: {
         scale: "xScale",
