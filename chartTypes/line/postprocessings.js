@@ -39,7 +39,7 @@ module.exports = [
         // textNode.setAttribute("paint-order", "stroke");
 
         const cloneTextNode = textNode.cloneNode(true);
-        cloneTextNode.setAttribute("fill", "none");
+        cloneTextNode.setAttribute("fill", "currentColor");
         cloneTextNode.setAttribute("stroke", "currentColor");
         cloneTextNode.setAttribute("stroke-width", "3px");
 
