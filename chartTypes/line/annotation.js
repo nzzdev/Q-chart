@@ -75,6 +75,7 @@ module.exports = {
   },
   getLabel(dataName, align, baseline = "top") {
     const label = clone(labelTemplate);
+    label.name = `line-annotation-label ${dataName}`;
     label.from.data = dataName;
 
     label.encode.update.align.value = align;
@@ -87,6 +88,7 @@ module.exports = {
       label.encode.update.dy.value = 10;
       label.encode.update.baseline.value = "top";
     }
+
     return label;
   }
 };
