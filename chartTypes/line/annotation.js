@@ -73,18 +73,18 @@ module.exports = {
     symbol.from.data = dataName;
     return symbol;
   },
-  getLabel(dataName, align, baseline = "top") {
+  getLabel(dataName, align, verticalAlign = "top") {
     const label = clone(labelTemplate);
     label.name = `line-annotation-label ${dataName}`;
     label.from.data = dataName;
 
     label.encode.update.align.value = align;
 
-    if (baseline === "top") {
+    if (verticalAlign === "top") {
       label.encode.update.dy.value = -10;
       label.encode.update.baseline.value = "bottom";
     }
-    if (baseline === "bottom") {
+    if (verticalAlign === "bottom") {
       label.encode.update.dy.value = 10;
       label.encode.update.baseline.value = "top";
     }

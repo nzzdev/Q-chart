@@ -73,14 +73,15 @@ module.exports = function getMappings(config = {}) {
             value: firstValue,
             dataName: "onlyFirst",
             align: "left",
-            baseline: firstValue.yValue > secondValue.yValue ? "top" : "bottom"
+            verticalAlign:
+              firstValue.yValue > secondValue.yValue ? "top" : "bottom"
           },
           {
             optionName: "last",
             value: lastValue,
             dataName: "onlyLast",
             align: "right",
-            baseline:
+            verticalAlign:
               lastValue.yValue > secondLastValue.yValue ? "top" : "bottom"
           },
           {
@@ -93,7 +94,7 @@ module.exports = function getMappings(config = {}) {
                 : maxValue.xValue.toString() === lastValue.xValue.toString()
                   ? "right"
                   : "center",
-            baseline: "top"
+            verticalAlign: "top"
           },
           {
             optionName: "min",
@@ -105,7 +106,7 @@ module.exports = function getMappings(config = {}) {
                 : minValue.xValue.toString() === lastValue.xValue.toString()
                   ? "right"
                   : "center",
-            baseline: "bottom"
+            verticalAlign: "bottom"
           }
         ]
           .filter(annotation => {
@@ -136,7 +137,7 @@ module.exports = function getMappings(config = {}) {
           const label = annotation.getLabel(
             valueToAnnotate.dataName,
             valueToAnnotate.align,
-            valueToAnnotate.baseline
+            valueToAnnotate.verticalAlign
           );
           objectPath.push(spec, "marks", symbol);
           objectPath.push(spec, "marks", label);
