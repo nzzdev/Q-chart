@@ -12,6 +12,13 @@ const getLongestDataLabel = require("../../helpers/data.js")
 const textMetrics = require("vega").textMetrics;
 
 function shouldHaveLabelsOnTopOfBar(item, config) {
+  // this does not work for positive and negative values. so if we have both, we do not show the labels on top
+  const minValue = dataHelpers.getMinValue(item.data);
+  const maxValue = dataHelpers.getMaxValue(item.data);
+  if (minValue < 0 && maxValue > 0) {
+    return false;
+  }
+
   const longestLabel = getLongestDataLabel(item, config, true);
   const textItem = {
     text: longestLabel

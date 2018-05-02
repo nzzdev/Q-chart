@@ -75,6 +75,7 @@
   "marks": [
     {
       "type": "group",
+      "name": "data-series",
       "from": {
         "facet": {
           "name": "series",
