@@ -1,0 +1,68 @@
+{
+  "title": "FIXTURE: Bar - color overwrite - highlight",
+  "subtitle": "Colorcolorcolor",
+  "data": [
+    [
+      "Country",
+      "America",
+      "Mexico",
+      "Switzerland",
+      "Dem. Republic of Congo"
+    ],
+    [
+      "GDP",
+      "18570000000",
+      "1046000000000",
+      "659800000000",
+      "35000000000"
+    ],
+    [
+      "Population",
+      "800372000000",
+      "127500000000",
+      "83720000000",
+      "787400000000"
+    ]
+  ],
+  "sources": [],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear"
+    },
+    "colorOverwrite": [
+      {
+        "color": "#23288c",
+        "colorBright": "#c0c4f0",
+        "position": 1
+      },
+      {
+        "color": "#ba9b20",
+        "colorBright": "#f5e49f",
+        "position": 2
+      },
+      {
+        "color": "#bf5d30",
+        "colorBright": "#f5cab8",
+        "position": 3
+      },
+      {
+        "color": "#29a0a6",
+        "colorBright": "#b9eaed",
+        "position": 4
+      }
+    ],
+    "highlightDataSeries": 2
+  }
+}
