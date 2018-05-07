@@ -6,5 +6,6 @@ module.exports = [
   require("./option-availability.js"),
   require("./dynamic-enum.js"),
   require("./health.js"),
-  require("./fixtures/data.js")
+  require("./fixtures/data.js"),
+  require("./validation/index.js")
 ].concat(require("./schema.js"));
