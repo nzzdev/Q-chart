@@ -7,6 +7,10 @@ const commonMappings = require("../commonMappings.js");
 
 const annotation = require("./annotation.js");
 
+const d3 = {
+  array: require("d3-array")
+};
+
 module.exports = function getMappings(config = {}) {
   return [
     {
@@ -227,6 +231,65 @@ module.exports = function getMappings(config = {}) {
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];
+      }
+    },
+    {
+      path: "options.lineChartOptions.isStockChart",
+      mapToSpec: function(isStockChart, spec, item) {
+        if (!isStockChart) {
+          return;
+        }
+
+        // if the option for (intraday) stock is set
+        // we do not use a time scale as this would look weird
+        // because there is no data during the night when stock exchanges are closed
+        // therefor we need to do some manual date wrangling to have the labels in the correct format
+
+        const d3format =
+          intervals[item.options.dateSeriesOptions.interval].d3format;
+
+        // format the labels for the X axis according to the interval d3format
+        spec.axes[0].encode = Object.assign({}, spec.axes[0].encode, {
+          labels: {
+            update: {
+              text: {
+                signal: `timeFormat(timeParse(datum.value, "%Y-%m-%dT%H:%M:%S.%L%Z"), '${
+                  intervals[item.options.dateSeriesOptions.interval].d3format
+                }')`
+              }
+            }
+          }
+        });
+
+        const dates = item.data
+          .slice(0)
+          .slice(1) // return header row
+          .map(row => {
+            return row[0];
+          });
+
+        // just show first and last date for now
+        // todo: this should be more intelligent in calculating the ticks
+        objectPath.set(
+          spec,
+          "axes.0.values",
+          d3.array.extent(dates).map(date => date.toISOString())
+        );
+
+        objectPath.set(
+          spec,
+          "data.0.values",
+          spec.data[0].values.map(value => {
+            value.xValue = value.xValue.toISOString();
+            return value;
+          })
+        );
+
+        objectPath.set(spec, "data.0.parse", {
+          format: "date:%Y-%m-%dT%H:%M:%S.%L%Z"
+        });
+
+        objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
       }
     }
   ].concat(commonMappings.getLineDateSeriesHandlingMappings(config));

@@ -286,6 +286,11 @@
                   }
                 ]
               }
+            },
+            "isStockChart": {
+              "title": "Intraday-Chart",
+              "type": "boolean",
+              "default": false
             }
           }
         },
