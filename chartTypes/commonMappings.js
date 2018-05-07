@@ -10,7 +10,11 @@ function getLineDateSeriesHandlingMappings(config = {}) {
     {
       path: "data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
+        if (
+          config.dateFormat &&
+          item.options.lineChartOptions &&
+          item.options.lineChartOptions.isStockChart === false
+        ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
@@ -21,7 +25,7 @@ function getLineDateSeriesHandlingMappings(config = {}) {
       path: "options.dateSeriesOptions.interval",
       mapToSpec: function(interval, spec, item) {
         // only use this option if we have a valid dateFormat
-        if (config.dateFormat) {
+        if (spec.scales[0].type === "time") {
           if (process.env.FEAT_VARIABLE_HOUR_STEP === true) {
             let step = 1;
             // if we have hour interval and potentially to many ticks (so they become messy because they do not map to pixels nicely)

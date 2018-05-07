@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
     "hoek": "^5.0.2",
     "inert": "^5.0.1",
     "jsdom": "^11.5.1",
+    "moment-timezone": "^0.5.16",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",

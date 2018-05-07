@@ -1,6 +1,9 @@
 const array2d = require("array2d");
 const clone = require("clone");
 
+const moment = require("moment-timezone");
+const timezone = process.env.TIMEZONE || "Europe/Zurich";
+
 function dateFromIsoWeek(year, week, day) {
   var d = new Date(Date.UTC(year, 0, 3));
   d.setUTCDate(3 - d.getUTCDay() + (week - 1) * 7 + parseInt(day, 10));
@@ -124,14 +127,19 @@ const dateFormats = {
     precision: "minutes",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
-      return new Date(
-        parsed[4],
-        parsed[1] - 1,
-        parsed[3],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        parsed[7] || 0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[4],
+            parsed[1] - 1,
+            parsed[3],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            parsed[7] || 0
+          ),
+          timezone
+        )
+        .toDate();
     }
   },
   "DD.MM.YYYY HH:MM": {
@@ -140,14 +148,19 @@ const dateFormats = {
     precision: "minutes",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
-      return new Date(
-        parsed[4],
-        parsed[3] - 1,
-        parsed[1],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[4],
+            parsed[3] - 1,
+            parsed[1],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            0
+          ),
+          timezone
+        )
+        .toDate();
     }
   },
   "YYYY-MM-DD HH:MM": {
@@ -156,14 +169,19 @@ const dateFormats = {
     precision: "minutes",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
-      return new Date(
-        parsed[1],
-        parsed[3] - 1,
-        parsed[4],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[1],
+            parsed[3] - 1,
+            parsed[4],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            0
+          ),
+          timezone
+        )
+        .toDate();
     }
   },
   "MM/DD/YYYY HH:MM:SS": {
@@ -172,14 +190,19 @@ const dateFormats = {
     precision: "seconds",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
-      return new Date(
-        parsed[4],
-        parsed[1] - 1,
-        parsed[3],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[4],
+            parsed[1] - 1,
+            parsed[3],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            0
+          ),
+          timezone
+        )
+        .toDate();
     }
   },
   "DD.MM.YYYY HH:MM:SS": {
@@ -188,14 +211,19 @@ const dateFormats = {
     precision: "seconds",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
-      return new Date(
-        parsed[4],
-        parsed[3] - 1,
-        parsed[1],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        parsed[7] || 0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[4],
+            parsed[3] - 1,
+            parsed[1],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            parsed[7] || 0
+          ),
+          timezone
+        )
+        .toDate();
     }
   },
   "YYYY-MM-DD HH:MM:SS": {
@@ -204,14 +232,19 @@ const dateFormats = {
     precision: "seconds",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
-      return new Date(
-        parsed[1],
-        parsed[3] - 1,
-        parsed[4],
-        parsed[5] || 0,
-        parsed[6] || 0,
-        parsed[7] || 0
-      );
+      return moment
+        .tz(
+          new Date(
+            parsed[1],
+            parsed[3] - 1,
+            parsed[4],
+            parsed[5] || 0,
+            parsed[6] || 0,
+            parsed[7] || 0
+          ),
+          timezone
+        )
+        .toDate();
     }
   }
 };

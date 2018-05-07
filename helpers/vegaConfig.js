@@ -30,8 +30,8 @@ function getComputedColorRange(item, toolRuntimeConfig) {
       }
 
       let color = colorOverwrite.color;
-      // if we have highlightDataSeries, we use bright, otherwise default color
-      if (hasHighlight(item)) {
+      // if we have highlightDataSeries and the current on is not the highlighted on, we use bright, otherwise default color
+      if (hasHighlight(item) && item.options.highlightDataSeries !== colorOverwrite.position - 1) {
         color = colorOverwrite.colorBright;
       }
       // the position is a 1 based index, therefore we need to do -1
