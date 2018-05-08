@@ -5,7 +5,21 @@
   "properties": {
     "title": {
       "title": "Titel",
-      "type": "string"
+      "type": "string",
+      "Q:options": {
+        "validationRules": [
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "/validation/sources",
+            "data": ["title", "data", "options.chartType"]
+          },
+          {
+            "type": "Schema",
+            "endpoint": "/validation/data",
+            "data": ["title", "data", "options.chartType"]
+          }
+        ]
+      }
     },
     "subtitle": {
       "title": "Untertitel",
