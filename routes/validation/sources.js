@@ -21,17 +21,15 @@ module.exports = {
     tags: ["api"]
   },
   handler: function(request, h) {
-    return JSON.stringify([
-      {
-        priority: {
-          name: "medium",
-          value: 1
-        },
-        message: {
-          title: "Keine Quelle erfasst",
-          body: "Bist du sicher, dass es keine Quellenangabe benötigt?"
-        }
+    return JSON.stringify({
+      priority: {
+        name: "medium",
+        value: 1
+      },
+      message: {
+        title: "Keine Quelle erfasst",
+        body: "Bist du sicher, dass es keine Quellenangabe benötigt?"
       }
-    ]);
+    });
   }
 };

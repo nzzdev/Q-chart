@@ -7,5 +7,5 @@ module.exports = [
   require("./dynamic-enum.js"),
   require("./health.js"),
   require("./fixtures/data.js"),
-  require("./validation/index.js")
+  require("./validation/sources.js")
 ].concat(require("./schema.js"));
