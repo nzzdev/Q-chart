@@ -5,21 +5,7 @@
   "properties": {
     "title": {
       "title": "Titel",
-      "type": "string",
-      "Q:options": {
-        "validationRules": [
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "/validation/sources",
-            "data": ["title", "data", "options.chartType"]
-          },
-          {
-            "type": "Schema",
-            "endpoint": "/validation/data",
-            "data": ["title", "data", "options.chartType"]
-          }
-        ]
-      }
+      "type": "string"
     },
     "subtitle": {
       "title": "Untertitel",
@@ -30,9 +16,18 @@
       "type": "array",
       "Q:type": "table",
       "Q:options": {
-        "validation": {
-          "endpoint": "validate"
-        }
+        "validationRules": [
+          {
+            "type": "Local",
+            "method": "checkForEmptyData",
+            "data": ["data"]
+          },
+          {
+            "type": "Local",
+            "method": "checkForEmptyDataEntries",
+            "data": ["data"]
+          }
+        ]
       },
       "items": {
         "type": "array",
@@ -91,10 +86,10 @@
         "required": ["text"]
       },
       "Q:options": {
-        "validation": [
+        "validationRules": [
           {
-            "type": "ToolEndpoint",
-            "endpoint": "/validation/sources",
+            "type": "Local",
+            "method": "checkForSources",
             "data": ["sources"]
           }
         ]
