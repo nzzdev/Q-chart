@@ -21,11 +21,6 @@
             "type": "Local",
             "method": "checkForEmptyData",
             "data": ["data"]
-          },
-          {
-            "type": "Local",
-            "method": "checkForEmptyDataEntries",
-            "data": ["data"]
           }
         ]
       },
