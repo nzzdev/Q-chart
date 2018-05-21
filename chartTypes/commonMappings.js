@@ -13,7 +13,7 @@ function getLineDateSeriesHandlingMappings(config = {}) {
         if (
           config.dateFormat &&
           item.options.lineChartOptions &&
-          item.options.lineChartOptions.isStockChart === false
+          item.options.lineChartOptions.isStockChart !== true
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
