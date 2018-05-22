@@ -46,7 +46,7 @@ function getLegendModel(item, toolRuntimeConfig) {
     );
 
     let legendLabel = "Prognose ";
-    if (prognosisStart !== dataWithDateParsed.slice(1).length + 1) {
+    if (prognosisStart !== dataWithDateParsed.slice(1).length - 1) {
       // if the prognosis is not the last label
       legendLabel += "(ab ";
     } else {
