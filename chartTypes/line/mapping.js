@@ -66,7 +66,8 @@ module.exports = function getMappings(config = {}) {
         const firstValue = spec.data[0].values[0];
         const secondValue = spec.data[0].values[1];
         const lastValue = spec.data[0].values[spec.data[0].values.length - 1];
-        const secondLastValue = spec.data[0].values[spec.data[0].values.length - 2];
+        const secondLastValue =
+          spec.data[0].values[spec.data[0].values.length - 2];
 
         const maxValue = sortedValues.pop();
         const minValue = sortedValues.shift();
@@ -78,7 +79,10 @@ module.exports = function getMappings(config = {}) {
             dataName: "onlyFirst",
             align: "left",
             verticalAlign:
-              firstValue.yValue > secondValue.yValue ? "top" : "bottom"
+              firstValue.yValue > secondValue.yValue &&
+              !item.options.lineChartOptions.reverseYScale
+                ? "top"
+                : "bottom"
           },
           {
             optionName: "last",
@@ -86,7 +90,10 @@ module.exports = function getMappings(config = {}) {
             dataName: "onlyLast",
             align: "right",
             verticalAlign:
-              lastValue.yValue > secondLastValue.yValue ? "top" : "bottom"
+              lastValue.yValue > secondLastValue.yValue &&
+              !item.options.lineChartOptions.reverseYScale
+                ? "top"
+                : "bottom"
           },
           {
             optionName: "max",
@@ -98,7 +105,9 @@ module.exports = function getMappings(config = {}) {
                 : maxValue.xValue.toString() === lastValue.xValue.toString()
                   ? "right"
                   : "center",
-            verticalAlign: "top"
+            verticalAlign: !item.options.lineChartOptions.reverseYScale
+              ? "top"
+              : "bottom"
           },
           {
             optionName: "min",
@@ -110,7 +119,9 @@ module.exports = function getMappings(config = {}) {
                 : minValue.xValue.toString() === lastValue.xValue.toString()
                   ? "right"
                   : "center",
-            verticalAlign: "bottom"
+            verticalAlign: !item.options.lineChartOptions.reverseYScale
+              ? "bottom"
+              : "top"
           }
         ]
           .filter(annotation => {
