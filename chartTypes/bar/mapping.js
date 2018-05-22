@@ -38,6 +38,17 @@ module.exports = function getMapping(config = {}) {
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
+        // set the barWidth depending on the number of bars we will get
+        const numberOfBars = (itemData.length - 1) * itemData[0].length;
+        const barWidthSignal = spec.signals.find(signal => {
+          return signal.name === 'barWidth'
+        });
+        if (numberOfBars > 10) {
+          barWidthSignal.value = 16
+        } else {
+          barWidthSignal.value = 24
+        }
+
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
