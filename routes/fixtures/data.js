@@ -14,7 +14,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/line-annotation-min-max.json`),
   require(`${fixtureDataDirectory}/line-annotation-reversed-y-axis.json`),
-  require(`${fixtureDataDirectory}/line-annotation-shortened-numbers.json`),
+  require(`${fixtureDataDirectory}/line-annotation-shortened-numbers-prognosis.json`),
   require(`${fixtureDataDirectory}/line-dates-days.json`),
   require(`${fixtureDataDirectory}/line-dates-min-max-missing-value.json`),
   require(`${fixtureDataDirectory}/line-stock-chart.json`),

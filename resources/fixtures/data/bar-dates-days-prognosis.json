@@ -100,7 +100,7 @@
     },
     "dateSeriesOptions": {
       "interval": "year",
-      "prognosisStart": 3
+      "prognosisStart": 20
     },
     "lineChartOptions": {},
     "colorOverwrite": [],
