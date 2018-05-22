@@ -1,4 +1,5 @@
 const clone = require("clone");
+const d3config = require("../../config/d3.js");
 
 const symbolTemplate = {
   type: "symbol",
@@ -34,7 +35,8 @@ const labelTemplate = {
   encode: {
     update: {
       text: {
-        field: "yValue"
+        signal: `format(datum.yValue, "${d3config.formatLocale.decimal}")`,
+        // field: "yValue"
       },
       fontWeight: {
         value: "100"
