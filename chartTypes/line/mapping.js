@@ -63,11 +63,11 @@ module.exports = function getMappings(config = {}) {
           return a.yValue - b.yValue;
         });
 
-        const originalCopy = spec.data[0].values.slice(0);
-        const firstValue = originalCopy.shift();
-        const secondValue = originalCopy.shift();
-        const lastValue = originalCopy.pop();
-        const secondLastValue = originalCopy.pop();
+        const firstValue = spec.data[0].values[0];
+        const secondValue = spec.data[0].values[1];
+        const lastValue = spec.data[0].values[spec.data[0].values.length - 1];
+        const secondLastValue = spec.data[0].values[spec.data[0].values.length - 2];
+
         const maxValue = sortedValues.pop();
         const minValue = sortedValues.shift();
 
