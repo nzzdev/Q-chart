@@ -1,5 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const dataHelpers = require("../helpers/data.js");
+const d3config = require("../config/d3.js");
 
 const hideRepeatingTickLabels = {
   process: function(svg, spec, item, toolRuntimeConfig) {
@@ -118,9 +120,81 @@ const addPrognosisPattern = {
   }
 };
 
+const highlightZeroGridLineIfPositiveAndNegative = {
+  process: function(svg, spec, item, toolRuntimeConfig, id) {
+    // return early if there are only positive values
+    if (
+      dataHelpers.getMinValue(item.data) > 0 &&
+      dataHelpers.getMaxValue(item.data) > 0
+    ) {
+      return svg;
+    }
+    // return early if there are only negative values
+    if (
+      dataHelpers.getMinValue(item.data) < 0 &&
+      dataHelpers.getMaxValue(item.data) < 0
+    ) {
+      return svg;
+    }
+
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    // for columns and lines, the Y axis is the 2nd axis, for bars it's the first
+    // we determine this by the domain value property for the y axes
+    let axisIndex;
+    if (
+      spec.scales.find(scale => scale.name === "yScale").domain.field ===
+      "yValue"
+    ) {
+      axisIndex = 1;
+    } else {
+      axisIndex = 0;
+    }
+    const axisElements = document.querySelectorAll(".role-axis");
+    const yAxisTickLabels = axisElements
+      .item(axisIndex)
+      .querySelectorAll("text");
+    // find the index of the tick with the value 0
+    let zeroTickIndex = undefined;
+    for (let i = 0; i < yAxisTickLabels.length; i++) {
+      const tick = yAxisTickLabels.item(i);
+      const label = tick.innerHTML;
+      const labelValue = parseFloat(
+        label.replace(d3config.formatLocale.decimal, ".")
+      );
+      if (labelValue === 0) {
+        zeroTickIndex = i;
+      }
+    }
+
+    // if we have found the index of the zero tick
+    // we are going to change the stroke color of the corresponding grid line
+    if (zeroTickIndex !== undefined) {
+      const yAxisGridlines = axisElements
+        .item(axisIndex)
+        .querySelectorAll("line");
+
+      yAxisGridlines.item(zeroTickIndex).setAttribute(
+        "style",
+        yAxisGridlines
+          .item(zeroTickIndex)
+          .getAttribute("style")
+          .replace(
+            `stroke: ${toolRuntimeConfig.axis.tickColor}`,
+            `stroke: ${toolRuntimeConfig.axis.labelColor}`
+          )
+      );
+    }
+
+    return document.body.innerHTML;
+  }
+};
+
 module.exports = {
   hideRepeatingTickLabels: hideRepeatingTickLabels,
   hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
   highlightTicksWithVisibleValues: highlightTicksWithVisibleValues,
-  addPrognosisPattern: addPrognosisPattern
+  addPrognosisPattern: addPrognosisPattern,
+  highlightZeroGridLineIfPositiveAndNegative: highlightZeroGridLineIfPositiveAndNegative
 };
