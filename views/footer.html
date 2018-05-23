@@ -25,4 +25,8 @@
   {%- else %}
     Quelle: nicht angegeben
   {%- endif %}
+
+  {%- if item.acronym %}
+    <span>&nbsp;&ndash;&nbsp;Grafik: {{ item.acronym }}</span>
+  {%- endif %}
 </div>
