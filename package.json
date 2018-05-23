@@ -22,7 +22,7 @@
     "hapi": "^17.0.1",
     "hoek": "^5.0.2",
     "inert": "^5.0.1",
-    "jsdom": "^11.5.1",
+    "jsdom": "^11.10.0",
     "moment-timezone": "^0.5.16",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
