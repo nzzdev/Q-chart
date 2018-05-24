@@ -1,6 +1,6 @@
 <div class="s-q-item__footer">
   {%- if item.notes %}
-    <span>{{ item.notes }}&nbsp;&ndash;&nbsp;</span>
+    <span>{{ item.notes }} &ndash; </span>
   {%- endif %}
   {%- if item.sources.length > 0 %}
     {%- if item.sources.length > 1 %}
@@ -12,21 +12,14 @@
     {%- for source in item.sources %}
       
       {%- if source.text !== "" %}
-        {%- if source.link and source.link.isValid %}
-          <a href="{{ source.link.url }}" target="blank" rel="noopener noreferrer">{{ source.text }}</a>
-        {%- else %}
-          {{ source.text }}
-        {%- endif %}
+        {%- if source.link and source.link.isValid %}<a href="{{ source.link.url }}" target="blank" rel="noopener noreferrer">{{ source.text }}</a>
+        {%- else %} {{ source.text }}{%- endif %}
         {% if not loop.last %}, {% endif %}
       {%- endif %}
 
     {%- endfor %}
 
-  {%- else %}
-    Quelle: nicht angegeben
-  {%- endif %}
+  {%- else %}Quelle: nicht angegeben{%- endif %}
 
-  {%- if item.acronym %}
-    <span>&nbsp;&ndash;&nbsp;Grafik: {{ item.acronym }}</span>
-  {%- endif %}
+  {%- if item.acronym %} &ndash; Grafik: {{ item.acronym }}{%- endif %}
 </div>
