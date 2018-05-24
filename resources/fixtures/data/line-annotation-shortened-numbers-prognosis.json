@@ -1,5 +1,5 @@
 {
-  "title": "FIXTURE: line - annotation - shortened numbers",
+  "title": "FIXTURE: line - annotation - shortened numbers - prognosis",
   "data": [
     [
       "yearMonth",
@@ -264,7 +264,7 @@
     },
     "dateSeriesOptions": {
       "interval": "year",
-      "prognosisStart": null
+      "prognosisStart": 40
     },
     "lineChartOptions": {
       "reverseYScale": false,

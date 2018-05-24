@@ -68,7 +68,8 @@
     .q-chart__legend__item__box {
       background: transparent;
       line {
-        stroke-dasharray: 2px 2px;
+        stroke-dasharray: 0px 4px;
+        stroke-linecap: round;
       }
     }
   }

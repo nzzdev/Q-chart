@@ -5,8 +5,8 @@
   },
   "style": {
     "prognosisLine": {
-      "strokeDash": [6, 2],
-      "strokeDashOffset": -2
+      "strokeDash": [0, 4],
+      "strokeCap": "round"
     }
   },
   "axis": {
