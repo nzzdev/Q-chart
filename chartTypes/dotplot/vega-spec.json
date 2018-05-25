@@ -9,10 +9,6 @@
       "value": 1
     },
     {
-      "name": "labelHeight",
-      "value": 0
-    },
-    {
       "name": "dotGroupHeight",
       "value": 24
     },
@@ -22,7 +18,7 @@
     },
     {
       "name": "groupHeight",
-      "update": "dotGroupHeight + labelHeight + groupPadding"
+      "update": "dotGroupHeight + groupPadding"
     }
   ],
   "data": [
@@ -97,19 +93,13 @@
           }
         }
       },
-      "signals": [
-        {
-          "name": "height",
-          "update": "bandwidth('yScale') - labelHeight"
-        }
-      ],
       "marks": [
         {
           "type": "group",
           "encode": {
             "enter": {
               "y": {
-                "signal": "labelHeight"
+                "value": 0
               },
               "x": {
                 "value": 0
@@ -122,6 +112,20 @@
               }
             }
           },
+          "data": [
+            {
+              "name": "xValues",
+              "source": "series",
+              "transform": [
+                {
+                  "type": "aggregate",
+                  "groupby": [
+                    "xValue"
+                  ]
+                }
+              ]
+            }
+          ],
           "marks": [
             {
               "type": "symbol",
@@ -132,7 +136,7 @@
               "encode": {
                 "enter": {
                   "y": {
-                    "signal": "dotGroupHeight / 2 + (datum.posCorrectionFactor * 10)"
+                    "signal": "dotGroupHeight / 2 + (datum.posCorrectionFactor * 11)"
                   },
                   "x": {
                     "scale": "xScale",
@@ -149,7 +153,7 @@
                     "value": 2
                   },
                   "size": {
-                    "value": 100
+                    "value": 121
                   }
                 }
               }

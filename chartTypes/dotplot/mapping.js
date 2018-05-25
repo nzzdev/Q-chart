@@ -11,26 +11,6 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
-function shouldHaveLabelsOnTopOfBar(item, config) {
-  // this does not work for positive and negative values. so if we have both, we do not show the labels on top
-  const minValue = dataHelpers.getMinValue(item.data);
-  const maxValue = dataHelpers.getMaxValue(item.data);
-  if (minValue < 0 && maxValue > 0) {
-    return false;
-  }
-
-  const longestLabel = getLongestDataLabel(item, config, true);
-  const textItem = {
-    text: longestLabel
-  };
-  const longestLabelWidth = textMetrics.width(textItem);
-
-  if (config.width / 3 < longestLabelWidth) {
-    return true;
-  }
-  return false;
-}
-
 module.exports = function getMapping(config = {}) {
   return [
     {
@@ -68,6 +48,8 @@ module.exports = function getMapping(config = {}) {
               });
             }, {});
 
+            // if we have duplicate values, we add some correction factor here to calculate
+            // the circles position (stacked if same value)
             // calculate the first correction factor
             // this gives us a currentCorrectionFactor like this
             // occurences   factors
@@ -81,28 +63,52 @@ module.exports = function getMapping(config = {}) {
                 (valueOccurences[value].occurences - 1) * -0.5;
             }
 
-            return row.map((val, index) => {
-              // generate one array entry for every data category on the same x value
-              let value = null;
-              if (!Number.isNaN(parseFloat(val))) {
-                value = val / divisor;
-              }
+            return row
+              .map((val, index) => {
+                // generate one array entry for every data category on the same x value
+                let value = null;
+                if (!Number.isNaN(parseFloat(val))) {
+                  value = val / divisor;
+                }
 
-              const data = {
-                xValue: x,
-                xIndex: rowIndex,
-                yValue: value,
-                cValue: index,
-                posCorrectionFactor:
-                  valueOccurences[value].currentCorrectionFactor
-              };
+                const data = {
+                  xValue: x,
+                  xIndex: rowIndex,
+                  yValue: value,
+                  cValue: index,
+                  posCorrectionFactor:
+                    valueOccurences[value].currentCorrectionFactor
+                };
 
-              // increase the currentCorrectionFactor for this value by 1
-              valueOccurences[value].currentCorrectionFactor =
-                valueOccurences[value].currentCorrectionFactor + 1;
+                // increase the currentCorrectionFactor for this value by 1
+                valueOccurences[value].currentCorrectionFactor =
+                  valueOccurences[value].currentCorrectionFactor + 1;
 
-              return data;
-            });
+                return data;
+              })
+              .sort((a, b) => {
+                // sort the array to have the lowest first and the largest last in the data
+                // this is done to easier calculate helper properties for the annotations afterwords
+                return a.yValue - b.yValue;
+              })
+              .map((data, index, row) => {
+                // add isMin and isMax to be used by min/max annotation later
+                data.isMin = index === 0;
+                data.isMax = index === row.length - 1;
+                return data;
+              })
+              .map((data, index, row) => {
+                // if this is not the first data series, we calculate the diff to the previous one
+                // this is needed for the annotations.diff options
+                if (index !== 0) {
+                  data.diffToPrevious = Math.abs(
+                    data.yValue - row[index - 1].yValue
+                  );
+                } else {
+                  data.diffToPrevious = null;
+                }
+                return data;
+              });
           })
           .reduce((acc, cur) => {
             // flatten the array
@@ -113,53 +119,6 @@ module.exports = function getMapping(config = {}) {
           signal => signal.name === "numberOfDataSeries"
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
-
-        if (shouldHaveLabelsOnTopOfBar(item, config)) {
-          spec.axes[1].labels = false;
-
-          // flush the X axis labels if we have the labels on top of the bar
-          spec.axes[0].labelFlush = true;
-
-          // align the axis alignment to the left if the labels are inside the chart
-          spec.axes[1].encode.title.update.align = "left";
-
-          const labelHeightSignal = spec.signals.find(
-            signal => signal.name === "labelHeight"
-          );
-          labelHeightSignal.value = 16;
-
-          // if we have a date series, we need to format the label accordingly
-          // otherwise we use the exact xValue as the label
-          const labelText = {};
-          if (config.dateFormat) {
-            const d3format =
-              intervals[item.options.dateSeriesOptions.interval].d3format;
-            labelText.signal = `timeFormat(datum.xValue, '${
-              intervals[item.options.dateSeriesOptions.interval].d3format
-            }')`;
-          } else {
-            labelText.field = "xValue";
-          }
-
-          spec.marks[0].marks[0].marks.push({
-            type: "text",
-            name: "bar-top-label",
-            from: {
-              data: "xValues"
-            },
-            encode: {
-              update: {
-                text: labelText,
-                y: {
-                  signal: "-labelHeight/2"
-                },
-                baseline: {
-                  value: "middle"
-                }
-              }
-            }
-          });
-        }
       }
     },
     {
@@ -223,10 +182,7 @@ module.exports = function getMapping(config = {}) {
                 scale: "xScale",
                 field: "yValue"
               },
-              x2: {
-                scale: "xScale",
-                field: "yValue"
-              },
+              strokeMiterLimit: 0,
               stroke: {
                 value: spec.config.axis.labelColor
               },
@@ -238,9 +194,122 @@ module.exports = function getMapping(config = {}) {
         };
         spec.marks[0].marks[0].marks.unshift(dotConnectionLineSpec);
       }
+    },
+    {
+      path: "options.annotations.min",
+      mapToSpec: function(showDiffAnnoation, spec, item) {
+        if (!showDiffAnnoation) {
+          return;
+        }
+        spec.marks[0].marks[0].data.push({
+          name: "minAnnotationSeries",
+          source: "series",
+          transform: [{ type: "filter", expr: "datum.isMin === true" }]
+        });
+        const diffTextMarksSpec = {
+          type: "text",
+          name: "annotation-label annotation-label--min",
+          from: { data: "minAnnotationSeries" },
+          encode: {
+            enter: {
+              text: { signal: "datum.yValue" },
+              y: {
+                signal: "dotGroupHeight / 2"
+              },
+              x: {
+                scale: "xScale",
+                signal: "datum.yValue - 30"
+              },
+              fill: { value: spec.config.axis.labelColor },
+              align: { value: "right" },
+              baseline: { value: "middle" },
+              fontSize: { value: spec.config.text.fontSize + 2 }
+            }
+          }
+        };
+        spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
+      }
+    },
+    {
+      path: "options.annotations.max",
+      mapToSpec: function(showDiffAnnoation, spec, item) {
+        if (!showDiffAnnoation) {
+          return;
+        }
+        spec.marks[0].marks[0].data.push({
+          name: "maxAnnotationSeries",
+          source: "series",
+          transform: [{ type: "filter", expr: "datum.isMax === true" }]
+        });
+        const diffTextMarksSpec = {
+          type: "text",
+          name: "annotation-label annotation-label--max",
+          from: { data: "maxAnnotationSeries" },
+          encode: {
+            enter: {
+              text: { signal: "datum.yValue" },
+              y: {
+                signal: "dotGroupHeight / 2"
+              },
+              x: {
+                scale: "xScale",
+                signal: "datum.yValue + 30"
+              },
+              fill: { value: spec.config.axis.labelColor },
+              align: { value: "left" },
+              baseline: { value: "middle" },
+              fontSize: { value: spec.config.text.fontSize + 2 }
+            }
+          }
+        };
+        spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
+      }
+    },
+    {
+      path: "options.annotations.diff",
+      mapToSpec: function(showDiffAnnoation, spec, item) {
+        if (!showDiffAnnoation) {
+          return;
+        }
+
+        spec.marks[0].marks[0].data.push({
+          name: "diffAnnotationSeries",
+          source: "series",
+          transform: [
+            { type: "filter", expr: "datum.diffToPrevious !== null" },
+            {
+              type: "aggregate", // this makes the diffToPrevious entries unique by yValue, so if they are stacked, we have only one annotation
+              groupby: ["yValue"],
+              fields: ["yValue", "diffToPrevious", "posCorrectionFactor"],
+              as: ["yValue", "diffToPrevious", "posCorrectionFactor"],
+              ops: ["min", "min", "max"] // important to take the max posCorrectionFactor
+            }
+          ]
+        });
+        const diffTextMarksSpec = {
+          type: "text",
+          name: "annotation-label annotation-label--diff",
+          from: { data: "diffAnnotationSeries" },
+          encode: {
+            enter: {
+              text: { signal: "datum.diffToPrevious" },
+              y: {
+                signal:
+                  "dotGroupHeight / 2 - 4 - (datum.posCorrectionFactor * 11)"
+              },
+              x: {
+                scale: "xScale",
+                signal: "datum.yValue - (datum.diffToPrevious / 2)"
+              },
+              fill: { value: spec.config.axis.labelColor },
+              align: { value: "center" },
+              baseline: { value: "bottom" },
+              fontSize: { value: spec.config.text.fontSize + 2 }
+            }
+          }
+        };
+        spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
+      }
     }
-  ]
-    .concat(commonMappings.getBarDateSeriesHandlingMappings(config))
-    .concat(commonMappings.getBarPrognosisMappings(config))
-    .concat(commonMappings.getBarLabelColorMappings(config));
+  ].concat(commonMappings.getBarLabelColorMappings(config));
 };
