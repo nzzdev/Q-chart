@@ -20,11 +20,11 @@ module.exports = function getMapping(config = {}) {
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
         // set the dotGroupHeight depending on the number of bars we will get
-        const numberOfBars = itemData.length - 1;
+        const numberOfGroups = itemData.length - 1;
         const dotGroupHeightSignal = spec.signals.find(signal => {
           return signal.name === "dotGroupHeight";
         });
-        if (numberOfBars > 10) {
+        if (numberOfGroups > 10) {
           dotGroupHeightSignal.value = 16;
         } else {
           dotGroupHeightSignal.value = 24;
