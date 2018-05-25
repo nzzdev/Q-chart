@@ -9,8 +9,8 @@
     ],
     [
       "A",
-      "-1000",
-      "1000"
+      "1000",
+      "-1000"
     ],
     [
       "B",
@@ -25,6 +25,9 @@
       "minValue": -1500,
       "maxValue": 1500,
       "connectDots": true
+    },
+    "annotations": {
+      "diff": true
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
