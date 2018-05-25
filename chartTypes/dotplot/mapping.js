@@ -1,6 +1,7 @@
 const objectPath = require("object-path");
 const array2d = require("array2d");
 const clone = require("clone");
+const Decimal = require("decimal.js");
 const dataHelpers = require("../../helpers/data.js");
 
 const commonMappings = require("../commonMappings.js");
@@ -106,12 +107,15 @@ module.exports = function getMapping(config = {}) {
               .map((data, index, row) => {
                 // if this is not the first data series, we calculate the diff to the previous one
                 // this is needed for the annotations.diff options
-                // we round the diff to the maximum precision availble in the source data
-
                 if (index !== 0) {
-                  data.diffToPrevious = Math.abs(
-                    data.yValue - row[index - 1].yValue
-                  );
+                  // we round the diff to the maximum precision availble in the source data
+                  const currentValue = new Decimal(data.yValue);
+                  const previousValue = new Decimal(row[index - 1].yValue);
+
+                  data.diffToPrevious = currentValue
+                    .minus(previousValue)
+                    .abs()
+                    .toNumber();
                 } else {
                   data.diffToPrevious = null;
                 }

@@ -13,6 +13,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-stacked-days-prognosis.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/dotplot-empty-cells.json`),
+  require(`${fixtureDataDirectory}/dotplot-floating-point.json`),
   require(`${fixtureDataDirectory}/dotplot-two-categories-same-value-min-max.json`),
   require(`${fixtureDataDirectory}/dotplot-years.json`),
   require(`${fixtureDataDirectory}/line-annotation-min-max.json`),
