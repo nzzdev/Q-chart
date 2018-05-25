@@ -5,10 +5,6 @@
       "update": "span(range('yScale'))"
     },
     {
-      "name": "numberOfDataSeries",
-      "value": 1
-    },
-    {
       "name": "dotGroupHeight",
       "value": 24
     },
@@ -87,9 +83,6 @@
           },
           "x": {
             "value": 0
-          },
-          "height": {
-            "signal": "bandwidth('yScale')"
           }
         }
       },
@@ -108,7 +101,7 @@
                 "signal": "width"
               },
               "height": {
-                "signal": "height"
+                "signal": "dotGroupHeight"
               }
             }
           },

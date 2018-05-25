@@ -127,11 +127,6 @@ module.exports = function getMapping(config = {}) {
             // flatten the array
             return acc.concat(cur);
           }, []);
-
-        const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
-        );
-        numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     },
     {
