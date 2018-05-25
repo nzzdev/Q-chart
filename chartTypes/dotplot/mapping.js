@@ -84,6 +84,14 @@ module.exports = function getMapping(config = {}) {
 
                 return data;
               })
+              .filter(data => {
+                return (
+                  !isNaN(data.yValue) &&
+                  data.yValue !== null &&
+                  data.yValue !== false &&
+                  data.yValue !== true
+                );
+              })
               .sort((a, b) => {
                 // sort the array to have the lowest first and the largest last in the data
                 // this is done to easier calculate helper properties for the annotations afterwords
@@ -98,6 +106,8 @@ module.exports = function getMapping(config = {}) {
               .map((data, index, row) => {
                 // if this is not the first data series, we calculate the diff to the previous one
                 // this is needed for the annotations.diff options
+                // we round the diff to the maximum precision availble in the source data
+
                 if (index !== 0) {
                   data.diffToPrevious = Math.abs(
                     data.yValue - row[index - 1].yValue
