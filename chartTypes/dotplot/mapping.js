@@ -3,6 +3,7 @@ const array2d = require("array2d");
 const clone = require("clone");
 const Decimal = require("decimal.js");
 const dataHelpers = require("../../helpers/data.js");
+const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
 
@@ -224,7 +225,11 @@ module.exports = function getMapping(config = {}) {
           from: { data: "minAnnotationSeries" },
           encode: {
             enter: {
-              text: { signal: "datum.yValue" },
+              text: {
+                signal: `format(datum.yValue, "${
+                  d3config.formatLocale.decimal
+                }")`
+              },
               y: {
                 signal: "dotGroupHeight / 2"
               },
@@ -258,7 +263,11 @@ module.exports = function getMapping(config = {}) {
           from: { data: "maxAnnotationSeries" },
           encode: {
             enter: {
-              text: { signal: "datum.yValue" },
+              text: {
+                signal: `format(datum.yValue, "${
+                  d3config.formatLocale.decimal
+                }")`
+              },
               y: {
                 signal: "dotGroupHeight / 2"
               },
@@ -302,7 +311,11 @@ module.exports = function getMapping(config = {}) {
           from: { data: "diffAnnotationSeries" },
           encode: {
             enter: {
-              text: { signal: "datum.diffToPrevious" },
+              text: {
+                signal: `format(datum.diffToPrevious, "${
+                  d3config.formatLocale.decimal
+                }")`
+              },
               y: {
                 signal:
                   "dotGroupHeight / 2 - 4 - (datum.posCorrectionFactor * 11)"
