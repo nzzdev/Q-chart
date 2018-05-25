@@ -53,11 +53,14 @@ async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
     width: width
   };
 
-  // if we have a date series, we change the date values to date objects
-  // and set the detected dateFormat to the mappingConfig to be used within the mapping functions
-  if (dateSeries.isDateSeriesData(item.data)) {
-    mappingConfig.dateFormat = dateSeries.getDateFormatForData(item.data);
-    item.data = dateSeries.getDataWithDateParsed(item.data);
+  const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
+  if (chartTypeConfig.data.handleDateSeries) {
+    // if we have a date series, we change the date values to date objects
+    // and set the detected dateFormat to the mappingConfig to be used within the mapping functions
+    if (dateSeries.isDateSeriesData(item.data)) {
+      mappingConfig.dateFormat = dateSeries.getDateFormatForData(item.data);
+      item.data = dateSeries.getDataWithDateParsed(item.data);
+    }
   }
 
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);

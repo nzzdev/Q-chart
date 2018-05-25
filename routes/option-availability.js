@@ -3,6 +3,8 @@ const Joi = require("joi");
 const isDateSeries = require("../helpers/dateSeries.js").isDateSeries;
 const getFirstColumnSerie = require("../helpers/dateSeries.js")
   .getFirstColumnSerie;
+const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
+  .getChartTypeForItemAndWidth;
 
 function isBarChart(item) {
   return (
@@ -63,6 +65,17 @@ module.exports = {
     }
 
     if (request.params.optionName === "dateseries") {
+      // check first if the chart type actually supports date series handling
+      // first we need to know if there is a chartType and which one
+      const chartType = getChartTypeForItemAndWidth(request.payload, 400); // just hardcode a small width here
+
+      const chartTypeConfig = require(`../chartTypes/${chartType}/config.js`);
+      if (!chartTypeConfig.data.handleDateSeries) {
+        return {
+          available: false
+        };
+      }
+
       let isAvailable;
 
       try {
