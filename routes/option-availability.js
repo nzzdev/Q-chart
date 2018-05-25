@@ -14,6 +14,10 @@ function isLineChart(item) {
   return item.options.chartType === "Line";
 }
 
+function isDotplot(item) {
+  return item.options.chartType === "Dotplot";
+}
+
 function hasNoCustomVegaSpec(item) {
   return item.vegaSpec === undefined || item.vegaSpec === "";
 }
@@ -51,6 +55,13 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "dotplot") {
+      return {
+        available:
+          isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
     if (request.params.optionName === "dateseries") {
       let isAvailable;
 
@@ -80,11 +91,51 @@ module.exports = {
     }
 
     if (request.params.optionName === "annotations") {
+      let available = false;
+      if (
+        isLineChart(request.payload) &&
+        hasNoCustomVegaSpec(request.payload) &&
+        request.payload.data[0].length === 2 // only if there is just one data series
+      ) {
+        available = true;
+      }
+
+      if (isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)) {
+        available = true;
+      }
+
       return {
-        available:
-          isLineChart(request.payload) &&
-          hasNoCustomVegaSpec(request.payload) &&
-          request.payload.data[0].length === 2 // only if there is just one data series
+        available: available
+      };
+    }
+
+    if (request.params.optionName === "annotations.first") {
+      return {
+        available: isLineChart(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.last") {
+      return {
+        available: isLineChart(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.max") {
+      return {
+        available: isLineChart(request.payload) || isDotplot(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.min") {
+      return {
+        available: isLineChart(request.payload) || isDotplot(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.diff") {
+      return {
+        available: isDotplot(request.payload)
       };
     }
 
