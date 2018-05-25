@@ -18,8 +18,15 @@
       "Q:options": {
         "validationRules": [
           {
-            "type": "Local",
-            "method": "checkForEmptyData",
+            "type": "EmptyData",
+            "data": ["data"]
+          },
+          {
+            "type": "EmptyFirstRow",
+            "data": ["data"]
+          },
+          {
+            "type": "TooManyColumns",
             "data": ["data"]
           }
         ]
@@ -79,15 +86,6 @@
           }
         },
         "required": ["text"]
-      },
-      "Q:options": {
-        "validationRules": [
-          {
-            "type": "Local",
-            "method": "checkForSources",
-            "data": ["sources"]
-          }
-        ]
       }
     },
     "notes": {
