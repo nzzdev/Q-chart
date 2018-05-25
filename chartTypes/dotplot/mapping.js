@@ -3,8 +3,6 @@ const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 
-const intervals = require("../../helpers/dateSeries.js").intervals;
-
 const commonMappings = require("../commonMappings.js");
 
 const getLongestDataLabel = require("../../helpers/data.js")
@@ -217,8 +215,7 @@ module.exports = function getMapping(config = {}) {
                 signal: "dotGroupHeight / 2"
               },
               x: {
-                scale: "xScale",
-                signal: "datum.yValue - 30"
+                signal: "scale('xScale', datum.yValue) - 8"
               },
               fill: { value: spec.config.axis.labelColor },
               align: { value: "right" },
@@ -252,8 +249,7 @@ module.exports = function getMapping(config = {}) {
                 signal: "dotGroupHeight / 2"
               },
               x: {
-                scale: "xScale",
-                signal: "datum.yValue + 30"
+                signal: "scale('xScale', datum.yValue) + 8"
               },
               fill: { value: spec.config.axis.labelColor },
               align: { value: "left" },
