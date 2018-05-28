@@ -64,17 +64,18 @@ module.exports = function getMapping(config = {}) {
             }
 
             return row
-              .map((val, index) => {
+              .map((value, index) => {
                 // generate one array entry for every data category on the same x value
-                let value = null;
-                if (!Number.isNaN(parseFloat(val))) {
-                  value = val / divisor;
+
+                let shortenedValue = null;
+                if (!Number.isNaN(parseFloat(value))) {
+                  shortenedValue = value / divisor;
                 }
 
                 const data = {
                   xValue: x,
                   xIndex: rowIndex,
-                  yValue: value,
+                  yValue: shortenedValue,
                   cValue: index,
                   posCorrectionFactor:
                     valueOccurences[value].currentCorrectionFactor
