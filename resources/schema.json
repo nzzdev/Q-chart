@@ -83,10 +83,10 @@
         "chartType": {
           "title": "Diagrammtyp",
           "type": "string",
-          "enum": ["Bar", "StackedBar", "Line"],
+          "enum": ["Bar", "StackedBar", "Line", "Dotplot"],
           "Q:options": {
             "selectType": "radio",
-            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien"],
+            "enum_titles": ["Säulen", "Gestapelte Säulen", "Linien", "Dot Plot"],
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
@@ -142,19 +142,68 @@
           "properties": {
             "first": {
               "title": "erster Wert",
-              "type": "boolean"
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/annotations.first"
+                  }
+                ]
+              }
             },
             "last": {
               "title": "letzter Wert",
-              "type": "boolean"
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/annotations.last"
+                  }
+                ]
+              }
             },
             "max": {
               "title": "höchster Wert",
-              "type": "boolean"
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/annotations.max"
+                  }
+                ]
+              }
             },
             "min": {
               "title": "tiefster Wert",
-              "type": "boolean"
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/annotations.min"
+                  }
+                ]
+              }
+            },
+            "diff": {
+              "title": "Differenz",
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/annotations.diff"
+                  }
+                ]
+              }
             }
           },
           "Q:options": {
@@ -300,6 +349,34 @@
                   }
                 ]
               }
+            }
+          }
+        },
+
+        "dotplotOptions": {
+          "title": "Dot Plot Optionen",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/dotplot"
+              }
+            ]
+          },
+          "properties": {
+            "connectDots": {
+              "title": "Punkte verbinden",
+              "type": "boolean"
+            },
+            "minValue": {
+              "title": "Minimaler Wert",
+              "type": "number"
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
             }
           }
         },

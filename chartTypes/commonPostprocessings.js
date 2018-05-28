@@ -208,10 +208,39 @@ const highlightZeroGridLineIfPositiveAndNegative = {
   }
 };
 
+const addOutlineToAnnotationLabels = {
+  process: function(svg, spec, item, toolRuntimeConfig) {
+    // this duplicates the text nodes to have a white outline around the text
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    const annotationLabels = document.querySelectorAll(".annotation-label");
+    for (const label of annotationLabels) {
+      const textNode = label.querySelector("text");
+
+      // once this is supported by more browsers or we do not have to support them anymore,
+      // we can use paint-order here. for now we just clone the textNode and use stroke instead of fill on the clone
+      // textNode.setAttribute("paint-order", "stroke");
+
+      const cloneTextNode = textNode.cloneNode(true);
+      cloneTextNode.setAttribute("fill", "currentColor");
+      cloneTextNode.setAttribute("stroke", "currentColor");
+      cloneTextNode.setAttribute("stroke-width", "3px");
+
+      textNode.parentNode.appendChild(cloneTextNode);
+
+      // move the textNode to the end
+      textNode.parentNode.appendChild(textNode);
+    }
+    return document.body.innerHTML;
+  }
+};
+
 module.exports = {
   hideRepeatingTickLabels: hideRepeatingTickLabels,
   hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
   highlightTicksWithVisibleValues: highlightTicksWithVisibleValues,
   addPrognosisPattern: addPrognosisPattern,
-  highlightZeroGridLineIfPositiveAndNegative: highlightZeroGridLineIfPositiveAndNegative
+  highlightZeroGridLineIfPositiveAndNegative: highlightZeroGridLineIfPositiveAndNegative,
+  addOutlineToAnnotationLabels: addOutlineToAnnotationLabels
 };

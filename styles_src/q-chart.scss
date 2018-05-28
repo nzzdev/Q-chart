@@ -45,6 +45,13 @@
   background: currentColor;
 }
 
+.q-chart__legend--dotplot .q-chart__legend__item__box {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .q-chart__legend--bar, .q-chart__legend--stackedbar {
   .q-chart__legend__item--prognosis {
     .q-chart__legend__item__box {
