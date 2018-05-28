@@ -101,9 +101,11 @@ module.exports = function getMapping(config = {}) {
                 return a.yValue - b.yValue;
               })
               .map((data, index, row) => {
-                // add isMin and isMax to be used by min/max annotation later
-                data.isMin = index === 0;
+                // add isMax and isMin to be used by min/max annotation later
                 data.isMax = index === row.length - 1;
+
+                // add only if this is not the same as isMax to not have doubled labels for the same point
+                data.isMin = index === 0 && index !== row.length - 1;
                 return data;
               })
               .map((data, index, row) => {

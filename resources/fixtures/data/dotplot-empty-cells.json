@@ -191,7 +191,10 @@
   "options": {
     "chartType": "Dotplot",
     "hideAxisLabel": false,
-    "annotations": {},
+    "annotations": {
+      "max": true,
+      "min": true
+    },
     "barOptions": {
       "isBarChart": false,
       "forceBarsOnSmall": false
