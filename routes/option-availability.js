@@ -57,6 +57,16 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "line.isStockChart") {
+      const serie = getFirstColumnSerie(request.payload.data);
+      return {
+        available:
+          isDateSeries(serie) &&
+          isLineChart(request.payload) &&
+          hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
     if (request.params.optionName === "dotplot") {
       return {
         available:
