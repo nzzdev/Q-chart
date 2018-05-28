@@ -35,7 +35,7 @@ const labelTemplate = {
   encode: {
     update: {
       text: {
-        signal: `format(datum.yValue, "${d3config.formatLocale.decimal}")`,
+        signal: `format(datum.yValue, "${d3config.formatLocale.decimal}")`
         // field: "yValue"
       },
       fontWeight: {
@@ -77,7 +77,7 @@ module.exports = {
   },
   getLabel(dataName, align, verticalAlign = "top") {
     const label = clone(labelTemplate);
-    label.name = `line-annotation-label ${dataName}`;
+    label.name = `annotation-label ${dataName}`;
     label.from.data = dataName;
 
     label.encode.update.align.value = align;

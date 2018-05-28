@@ -1,0 +1,37 @@
+{
+  "title": "FIXTURE: Dotplot - 2 categories - same value - min max",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Cat",
+      "A",
+      "B"
+    ],
+    [
+      "A",
+      "1000",
+      "-1000"
+    ],
+    [
+      "B",
+      "200",
+      "200"
+    ]
+  ],
+  "options": {
+    "chartType": "Dotplot",
+    "hideAxisLabel": false,
+    "dotplotOptions": {
+      "minValue": -1500,
+      "maxValue": 1500,
+      "connectDots": true
+    },
+    "annotations": {
+      "diff": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}

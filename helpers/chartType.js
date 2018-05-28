@@ -7,6 +7,10 @@ function getChartTypeForItemAndWidth(item, width) {
     return "line";
   }
 
+  if (item.options.chartType === "Dotplot") {
+    return "dotplot";
+  }
+
   if (item.options.chartType === "Bar") {
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {

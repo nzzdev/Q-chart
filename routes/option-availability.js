@@ -3,6 +3,8 @@ const Joi = require("joi");
 const isDateSeries = require("../helpers/dateSeries.js").isDateSeries;
 const getFirstColumnSerie = require("../helpers/dateSeries.js")
   .getFirstColumnSerie;
+const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
+  .getChartTypeForItemAndWidth;
 
 function isBarChart(item) {
   return (
@@ -12,6 +14,10 @@ function isBarChart(item) {
 
 function isLineChart(item) {
   return item.options.chartType === "Line";
+}
+
+function isDotplot(item) {
+  return item.options.chartType === "Dotplot";
 }
 
 function hasNoCustomVegaSpec(item) {
@@ -61,7 +67,25 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "dotplot") {
+      return {
+        available:
+          isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
     if (request.params.optionName === "dateseries") {
+      // check first if the chart type actually supports date series handling
+      // first we need to know if there is a chartType and which one
+      const chartType = getChartTypeForItemAndWidth(request.payload, 400); // just hardcode a small width here
+
+      const chartTypeConfig = require(`../chartTypes/${chartType}/config.js`);
+      if (!chartTypeConfig.data.handleDateSeries) {
+        return {
+          available: false
+        };
+      }
+
       let isAvailable;
 
       try {
@@ -90,11 +114,51 @@ module.exports = {
     }
 
     if (request.params.optionName === "annotations") {
+      let available = false;
+      if (
+        isLineChart(request.payload) &&
+        hasNoCustomVegaSpec(request.payload) &&
+        request.payload.data[0].length === 2 // only if there is just one data series
+      ) {
+        available = true;
+      }
+
+      if (isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)) {
+        available = true;
+      }
+
       return {
-        available:
-          isLineChart(request.payload) &&
-          hasNoCustomVegaSpec(request.payload) &&
-          request.payload.data[0].length === 2 // only if there is just one data series
+        available: available
+      };
+    }
+
+    if (request.params.optionName === "annotations.first") {
+      return {
+        available: isLineChart(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.last") {
+      return {
+        available: isLineChart(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.max") {
+      return {
+        available: isLineChart(request.payload) || isDotplot(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.min") {
+      return {
+        available: isLineChart(request.payload) || isDotplot(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "annotations.diff") {
+      return {
+        available: isDotplot(request.payload)
       };
     }
 
