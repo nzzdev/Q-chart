@@ -290,7 +290,16 @@
             "isStockChart": {
               "title": "Intraday-Chart",
               "type": "boolean",
-              "default": false
+              "default": false,
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/line.isStockChart"
+                  }
+                ]
+              }
             }
           }
         },
