@@ -124,6 +124,11 @@ module.exports = function getMapping(config = {}) {
                   data.diffToPrevious = null;
                 }
                 return data;
+              })
+              .sort((a, b) => {
+                // sort by cValue to build colorScale correctly
+                // we messed before by sorting by the value for easier min/max
+                return a.cValue - b.cValue;
               });
           })
           .reduce((acc, cur) => {
