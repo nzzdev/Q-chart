@@ -1,0 +1,12 @@
+{
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "Achsenbeschriftung nicht nötig",
+      "body": "Brauchen wir die Achsenbeschriftung wirklich? Wenn nicht, einfach Achsenbeschriftung ausblenden anwählen."
+    },
+    "shouldBeBarChart": {
+      "title": "Nur eine Datenspalte vorhanden",
+      "body": "Vielleicht ist es besser, auf Diagrammtyp «Säulen» zu wechseln. Bei nur einer Datenspalte ist das oft klarer."
+    }
+  }
+}
