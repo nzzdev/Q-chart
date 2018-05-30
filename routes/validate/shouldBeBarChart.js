@@ -3,15 +3,14 @@ const Boom = require("boom");
 
 module.exports = {
   method: "POST",
-  path: "/validation/sources",
+  path: "/validate/shouldBeBarChart",
   options: {
     validate: {
       options: {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required(),
-        schema: Joi.object().required()
+        data: Joi.any().required()
       }
     },
     cors: true,
@@ -21,15 +20,11 @@ module.exports = {
     tags: ["api"]
   },
   handler: function(request, h) {
-    return JSON.stringify({
-      priority: {
-        name: "medium",
-        value: 1
-      },
-      message: {
-        title: "Keine Quelle erfasst",
-        body: "Bist du sicher, dass es keine Quellenangabe benötigt?"
-      }
-    });
+    const data = request.payload.data[0];
+    const chartType = request.payload.data[1];
+    return {
+      showNotification: chartType === "StackedBar" && data[0].length === 2,
+      priority: "medium"
+    };
   }
 };

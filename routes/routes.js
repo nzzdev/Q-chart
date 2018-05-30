@@ -7,5 +7,9 @@ module.exports = [
   require("./dynamic-enum.js"),
   require("./health.js"),
   require("./fixtures/data.js"),
-  require("./validation/sources.js")
+  require("./validate/hideAxisLabel.js"),
+  require("./validate/shouldBeBarChart.js"),
+  require("./validate/shouldBeLineChart.js"),
+  require("./validate/tooManyBars.js"),
+  require("./locales.js")
 ].concat(require("./schema.js"));
