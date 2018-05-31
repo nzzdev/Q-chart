@@ -1,6 +1,5 @@
 const Joi = require("joi");
-const GermanTranslation = require("../locales/de/translation.json");
-const EnglishTranslation = require("../locales/en/translation.json");
+const localesDir = __dirname + "/../resources/locales/";
 
 module.exports = {
   path: "/locales/{lng}/translation.json",
@@ -15,9 +14,8 @@ module.exports = {
     }
   },
   handler: (request, h) => {
-    if (request.params.lng === "de") {
-      return JSON.stringify(GermanTranslation);
-    }
-    return JSON.stringify(EnglishTranslation);
+    return h
+      .file(localesDir + request.params.lng + "/translation.json")
+      .type("application/json");
   }
 };
