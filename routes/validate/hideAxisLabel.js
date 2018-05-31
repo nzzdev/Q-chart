@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const Boom = require("boom");
+const dateSeries = require("../../helpers/dateSeries.js");
 
 module.exports = {
   method: "POST",
@@ -21,18 +22,9 @@ module.exports = {
   },
   handler: function(request, h) {
     const data = request.payload.data[0];
-    const validationResult = {
-      showNotification: false,
+    return {
+      showNotification: dateSeries.isDateSeriesData(data),
       priority: "medium"
     };
-    if (data[0] && data[0][0]) {
-      validationResult.showNotification = [
-        "Date",
-        "Datum",
-        "date",
-        "datum"
-      ].includes(data[0][0]);
-    }
-    return validationResult;
   }
 };
