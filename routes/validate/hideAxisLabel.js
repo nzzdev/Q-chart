@@ -26,9 +26,12 @@ module.exports = {
       priority: "medium"
     };
     if (data[0] && data[0][0]) {
-      validationResult.showNotification = ["Date", "Datum"].includes(
-        data[0][0]
-      );
+      validationResult.showNotification = [
+        "Date",
+        "Datum",
+        "date",
+        "datum"
+      ].includes(data[0][0]);
     }
     return validationResult;
   }
