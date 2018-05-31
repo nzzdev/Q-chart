@@ -54,7 +54,7 @@
           {
             "type": "ToolEndpoint",
             "endpoint": "validate/shouldBeLineChart",
-            "data": ["data"]
+            "data": ["data", "options.chartType"]
           },
           {
             "type": "ToolEndpoint",

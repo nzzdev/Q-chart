@@ -22,11 +22,12 @@ module.exports = {
   },
   handler: function(request, h) {
     const data = request.payload.data[0];
+    const chartType = request.payload.data[1];
     const validationResult = {
       showNotification: false,
       priority: "medium"
     };
-    if (data[0]) {
+    if (chartType !== "Line" && data[0]) {
       validationResult.showNotification =
         data[0].length > 15 && dateSeries.isDateSeriesData(data);
     }
