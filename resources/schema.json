@@ -40,26 +40,6 @@
           {
             "type": "TooManyColumns",
             "data": ["data"]
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "validate/hideAxisLabel",
-            "data": ["data"]
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "validate/shouldBeBarChart",
-            "data": ["data", "options.chartType"]
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "validate/shouldBeLineChart",
-            "data": ["data", "options.chartType"]
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "validate/tooManyBars",
-            "data": ["data"]
           }
         ]
       },
@@ -149,7 +129,21 @@
                 "withData": true,
                 "endpoint": "option-availability/chartType"
               }
-            ]
+            ],
+            "Q:options": {
+              "validationRules": [
+                {
+                  "type": "ToolEndpoint",
+                  "endpoint": "validate/shouldBeBarChart",
+                  "data": ["data", "options.chartType"]
+                },
+                {
+                  "type": "ToolEndpoint",
+                  "endpoint": "validate/shouldBeLineChart",
+                  "data": ["data", "options.chartType"]
+                }
+              ]
+            }
           },
           "default": "Bar"
         },
@@ -189,7 +183,16 @@
                 "withData": true,
                 "endpoint": "option-availability/hideAxisLabel"
               }
-            ]
+            ],
+            "Q:options": {
+              "validationRules": [
+                {
+                  "type": "ToolEndpoint",
+                  "endpoint": "validate/hideAxisLabel",
+                  "data": ["data"]
+                }
+              ]
+            }
           }
         },
         "annotations": {
@@ -288,7 +291,16 @@
             "isBarChart": {
               "title": "Balken statt Säulen",
               "type": "boolean",
-              "default": false
+              "default": false,
+              "Q:options": {
+                "validationRules": [
+                  {
+                    "type": "ToolEndpoint",
+                    "endpoint": "validate/tooManyBars",
+                    "data": ["data"]
+                  }
+                ]
+              }
             },
             "forceBarsOnSmall": {
               "title": "Balken für Mobile",
