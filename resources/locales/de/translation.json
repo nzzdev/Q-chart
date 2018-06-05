@@ -12,7 +12,7 @@
       "title": "Sehr viele Datenspalten vorhanden",
       "body": "Für so viele Datenpunkte ist vermutlich ein Liniendiagramm besser geeignet."
     },
-    "tooManyBars": {
+    "shouldBeBars": {
       "title": "Sehr viele Datenspalten vorhanden",
       "body": "Wenn Labels sich überlappen, solltest du die Option Balken für mobile oder Balken statt Säulen anwählen."
     }
