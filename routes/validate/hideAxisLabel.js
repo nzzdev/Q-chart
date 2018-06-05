@@ -22,9 +22,14 @@ module.exports = {
   },
   handler: function(request, h) {
     const data = request.payload.data[0];
-    return {
-      showNotification: dateSeries.isDateSeriesData(data),
+    const hideAxisLabel = request.payload.data[1];
+    const validationResult = {
+      showNotification: false,
       priority: "medium"
     };
+    if (!hideAxisLabel) {
+      validationResult.showNotification = dateSeries.isDateSeriesData(data);
+    }
+    return validationResult;
   }
 };

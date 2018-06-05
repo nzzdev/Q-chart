@@ -189,7 +189,7 @@
                 {
                   "type": "ToolEndpoint",
                   "endpoint": "validate/hideAxisLabel",
-                  "data": ["data"]
+                  "data": ["data", "options.hideAxisLabel"]
                 }
               ]
             }
