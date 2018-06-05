@@ -1,0 +1,252 @@
+{
+  "signals": [
+    {
+      "name": "height",
+      "update": "span(range('yScale'))"
+    },
+    {
+      "name": "arrowGroupHeight",
+      "value": 24
+    },
+    {
+      "name": "groupPadding",
+      "value": 16
+    },
+    {
+      "name": "groupHeight",
+      "update": "arrowGroupHeight + groupPadding"
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": []
+    }
+  ],
+  "scales": [
+    {
+      "name": "xScale",
+      "type": "linear",
+      "range": "width",
+      "domain": {
+        "data": "table",
+        "field": "yValue"
+      },
+      "nice": true,
+      "zero": true,
+      "round": true
+    },
+    {
+      "name": "yScale",
+      "type": "band",
+      "range": {
+        "step": {
+          "signal": "groupHeight"
+        }
+      },
+      "domain": {
+        "data": "table",
+        "field": "xValue"
+      },
+      "paddingInner": {
+        "signal": "groupPadding / groupHeight"
+      },
+      "paddingOuter": 0,
+      "round": true
+    },
+    {
+      "name": "colorScale",
+      "type": "quantile",
+      "range": {
+        "scheme": "basic",
+        "count": 3
+      },
+      "domain": {
+        "data": "table",
+        "field": "colorScaleIndex"
+      }
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "name": "blocks",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "table",
+          "groupby": "xValue"
+        }
+      },
+      "encode": {
+        "enter": {
+          "y": {
+            "scale": "yScale",
+            "field": "xValue"
+          },
+          "x": {
+            "value": 0
+          }
+        }
+      },
+      "marks": [
+        {
+          "type": "group",
+          "encode": {
+            "enter": {
+              "y": {
+                "value": 0
+              },
+              "x": {
+                "value": 0
+              },
+              "width": {
+                "signal": "width"
+              },
+              "height": {
+                "signal": "arrowGroupHeight"
+              }
+            }
+          },
+          "data": [
+            {
+              "name": "xValues",
+              "source": "series",
+              "transform": [
+                {
+                  "type": "aggregate",
+                  "groupby": [
+                    "xValue"
+                  ]
+                }
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "type": "line",
+              "name": "line",
+              "from": {
+                "data": "series"
+              },
+              "encode": {
+                "enter": {
+                  "y": {
+                    "signal": "arrowGroupHeight / 2"
+                  },
+                  "x": {
+                    "scale": "xScale",
+                    "field": "yValue"
+                  },
+                  "stroke": {
+                    "scale": "colorScale",
+                    "field": "colorScaleIndex"
+                  },
+                  "strokeWidth": {
+                    "value": 2
+                  }
+                }
+              }
+            },
+            {
+              "type": "symbol",
+              "name": "symbol",
+              "from": {
+                "data": "series"
+              },
+              "encode": {
+                "enter": {
+                  "y": {
+                    "signal": "arrowGroupHeight / 2"
+                  },
+                  "x": {
+                    "scale": "xScale",
+                    "field": "yValue"
+                  },
+                  "fill": [
+                    {
+                      "test": "datum.cValue !== 0",
+                      "value": "transparent"
+                    },
+                    {
+                      "scale": "colorScale",
+                      "field": "colorScaleIndex"
+                    }
+                  ],
+                  "stroke": [
+                    {
+                      "test": "datum.cValue === 0",
+                      "value": "white"
+                    },
+                    {
+                      "scale": "colorScale",
+                      "field": "colorScaleIndex"
+                    }
+                  ],
+                  "strokeWidth": {
+                    "value": 2
+                  },
+                  "size": {
+                    "value": 64
+                  },
+                  "shape": [
+                    {
+                      "test": "datum.diffToPrevious !== 0",
+                      "signal": "datum.cValue === 0 ? 'circle' : (datum.isMin ? 'M1,-1 L0,0 L1,1' : 'M-1,1 L0,0 L-1,-1')"
+                    },
+                    {
+                      "value": "none"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "axes": [
+    {
+      "orient": "top",
+      "scale": "xScale",
+      "domain": false,
+      "grid": true,
+      "ticks": true,
+      "tickCount": 6
+    },
+    {
+      "orient": "left",
+      "scale": "yScale",
+      "domain": false,
+      "grid": true,
+      "labels": true,
+      "ticks": false,
+      "encode": {
+        "title": {
+          "update": {
+            "align": {
+              "value": "right"
+            },
+            "angle": {
+              "value": 0
+            },
+            "baseline": {
+              "value": "bottom"
+            },
+            "x": {
+              "value": 0
+            },
+            "y": {
+              "value": -30
+            }
+          }
+        }
+      }
+    }
+  ],
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  }
+}

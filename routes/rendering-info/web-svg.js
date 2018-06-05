@@ -5,8 +5,7 @@ const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getSpecWithMappedItem = require("../../helpers/itemVegaMapping.js")
   .getSpecWithMappedItem;
-const getComputedColorRange = require("../../helpers/vegaConfig.js")
-  .getComputedColorRange;
+const vegaConfigHelper = require("../../helpers/vegaConfig.js");
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
@@ -17,6 +16,15 @@ const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
 
 const vegaConfig = require("../../config/vega-default.json");
+
+// vega.scheme(
+//   "basic",
+//   function(t) {
+//     debugger;
+//   },
+//   [undefined, undefined, undefined, ["#f00", "#0f0", "#00f"]],
+//   true
+// );
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
@@ -37,14 +45,25 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
   }
 
+  config.range = {};
+
   // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
   // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
+  const categoryRange = vegaConfigHelper.getComputedCategoryColorRange(
+    item,
+    toolRuntimeConfig
+  );
   if (categoryRange) {
-    config.range = {
-      category: getComputedColorRange(item, toolRuntimeConfig)
-    };
+    config.range.category = categoryRange;
   }
+  const divergingRange = vegaConfigHelper.getComputedDivergingColorRange(
+    item,
+    toolRuntimeConfig
+  );
+  if (divergingRange) {
+    config.range.diverging = divergingRange;
+  }
+
   return config;
 }
 
@@ -121,6 +140,7 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
 
   try {
     const dataflow = vega.parse(spec);
+    console.log(JSON.stringify(spec));
 
     try {
       const prerender = require(`../../chartTypes/${chartType}/prerender.js`);

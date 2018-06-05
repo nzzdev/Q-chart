@@ -2,14 +2,17 @@ const clone = require("clone");
 const dateSeries = require("./dateSeries.js");
 const d3config = require("../config/d3.js");
 const d3timeFormat = require("d3-time-format");
-const getComputedColorRange = require("./vegaConfig.js").getComputedColorRange;
+const vegaConfigHelpers = require("./vegaConfig.js");
 
 function getLegendModel(item, toolRuntimeConfig) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!item.options.chartType || item.vegaSpec) {
     return null;
   }
-  const colorRange = getComputedColorRange(item, toolRuntimeConfig);
+  const colorRange = vegaConfigHelpers.getComputedCategoryColorRange(
+    item,
+    toolRuntimeConfig
+  );
   const legendModel = {};
 
   legendModel.type = item.options.chartType.toLowerCase();

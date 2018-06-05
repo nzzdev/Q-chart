@@ -87,6 +87,13 @@ async function getColorSchemes(target) {
         sophieVizColorVars.general["s-viz-color-eleven-1"],
         sophieVizColorVars.general["s-viz-color-twelve-1"]
       ]
+    },
+    "diverging-3": {
+      default: [
+        sophieVizColorVars["diverging-2"]["s-viz-color-diverging-2-1"],
+        sophieColorVars.general["s-color-gray-7"],
+        sophieVizColorVars["diverging-2"]["s-viz-color-diverging-2-2"]
+      ]
     }
   };
 }

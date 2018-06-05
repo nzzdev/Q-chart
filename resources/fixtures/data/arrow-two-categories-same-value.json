@@ -1,5 +1,5 @@
 {
-  "title": "FIXTURE: Dotplot - 2 categories - same value - min max",
+  "title": "FIXTURE: Arrow - 2 categories - same value - min max",
   "subtitle": "some subtitle here",
   "data": [
     [
@@ -16,10 +16,15 @@
       "B",
       "200",
       "200"
+    ],
+    [
+      "C",
+      "-400",
+      "200"
     ]
   ],
   "options": {
-    "chartType": "Dotplot",
+    "chartType": "Arrow",
     "hideAxisLabel": false,
     "dotplotOptions": {
       "minValue": -1500,
@@ -28,8 +33,8 @@
     },
     "annotations": {
       "diff": true,
-      "min": true,
-      "max": true
+      "start": true,
+      "end": true
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
