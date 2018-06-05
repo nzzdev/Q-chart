@@ -10,6 +10,6 @@ module.exports = [
   require("./validate/hideAxisLabel.js"),
   require("./validate/shouldBeBarChart.js"),
   require("./validate/shouldBeLineChart.js"),
-  require("./validate/tooManyBars.js"),
+  require("./validate/shouldBeBars.js"),
   require("./locales.js")
 ].concat(require("./schema.js"));

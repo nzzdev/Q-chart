@@ -4,7 +4,7 @@ const dateSeries = require("../../helpers/dateSeries.js");
 
 module.exports = {
   method: "POST",
-  path: "/validate/tooManyBars",
+  path: "/validate/shouldBeBars",
   options: {
     validate: {
       options: {
@@ -22,13 +22,22 @@ module.exports = {
   },
   handler: function(request, h) {
     const data = request.payload.data[0];
+    const chartType = request.payload.data[1];
+    const isBarChart = request.payload.data[2];
+    const forceBarsOnSmall = request.payload.data[3];
+
     const validationResult = {
       showNotification: false,
       priority: "medium"
     };
-    if (data[0]) {
+    if (
+      data[0] &&
+      ["Bar", "StackedBar"].includes(chartType) &&
+      !isBarChart &&
+      !forceBarsOnSmall
+    ) {
       validationResult.showNotification =
-        data[0].length > 15 && !dateSeries.isDateSeriesData(data);
+        data[0].length > 8 && !dateSeries.isDateSeriesData(data);
     }
     return validationResult;
   }

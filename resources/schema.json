@@ -296,8 +296,8 @@
                 "validationRules": [
                   {
                     "type": "ToolEndpoint",
-                    "endpoint": "validate/tooManyBars",
-                    "data": ["data"]
+                    "endpoint": "validate/shouldBeBars",
+                    "data": ["data", "options.chartType", "options.barOptions.isBarChart", "options.barOptions.forceBarsOnSmall"]
                   }
                 ]
               }
