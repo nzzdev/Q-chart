@@ -1,0 +1,28 @@
+{
+  "title": "FIXTURE: StackedBar - 100",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "Abstimmung",
+      "Ja: 46.02%",
+      "Nein: 53.98%"
+    ],
+    [
+      "in %",
+      "46.02",
+      "53.98"
+    ]
+  ],
+  "options": {
+    "chartType": "StackedBar",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}
