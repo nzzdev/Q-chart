@@ -28,7 +28,10 @@ module.exports = {
 
     const validationResult = {
       showNotification: false,
-      priority: "medium"
+      priority: {
+        type: "medium",
+        value: 50
+      }
     };
     if (
       data[0] &&

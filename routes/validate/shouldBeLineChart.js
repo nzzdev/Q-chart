@@ -25,7 +25,10 @@ module.exports = {
     const chartType = request.payload.data[1];
     const validationResult = {
       showNotification: false,
-      priority: "medium"
+      priority: {
+        type: "medium",
+        value: 60
+      }
     };
     if (chartType !== "Line" && data[0]) {
       validationResult.showNotification =

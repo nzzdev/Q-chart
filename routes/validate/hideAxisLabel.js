@@ -25,7 +25,10 @@ module.exports = {
     const hideAxisLabel = request.payload.data[1];
     const validationResult = {
       showNotification: false,
-      priority: "medium"
+      priority: {
+        type: "medium",
+        value: 30
+      }
     };
     if (!hideAxisLabel) {
       validationResult.showNotification = dateSeries.isDateSeriesData(data);

@@ -24,7 +24,10 @@ module.exports = {
     const chartType = request.payload.data[1];
     return {
       showNotification: chartType === "StackedBar" && data[0].length === 2,
-      priority: "medium"
+      priority: {
+        type: "medium",
+        value: 40
+      }
     };
   }
 };
