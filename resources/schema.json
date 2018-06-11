@@ -40,6 +40,26 @@
           {
             "type": "TooManyColumns",
             "data": ["data"]
+          },
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "validate/shouldBeBarChart",
+            "data": ["data", "options.chartType"]
+          },
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "validate/shouldBeLineChart",
+            "data": ["data", "options.chartType"]
+          },
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "validate/hideAxisLabel",
+            "data": ["data", "options.hideAxisLabel"]
+          },
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "validate/shouldBeBars",
+            "data": ["data", "options.chartType", "options.barOptions.isBarChart", "options.barOptions.forceBarsOnSmall"]
           }
         ]
       },
