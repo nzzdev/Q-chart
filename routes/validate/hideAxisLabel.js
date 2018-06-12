@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
+const validationConfig = JSON.parse(process.env.VALIDATION_CONFIG);
 
 module.exports = {
   method: "POST",
@@ -25,10 +26,7 @@ module.exports = {
     const hideAxisLabel = request.payload.data[1];
     const validationResult = {
       showNotification: false,
-      priority: {
-        type: "medium",
-        value: 30
-      }
+      priority: validationConfig.hideAxisLabel.priority
     };
     if (!hideAxisLabel) {
       validationResult.showNotification = dateSeries.isDateSeriesData(data);
