@@ -7,7 +7,7 @@
       "title": "Titel",
       "type": "string",
       "Q:options": {
-        "validationRules": [
+        "notificationRules": [
           {
             "type": "IsValueMissing",
             "data": []
@@ -24,7 +24,7 @@
       "type": "array",
       "Q:type": "table",
       "Q:options": {
-        "validationRules": [
+        "notificationRules": [
           {
             "type": "IsValueMissing",
             "data": []
@@ -43,22 +43,22 @@
           },
           {
             "type": "ToolEndpoint",
-            "endpoint": "validate/shouldBeBarChart",
+            "endpoint": "notification/shouldBeBarChart",
             "data": ["data", "options.chartType"]
           },
           {
             "type": "ToolEndpoint",
-            "endpoint": "validate/shouldBeLineChart",
+            "endpoint": "notification/shouldBeLineChart",
             "data": ["data", "options.chartType"]
           },
           {
             "type": "ToolEndpoint",
-            "endpoint": "validate/hideAxisLabel",
+            "endpoint": "notification/hideAxisLabel",
             "data": ["data", "options.hideAxisLabel"]
           },
           {
             "type": "ToolEndpoint",
-            "endpoint": "validate/shouldBeBars",
+            "endpoint": "notification/shouldBeBars",
             "data": ["data", "options.chartType", "options.barOptions.isBarChart", "options.barOptions.forceBarsOnSmall"]
           }
         ]
@@ -102,7 +102,7 @@
             "title": "Text",
             "type": "string",
             "Q:options": {
-              "validationRules": [
+              "notificationRules": [
                 {
                   "type": "IsValueMissing",
                   "data": []
@@ -151,15 +151,15 @@
               }
             ],
             "Q:options": {
-              "validationRules": [
+              "notificationRules": [
                 {
                   "type": "ToolEndpoint",
-                  "endpoint": "validate/shouldBeBarChart",
+                  "endpoint": "notification/shouldBeBarChart",
                   "data": ["data", "options.chartType"]
                 },
                 {
                   "type": "ToolEndpoint",
-                  "endpoint": "validate/shouldBeLineChart",
+                  "endpoint": "notification/shouldBeLineChart",
                   "data": ["data", "options.chartType"]
                 }
               ]
@@ -205,10 +205,10 @@
               }
             ],
             "Q:options": {
-              "validationRules": [
+              "notificationRules": [
                 {
                   "type": "ToolEndpoint",
-                  "endpoint": "validate/hideAxisLabel",
+                  "endpoint": "notification/hideAxisLabel",
                   "data": ["data", "options.hideAxisLabel"]
                 }
               ]
@@ -313,10 +313,10 @@
               "type": "boolean",
               "default": false,
               "Q:options": {
-                "validationRules": [
+                "notificationRules": [
                   {
                     "type": "ToolEndpoint",
-                    "endpoint": "validate/shouldBeBars",
+                    "endpoint": "notification/shouldBeBars",
                     "data": ["data", "options.chartType", "options.barOptions.isBarChart", "options.barOptions.forceBarsOnSmall"]
                   }
                 ]

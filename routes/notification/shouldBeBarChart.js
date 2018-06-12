@@ -1,10 +1,10 @@
 const Joi = require("joi");
 const Boom = require("boom");
-const validationConfig = JSON.parse(process.env.VALIDATION_CONFIG);
+const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
-  path: "/validate/shouldBeBarChart",
+  path: "/notification/shouldBeBarChart",
   options: {
     validate: {
       options: {
@@ -26,8 +26,8 @@ module.exports = {
     return {
       showNotification:
         chartType === "StackedBar" &&
-        data[0].length === validationConfig.shouldBeBarChart.limit,
-      priority: validationConfig.shouldBeBarChart.priority
+        data[0].length === notificationConfig.shouldBeBarChart.limit,
+      priority: notificationConfig.shouldBeBarChart.priority
     };
   }
 };

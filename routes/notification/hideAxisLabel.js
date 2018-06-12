@@ -1,11 +1,11 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
-const validationConfig = JSON.parse(process.env.VALIDATION_CONFIG);
+const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
-  path: "/validate/hideAxisLabel",
+  path: "/notification/hideAxisLabel",
   options: {
     validate: {
       options: {
@@ -24,13 +24,13 @@ module.exports = {
   handler: function(request, h) {
     const data = request.payload.data[0];
     const hideAxisLabel = request.payload.data[1];
-    const validationResult = {
+    const notificationResult = {
       showNotification: false,
-      priority: validationConfig.hideAxisLabel.priority
+      priority: notificationConfig.hideAxisLabel.priority
     };
     if (!hideAxisLabel) {
-      validationResult.showNotification = dateSeries.isDateSeriesData(data);
+      notificationResult.showNotification = dateSeries.isDateSeriesData(data);
     }
-    return validationResult;
+    return notificationResult;
   }
 };

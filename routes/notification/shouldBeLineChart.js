@@ -1,11 +1,11 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
-const validationConfig = JSON.parse(process.env.VALIDATION_CONFIG);
+const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
-  path: "/validate/shouldBeLineChart",
+  path: "/notification/shouldBeLineChart",
   options: {
     validate: {
       options: {
@@ -24,15 +24,15 @@ module.exports = {
   handler: function(request, h) {
     const data = request.payload.data[0];
     const chartType = request.payload.data[1];
-    const validationResult = {
+    const notificationResult = {
       showNotification: false,
-      priority: validationConfig.shouldBeLineChart.priority
+      priority: notificationConfig.shouldBeLineChart.priority
     };
     if (chartType !== "Line" && data[0]) {
-      validationResult.showNotification =
-        data[0].length > validationConfig.shouldBeLineChart.limit &&
+      notificationResult.showNotification =
+        data[0].length > notificationConfig.shouldBeLineChart.limit &&
         dateSeries.isDateSeriesData(data);
     }
-    return validationResult;
+    return notificationResult;
   }
 };

@@ -1,11 +1,11 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
-const validationConfig = JSON.parse(process.env.VALIDATION_CONFIG);
+const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
-  path: "/validate/shouldBeBars",
+  path: "/notification/shouldBeBars",
   options: {
     validate: {
       options: {
@@ -27,9 +27,9 @@ module.exports = {
     const isBarChart = request.payload.data[2];
     const forceBarsOnSmall = request.payload.data[3];
 
-    const validationResult = {
+    const notificationResult = {
       showNotification: false,
-      priority: validationConfig.shouldBeBars.priority
+      priority: notificationConfig.shouldBeBars.priority
     };
     if (
       data[0] &&
@@ -37,10 +37,10 @@ module.exports = {
       !isBarChart &&
       !forceBarsOnSmall
     ) {
-      validationResult.showNotification =
-        data[0].length > validationConfig.shouldBeBars.limit &&
+      notificationResult.showNotification =
+        data[0].length > notificationConfig.shouldBeBars.limit &&
         !dateSeries.isDateSeriesData(data);
     }
-    return validationResult;
+    return notificationResult;
   }
 };
