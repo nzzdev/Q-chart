@@ -46,6 +46,34 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
+      path: "data",
+      mapToSpec: function(itemData, spec, item, id) {
+        // check if all rows sum up to 100
+        const stackedSums = itemData
+          .slice(1)
+          .map(row => {
+            return row.slice(1).reduce((sum, cell) => {
+              return sum + cell;
+            }, 0);
+          })
+          .reduce((uniqueSums, sum) => {
+            if (!uniqueSums.includes(sum)) {
+              uniqueSums.push(sum);
+            }
+            return uniqueSums;
+          }, []);
+
+        // if the sums are not unique or do not equal 100, do nothing
+        if (stackedSums.length !== 1 || Math.floor(stackedSums[0]) !== 100) {
+          return;
+        }
+
+        // set the ticks to 0/25/50/75/100
+        objectPath.set(spec, "axes.1.tickCount", undefined);
+        objectPath.set(spec, "axes.1.values", [0, 25, 50, 75, 100]);
+      }
+    },
+    {
       path: "options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec, item) {
         if (hideAxisLabel === true) {

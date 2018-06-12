@@ -104,8 +104,8 @@ module.exports = function getMapping(config = {}) {
                 // add isMax and isMin to be used by min/max annotation later
                 data.isMax = index === row.length - 1;
 
-                // add only if this is not the same as isMax to not have doubled labels for the same point
-                data.isMin = index === 0 && index !== row.length - 1;
+                // add only if we have more than one data series to not have doubled labels for the same point
+                data.isMin = index === 0 && row.length > 1;
                 return data;
               })
               .map((data, index, row) => {
@@ -213,8 +213,8 @@ module.exports = function getMapping(config = {}) {
     },
     {
       path: "options.annotations.min",
-      mapToSpec: function(showDiffAnnoation, spec, item) {
-        if (!showDiffAnnoation) {
+      mapToSpec: function(showMinAnnotation, spec, item) {
+        if (!showMinAnnotation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
@@ -251,8 +251,8 @@ module.exports = function getMapping(config = {}) {
     },
     {
       path: "options.annotations.max",
-      mapToSpec: function(showDiffAnnoation, spec, item) {
-        if (!showDiffAnnoation) {
+      mapToSpec: function(showMaxAnnotation, spec, item) {
+        if (!showMaxAnnotation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
