@@ -1,3 +1,24 @@
 {
-  "notifications": {}
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "Achsenbeschriftung nicht nötig",
+      "body":
+        "Ist die Achsenbeschriftung wirklich nötig? Wenn nicht, einfach Achsenbeschriftung ausblenden anwählen."
+    },
+    "shouldBeBarChart": {
+      "title": "Nur eine Datenspalte vorhanden",
+      "body":
+        "Vielleicht ist es besser, auf Diagrammtyp «Säulen» zu wechseln. Bei nur einer Datenspalte ist das oft klarer."
+    },
+    "shouldBeLineChart": {
+      "title": "Sehr viele Datenspalten vorhanden",
+      "body":
+        "Für so viele Datenpunkte ist vermutlich ein Liniendiagramm besser geeignet."
+    },
+    "shouldBeBars": {
+      "title": "Sehr viele Datenspalten vorhanden",
+      "body":
+        "Wenn Labels sich überlappen, solltest du die Option Balken für mobile oder Balken statt Säulen anwählen."
+    }
+  }
 }
