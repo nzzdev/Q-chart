@@ -1,6 +1,5 @@
 const Joi = require("joi");
 const Boom = require("boom");
-const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
@@ -11,7 +10,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required()
+        data: Joi.any().required(),
+        notificationRule: Joi.object().required()
       }
     },
     cors: true,
@@ -26,8 +26,8 @@ module.exports = {
     return {
       showNotification:
         chartType === "StackedBar" &&
-        data[0].length === notificationConfig.shouldBeBarChart.limit,
-      priority: notificationConfig.shouldBeBarChart.priority
+        data[0].length === request.payload.notificationRule.limit,
+      priority: request.payload.notificationRule.priority
     };
   }
 };

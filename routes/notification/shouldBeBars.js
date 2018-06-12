@@ -1,7 +1,6 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
-const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
@@ -12,7 +11,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required()
+        data: Joi.any().required(),
+        notificationRule: Joi.object().required()
       }
     },
     cors: true,
@@ -29,7 +29,7 @@ module.exports = {
 
     const notificationResult = {
       showNotification: false,
-      priority: notificationConfig.shouldBeBars.priority
+      priority: request.payload.notificationRule.priority
     };
     if (
       data[0] &&
@@ -38,7 +38,7 @@ module.exports = {
       !forceBarsOnSmall
     ) {
       notificationResult.showNotification =
-        data[0].length > notificationConfig.shouldBeBars.limit &&
+        data[0].length > request.payload.notificationRule.limit &&
         !dateSeries.isDateSeriesData(data);
     }
     return notificationResult;

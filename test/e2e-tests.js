@@ -8,7 +8,6 @@ const before = lab.before;
 const after = lab.after;
 const it = lab.it;
 
-process.env.NOTIFICATION_CONFIG = `{"hideAxisLabel":{"priority":{"type":"medium","value":30}},"shouldBeBarChart":{"limit":2,"priority":{"type":"medium","value":40}},"shouldBeBars":{"limit":8,"priority":{"type":"medium","value":50}},"shouldBeLineChart":{"limit":15,"priority":{"type":"medium","value":60}}}`;
 const package = require("../package.json");
 const routes = require("../routes/routes.js");
 

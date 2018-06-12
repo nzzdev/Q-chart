@@ -1,7 +1,6 @@
 const Joi = require("joi");
 const Boom = require("boom");
 const dateSeries = require("../../helpers/dateSeries.js");
-const notificationConfig = JSON.parse(process.env.NOTIFICATION_CONFIG);
 
 module.exports = {
   method: "POST",
@@ -12,7 +11,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required()
+        data: Joi.any().required(),
+        notificationRule: Joi.object().required()
       }
     },
     cors: true,
@@ -26,7 +26,7 @@ module.exports = {
     const hideAxisLabel = request.payload.data[1];
     const notificationResult = {
       showNotification: false,
-      priority: notificationConfig.hideAxisLabel.priority
+      priority: request.payload.notificationRule.priority
     };
     if (!hideAxisLabel) {
       notificationResult.showNotification = dateSeries.isDateSeriesData(data);
