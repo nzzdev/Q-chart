@@ -68,7 +68,7 @@ module.exports = {
     const exactPixelWidth = getExactPixelWidth(
       request.payload.toolRuntimeConfig
     );
-    if (Number.isInteger(exactPixelWidth)) {
+    if (typeof exactPixelWidth === "number") {
       const svgResponse = await request.server.inject({
         method: "POST",
         url: `/rendering-info/web-svg?width=${exactPixelWidth}&id=${
