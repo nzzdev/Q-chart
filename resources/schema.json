@@ -203,31 +203,7 @@
                 "withData": true,
                 "endpoint": "option-availability/chartType"
               }
-            ],
-            "Q:options": {
-              "notificationRules": [
-                {
-                  "type": "ToolEndpoint",
-                  "endpoint": "notification/shouldBeBarChart",
-                  "data": ["data", "options.chartType"],
-                  "priority": {
-                    "type": "medium",
-                    "value": 1
-                  },
-                  "limit": 2
-                },
-                {
-                  "type": "ToolEndpoint",
-                  "endpoint": "notification/shouldBeLineChart",
-                  "data": ["data", "options.chartType"],
-                  "limit": 15,
-                  "priority": {
-                    "type": "medium",
-                    "value": 2
-                  }
-                }
-              ]
-            }
+            ]
           },
           "default": "Bar"
         },
@@ -267,20 +243,7 @@
                 "withData": true,
                 "endpoint": "option-availability/hideAxisLabel"
               }
-            ],
-            "Q:options": {
-              "notificationRules": [
-                {
-                  "type": "ToolEndpoint",
-                  "endpoint": "notification/hideAxisLabel",
-                  "data": ["data", "options.hideAxisLabel"],
-                  "priority": {
-                    "type": "medium",
-                    "value": 1
-                  }
-                }
-              ]
-            }
+            ]
           }
         },
         "annotations": {
@@ -379,26 +342,7 @@
             "isBarChart": {
               "title": "Balken statt Säulen",
               "type": "boolean",
-              "default": false,
-              "Q:options": {
-                "notificationRules": [
-                  {
-                    "type": "ToolEndpoint",
-                    "endpoint": "notification/shouldBeBars",
-                    "data": [
-                      "data",
-                      "options.chartType",
-                      "options.barOptions.isBarChart",
-                      "options.barOptions.forceBarsOnSmall"
-                    ],
-                    "limit": 8,
-                    "priority": {
-                      "type": "medium",
-                      "value": 1
-                    }
-                  }
-                ]
-              }
+              "default": false
             },
             "forceBarsOnSmall": {
               "title": "Balken für Mobile",
