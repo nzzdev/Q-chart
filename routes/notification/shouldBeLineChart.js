@@ -11,8 +11,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required(),
-        notificationCheck: Joi.object().required()
+        data: Joi.array().required(),
+        options: Joi.object().required()
       }
     },
     cors: true,
@@ -24,15 +24,19 @@ module.exports = {
   handler: function(request, h) {
     const data = request.payload.data[0];
     const chartType = request.payload.data[1];
-    const notificationResult = {
-      showNotification: false,
-      priority: request.payload.notificationCheck.priority
-    };
-    if (chartType !== "Line" && data[0]) {
-      notificationResult.showNotification =
-        data[0].length > request.payload.notificationCheck.limit &&
-        dateSeries.isDateSeriesData(data);
+    if (
+      chartType !== "Line" &&
+      data[0] &&
+      data[0].length > request.payload.options.limit &&
+      dateSeries.isDateSeriesData(data)
+    ) {
+      return {
+        message: {
+          title: "notifications.shouldBeLineChart.title",
+          body: "notifications.shouldBeLineChart.body"
+        }
+      };
     }
-    return notificationResult;
+    return null;
   }
 };

@@ -10,8 +10,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required(),
-        notificationCheck: Joi.object().required()
+        data: Joi.array().required(),
+        options: Joi.object().required()
       }
     },
     cors: true,
@@ -23,11 +23,17 @@ module.exports = {
   handler: function(request, h) {
     const data = request.payload.data[0];
     const chartType = request.payload.data[1];
-    return {
-      showNotification:
-        chartType === "StackedBar" &&
-        data[0].length === request.payload.notificationCheck.limit,
-      priority: request.payload.notificationCheck.priority
-    };
+    if (
+      chartType === "StackedBar" &&
+      data[0].length === request.payload.options.limit
+    ) {
+      return {
+        message: {
+          title: "notifications.shouldBeBarChart.title",
+          body: "notifications.shouldBeBarChart.body"
+        }
+      };
+    }
+    return null;
   }
 };

@@ -11,8 +11,8 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required(),
-        notificationCheck: Joi.object().required()
+        data: Joi.array().required(),
+        options: Joi.object().required()
       }
     },
     cors: true,
@@ -27,20 +27,21 @@ module.exports = {
     const isBarChart = request.payload.data[2];
     const forceBarsOnSmall = request.payload.data[3];
 
-    const notificationResult = {
-      showNotification: false,
-      priority: request.payload.notificationCheck.priority
-    };
     if (
       data[0] &&
       ["Bar", "StackedBar"].includes(chartType) &&
       !isBarChart &&
-      !forceBarsOnSmall
+      !forceBarsOnSmall &&
+      data[0].length > request.payload.options.limit &&
+      !dateSeries.isDateSeriesData(data)
     ) {
-      notificationResult.showNotification =
-        data[0].length > request.payload.notificationCheck.limit &&
-        !dateSeries.isDateSeriesData(data);
+      return {
+        message: {
+          title: "notifications.shouldBeBars.title",
+          body: "notifications.shouldBeBars.body"
+        }
+      };
     }
-    return notificationResult;
+    return null;
   }
 };

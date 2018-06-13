@@ -11,8 +11,7 @@ module.exports = {
         allowUnknown: true
       },
       payload: {
-        data: Joi.any().required(),
-        notificationCheck: Joi.object().required()
+        data: Joi.any().required()
       }
     },
     cors: true,
@@ -24,13 +23,14 @@ module.exports = {
   handler: function(request, h) {
     const data = request.payload.data[0];
     const hideAxisLabel = request.payload.data[1];
-    const notificationResult = {
-      showNotification: false,
-      priority: request.payload.notificationCheck.priority
-    };
-    if (!hideAxisLabel) {
-      notificationResult.showNotification = dateSeries.isDateSeriesData(data);
+    if (!hideAxisLabel && dateSeries.isDateSeriesData(data)) {
+      return {
+        message: {
+          title: "notifications.hideAxisLabel.title",
+          body: "notifications.hideAxisLabel.body"
+        }
+      };
     }
-    return notificationResult;
+    return null;
   }
 };
