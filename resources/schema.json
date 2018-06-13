@@ -7,7 +7,7 @@
       "title": "Titel",
       "type": "string",
       "Q:options": {
-        "notificationRules": [
+        "notificationChecks": [
           {
             "type": "IsValueMissing",
             "data": [],
@@ -28,7 +28,7 @@
       "type": "array",
       "Q:type": "table",
       "Q:options": {
-        "notificationRules": [
+        "notificationChecks": [
           {
             "type": "IsValueMissing",
             "data": [],
@@ -147,7 +147,7 @@
             "title": "Text",
             "type": "string",
             "Q:options": {
-              "notificationRules": [
+              "notificationChecks": [
                 {
                   "type": "IsValueMissing",
                   "data": [],

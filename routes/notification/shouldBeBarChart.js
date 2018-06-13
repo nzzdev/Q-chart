@@ -11,7 +11,7 @@ module.exports = {
       },
       payload: {
         data: Joi.any().required(),
-        notificationRule: Joi.object().required()
+        notificationCheck: Joi.object().required()
       }
     },
     cors: true,
@@ -26,8 +26,8 @@ module.exports = {
     return {
       showNotification:
         chartType === "StackedBar" &&
-        data[0].length === request.payload.notificationRule.limit,
-      priority: request.payload.notificationRule.priority
+        data[0].length === request.payload.notificationCheck.limit,
+      priority: request.payload.notificationCheck.priority
     };
   }
 };

@@ -12,7 +12,7 @@ module.exports = {
       },
       payload: {
         data: Joi.any().required(),
-        notificationRule: Joi.object().required()
+        notificationCheck: Joi.object().required()
       }
     },
     cors: true,
@@ -29,7 +29,7 @@ module.exports = {
 
     const notificationResult = {
       showNotification: false,
-      priority: request.payload.notificationRule.priority
+      priority: request.payload.notificationCheck.priority
     };
     if (
       data[0] &&
@@ -38,7 +38,7 @@ module.exports = {
       !forceBarsOnSmall
     ) {
       notificationResult.showNotification =
-        data[0].length > request.payload.notificationRule.limit &&
+        data[0].length > request.payload.notificationCheck.limit &&
         !dateSeries.isDateSeriesData(data);
     }
     return notificationResult;

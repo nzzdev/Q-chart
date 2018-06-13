@@ -12,7 +12,7 @@ module.exports = {
       },
       payload: {
         data: Joi.any().required(),
-        notificationRule: Joi.object().required()
+        notificationCheck: Joi.object().required()
       }
     },
     cors: true,
@@ -26,11 +26,11 @@ module.exports = {
     const chartType = request.payload.data[1];
     const notificationResult = {
       showNotification: false,
-      priority: request.payload.notificationRule.priority
+      priority: request.payload.notificationCheck.priority
     };
     if (chartType !== "Line" && data[0]) {
       notificationResult.showNotification =
-        data[0].length > request.payload.notificationRule.limit &&
+        data[0].length > request.payload.notificationCheck.limit &&
         dateSeries.isDateSeriesData(data);
     }
     return notificationResult;
