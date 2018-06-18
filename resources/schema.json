@@ -5,19 +5,7 @@
   "properties": {
     "title": {
       "title": "Titel",
-      "type": "string",
-      "Q:options": {
-        "notificationChecks": [
-          {
-            "type": "IsValueMissing",
-            "data": [],
-            "priority": {
-              "type": "high",
-              "value": 1
-            }
-          }
-        ]
-      }
+      "type": "string"
     },
     "subtitle": {
       "title": "Untertitel",
@@ -29,14 +17,6 @@
       "Q:type": "table",
       "Q:options": {
         "notificationChecks": [
-          {
-            "type": "IsValueMissing",
-            "data": [],
-            "priority": {
-              "type": "high",
-              "value": 1
-            }
-          },
           {
             "type": "EmptyData",
             "data": ["data"],
@@ -62,56 +42,6 @@
             },
             "options": {
               "limit": 8
-            }
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "notification/shouldBeBarChart",
-            "data": ["data", "options.chartType"],
-            "priority": {
-              "type": "medium",
-              "value": 3
-            },
-            "options": {
-              "limit": 2
-            }
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "notification/shouldBeLineChart",
-            "data": ["data", "options.chartType"],
-            "options": {
-              "limit": 5
-            },
-            "priority": {
-              "type": "medium",
-              "value": 4
-            }
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "notification/hideAxisLabel",
-            "data": ["data", "options.hideAxisLabel"],
-            "priority": {
-              "type": "medium",
-              "value": 5
-            }
-          },
-          {
-            "type": "ToolEndpoint",
-            "endpoint": "notification/shouldBeBars",
-            "data": [
-              "data",
-              "options.chartType",
-              "options.barOptions.isBarChart",
-              "options.barOptions.forceBarsOnSmall"
-            ],
-            "options": {
-              "limit": 8
-            },
-            "priority": {
-              "type": "medium",
-              "value": 6
             }
           }
         ]
@@ -153,19 +83,7 @@
         "properties": {
           "text": {
             "title": "Text",
-            "type": "string",
-            "Q:options": {
-              "notificationChecks": [
-                {
-                  "type": "IsValueMissing",
-                  "data": [],
-                  "priority": {
-                    "type": "high",
-                    "value": 1
-                  }
-                }
-              ]
-            }
+            "type": "string"
           },
           "link": {
             "Q:type": "link",
@@ -211,6 +129,32 @@
                 "withData": true,
                 "endpoint": "option-availability/chartType"
               }
+            ],
+            "notificationChecks": [
+              {
+                "type": "ToolEndpoint",
+                "endpoint": "notification/shouldBeBarChart",
+                "data": ["data", "options.chartType"],
+                "priority": {
+                  "type": "medium",
+                  "value": 3
+                },
+                "options": {
+                  "limit": 2
+                }
+              },
+              {
+                "type": "ToolEndpoint",
+                "endpoint": "notification/shouldBeLineChart",
+                "data": ["data", "options.chartType"],
+                "options": {
+                  "limit": 5
+                },
+                "priority": {
+                  "type": "medium",
+                  "value": 4
+                }
+              }
             ]
           },
           "default": "Bar"
@@ -250,6 +194,17 @@
                 "type": "ToolEndpoint",
                 "withData": true,
                 "endpoint": "option-availability/hideAxisLabel"
+              }
+            ],
+            "notificationChecks": [
+              {
+                "type": "ToolEndpoint",
+                "endpoint": "notification/hideAxisLabel",
+                "data": ["data", "options.hideAxisLabel"],
+                "priority": {
+                  "type": "medium",
+                  "value": 5
+                }
               }
             ]
           }
@@ -350,7 +305,28 @@
             "isBarChart": {
               "title": "Balken statt Säulen",
               "type": "boolean",
-              "default": false
+              "default": false,
+              "Q:options": {
+                "notificationChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "endpoint": "notification/shouldBeBars",
+                    "data": [
+                      "data",
+                      "options.chartType",
+                      "options.barOptions.isBarChart",
+                      "options.barOptions.forceBarsOnSmall"
+                    ],
+                    "priority": {
+                      "type": "medium",
+                      "value": 6
+                    },
+                    "options": {
+                      "limit": 8
+                    }
+                  }
+                ]
+              }
             },
             "forceBarsOnSmall": {
               "title": "Balken für Mobile",
