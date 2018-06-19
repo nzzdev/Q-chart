@@ -26,7 +26,7 @@
             }
           },
           {
-            "type": "EmptyFirstRow",
+            "type": "HasColumnTitles",
             "data": ["data"],
             "priority": {
               "type": "medium",
