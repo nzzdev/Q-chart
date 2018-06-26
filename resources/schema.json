@@ -5,11 +5,17 @@
   "properties": {
     "title": {
       "title": "Titel",
-      "type": "string"
+      "type": "string",
+      "Q:options": {
+        "placeholder": "Der Titel bringt die Kernaussage der Grafik auf den Punkt."
+      }
     },
     "subtitle": {
       "title": "Untertitel",
-      "type": "string"
+      "type": "string",
+      "Q:options": {
+        "placeholder": "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten."
+      }
     },
     "data": {
       "title": "Daten",
@@ -71,7 +77,7 @@
       "minItems": 1
     },
     "vegaSpec": {
-      "title": "Vega Spezifikation",
+      "title": "Vega-Spezifikation",
       "type": "object",
       "Q:type": "json",
       "Q:options": {
@@ -84,20 +90,23 @@
       }
     },
     "sources": {
-      "title": "Quellen",
+      "title": "Quelle(n)",
       "type": "array",
       "items": {
         "type": "object",
         "title": "Quelle",
         "properties": {
           "text": {
-            "title": "Text",
+            "title": "Quelle",
             "type": "string"
           },
           "link": {
             "Q:type": "link",
             "title": "Link",
             "type": "object",
+            "Q:options": {
+              "placeholder": "Direktlink zur Quelle, http://..."
+            },
             "properties": {
               "url": {
                 "title": "Url",
@@ -299,7 +308,7 @@
           }
         },
         "barOptions": {
-          "title": "Balkendiagramm Optionen",
+          "title": "Optionen für Säulendiagramme",
           "type": "object",
           "Q:options": {
             "availabilityChecks": [
@@ -352,7 +361,7 @@
               }
             },
             "maxValue": {
-              "title": "Maximaler Wert",
+              "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
             }
           }
@@ -406,7 +415,7 @@
           }
         },
         "lineChartOptions": {
-          "title": "Liniendiagramm Optionen",
+          "title": "Optionen für Liniendiagramme",
           "type": "object",
           "Q:options": {
             "availabilityChecks": [
@@ -419,20 +428,20 @@
           },
           "properties": {
             "minValue": {
-              "title": "Minimaler Wert",
+              "title": "Minimaler Wert auf Y-Achse",
               "type": "number"
             },
             "maxValue": {
-              "title": "Maximaler Wert",
+              "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
             },
             "reverseYScale": {
-              "title": "Y Achse invertieren",
+              "title": "Y-Achse invertieren",
               "type": "boolean",
               "default": false
             },
             "lineInterpolation": {
-              "title": "Interpolation",
+              "title": "Interpolation der Linien",
               "type": "string",
               "default": "linear",
               "enum": ["linear", "step-before", "step-after", "monotone"],
@@ -463,7 +472,7 @@
         },
 
         "dotplotOptions": {
-          "title": "Dot Plot Optionen",
+          "title": "Optionen für Dot Plots",
           "type": "object",
           "Q:options": {
             "availabilityChecks": [
@@ -490,7 +499,7 @@
           }
         },
         "colorOverwrite": {
-          "title": "Farben",
+          "title": "Farben manuell festlegen",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
