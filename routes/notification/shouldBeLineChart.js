@@ -19,21 +19,25 @@ module.exports = {
     tags: ["api"]
   },
   handler: function(request, h) {
-    const data = request.payload.data[0];
-    const chartType = request.payload.data[1];
-    if (
-      chartType !== "Line" &&
-      data[0] &&
-      data[0].length > request.payload.options.limit &&
-      dateSeries.isDateSeriesData(data)
-    ) {
-      return {
-        message: {
-          title: "notifications.shouldBeLineChart.title",
-          body: "notifications.shouldBeLineChart.body"
-        }
-      };
+    try {
+      const data = request.payload.data[0];
+      const chartType = request.payload.data[1];
+      if (
+        chartType !== "Line" &&
+        data[0] &&
+        data[0].length > request.payload.options.limit &&
+        dateSeries.isDateSeriesData(data)
+      ) {
+        return {
+          message: {
+            title: "notifications.shouldBeLineChart.title",
+            body: "notifications.shouldBeLineChart.body"
+          }
+        };
+      }
+      return null;
+    } catch (err) {
+      return null;
     }
-    return null;
   }
 };

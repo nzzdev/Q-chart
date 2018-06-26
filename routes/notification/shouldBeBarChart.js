@@ -18,19 +18,23 @@ module.exports = {
     tags: ["api"]
   },
   handler: function(request, h) {
-    const data = request.payload.data[0];
-    const chartType = request.payload.data[1];
-    if (
-      chartType === "StackedBar" &&
-      data[0].length === request.payload.options.limit
-    ) {
-      return {
-        message: {
-          title: "notifications.shouldBeBarChart.title",
-          body: "notifications.shouldBeBarChart.body"
-        }
-      };
+    try {
+      const data = request.payload.data[0];
+      const chartType = request.payload.data[1];
+      if (
+        chartType === "StackedBar" &&
+        data[0].length === request.payload.options.limit
+      ) {
+        return {
+          message: {
+            title: "notifications.shouldBeBarChart.title",
+            body: "notifications.shouldBeBarChart.body"
+          }
+        };
+      }
+      return null;
+    } catch (err) {
+      return null;
     }
-    return null;
   }
 };

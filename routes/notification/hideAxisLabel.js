@@ -21,16 +21,20 @@ module.exports = {
     tags: ["api"]
   },
   handler: function(request, h) {
-    const data = request.payload.data[0];
-    const hideAxisLabel = request.payload.data[1];
-    if (!hideAxisLabel && dateSeries.isDateSeriesData(data)) {
-      return {
-        message: {
-          title: "notifications.hideAxisLabel.title",
-          body: "notifications.hideAxisLabel.body"
-        }
-      };
+    try {
+      const data = request.payload.data[0];
+      const hideAxisLabel = request.payload.data[1];
+      if (!hideAxisLabel && dateSeries.isDateSeriesData(data)) {
+        return {
+          message: {
+            title: "notifications.hideAxisLabel.title",
+            body: "notifications.hideAxisLabel.body"
+          }
+        };
+      }
+      return null;
+    } catch (err) {
+      return null;
     }
-    return null;
   }
 };
