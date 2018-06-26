@@ -1,0 +1,29 @@
+{
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "Is the axis label necessary?",
+      "body":
+        "If the axis label is self-explanatory, we better leave it out. Select «hide axis label»."
+    },
+    "shouldBeBarChart": {
+      "title": "Chart type not ideal",
+      "body":
+        "Maybe it's better to switch to chart type «Bar». This is often clearer with just one data column."
+    },
+    "shouldBeLineChart": {
+      "title": "Chart type not ideal",
+      "body":
+        "For so many data points, a line chart is probably more appropriate."
+    },
+    "shouldBeBars": {
+      "title": "Many columns",
+      "body":
+        "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
+    },
+    "unsupportedDateFormat": {
+      "title": "Unsupported Datumsformat",
+      "body":
+        "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."
+    }
+  }
+}
