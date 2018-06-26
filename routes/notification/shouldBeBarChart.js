@@ -15,9 +15,6 @@ module.exports = {
       }
     },
     cors: true,
-    cache: {
-      expiresIn: 1000 * 60 // 60 seconds
-    },
     tags: ["api"]
   },
   handler: function(request, h) {

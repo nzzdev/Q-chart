@@ -43,6 +43,15 @@
             "options": {
               "limit": 8
             }
+          },
+          {
+            "type": "ToolEndpoint",
+            "endpoint": "notification/unsupportedDateFormat",
+            "data": ["data"],
+            "priority": {
+              "type": "medium",
+              "value": 3
+            }
           }
         ]
       },

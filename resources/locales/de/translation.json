@@ -19,6 +19,11 @@
       "title": "Sehr viele Spalten",
       "body":
         "Wenn Labels sich überlappen, solltest du die Option «Balken für mobile» oder «Balken statt Säulen» anwählen."
+    },
+    "unsupportedDateFormat": {
+      "title": "Ungültiges Datumsformat",
+      "body":
+        "Spalte A enthält wahrscheinlich ein nicht unterstütztes Datumsformat. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
     }
   }
 }
