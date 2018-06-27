@@ -1,0 +1,29 @@
+{
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "L'étiquette de l'axe est-elle nécessaire?",
+      "body":
+        "Si l'étiquette de l'axe est explicite, il vaut mieux ne pas y penser. Sélectionnez «Masquer l'étiquette de l'axe»."
+    },
+    "shouldBeBarChart": {
+      "title": "Le type de graphique n'est pas idéal",
+      "body":
+        "Peut-être qu'il vaut mieux passer au type de graphique «Bar». Ceci est souvent plus clair avec une seule colonne de données."
+    },
+    "shouldBeLineChart": {
+      "title": "Le type de graphique n'est pas idéal",
+      "body":
+        "Pour un si grand nombre de points de données, un graphique linéaire est probablement plus approprié."
+    },
+    "shouldBeBars": {
+      "title": "Beaucoup de colonnes",
+      "body":
+        "Si les étiquettes se chevauchent, vous devez sélectionner l'option «Bars for mobile» ou «Bars au lieu des colonnes»."
+    },
+    "unsupportedDateFormat": {
+      "title": "Format de date invalide",
+      "body":
+        "La colonne A contient probablement un format de date non pris en charge. Veuillez consulter le manuel pour une liste des formats supportés."
+    }
+  }
+}
