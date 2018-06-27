@@ -35,7 +35,7 @@
     "code": "^5.1.2",
     "cssnano": "^3.10.0",
     "lab": "^15.1.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.0",
     "postcss": "^6.0.14",
     "postcss-import": "^11.0.0"
   }
