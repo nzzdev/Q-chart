@@ -499,7 +499,7 @@
           }
         },
         "colorOverwrite": {
-          "title": "Farben manuell festlegen",
+          "title": "Farben",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
