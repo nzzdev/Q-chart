@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const Boom = require("boom");
+const array2d = require("array2d");
 const dateSeries = require("../../helpers/dateSeries.js");
 
 module.exports = {
@@ -22,10 +23,11 @@ module.exports = {
     try {
       const data = request.payload.data[0];
       const chartType = request.payload.data[1];
+      const amountOfRows = array2d.width(data);
       if (
         chartType !== "Line" &&
         data[0] &&
-        data[0].length > request.payload.options.limit &&
+        amountOfRows > request.payload.options.limit &&
         dateSeries.isDateSeriesData(data)
       ) {
         return {
