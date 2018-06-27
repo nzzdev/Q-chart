@@ -7,14 +7,16 @@
       "title": "Titel",
       "type": "string",
       "Q:options": {
-        "placeholder": "Der Titel bringt die Kernaussage der Grafik auf den Punkt."
+        "placeholder":
+          "Der Titel bringt die Kernaussage der Grafik auf den Punkt."
       }
     },
     "subtitle": {
       "title": "Untertitel",
       "type": "string",
       "Q:options": {
-        "placeholder": "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten."
+        "placeholder":
+          "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten."
       }
     },
     "data": {
@@ -166,7 +168,7 @@
                 "endpoint": "notification/shouldBeLineChart",
                 "data": ["data", "options.chartType"],
                 "options": {
-                  "limit": 5
+                  "limit": 40
                 },
                 "priority": {
                   "type": "medium",
