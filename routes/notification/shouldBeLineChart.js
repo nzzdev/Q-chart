@@ -23,7 +23,7 @@ module.exports = {
     try {
       const data = request.payload.data[0];
       const chartType = request.payload.data[1];
-      const amountOfRows = array2d.width(data);
+      const amountOfRows = array2d.height(data);
       if (
         chartType !== "Line" &&
         data[0] &&
