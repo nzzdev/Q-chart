@@ -28,10 +28,10 @@
   },
   "Diagramm": "Graphique",
   "Titel": "Titre",
-  "Der Titel bringt die Kernaussage der Grafik auf den Punkt.":
+  "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;":
     "Le titre apporte le message de base du graphique au point.",
   "Untertitel": "Sous-Titre",
-  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten.":
+  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;":
     "Les noms de sous-titres sont précisément ce qui peut être vu dans le graphique, y compris les unités.",
   "Daten": "Données",
   "Vega-Spezifikation": "Spécification Vega",
