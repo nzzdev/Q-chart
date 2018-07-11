@@ -12,7 +12,11 @@ function getLegendModel(item, toolRuntimeConfig) {
   const colorRange = getComputedColorRange(item, toolRuntimeConfig);
   const legendModel = {};
 
-  legendModel.type = item.options.chartType.toLowerCase();
+  if (item.options.chartType.toLowerCase() === "line") {
+    legendModel.type = "line";
+  } else {
+    legendModel.type = "circle";
+  }
 
   legendModel.legendItems = [];
 
