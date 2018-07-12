@@ -15,7 +15,7 @@ function getLegendModel(item, toolRuntimeConfig) {
   if (item.options.chartType.toLowerCase() === "line") {
     legendModel.type = "line";
   } else {
-    legendModel.type = "circle";
+    legendModel.type = "default";
   }
 
   legendModel.legendItems = [];
