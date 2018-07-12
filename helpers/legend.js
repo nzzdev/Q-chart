@@ -15,7 +15,11 @@ function getLegendModel(item, toolRuntimeConfig) {
   );
   const legendModel = {};
 
-  legendModel.type = item.options.chartType.toLowerCase();
+  if (item.options.chartType.toLowerCase() === "line") {
+    legendModel.type = "line";
+  } else {
+    legendModel.type = "default";
+  }
 
   legendModel.legendItems = [];
 

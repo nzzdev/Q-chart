@@ -1,0 +1,83 @@
+{
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "Is the axis label necessary?",
+      "body":
+        "If the axis label is self-explanatory, we better leave it out. Select «hide axis label»."
+    },
+    "shouldBeBarChart": {
+      "title": "Chart type not ideal",
+      "body":
+        "Maybe it's better to switch to chart type «Bar». This is often clearer with just one data column."
+    },
+    "shouldBeLineChart": {
+      "title": "Chart type not ideal",
+      "body":
+        "For so many data points, a line chart is probably more appropriate."
+    },
+    "shouldBeBars": {
+      "title": "Many columns",
+      "body":
+        "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
+    },
+    "unsupportedDateFormat": {
+      "title": "Unsupported Datumsformat",
+      "body":
+        "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."
+    }
+  },
+  "Diagramm": "Diagram",
+  "Titel": "Title",
+  "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;":
+    "The title brings the core message of the graphic to the point.",
+  "Untertitel": "Subtitle",
+  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;":
+    "The subtitle names precisely what can be seen in the graphic, including units.",
+  "Daten": "Data",
+  "Vega-Spezifikation": "Vega specification",
+  "Quelle(n)": "Sources",
+  "Quelle": "Source",
+  "Link": "Link",
+  "Direktlink zur Quelle, http://...": "Direct link to the source, http://...",
+  "Url": "Url",
+  "Anmerkungen": "Annotation",
+  "Allgemeine Optionen": "General options",
+  "Diagrammtyp": "Chart type",
+  "Säulen": "Bars",
+  "Gestapelte Säulen": "Stacked Bars",
+  "Linien": "Line",
+  "Dot Plot": "Dot Plot",
+  "Hervorhebung": "Highlight",
+  "Achsenbeschriftung ausblenden": "Hide axis label",
+  "Beschriftungen": "Annotations",
+  "erster Wert": "First value",
+  "letzter Wert": "Last value",
+  "höchster Wert": "Highest value",
+  "tiefster Wert": "Lowest value",
+  "Differenz": "Difference",
+  "Optionen für Säulendiagramme": "Options for bar charts",
+  "Balken statt Säulen": "Bars or columns",
+  "Balken für Mobile": "Bars for mobile",
+  "Maximaler Wert auf Y-Achse": "Maximum value on Y-axis",
+  "Datumsreihe": "Dateseries",
+  "Angezeigtes Intervall": "Displayed interval",
+  "Jahre": "Years",
+  "Quartale": "Quarters",
+  "Monate": "Months",
+  "Tage": "Days",
+  "Stunden": "Hours",
+  "Start Prognose": "Start forecast",
+  "Optionen für Liniendiagramme": "Options for line charts",
+  "Minimaler Wert auf Y-Achse": "Minimum value on Y-axis",
+  "Y-Achse invertieren": "Invert the Y axis",
+  "Interpolation der Linien": "Interpolation of the lines",
+  "Intraday-Chart": "Intraday-Chart",
+  "Optionen für Dot Plots": "Options for Dot Plots",
+  "Punkte verbinden": "Connect points",
+  "Minimaler Wert": "Minimum value",
+  "Maximaler Wert": "Maximum value",
+  "Farben": "Colors",
+  "Farbe normal": "Normal color",
+  "Farbe hell": "Bright color",
+  "Position": "Position"
+}

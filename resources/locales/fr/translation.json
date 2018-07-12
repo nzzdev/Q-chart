@@ -1,0 +1,83 @@
+{
+  "notifications": {
+    "hideAxisLabel": {
+      "title": "L'étiquette de l'axe est-elle nécessaire?",
+      "body":
+        "Si l'étiquette de l'axe est explicite, il vaut mieux ne pas y penser. Sélectionnez «Masquer l'étiquette de l'axe»."
+    },
+    "shouldBeBarChart": {
+      "title": "Le type de graphique n'est pas idéal",
+      "body":
+        "Peut-être qu'il vaut mieux passer au type de graphique «Bar». Ceci est souvent plus clair avec une seule colonne de données."
+    },
+    "shouldBeLineChart": {
+      "title": "Le type de graphique n'est pas idéal",
+      "body":
+        "Pour un si grand nombre de points de données, un graphique linéaire est probablement plus approprié."
+    },
+    "shouldBeBars": {
+      "title": "Beaucoup de colonnes",
+      "body":
+        "Si les étiquettes se chevauchent, vous devez sélectionner l'option «Bars for mobile» ou «Bars au lieu des colonnes»."
+    },
+    "unsupportedDateFormat": {
+      "title": "Format de date invalide",
+      "body":
+        "La colonne A contient probablement un format de date non pris en charge. Veuillez consulter le manuel pour une liste des formats supportés."
+    }
+  },
+  "Diagramm": "Graphique",
+  "Titel": "Titre",
+  "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;":
+    "Le titre apporte le message de base du graphique au point.",
+  "Untertitel": "Sous-Titre",
+  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;":
+    "Les noms de sous-titres sont précisément ce qui peut être vu dans le graphique, y compris les unités.",
+  "Daten": "Données",
+  "Vega-Spezifikation": "Spécification Vega",
+  "Quelle(n)": "Sources",
+  "Quelle": "Source",
+  "Link": "Lien",
+  "Direktlink zur Quelle, http://...": "Lien direct vers la source, http://...",
+  "Url": "Url",
+  "Anmerkungen": "Remarques",
+  "Allgemeine Optionen": "Options générales",
+  "Diagrammtyp": "Type de graphique",
+  "Säulen": "Colonnes",
+  "Gestapelte Säulen": "Colonnes empilées",
+  "Linien": "Lignes",
+  "Dot Plot": "Dot Plot",
+  "Hervorhebung": "Accentuation",
+  "Achsenbeschriftung ausblenden": "Masquer l'étiquette d'axe",
+  "Beschriftungen": "Sous-Titres",
+  "erster Wert": "Première valeur",
+  "letzter Wert": "Dernière valeur",
+  "höchster Wert": "Valeur la plus élevée",
+  "tiefster Wert": "Valeur la plus basse",
+  "Differenz": "Différence",
+  "Optionen für Säulendiagramme": "Options pour les graphiques à colonnes",
+  "Balken statt Säulen": "Poutres au lieu des colonnes",
+  "Balken für Mobile": "Poutres pour mobile",
+  "Maximaler Wert auf Y-Achse": "Valeur maximale sur l'axe Y",
+  "Datumsreihe": "Série de date",
+  "Angezeigtes Intervall": "Intervalle affiché",
+  "Jahre": "Ans",
+  "Quartale": "Quarts",
+  "Monate": "Mois",
+  "Tage": "Journées",
+  "Stunden": "Heures",
+  "Start Prognose": "Démarrer la prévision",
+  "Optionen für Liniendiagramme": "Options pour les graphiques linéaires",
+  "Minimaler Wert auf Y-Achse": "Valeur minimale sur l'axe Y",
+  "Y-Achse invertieren": "Inverser l'axe Y",
+  "Interpolation der Linien": "Interpolation des lignes",
+  "Intraday-Chart": "Graphique intraday",
+  "Optionen für Dot Plots": "Options pour dot plots",
+  "Punkte verbinden": "Connecter des points",
+  "Minimaler Wert": "Valeur minimale",
+  "Maximaler Wert": "Valeur maximale",
+  "Farben": "Couleurs",
+  "Farbe normal": "Couleur normale",
+  "Farbe hell": "Couleur brillante",
+  "Position": "Position"
+}

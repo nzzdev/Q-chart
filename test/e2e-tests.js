@@ -1,16 +1,15 @@
-const Lab = require('lab');
-const Code = require('code');
-const Hapi = require('hapi');
-const Boom = require('boom');
-const lab = exports.lab = Lab.script();
-
+const Lab = require("lab");
+const Code = require("code");
+const Hapi = require("hapi");
+const Boom = require("boom");
+const lab = (exports.lab = Lab.script());
 const expect = Code.expect;
 const before = lab.before;
 const after = lab.after;
 const it = lab.it;
 
-const package = require('../package.json');
-const routes = require('../routes/routes.js');
+const package = require("../package.json");
+const routes = require("../routes/routes.js");
 
 let server;
 
@@ -23,8 +22,7 @@ before(async () => {
       }
     });
     server.route(routes);
-  }
-  catch (err) {
+  } catch (err) {
     expect(err).to.not.exist();
   }
 });
@@ -34,15 +32,13 @@ after(async () => {
   server = null;
 });
 
-lab.experiment('basics', () => {
-
-  it('starts the server', () => {
+lab.experiment("basics", () => {
+  it("starts the server", () => {
     expect(server.info.created).to.be.a.number();
   });
 
-  it('is healthy', async () => {
-    const response = await server.inject('/health');
-    expect(response.payload).to.equal('ok');
+  it("is healthy", async () => {
+    const response = await server.inject("/health");
+    expect(response.payload).to.equal("ok");
   });
-
 });
