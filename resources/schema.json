@@ -499,6 +499,29 @@
             }
           }
         },
+        "arrowOptions": {
+          "title": "Optionen für Arrow Charts",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/arrow"
+              }
+            ]
+          },
+          "properties": {
+            "minValue": {
+              "title": "Minimaler Wert",
+              "type": "number"
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
+            }
+          }
+        },
         "colorOverwrite": {
           "title": "Farben",
           "type": "array",

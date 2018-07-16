@@ -26,10 +26,9 @@
   "options": {
     "chartType": "Arrow",
     "hideAxisLabel": false,
-    "dotplotOptions": {
+    "arrowOptions": {
       "minValue": -1500,
-      "maxValue": 1500,
-      "connectDots": true
+      "maxValue": 1500
     },
     "annotations": {
       "diff": true,

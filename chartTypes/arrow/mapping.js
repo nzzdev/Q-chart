@@ -134,7 +134,7 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.dotplotOptions.minValue",
+      path: "options.arrowOptions.minValue",
       mapToSpec: function(minValue, spec, item) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(item.data);
@@ -149,7 +149,7 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.dotplotOptions.maxValue",
+      path: "options.arrowOptions.maxValue",
       mapToSpec: function(maxValue, spec, item) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(item.data);
