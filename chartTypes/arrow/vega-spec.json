@@ -58,13 +58,10 @@
       "name": "colorScale",
       "type": "quantile",
       "range": {
-        "scheme": "basic",
+        "scheme": "redblue",
         "count": 3
       },
-      "domain": {
-        "data": "table",
-        "field": "colorScaleIndex"
-      }
+      "domain": [0, 1, 2]
     }
   ],
   "marks": [
