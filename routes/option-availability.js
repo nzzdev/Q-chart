@@ -120,7 +120,7 @@ module.exports = {
       request.params.optionName === "colorOverwrite"
     ) {
       return {
-        available: hasNoCustomVegaSpec(request.payload)
+        available: hasNoCustomVegaSpec(request.payload) && !isArrowChart(request.payload)
       };
     }
 
