@@ -138,6 +138,10 @@ module.exports = {
         available = true;
       }
 
+      if (isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload)) {
+        available = true;
+      }
+
       return {
         available: available
       };
