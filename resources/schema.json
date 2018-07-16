@@ -132,14 +132,15 @@
         "chartType": {
           "title": "Diagrammtyp",
           "type": "string",
-          "enum": ["Bar", "StackedBar", "Line", "Dotplot"],
+          "enum": ["Bar", "StackedBar", "Line", "Dotplot", "Arrow"],
           "Q:options": {
             "selectType": "radio",
             "enum_titles": [
               "Säulen",
               "Gestapelte Säulen",
               "Linien",
-              "Dot Plot"
+              "Dot Plot",
+              "Pfeile"
             ],
             "availabilityChecks": [
               {
