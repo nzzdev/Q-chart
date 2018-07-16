@@ -164,20 +164,20 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.start",
+      path: "options.annotations.first",
       mapToSpec: function(showStartAnimation, spec, item) {
         if (!showStartAnimation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
-          name: "minAnnotationSeries",
+          name: "firstAnnotationSeries",
           source: "series",
           transform: [{ type: "filter", expr: "datum.cValue === 0" }]
         });
         const diffTextMarksSpec = {
           type: "text",
           name: "annotation-label annotation-label--start",
-          from: { data: "minAnnotationSeries" },
+          from: { data: "firstAnnotationSeries" },
           encode: {
             enter: {
               text: {
@@ -212,20 +212,20 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.end",
+      path: "options.annotations.last",
       mapToSpec: function(showDiffAnnoation, spec, item) {
         if (!showDiffAnnoation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
-          name: "endAnnotationSeries",
+          name: "lastAnnotationSeries",
           source: "series",
           transform: [{ type: "filter", expr: "datum.cValue === 1" }]
         });
         const diffTextMarksSpec = {
           type: "text",
           name: "annotation-label annotation-label--end",
-          from: { data: "endAnnotationSeries" },
+          from: { data: "lastAnnotationSeries" },
           encode: {
             enter: {
               text: {

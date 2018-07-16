@@ -20,6 +20,10 @@ function isDotplot(item) {
   return item.options.chartType === "Dotplot";
 }
 
+function isArrowChart(item) {
+  return item.options.chartType === "Arrow";
+}
+
 function hasNoCustomVegaSpec(item) {
   return item.vegaSpec === undefined || item.vegaSpec === "";
 }
@@ -71,6 +75,13 @@ module.exports = {
       return {
         available:
           isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "arrow") {
+      return {
+        available:
+          isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload)
       };
     }
 
@@ -134,13 +145,13 @@ module.exports = {
 
     if (request.params.optionName === "annotations.first") {
       return {
-        available: isLineChart(request.payload)
+        available: isLineChart(request.payload) || isArrowChart(request.payload)
       };
     }
 
     if (request.params.optionName === "annotations.last") {
       return {
-        available: isLineChart(request.payload)
+        available: isLineChart(request.payload) || isArrowChart(request.payload)
       };
     }
 
@@ -158,7 +169,7 @@ module.exports = {
 
     if (request.params.optionName === "annotations.diff") {
       return {
-        available: isDotplot(request.payload)
+        available: isDotplot(request.payload) || isArrowChart(request.payload)
       };
     }
 

@@ -29,8 +29,8 @@
     "dotplotOptions": {
     },
     "annotations": {
-      "start": true,
-      "end": true
+      "first": true,
+      "last": true
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
