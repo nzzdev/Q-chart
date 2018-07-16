@@ -30,11 +30,18 @@ function getLegendModel(item, toolRuntimeConfig) {
 
   let arrowColor = '#6E6E7E'; // the default gray
   let arrowTranslate = '';
+  let firstLabel = item.data[0][1];
+  let lastLabel = item.data[0][2];
+
   if (hasOnlyPositiveChanges(item)) {
     arrowColor = toolRuntimeConfig.colorSchemes['diverging-one']['3'][2];
   } else if (hasOnlyNegativeChanges(item)) {
     arrowColor = toolRuntimeConfig.colorSchemes['diverging-one']['3'][0];
+    // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
+    // and switch the labels
+    firstLabel = item.data[0][1];
+    lastLabel = item.data[0][2];
   }
   
   return {
@@ -42,7 +49,7 @@ function getLegendModel(item, toolRuntimeConfig) {
       {
         elements: [
           {
-            label: item.data[0][1]
+            label: firstLabel
           },
           {
             iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="29" height="12" viewBox="0 0 29 12">
@@ -54,7 +61,7 @@ function getLegendModel(item, toolRuntimeConfig) {
                       </svg>`
           },
           {
-            label: item.data[0][2]
+            label: lastLabel
           }
         ]
       }
