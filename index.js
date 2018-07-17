@@ -1,13 +1,19 @@
 // try to load canvas and log errors if it doesn't work
 // this code is from vega
+let canvas;
 ['canvas', 'canvas-prebuilt'].some(function(libName) {
   try {
     console.log(`trying to load ${libName}`)
-    require(libName);
+    canvas = require(libName);
   } catch (error) {
     console.log(error);
   }
 });
+if (typeof canvas !== 'function') {
+  console.log('failed to load canvas');
+} else {
+  console.log('canvas loaded', canvas.name, canvas.version);
+}
 
 const fs = require('fs');
 const fetch = require('node-fetch');
