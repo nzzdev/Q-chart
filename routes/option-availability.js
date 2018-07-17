@@ -112,10 +112,14 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "chartType" || request.params.optionName === "hideAxisLabel") {
+      return {
+        available: hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
     if (
       request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "hideAxisLabel" ||
-      request.params.optionName === "chartType" ||
       request.params.optionName === "highlightDataSeries" ||
       request.params.optionName === "colorOverwrite"
     ) {
