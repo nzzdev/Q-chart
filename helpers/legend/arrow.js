@@ -34,9 +34,9 @@ function getLegendModel(item, toolRuntimeConfig) {
   let lastLabel = item.data[0][2];
 
   if (hasOnlyPositiveChanges(item)) {
-    arrowColor = toolRuntimeConfig.colorSchemes['diverging-one']['3'][2];
+    arrowColor = toolRuntimeConfig.colorSchemes['diverging_one'][3][2];
   } else if (hasOnlyNegativeChanges(item)) {
-    arrowColor = toolRuntimeConfig.colorSchemes['diverging-one']['3'][0];
+    arrowColor = toolRuntimeConfig.colorSchemes['diverging_one'][3][0];
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels

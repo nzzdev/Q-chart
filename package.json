@@ -29,7 +29,7 @@
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",
-    "vega": "^4.1.0"
+    "vega": "^4.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
