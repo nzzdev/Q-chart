@@ -45,13 +45,6 @@ function getComputedCategoryColorRange(item, toolRuntimeConfig) {
   return range;
 }
 
-function getComputedDivergingColorRange(item, toolRuntimeConfig) {
-  // let range = toolRuntimeConfig.colorSchemes["diverging-3"].default;
-  // // todo: handle color overwrite and in the future maybe highlighting
-  // return range;
-}
-
 module.exports = {
   getComputedCategoryColorRange: getComputedCategoryColorRange,
-  getComputedDivergingColorRange: getComputedDivergingColorRange
 };
