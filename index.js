@@ -14,6 +14,14 @@ if (typeof canvas !== 'function') {
 } else {
   console.log('canvas loaded', canvas.name, canvas.version);
 }
+try {
+  const testCanvas = new canvas(1,1);
+  const context = testCanvas.getContext('2d');
+  context.font = 'nzz-sans-serif 11px';
+  console.log('text width measure test: ', context.measureText('hello world').width);
+} catch (e) {
+  console.log('failed to measure text width', e);
+}
 
 const fs = require('fs');
 const fetch = require('node-fetch');
