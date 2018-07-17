@@ -1,3 +1,14 @@
+// try to load canvas and log errors if it doesn't work
+// this code is from vega
+['canvas', 'canvas-prebuilt'].some(function(libName) {
+  try {
+    console.log(`trying to load ${libName}`)
+    require(libName);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const fs = require('fs');
 const fetch = require('node-fetch');
 async function loadFonts(fonts) {
