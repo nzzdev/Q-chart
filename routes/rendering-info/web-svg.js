@@ -17,15 +17,6 @@ const d3config = require("../../config/d3.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
-// vega.scheme(
-//   "basic",
-//   function(t) {
-//     debugger;
-//   },
-//   [undefined, undefined, undefined, ["#f00", "#0f0", "#00f"]],
-//   true
-// );
-
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
 // thats the default and might get overwritten by a prerender function of a chart type
@@ -55,13 +46,6 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   );
   if (categoryRange) {
     config.range.category = categoryRange;
-  }
-  const divergingRange = vegaConfigHelper.getComputedDivergingColorRange(
-    item,
-    toolRuntimeConfig
-  );
-  if (divergingRange) {
-    config.range.diverging = divergingRange;
   }
 
   return config;
@@ -140,7 +124,6 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
 
   try {
     const dataflow = vega.parse(spec);
-    console.log(JSON.stringify(spec));
 
     try {
       const prerender = require(`../../chartTypes/${chartType}/prerender.js`);
@@ -178,6 +161,14 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
   return svg;
 }
 
+function registerColorSchemes(type, name, values) {
+  if (type === "discrete") {
+    // this is not working yet because of a bug in vega, the next version should probably fix it 
+    vega.schemeDiscretized(name, values);
+  } else {
+  }
+}
+
 module.exports = {
   method: "POST",
   path: "/rendering-info/web-svg",
@@ -202,6 +193,14 @@ module.exports = {
     const item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
+    if (toolRuntimeConfig.colorSchemes["diverging_one"]) {
+      registerColorSchemes(
+        "discrete",
+        "diverging_one",
+        toolRuntimeConfig.colorSchemes["diverging_one"]
+      );
+    }
 
     const webSvg = {
       markup: await getSvg(
