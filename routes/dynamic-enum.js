@@ -7,9 +7,13 @@ function getChartTypeEnumWithTitles(item) {
     enum: ["Bar", "StackedBar", "Line", "Dotplot"],
     enum_titles: ["Säulen", "Gestapelte Säulen", "Linien", "Dot Plot"]
   }
-  if (item.data[0].length === 3) {
-    chartTypes.enum.push('Arrow');
-    chartTypes.enum_titles.push('Pfeile');
+  try {
+    if (item.data[0].length === 3) {
+      chartTypes.enum.push('Arrow');
+      chartTypes.enum_titles.push('Pfeile');
+    }
+  } catch (e) {
+    // ignore the error, arrow will only be available if we have exactly 3 columns
   }
   return chartTypes;
 }
