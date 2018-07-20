@@ -11,6 +11,8 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
+const configuredDivergingColorSchemes = require('../../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
+
 module.exports = function getMapping(config = {}) {
   return [
     {
@@ -161,6 +163,14 @@ module.exports = function getMapping(config = {}) {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
+      }
+    },
+    {
+      path: "options.arrowOptions.colorScheme",
+      mapToSpec: function(colorScheme, spec, item) {
+        if (configuredDivergingColorSchemes && configuredDivergingColorSchemes[colorScheme]) {
+          objectPath.set(spec, "scales.2.range.scheme", configuredDivergingColorSchemes[colorScheme].scheme_name);
+        }
       }
     },
     {

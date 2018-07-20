@@ -1,8 +1,15 @@
-const clone = require("clone");
-const dateSeries = require("../dateSeries.js");
-const d3config = require("../../config/d3.js");
-const d3timeFormat = require("d3-time-format");
-const vegaConfigHelpers = require("../vegaConfig.js");
+const configuredDivergingColorSchemes = require('../colorSchemes.js').getConfiguredDivergingColorSchemes();
+const vega = require('vega');
+
+function getColorSchemeName(item) {
+  let itemColorScheme;
+  try {
+    itemColorScheme = configuredDivergingColorSchemes[item.options.arrowOptions.colorScheme].scheme_name;
+  } catch (e) {
+    itemColorScheme = null;
+  }
+  return itemColorScheme;
+}
 
 function hasOnlyPositiveChanges(item) {
   for (let row of item.data.slice(1)) { // loop over rows except header
@@ -33,10 +40,20 @@ function getLegendModel(item, toolRuntimeConfig) {
   let firstLabel = item.data[0][1];
   let lastLabel = item.data[0][2];
 
+  const colorSchemeName = getColorSchemeName(item);
+
   if (hasOnlyPositiveChanges(item)) {
-    arrowColor = toolRuntimeConfig.colorSchemes['diverging_one'][3][2];
+    if (colorSchemeName) {
+      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][2];
+    } else {
+      arrowColor = vega.schemeDiscretized('redblue')[3][2];
+    }
   } else if (hasOnlyNegativeChanges(item)) {
-    arrowColor = toolRuntimeConfig.colorSchemes['diverging_one'][3][0];
+    if (colorSchemeName) {
+      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][0];
+    } else {
+      arrowColor = vega.schemeDiscretized('redblue')[3][0];
+    }
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels

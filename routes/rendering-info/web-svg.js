@@ -14,6 +14,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
+const configuredDivergingColorSchemes = require('../../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -53,7 +54,8 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
 
 async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
   const mappingConfig = {
-    width: width
+    width: width,
+    colorSchemes: toolRuntimeConfig.colorSchemes
   };
 
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
@@ -194,12 +196,16 @@ module.exports = {
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
 
-    if (toolRuntimeConfig.colorSchemes["diverging_one"]) {
-      registerColorSchemes(
-        "discrete",
-        "diverging_one",
-        toolRuntimeConfig.colorSchemes["diverging_one"]
-      );
+    if (configuredDivergingColorSchemes) {
+      for (const colorScheme of configuredDivergingColorSchemes) {
+        if (toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]) {
+          registerColorSchemes(
+            "discrete",
+            colorScheme.scheme_name,
+            toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
+          );
+        }
+      }
     }
 
     const webSvg = {

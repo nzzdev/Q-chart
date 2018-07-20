@@ -58,7 +58,7 @@
       "name": "colorScale",
       "type": "quantile",
       "range": {
-        "scheme": "diverging_one",
+        "scheme": "redblue",
         "count": 3
       },
       "domain": [0, 1, 2]

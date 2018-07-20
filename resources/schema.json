@@ -516,6 +516,24 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
+            },
+            "colorScheme": {
+              "title": "Farbschema",
+              "type": "number",
+              "default": 0,
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "UserHasRole",
+                    "role": "expert-chart"
+                  },
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/arrow.colorScheme"
+                  }
+                ]
+              }
             }
           }
         },

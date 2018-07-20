@@ -6,6 +6,9 @@ const getFirstColumnSerie = require("../helpers/dateSeries.js")
 const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 
+const configuredDivergingColorSchemes = require('../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
+
+
 function isBarChart(item) {
   return (
     item.options.chartType === "Bar" || item.options.chartType === "StackedBar"
@@ -88,6 +91,13 @@ module.exports = {
       return {
         available:
           isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "arrow.colorScheme") {
+      return {
+        available:
+          isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload) && configuredDivergingColorSchemes
       };
     }
 
