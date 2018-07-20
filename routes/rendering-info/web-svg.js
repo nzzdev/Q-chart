@@ -165,9 +165,9 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
 
 function registerColorSchemes(type, name, values) {
   if (type === "discrete") {
-    // this is not working yet because of a bug in vega, the next version should probably fix it 
     vega.schemeDiscretized(name, values);
   } else {
+    vega.scheme(name, values);
   }
 }
 
