@@ -175,8 +175,8 @@ module.exports = function getMapping(config = {}) {
     },
     {
       path: "options.annotations.first",
-      mapToSpec: function(showStartAnimation, spec, item) {
-        if (!showStartAnimation) {
+      mapToSpec: function(showFirstAnimation, spec, item) {
+        if (!showFirstAnimation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
@@ -223,8 +223,8 @@ module.exports = function getMapping(config = {}) {
     },
     {
       path: "options.annotations.last",
-      mapToSpec: function(showDiffAnnoation, spec, item) {
-        if (!showDiffAnnoation) {
+      mapToSpec: function(showLastAnnotation, spec, item) {
+        if (!showLastAnnotation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
@@ -271,8 +271,8 @@ module.exports = function getMapping(config = {}) {
     },
     {
       path: "options.annotations.diff",
-      mapToSpec: function(showDiffAnnoation, spec, item) {
-        if (!showDiffAnnoation) {
+      mapToSpec: function(showDiffAnnotation, spec, item) {
+        if (!showDiffAnnotation) {
           return;
         }
 
