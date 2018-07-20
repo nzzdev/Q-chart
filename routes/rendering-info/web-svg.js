@@ -5,8 +5,7 @@ const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getSpecWithMappedItem = require("../../helpers/itemVegaMapping.js")
   .getSpecWithMappedItem;
-const getComputedColorRange = require("../../helpers/vegaConfig.js")
-  .getComputedColorRange;
+const vegaConfigHelper = require("../../helpers/vegaConfig.js");
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
@@ -15,6 +14,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
+const configuredDivergingColorSchemes = require('../../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -37,20 +37,25 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
   }
 
+  config.range = {};
+
   // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
   // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = getComputedColorRange(item, toolRuntimeConfig);
+  const categoryRange = vegaConfigHelper.getComputedCategoryColorRange(
+    item,
+    toolRuntimeConfig
+  );
   if (categoryRange) {
-    config.range = {
-      category: getComputedColorRange(item, toolRuntimeConfig)
-    };
+    config.range.category = categoryRange;
   }
+
   return config;
 }
 
 async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
   const mappingConfig = {
-    width: width
+    width: width,
+    colorSchemes: toolRuntimeConfig.colorSchemes
   };
 
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
@@ -158,6 +163,14 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
   return svg;
 }
 
+function registerColorSchemes(type, name, values) {
+  if (type === "discrete") {
+    vega.schemeDiscretized(name, values);
+  } else {
+    vega.scheme(name, values);
+  }
+}
+
 module.exports = {
   method: "POST",
   path: "/rendering-info/web-svg",
@@ -182,6 +195,18 @@ module.exports = {
     const item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
+    if (configuredDivergingColorSchemes) {
+      for (const colorScheme of configuredDivergingColorSchemes) {
+        if (toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]) {
+          registerColorSchemes(
+            "discrete",
+            colorScheme.scheme_name,
+            toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
+          );
+        }
+      }
+    }
 
     const webSvg = {
       markup: await getSvg(

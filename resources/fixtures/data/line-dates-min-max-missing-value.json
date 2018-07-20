@@ -82,7 +82,7 @@
     },
     "dateSeriesOptions": {
       "interval": "day",
-      "prognosisStart": null
+      "prognosisStart": 6
     },
     "lineChartOptions": {
       "reverseYScale": false,

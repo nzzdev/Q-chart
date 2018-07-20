@@ -1,8 +1,19 @@
 <div class="s-legend-icon-label">
   {%- for item in legend.legendItems %}
   <div class="s-legend-item-label__item" style="color: {{ item.color }};">
-    <div class="s-legend-item-label__item__icon s-legend-item-label__item__icon--{{ legend.type }} {% if item.isPrognosis %}s-legend-item-label__item__icon--prognosis{% endif %}"></div>
-    <div class="s-legend-item-label__item__label">{{ item.label }}</div>
+    {%- if item.elements %}
+    {%- for element in item.elements %}
+      {%- if element.label %}
+        <div class="s-legend-item-label__item__label">{{ element.label }}</div>
+      {%- endif %}
+      {%- if element.iconSvg %}
+        <div class="s-legend-item-label__item__icon">{{ element.iconSvg | safe }}</div>
+      {%- endif %}
+    {%- endfor %}
+    {%- else %}
+      <div class="s-legend-item-label__item__icon s-legend-item-label__item__icon--{{ item.iconType }} {% if item.isPrognosis %}s-legend-item-label__item__icon--prognosis{% endif %}"></div>
+      <div class="s-legend-item-label__item__label">{{ item.label }}</div>
+    {%- endif %}
   </div>
   {%- endfor %}
 </div>

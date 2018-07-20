@@ -1,35 +1,35 @@
 {
-  "title": "FIXTURE: Dotplot - 2 categories - same value - min max",
+  "title": "FIXTURE: Arrow - 2 categories - only positive",
   "subtitle": "some subtitle here",
   "data": [
     [
       "Cat",
-      "A",
-      "B"
+      "from",
+      "to"
     ],
     [
       "A",
       "1000",
-      "-1000"
+      "2000"
     ],
     [
       "B",
       "200",
-      "200"
+      "400"
+    ],
+    [
+      "C",
+      "400",
+      "900"
     ]
   ],
   "options": {
-    "chartType": "Dotplot",
+    "chartType": "Arrow",
     "hideAxisLabel": false,
     "dotplotOptions": {
-      "minValue": -1500,
-      "maxValue": 1500,
-      "connectDots": true
     },
     "annotations": {
-      "diff": true,
-      "min": true,
-      "max": true
+      "diff": true
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},

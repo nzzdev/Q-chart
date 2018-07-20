@@ -1,18 +1,21 @@
-const resourcesDir = __dirname + '/../resources/';
+const resourcesDir = `${__dirname}/../resources/`;
+
+const schema = require(`${resourcesDir}dynamicSchema.js`);
+const schemaString = JSON.stringify(schema);
 
 module.exports = [
   {
-    method: 'GET',
-    path: '/schema.json',
+    method: "GET",
+    path: "/schema.json",
     handler: function(request, h) {
-      return h.file(resourcesDir + 'schema.json');
+      return h.response(schemaString).type("application/json");
     }
   },
   {
-    method: 'GET',
-    path: '/display-options-schema.json',
+    method: "GET",
+    path: "/display-options-schema.json",
     handler: function(request, h) {
-      return h.file(resourcesDir + 'display-options-schema.json');
+      return h.file(`${resourcesDir}display-options-schema.json`);
     }
   }
 ];
