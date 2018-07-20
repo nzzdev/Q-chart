@@ -70,7 +70,7 @@ module.exports = function getMapping(config = {}) {
                 // if this is the first data series, we calculate the diff to the next one
                 // this is needed for the annotations.diff options
 
-                // we round the diff to the maximum precision availble in the source data
+                // we round the diff to the maximum precision available in the source data
                 // use the very nice Decimal.js lib for that
                 const currentValue = new Decimal(data.yValue);
 
