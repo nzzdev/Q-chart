@@ -4,6 +4,7 @@ const fixtureDataDirectory = "../../resources/fixtures/data";
 // has to be in sync with files created in build task - see ../../tasks/build.js
 const fixtureData = [
   require(`${fixtureDataDirectory}/arrow-two-categories-only-negative.json`),
+  require(`${fixtureDataDirectory}/arrow-two-categories-only-positive.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-same-value.json`),
   require(`${fixtureDataDirectory}/bar-color-overwrite-highlight.json`),
   require(`${fixtureDataDirectory}/bar-dates-days-prognosis.json`),
