@@ -1,28 +1,3 @@
-// try to load canvas and log errors if it doesn't work
-// this code is from vega
-let canvas;
-['canvas', 'canvas-prebuilt'].some(function(libName) {
-  try {
-    console.log(`trying to load ${libName}`)
-    canvas = require(libName);
-  } catch (error) {
-    console.log(error);
-  }
-});
-if (typeof canvas !== 'function') {
-  console.log('failed to load canvas');
-} else {
-  console.log('canvas loaded', canvas.name, canvas.version);
-}
-try {
-  const testCanvas = new canvas(1,1);
-  const context = testCanvas.getContext('2d');
-  context.font = 'nzz-sans-serif 11px';
-  console.log('text width measure test: ', context.measureText('hello world').width);
-} catch (e) {
-  console.log('failed to measure text width', e);
-}
-
 const fs = require('fs');
 const fetch = require('node-fetch');
 async function loadFonts(fonts) {
@@ -39,6 +14,33 @@ async function loadFonts(fonts) {
     }
     const fontFileBuffer = await response.buffer();
     fs.writeFileSync(`${__dirname}/resources/fonts/${font.filename}`, fontFileBuffer);
+  }
+}
+
+function testCanvasFontMeasure() {
+  // try to load canvas and log errors if it doesn't work
+  // this code is from vega
+  let canvas;
+  ['canvas', 'canvas-prebuilt'].some(function(libName) {
+    try {
+      console.log(`trying to load ${libName}`)
+      canvas = require(libName);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  if (typeof canvas !== 'function') {
+    console.log('failed to load canvas');
+  } else {
+    console.log('canvas loaded', canvas.name, 'canvas version:', canvas.version, 'cairo version:', canvas.cairoVersion);
+  }
+  try {
+    const testCanvas = new canvas(1,1);
+    const context = testCanvas.getContext('2d');
+    context.font = '100 11px nzz-sans-serif';
+    console.log('text width measure test: ', context.measureText('hello world').width);
+  } catch (e) {
+    console.log('failed to measure text width', e);
   }
 }
 
@@ -61,6 +63,8 @@ async function init() {
   // fiddle with canvas font: https://medium.com/@adamhooper/fonts-in-node-canvas-bbf0b6b0cabf
   process.env.FONTCONFIG_PATH = `${__dirname}/resources/fonts`;
   process.env.PANGOCAIRO_BACKEND = 'fontconfig';
+
+  testCanvasFontMeasure();
 
   await server.register(require('inert'));
 
