@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "1.11.1",
+  "version": "1.12.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "ajv": "^5.5.0",
     "array2d": "0.0.5",
     "boom": "^7.1.1",
-    "canvas": "^1.6.7",
+    "canvas": "^1.6.11",
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "clone": "^2.1.1",
     "d3-array": "^1.2.1",
     "d3-format": "^1.2.1",
@@ -28,7 +29,7 @@
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.0.1",
     "object-path": "^0.11.4",
-    "vega": "^3.3.1"
+    "vega": "^4.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

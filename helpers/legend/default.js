@@ -1,18 +1,25 @@
 const clone = require("clone");
-const dateSeries = require("./dateSeries.js");
-const d3config = require("../config/d3.js");
+const dateSeries = require("../dateSeries.js");
+const d3config = require("../../config/d3.js");
 const d3timeFormat = require("d3-time-format");
-const getComputedColorRange = require("./vegaConfig.js").getComputedColorRange;
+const vegaConfigHelpers = require("../vegaConfig.js");
 
 function getLegendModel(item, toolRuntimeConfig) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!item.options.chartType || item.vegaSpec) {
     return null;
   }
-  const colorRange = getComputedColorRange(item, toolRuntimeConfig);
+  const colorRange = vegaConfigHelpers.getComputedCategoryColorRange(
+    item,
+    toolRuntimeConfig
+  );
   const legendModel = {};
 
-  legendModel.type = item.options.chartType.toLowerCase();
+
+  let legendType = 'default';
+  if (item.options.chartType.toLowerCase() === "line") {
+    legendType = "line";
+  }
 
   legendModel.legendItems = [];
 
@@ -21,7 +28,8 @@ function getLegendModel(item, toolRuntimeConfig) {
     const dataSeries = item.data[0].slice(1).map((label, index) => {
       return {
         label: label,
-        color: colorRange[index]
+        color: colorRange[index],
+        iconType: legendType
       };
     });
     legendModel.legendItems = legendModel.legendItems.concat(dataSeries);
@@ -57,7 +65,8 @@ function getLegendModel(item, toolRuntimeConfig) {
     legendModel.legendItems.push({
       isPrognosis: true,
       label: legendLabel,
-      color: "currentColor"
+      color: "currentColor",
+      iconType: legendType
     });
   }
   return legendModel;

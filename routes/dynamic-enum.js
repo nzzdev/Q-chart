@@ -2,6 +2,22 @@ const Boom = require('boom');
 const Joi = require('joi');
 const getFirstColumnSerie = require('../helpers/dateSeries.js').getFirstColumnSerie;
 
+function getChartTypeEnumWithTitles(item) {
+  const chartTypes = {
+    enum: ["Bar", "StackedBar", "Line", "Dotplot"],
+    enum_titles: ["Säulen", "Gestapelte Säulen", "Linien", "Dot Plot"]
+  }
+  try {
+    if (item.data[0].length === 3) {
+      chartTypes.enum.push('Arrow');
+      chartTypes.enum_titles.push('Pfeile');
+    }
+  } catch (e) {
+    // ignore the error, arrow will only be available if we have exactly 3 columns
+  }
+  return chartTypes;
+}
+
 function getHighlightEnum(item) {
   if (item.data.length < 1) {
     return [null];
@@ -43,6 +59,10 @@ module.exports = {
     cors: true
   },
   handler: function(request, h) {
+    if (request.params.optionName === 'chartType') {
+      return getChartTypeEnumWithTitles(request.payload);
+    }
+
     if (request.params.optionName === 'highlightDataSeries') {
       return {
         enum: getHighlightEnum(request.payload),

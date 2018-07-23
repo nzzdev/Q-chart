@@ -1,14 +1,19 @@
-<div class="q-chart__legend q-chart__legend--{{ legend.type }}">
+<div class="s-legend-icon-label">
   {%- for item in legend.legendItems %}
-  <div class="q-chart__legend__item {% if item.isPrognosis %}q-chart__legend__item--prognosis s-color-gray-5{% endif %}">
-    <div class="q-chart__legend__item__box" style="color: {{ item.color }};">
-      {%- if legend.type === 'line' %}
-        <svg width="12" height="12">
-          <line x1="1" y1="11" x2="11" y2="1" />
-        </svg>
+  <div class="s-legend-item-label__item" style="color: {{ item.color }};">
+    {%- if item.elements %}
+    {%- for element in item.elements %}
+      {%- if element.label %}
+        <div class="s-legend-item-label__item__label">{{ element.label }}</div>
       {%- endif %}
-    </div>
-    <div class="q-chart__legend__item__text s-font-note-s">{{ item.label }}</div>
+      {%- if element.iconSvg %}
+        <div class="s-legend-item-label__item__icon">{{ element.iconSvg | safe }}</div>
+      {%- endif %}
+    {%- endfor %}
+    {%- else %}
+      <div class="s-legend-item-label__item__icon s-legend-item-label__item__icon--{{ item.iconType }} {% if item.isPrognosis %}s-legend-item-label__item__icon--prognosis{% endif %}"></div>
+      <div class="s-legend-item-label__item__label">{{ item.label }}</div>
+    {%- endif %}
   </div>
   {%- endfor %}
 </div>

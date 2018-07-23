@@ -7,16 +7,14 @@
       "title": "Titel",
       "type": "string",
       "Q:options": {
-        "placeholder":
-          "Der Titel bringt die Kernaussage der Grafik auf den Punkt."
+        "placeholder": "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;"
       }
     },
     "subtitle": {
       "title": "Untertitel",
       "type": "string",
       "Q:options": {
-        "placeholder":
-          "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten."
+        "placeholder": "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;"
       }
     },
     "data": {
@@ -134,15 +132,13 @@
         "chartType": {
           "title": "Diagrammtyp",
           "type": "string",
-          "enum": ["Bar", "StackedBar", "Line", "Dotplot"],
           "Q:options": {
             "selectType": "radio",
-            "enum_titles": [
-              "Säulen",
-              "Gestapelte Säulen",
-              "Linien",
-              "Dot Plot"
-            ],
+            "dynamicEnum": {
+              "type": "ToolEndpoint",
+              "withData": true,
+              "endpoint": "dynamic-enum/chartType"
+            },
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
@@ -497,6 +493,47 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
+            }
+          }
+        },
+        "arrowOptions": {
+          "title": "Optionen für Arrow Charts",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "withData": true,
+                "endpoint": "option-availability/arrow"
+              }
+            ]
+          },
+          "properties": {
+            "minValue": {
+              "title": "Minimaler Wert",
+              "type": "number"
+            },
+            "maxValue": {
+              "title": "Maximaler Wert",
+              "type": "number"
+            },
+            "colorScheme": {
+              "title": "Farbschema",
+              "type": "number",
+              "default": 0,
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "UserHasRole",
+                    "role": "expert-chart"
+                  },
+                  {
+                    "type": "ToolEndpoint",
+                    "withData": true,
+                    "endpoint": "option-availability/arrow.colorScheme"
+                  }
+                ]
+              }
             }
           }
         },

@@ -57,7 +57,7 @@ async function getColorSchemes(target) {
   const sophieVizColorVars =
     sophieVars[sophieModulesPerTarget[target].vizColor.name];
 
-  return {
+  const colorSchemes = {
     category: {
       default: [
         sophieVizColorVars.general["s-viz-color-one-5"],
@@ -89,6 +89,17 @@ async function getColorSchemes(target) {
       ]
     }
   };
+  colorSchemes['diverging_one'] = [];
+  colorSchemes['diverging_one'][2] = [
+    sophieVizColorVars["diverging-one-2"]["s-viz-color-diverging-one-2-1"],
+    sophieVizColorVars["diverging-one-2"]["s-viz-color-diverging-one-2-2"]
+  ];
+  colorSchemes['diverging_one'][3] = [
+    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-1"],
+    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-2"],
+    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
+  ];
+  return colorSchemes;
 }
 
 async function getAxisConfig(target) {
@@ -138,7 +149,7 @@ async function getConfig() {
         stylesheets: [
           {
             url:
-              "https://service.sophie.nzz.ch/bundle/sophie-q@1,sophie-font@1,sophie-color@1,sophie-viz-color@1.css"
+              "https://sophieservicestage-2cac.kxcdn.com/bundle/sophie-q@1,sophie-font@1,sophie-color@1,sophie-viz-color@1,sophie-legend%23master.css"
           }
         ]
       },

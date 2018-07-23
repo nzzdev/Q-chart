@@ -8,3 +8,4 @@ styles
 resources/fonts/*.otf
 resources/fonts/*.ttf
 dev.js
+.uuid

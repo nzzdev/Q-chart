@@ -20,7 +20,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
-const legend = require("../../helpers/legend.js");
+const legend = require("../../helpers/legend/index.js");
 
 module.exports = {
   method: "POST",
@@ -52,10 +52,21 @@ module.exports = {
       }
     }
 
+    let legendType = 'default';
+    const chartType = getChartTypeForItemAndWidth(item, 300);
+    const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
+    try {
+      if (chartTypeConfig.legend.type) {
+        legendType = chartTypeConfig.legend.type;
+      }
+    } catch (e) {
+      // nevermind and keep the default legendType;
+    }
+
     const context = {
       item: item,
       displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
-      legend: legend.getLegendModel(item, request.payload.toolRuntimeConfig),
+      legend: legend[legendType].getLegendModel(item, request.payload.toolRuntimeConfig),
       id: `q_chart_${request.query._id}_${Math.floor(
         Math.random() * 100000
       )}`.replace(/-/g, "")

@@ -9,7 +9,7 @@ function hasHighlight(item) {
 
 // this computes the color range based on the color ranges given in toolRuntimeConfig
 // and takes the option "highlightDataSeries" into account
-function getComputedColorRange(item, toolRuntimeConfig) {
+function getComputedCategoryColorRange(item, toolRuntimeConfig) {
   let range = toolRuntimeConfig.colorSchemes.category.default;
 
   // handle highlightDataSeries option
@@ -31,7 +31,10 @@ function getComputedColorRange(item, toolRuntimeConfig) {
 
       let color = colorOverwrite.color;
       // if we have highlightDataSeries and the current on is not the highlighted on, we use bright, otherwise default color
-      if (hasHighlight(item) && item.options.highlightDataSeries !== colorOverwrite.position - 1) {
+      if (
+        hasHighlight(item) &&
+        item.options.highlightDataSeries !== colorOverwrite.position - 1
+      ) {
         color = colorOverwrite.colorBright;
       }
       // the position is a 1 based index, therefore we need to do -1
@@ -43,5 +46,5 @@ function getComputedColorRange(item, toolRuntimeConfig) {
 }
 
 module.exports = {
-  getComputedColorRange: getComputedColorRange
+  getComputedCategoryColorRange: getComputedCategoryColorRange,
 };
