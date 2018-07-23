@@ -164,7 +164,7 @@
                 "endpoint": "notification/shouldBeLineChart",
                 "data": ["data", "options.chartType"],
                 "options": {
-                  "limit": 5
+                  "limit": 40
                 },
                 "priority": {
                   "type": "medium",
