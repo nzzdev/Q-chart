@@ -65,8 +65,8 @@ function getLegendModel(item, toolRuntimeConfig) {
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels
-    firstLabel = item.data[0][1];
-    lastLabel = item.data[0][2];
+    firstLabel = item.data[0][2];
+    lastLabel = item.data[0][1];
   }
 
   return {
