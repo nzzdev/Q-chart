@@ -14,7 +14,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
-const configuredDivergingColorSchemes = require('../../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
+const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -198,7 +198,10 @@ module.exports = {
 
     if (configuredDivergingColorSchemes) {
       for (const colorScheme of configuredDivergingColorSchemes) {
-        if (toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]) {
+        if (
+          toolRuntimeConfig.hasOwnProperty("colorSchemes") &&
+          toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
+        ) {
           registerColorSchemes(
             "discrete",
             colorScheme.scheme_name,
