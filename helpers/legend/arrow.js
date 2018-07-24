@@ -67,6 +67,12 @@ function getLegendModel(item, toolRuntimeConfig) {
     // and switch the labels
     firstLabel = item.data[0][2];
     lastLabel = item.data[0][1];
+  } else {
+    // use the middle color of the color scheme if given
+    if (colorSchemeName) {
+      arrowColor =
+        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][1];
+    }
   }
 
   return {
