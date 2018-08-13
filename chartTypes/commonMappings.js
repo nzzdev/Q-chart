@@ -10,13 +10,20 @@ function getLineDateSeriesHandlingMappings(config = {}) {
     {
       path: "data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, item) {
+        if (config.dateFormat) {
+          // use the xValue instead of xIndex for the axis and line marks
+          objectPath.set(spec, "scales.0.domain.field", "xValue");
+          for (const mark of spec.marks[0].marks) {
+            mark.encode.enter.x.field = "xValue";
+          }
+        }
+
         if (
           config.dateFormat &&
           item.options.lineChartOptions &&
           item.options.lineChartOptions.isStockChart !== true
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
-          objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
         }
       }
