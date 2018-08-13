@@ -18,6 +18,12 @@ function getLineDateSeriesHandlingMappings(config = {}) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
+
+          // use the xValue instead of xIndex for the axis and line marks
+          objectPath.set(spec, "scales.0.domain.field", "xValue");
+          for (const mark of spec.marks[0].marks) {
+            mark.encode.enter.x.field = "xValue";
+          }
         }
       }
     },
