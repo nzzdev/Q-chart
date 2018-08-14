@@ -12,7 +12,7 @@
       "nice": false,
       "domain": {
         "data": "table",
-        "field": "xValue"
+        "field": "xIndex"
       }
     },
     {
@@ -45,6 +45,7 @@
       "labelFlush": true,
       "labelBound": true,
       "labelFlushOffset": 0,
+      "labelOverlap": "parity",
       "encode": {
         "title": {
           "update": {
@@ -93,7 +94,7 @@
             "enter": {
               "x": {
                 "scale": "xScale",
-                "field": "xValue"
+                "field": "xIndex"
               },
               "y": {
                 "scale": "yScale",
