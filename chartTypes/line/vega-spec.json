@@ -12,7 +12,7 @@
       "nice": false,
       "domain": {
         "data": "table",
-        "field": "xIndex"
+        "field": "xValue"
       }
     },
     {
@@ -94,7 +94,7 @@
             "enter": {
               "x": {
                 "scale": "xScale",
-                "field": "xIndex"
+                "field": "xValue"
               },
               "y": {
                 "scale": "yScale",

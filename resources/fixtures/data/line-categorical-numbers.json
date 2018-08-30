@@ -1,0 +1,149 @@
+{
+  "title": "FIXTURE: line categorical numbers",
+  "data": [
+    [
+      "Dollar pro Tag",
+      "1970",
+      "2000"
+    ],
+    [
+      "0.27",
+      "9.8228",
+      "9.8228"
+    ],
+    [
+      "0.55",
+      "79.7013",
+      "57.4662"
+    ],
+    [
+      "0.68",
+      "100.4112052",
+      "72.39844768"
+    ],
+    [
+      "0.82",
+      "126.5024551",
+      "91.21075043"
+    ],
+    [
+      "0.96",
+      "159.3733599",
+      "114.9113173"
+    ],
+    [
+      "1.23",
+      "200.7855723",
+      "144.7703344"
+    ],
+    [
+      "1.37",
+      "252.9585",
+      "149.3155"
+    ],
+    [
+      "2.74",
+      "254.988",
+      "268.7459"
+    ],
+    [
+      "4.11",
+      "165.995",
+      "312.122"
+    ],
+    [
+      "5.48",
+      "125.4683",
+      "316.953"
+    ],
+    [
+      "6.85",
+      "116.433",
+      "305.3698"
+    ],
+    [
+      "8.22",
+      "122.5863",
+      "287.077"
+    ],
+    [
+      "9.59",
+      "134.2558",
+      "267.3987"
+    ],
+    [
+      "10.96",
+      "145.7987",
+      "249.0778"
+    ],
+    [
+      "12.33",
+      "154.4987",
+      "233.5023"
+    ],
+    [
+      "13.70",
+      "159.2652",
+      "219.3955"
+    ],
+    [
+      "16.44",
+      "159.1881",
+      "197.1205"
+    ],
+    [
+      "27.40",
+      "117.8798",
+      "155.5259"
+    ],
+    [
+      "82.19",
+      "22.4139",
+      "75.033"
+    ],
+    [
+      "136.99",
+      "5.3046",
+      "32.8008"
+    ],
+    [
+      "273.97",
+      "0.3882",
+      "6.5503"
+    ]
+  ],
+  "sources": [],
+  "options": {
+    "chartType": "Line",
+    "hideAxisLabel": false,
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  },
+  "tool": "chart",
+  "department": "Storytelling / Infografik",
+  "publication": "nzz",
+  "acronym": "dav.",
+  "active": true,
+  "createdDate": "2018-08-24T09:38:26.830Z",
+  "createdBy": "david.bauer@nzz.ch",
+  "updatedDate": "2018-08-24T09:38:30.652Z",
+  "updatedBy": "david.bauer@nzz.ch"
+}

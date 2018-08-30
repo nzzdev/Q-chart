@@ -10,14 +10,6 @@ function getLineDateSeriesHandlingMappings(config = {}) {
     {
       path: "data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
-          // use the xValue instead of xIndex for the axis and line marks
-          objectPath.set(spec, "scales.0.domain.field", "xValue");
-          for (const mark of spec.marks[0].marks) {
-            mark.encode.enter.x.field = "xValue";
-          }
-        }
-
         if (
           config.dateFormat &&
           item.options.lineChartOptions &&
