@@ -23,6 +23,8 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/line-annotation-min-max.json`),
   require(`${fixtureDataDirectory}/line-annotation-reversed-y-axis.json`),
   require(`${fixtureDataDirectory}/line-annotation-shortened-numbers-prognosis.json`),
+  require(`${fixtureDataDirectory}/line-categorical-numbers.json`),
+  require(`${fixtureDataDirectory}/line-categorical-strings.json`),
   require(`${fixtureDataDirectory}/line-categorical.json`),
   require(`${fixtureDataDirectory}/line-dates-days.json`),
   require(`${fixtureDataDirectory}/line-dates-min-max-missing-value.json`),
