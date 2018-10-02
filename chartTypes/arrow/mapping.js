@@ -303,11 +303,19 @@ module.exports = function getMapping(config = {}) {
           from: { data: "diffAnnotationSeries" },
           encode: {
             enter: {
-              text: {
-                signal: `format(datum.diffToNext, "${
-                  d3config.formatLocale.decimal
-                }")`
-              },
+              text: [
+                {
+                  test: "datum.diffToNext > 0",
+                  signal: `format(datum.diffToNext, "+${
+                    d3config.formatLocale.decimal
+                  }")`
+                },
+                {
+                  signal: `format(datum.diffToNext, "${
+                    d3config.formatLocale.decimal
+                  }")`
+                }
+              ],
               y: {
                 signal: "arrowGroupHeight / 2 - 4"
               },
