@@ -14,7 +14,7 @@
         "DIVERGING_COLOR_SCHEMES": "[{ \"label\": \"one\", \"key\": 0, \"scheme_name\": \"diverging_one\" }, { \"label\": \"two\", \"key\": 1, \"scheme_name\": \"diverging_two\" }, { \"label\": \"three\", \"key\": 2, \"scheme_name\": \"diverging_three\" } ]",
         "FONTS": "[{\"url\": \"https://assets.static-nzz.ch/nzz-niobe/assets/fonts/GT-America-Standard-Regular.otf\",\"name\": \"nzz-sans-serif\",\"filename\": \"nzz-sans-serif.otf\"}]"
       },
-      "runtimeVersion": "10.6.0",
+      "runtimeVersion": "10.11.0",
       "program": "${workspaceRoot}/index.js"
     }
   ]
