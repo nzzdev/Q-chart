@@ -61,14 +61,14 @@ module.exports = function getMappings() {
           if (height < 240) {
             height = 240;
           }
-          objectPath.set(spec, "height", height);
+          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
         } else {
           // Aspect ratio 7:3
           height = spec.width * (3 / 7);
           if (height < 240) {
             height = 240;
           }
-          objectPath.set(spec, "height", height);
+          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
         }
       }
     },
