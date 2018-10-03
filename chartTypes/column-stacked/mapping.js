@@ -74,6 +74,27 @@ module.exports = function getMapping() {
       }
     },
     {
+      path: "toolRuntimeConfig.displayOptions.size",
+      mapToSpec: function(size, spec) {
+        let height;
+        if (size === "prominent") {
+          // Aspect ratio 16:9
+          height = spec.width * (9 / 16);
+          if (height < 240) {
+            height = 240;
+          }
+          objectPath.set(spec, "height", height);
+        } else {
+          // Aspect ratio 7:3
+          height = spec.width * (3 / 7);
+          if (height < 240) {
+            height = 240;
+          }
+          objectPath.set(spec, "height", height);
+        }
+      }
+    },
+    {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {

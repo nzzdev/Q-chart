@@ -52,6 +52,27 @@ module.exports = function getMappings() {
       }
     },
     {
+      path: "toolRuntimeConfig.displayOptions.size",
+      mapToSpec: function(size, spec) {
+        let height;
+        if (size === "prominent") {
+          // Aspect ratio 16:9
+          height = spec.width * (9 / 16);
+          if (height < 240) {
+            height = 240;
+          }
+          objectPath.set(spec, "height", height);
+        } else {
+          // Aspect ratio 7:3
+          height = spec.width * (3 / 7);
+          if (height < 240) {
+            height = 240;
+          }
+          objectPath.set(spec, "height", height);
+        }
+      }
+    },
+    {
       path: "item.options.annotations",
       mapToSpec: function(annotationOptions, spec, renderingInfoInput) {
         const item = renderingInfoInput.item;
