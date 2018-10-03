@@ -1,11 +1,11 @@
 const clone = require("clone");
 const objectPath = require("object-path");
 
-function getSpecWithMappedItem(item, id, chartType, spec, config = {}) {
+function getMappedSpec(id, chartType, spec, renderingInfoInput) {
   const modifiedSpec = clone(spec);
   let mappings;
   try {
-    mappings = require(`../chartTypes/${chartType}/mapping.js`)(config);
+    mappings = require(`../chartTypes/${chartType}/mapping.js`)();
   } catch (err) {
     throw new Error(
       `no or no valid type mapping implemented for type ${chartType}`
@@ -13,11 +13,11 @@ function getSpecWithMappedItem(item, id, chartType, spec, config = {}) {
   }
   try {
     for (const mapping of mappings) {
-      const itemValue = objectPath.get(item, mapping.path);
+      const itemValue = objectPath.get(renderingInfoInput, mapping.path);
       if (itemValue === undefined) {
         continue;
       }
-      mapping.mapToSpec(itemValue, modifiedSpec, item, id);
+      mapping.mapToSpec(itemValue, modifiedSpec, renderingInfoInput, id);
     }
   } catch (err) {
     throw err;
@@ -26,5 +26,5 @@ function getSpecWithMappedItem(item, id, chartType, spec, config = {}) {
 }
 
 module.exports = {
-  getSpecWithMappedItem: getSpecWithMappedItem
+  getMappedSpec: getMappedSpec
 };

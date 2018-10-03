@@ -11,11 +11,11 @@ const d3 = {
   array: require("d3-array")
 };
 
-module.exports = function getMappings(config = {}) {
+module.exports = function getMappings() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
@@ -52,8 +52,9 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.annotations",
-      mapToSpec: function(annotationOptions, spec, item) {
+      path: "item.options.annotations",
+      mapToSpec: function(annotationOptions, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
         // this option is only available if we have exactly one data series
         if (item.data[0].length !== 2) {
           return;
@@ -160,8 +161,8 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec, item) {
+      path: "item.options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
@@ -170,12 +171,14 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.lineChartOptions.minValue",
-      mapToSpec: function(minValue, spec, item) {
+      path: "item.options.lineChartOptions.minValue",
+      mapToSpec: function(minValue, spec, renderingInfoInput) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
 
-        const dataMinValue = dataHelpers.getMinValue(item.data);
+        const dataMinValue = dataHelpers.getMinValue(
+          renderingInfoInput.item.data
+        );
         if (dataMinValue < minValue) {
           minValue = dataMinValue;
         }
@@ -185,12 +188,14 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.lineChartOptions.maxValue",
-      mapToSpec: function(maxValue, spec, item) {
+      path: "item.options.lineChartOptions.maxValue",
+      mapToSpec: function(maxValue, spec, renderingInfoInput) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        const dataMaxValue = dataHelpers.getMaxValue(
+          renderingInfoInput.item.data
+        );
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -200,16 +205,16 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.lineChartOptions.reverseYScale",
-      mapToSpec: function(reverseYScale, spec, item) {
+      path: "item.options.lineChartOptions.reverseYScale",
+      mapToSpec: function(reverseYScale, spec) {
         if (reverseYScale === true) {
           objectPath.set(spec, "scales.1.reverse", true);
         }
       }
     },
     {
-      path: "options.lineChartOptions.lineInterpolation",
-      mapToSpec: function(interpolation, spec, item) {
+      path: "item.options.lineChartOptions.lineInterpolation",
+      mapToSpec: function(interpolation, spec) {
         if (interpolation) {
           objectPath.set(
             spec,
@@ -220,7 +225,7 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.dateSeriesOptions.prognosisStart",
+      path: "item.options.dateSeriesOptions.prognosisStart",
       mapToSpec: function(prognosisStart, spec) {
         if (prognosisStart === null) {
           return;
@@ -245,8 +250,9 @@ module.exports = function getMappings(config = {}) {
       }
     },
     {
-      path: "options.lineChartOptions.isStockChart",
-      mapToSpec: function(isStockChart, spec, item) {
+      path: "item.options.lineChartOptions.isStockChart",
+      mapToSpec: function(isStockChart, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
         if (!isStockChart) {
           return;
         }
@@ -303,5 +309,5 @@ module.exports = function getMappings(config = {}) {
         objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
       }
     }
-  ].concat(commonMappings.getLineDateSeriesHandlingMappings(config));
+  ].concat(commonMappings.getLineDateSeriesHandlingMappings());
 };

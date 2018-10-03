@@ -5,13 +5,14 @@ const d3 = {
   timeFormat: require("d3-time-format").timeFormat
 };
 
-function getLineDateSeriesHandlingMappings(config = {}) {
+function getLineDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
         if (
-          config.dateFormat &&
+          renderingInfoInput.dateFormat &&
           item.options.lineChartOptions &&
           item.options.lineChartOptions.isStockChart !== true
         ) {
@@ -21,8 +22,9 @@ function getLineDateSeriesHandlingMappings(config = {}) {
       }
     },
     {
-      path: "options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, item) {
+      path: "item.options.dateSeriesOptions.interval",
+      mapToSpec: function(interval, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
         // only use this option if we have a valid dateFormat
         if (spec.scales[0].type === "time") {
           if (process.env.FEAT_VARIABLE_HOUR_STEP === true) {
@@ -61,12 +63,13 @@ function getLineDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getColumnDateSeriesHandlingMappings(config = {}) {
+function getColumnDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
+        if (renderingInfoInput.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -90,12 +93,13 @@ function getColumnDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getBarDateSeriesHandlingMappings(config = {}) {
+function getBarDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, renderingInfoInput) {
+        const item = renderingInfoInput.item;
+        if (renderingInfoInput.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -119,11 +123,11 @@ function getBarDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getColumnPrognosisMappings(config) {
+function getColumnPrognosisMappings() {
   return [
     {
-      path: "options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, item, id) {
+      path: "item.options.dateSeriesOptions.prognosisStart",
+      mapToSpec: function(prognosisStart, spec, renderingInfoInput, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -168,11 +172,11 @@ function getColumnPrognosisMappings(config) {
   ];
 }
 
-function getBarPrognosisMappings(config) {
+function getBarPrognosisMappings() {
   return [
     {
-      path: "options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, item, id) {
+      path: "item.options.dateSeriesOptions.prognosisStart",
+      mapToSpec: function(prognosisStart, spec, renderingInfoInput, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -215,11 +219,11 @@ function getBarPrognosisMappings(config) {
   ];
 }
 
-function getColumnLabelColorMappings(config) {
+function getColumnLabelColorMappings() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item, id) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }
@@ -233,11 +237,11 @@ function getColumnLabelColorMappings(config) {
   ];
 }
 
-function getBarLabelColorMappings(config) {
+function getBarLabelColorMappings() {
   return [
     {
       path: "data",
-      mapToSpec: function(itemData, spec, item, id) {
+      mapToSpec: function(itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }

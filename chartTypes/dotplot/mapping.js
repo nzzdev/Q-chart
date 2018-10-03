@@ -11,11 +11,11 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
-module.exports = function getMapping(config = {}) {
+module.exports = function getMapping() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
@@ -138,8 +138,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec, item) {
+      path: "item.options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, "axes.1.title", undefined);
@@ -148,12 +148,14 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.dotplotOptions.minValue",
-      mapToSpec: function(minValue, spec, item) {
+      path: "item.options.dotplotOptions.minValue",
+      mapToSpec: function(minValue, spec, renderingInfoInput) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
 
-        const dataMinValue = dataHelpers.getMinValue(item.data);
+        const dataMinValue = dataHelpers.getMinValue(
+          renderingInfoInput.item.data
+        );
         if (dataMinValue < minValue) {
           minValue = dataMinValue;
         }
@@ -163,12 +165,14 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.dotplotOptions.maxValue",
-      mapToSpec: function(maxValue, spec, item) {
+      path: "item.options.dotplotOptions.maxValue",
+      mapToSpec: function(maxValue, spec, renderingInfoInput) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        const dataMaxValue = dataHelpers.getMaxValue(
+          renderingInfoInput.item.data
+        );
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -178,8 +182,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.dotplotOptions.connectDots",
-      mapToSpec: function(connectDots, spec, item) {
+      path: "item.options.dotplotOptions.connectDots",
+      mapToSpec: function(connectDots, spec) {
         if (!connectDots) {
           return;
         }
@@ -212,8 +216,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.min",
-      mapToSpec: function(showMinAnnotation, spec, item) {
+      path: "item.options.annotations.min",
+      mapToSpec: function(showMinAnnotation, spec) {
         if (!showMinAnnotation) {
           return;
         }
@@ -250,8 +254,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.max",
-      mapToSpec: function(showMaxAnnotation, spec, item) {
+      path: "item.options.annotations.max",
+      mapToSpec: function(showMaxAnnotation, spec) {
         if (!showMaxAnnotation) {
           return;
         }
@@ -288,8 +292,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.diff",
-      mapToSpec: function(showDiffAnnoation, spec, item) {
+      path: "item.options.annotations.diff",
+      mapToSpec: function(showDiffAnnoation, spec) {
         if (!showDiffAnnoation) {
           return;
         }
@@ -337,5 +341,5 @@ module.exports = function getMapping(config = {}) {
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       }
     }
-  ].concat(commonMappings.getBarLabelColorMappings(config));
+  ].concat(commonMappings.getBarLabelColorMappings());
 };
