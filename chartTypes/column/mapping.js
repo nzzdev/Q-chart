@@ -46,27 +46,6 @@ module.exports = function getMapping() {
       }
     },
     {
-      path: "toolRuntimeConfig.displayOptions.size",
-      mapToSpec: function(size, spec) {
-        let height;
-        if (size === "prominent") {
-          // Aspect ratio 16:9
-          height = spec.width * (9 / 16);
-          if (height < 240) {
-            height = 240;
-          }
-          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
-        } else {
-          // Aspect ratio 7:3
-          height = spec.width * (3 / 7);
-          if (height < 240) {
-            height = 240;
-          }
-          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
-        }
-      }
-    },
-    {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
@@ -96,5 +75,6 @@ module.exports = function getMapping() {
   ]
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnPrognosisMappings())
-    .concat(commonMappings.getColumnLabelColorMappings());
+    .concat(commonMappings.getColumnLabelColorMappings())
+    .concat(commonMappings.getHeightMappings());
 };

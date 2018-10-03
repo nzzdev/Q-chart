@@ -255,6 +255,32 @@ function getBarLabelColorMappings() {
   ];
 }
 
+function getHeightMappings() {
+  return [
+    {
+      path: "toolRuntimeConfig.size",
+      mapToSpec: function(size, spec, renderingInfoInput) {
+        let aspectRatio;
+        if (size === "prominent") {
+          aspectRatio = 9 / 16;
+        } else {
+          aspectRatio = 3 / 7;
+        }
+        let height = spec.width * aspectRatio;
+
+        // minimum height is 240px
+        if (height < 240) {
+          height = 240;
+        }
+        // increase the height if hideAxisLabel option is unchecked
+        if (renderingInfoInput.item.options.hideAxisLabel === false) {
+          height = height + 20;
+        }
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
@@ -262,5 +288,6 @@ module.exports = {
   getColumnPrognosisMappings: getColumnPrognosisMappings,
   getBarPrognosisMappings: getBarPrognosisMappings,
   getColumnLabelColorMappings: getColumnLabelColorMappings,
-  getBarLabelColorMappings: getBarLabelColorMappings
+  getBarLabelColorMappings: getBarLabelColorMappings,
+  getHeightMappings: getHeightMappings
 };

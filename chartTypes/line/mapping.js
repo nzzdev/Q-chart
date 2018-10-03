@@ -52,27 +52,6 @@ module.exports = function getMappings() {
       }
     },
     {
-      path: "toolRuntimeConfig.displayOptions.size",
-      mapToSpec: function(size, spec) {
-        let height;
-        if (size === "prominent") {
-          // Aspect ratio 16:9
-          height = spec.width * (9 / 16);
-          if (height < 240) {
-            height = 240;
-          }
-          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
-        } else {
-          // Aspect ratio 7:3
-          height = spec.width * (3 / 7);
-          if (height < 240) {
-            height = 240;
-          }
-          objectPath.set(spec, "height", height + 20); // increase the height because we need space for the axis title
-        }
-      }
-    },
-    {
       path: "item.options.annotations",
       mapToSpec: function(annotationOptions, spec, renderingInfoInput) {
         const item = renderingInfoInput.item;
@@ -330,5 +309,7 @@ module.exports = function getMappings() {
         objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
       }
     }
-  ].concat(commonMappings.getLineDateSeriesHandlingMappings());
+  ]
+    .concat(commonMappings.getLineDateSeriesHandlingMappings())
+    .concat(commonMappings.getHeightMappings());
 };
