@@ -276,6 +276,7 @@ function getHeightMappings() {
         if (renderingInfoInput.item.options.hideAxisLabel === false) {
           height = height + 20;
         }
+        objectPath.set(spec, "height", height);
       }
     }
   ];
