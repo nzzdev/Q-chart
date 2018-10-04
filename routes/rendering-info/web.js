@@ -110,14 +110,8 @@ module.exports = {
           axis: request.payload.toolRuntimeConfig.axis,
           text: request.payload.toolRuntimeConfig.text,
           colorSchemes: request.payload.toolRuntimeConfig.colorSchemes,
-          size: "basic"
+          displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
         };
-
-        // set size property if displayOptions are defined
-        const displayOptions = request.payload.toolRuntimeConfig.displayOptions;
-        if (displayOptions && displayOptions.size) {
-          toolRuntimeConfigForWebSVG.size = displayOptions.size;
-        }
       }
 
       let requestMethod;

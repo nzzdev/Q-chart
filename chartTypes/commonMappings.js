@@ -258,7 +258,7 @@ function getBarLabelColorMappings() {
 function getHeightMappings() {
   return [
     {
-      path: "toolRuntimeConfig.size",
+      path: "toolRuntimeConfig.displayOptions.size",
       mapToSpec: function(size, spec, renderingInfoInput) {
         let aspectRatio;
         if (size === "prominent") {
