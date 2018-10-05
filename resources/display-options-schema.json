@@ -13,6 +13,7 @@
       "default": "basic",
       "enum": ["basic", "prominent"],
       "Q:options": {
+        "selectType": "radio",
         "enum_titles": ["standard", "prominent"],
         "availabilityChecks": [
           {
