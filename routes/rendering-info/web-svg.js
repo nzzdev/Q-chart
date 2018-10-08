@@ -52,20 +52,20 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
 }
 
 async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
-  const renderingInfoInput = {
+  const mappingData = {
     item: item,
     toolRuntimeConfig: toolRuntimeConfig
   };
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
   if (chartTypeConfig.data.handleDateSeries) {
     // if we have a date series, we change the date values to date objects
-    // and set the detected dateFormat to the renderingInfoInput to be used within the mapping functions
+    // and set the detected dateFormat to the mappingData to be used within the mapping functions
     if (dateSeries.isDateSeriesData(item.data)) {
-      renderingInfoInput.dateFormat = dateSeries.getDateFormatForData(
-        renderingInfoInput.item.data
+      mappingData.dateFormat = dateSeries.getDateFormatForData(
+        mappingData.item.data
       );
-      renderingInfoInput.item.data = dateSeries.getDataWithDateParsed(
-        renderingInfoInput.item.data
+      mappingData.item.data = dateSeries.getDataWithDateParsed(
+        mappingData.item.data
       );
     }
   }
@@ -73,9 +73,9 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
-    renderingInfoInput.item,
+    mappingData.item,
     templateSpec.config,
-    renderingInfoInput.toolRuntimeConfig
+    mappingData.toolRuntimeConfig
   );
 
   // set the size to the spec
@@ -84,7 +84,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   // this will be the compiled spec from template and mapping
   let spec;
   try {
-    spec = getMappedSpec(id, chartType, templateSpec, renderingInfoInput);
+    spec = getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
     throw new Boom(err);
   }

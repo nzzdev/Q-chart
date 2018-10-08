@@ -11,8 +11,8 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
-function shouldHaveLabelsOnTopOfBar(renderingInfoInput) {
-  const item = renderingInfoInput.item;
+function shouldHaveLabelsOnTopOfBar(mappingData) {
+  const item = mappingData.item;
   // this does not work for positive and negative values. so if we have both, we do not show the labels on top
   const minValue = dataHelpers.getMinValue(item.data);
   const maxValue = dataHelpers.getMaxValue(item.data);
@@ -20,13 +20,13 @@ function shouldHaveLabelsOnTopOfBar(renderingInfoInput) {
     return false;
   }
 
-  const longestLabel = getLongestDataLabel(renderingInfoInput, true);
+  const longestLabel = getLongestDataLabel(mappingData, true);
   const textItem = {
     text: longestLabel
   };
   const longestLabelWidth = textMetrics.width(textItem);
 
-  if (renderingInfoInput.width / 3 < longestLabelWidth) {
+  if (mappingData.width / 3 < longestLabelWidth) {
     return true;
   }
   return false;
@@ -36,8 +36,8 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
@@ -83,7 +83,7 @@ module.exports = function getMapping() {
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
 
-        if (shouldHaveLabelsOnTopOfBar(renderingInfoInput)) {
+        if (shouldHaveLabelsOnTopOfBar(mappingData)) {
           spec.axes[1].labels = false;
 
           // flush the X axis labels if we have the labels on top of the bar
@@ -100,7 +100,7 @@ module.exports = function getMapping() {
           // if we have a date series, we need to format the label accordingly
           // otherwise we use the exact xValue as the label
           const labelText = {};
-          if (renderingInfoInput.dateFormat) {
+          if (mappingData.dateFormat) {
             const d3format =
               intervals[item.options.dateSeriesOptions.interval].d3format;
             labelText.signal = `timeFormat(datum.xValue, '${
@@ -171,13 +171,11 @@ module.exports = function getMapping() {
     },
     {
       path: "item.options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, renderingInfoInput) {
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(
-          renderingInfoInput.item.data
-        );
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }

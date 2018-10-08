@@ -137,13 +137,11 @@ module.exports = function getMapping() {
     },
     {
       path: "item.options.arrowOptions.minValue",
-      mapToSpec: function(minValue, spec, renderingInfoInput) {
+      mapToSpec: function(minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMinValue = dataHelpers.getMinValue(
-          renderingInfoInput.item.data
-        );
+        const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
           minValue = dataMinValue;
         }
@@ -154,13 +152,11 @@ module.exports = function getMapping() {
     },
     {
       path: "item.options.arrowOptions.maxValue",
-      mapToSpec: function(maxValue, spec, renderingInfoInput) {
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(
-          renderingInfoInput.item.data
-        );
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }

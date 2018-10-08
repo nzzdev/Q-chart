@@ -31,8 +31,8 @@ function getDataWithStringsCastedToFloats(data) {
   });
 }
 
-function getLongestDataLabel(renderingInfoInput, transposed = false) {
-  const item = renderingInfoInput.item;
+function getLongestDataLabel(mappingData, transposed = false) {
+  const item = mappingData.item;
   data = clone(item.data);
   if (transposed) {
     data = array2d.transpose(data);
@@ -41,7 +41,7 @@ function getLongestDataLabel(renderingInfoInput, transposed = false) {
   titleRow.shift();
   return titleRow
     .map(label => {
-      if (!renderingInfoInput.dateFormat) {
+      if (!mappingData.dateFormat) {
         return label;
       }
       // we have a date format, so we need to format the labels
@@ -54,7 +54,7 @@ function getLongestDataLabel(renderingInfoInput, transposed = false) {
     })
     .reduce((prev, current) => {
       // if we have a date series, we need to format the label here
-      if (renderingInfoInput.dateFormat) {
+      if (mappingData.dateFormat) {
       }
 
       if (prev.length > current.length) {

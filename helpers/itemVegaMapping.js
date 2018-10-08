@@ -1,7 +1,7 @@
 const clone = require("clone");
 const objectPath = require("object-path");
 
-function getMappedSpec(id, chartType, spec, renderingInfoInput) {
+function getMappedSpec(id, chartType, spec, mappingData) {
   const modifiedSpec = clone(spec);
   let mappings;
   try {
@@ -13,11 +13,11 @@ function getMappedSpec(id, chartType, spec, renderingInfoInput) {
   }
   try {
     for (const mapping of mappings) {
-      const itemValue = objectPath.get(renderingInfoInput, mapping.path);
+      const itemValue = objectPath.get(mappingData, mapping.path);
       if (itemValue === undefined) {
         continue;
       }
-      mapping.mapToSpec(itemValue, modifiedSpec, renderingInfoInput, id);
+      mapping.mapToSpec(itemValue, modifiedSpec, mappingData, id);
     }
   } catch (err) {
     throw err;

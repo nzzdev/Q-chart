@@ -9,10 +9,10 @@ function getLineDateSeriesHandlingMappings() {
   return [
     {
       path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
         if (
-          renderingInfoInput.dateFormat &&
+          mappingData.dateFormat &&
           item.options.lineChartOptions &&
           item.options.lineChartOptions.isStockChart !== true
         ) {
@@ -23,8 +23,8 @@ function getLineDateSeriesHandlingMappings() {
     },
     {
       path: "item.options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
+      mapToSpec: function(interval, spec, mappingData) {
+        const item = mappingData.item;
         // only use this option if we have a valid dateFormat
         if (spec.scales[0].type === "time") {
           if (process.env.FEAT_VARIABLE_HOUR_STEP === true) {
@@ -67,9 +67,9 @@ function getColumnDateSeriesHandlingMappings() {
   return [
     {
       path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
-        if (renderingInfoInput.dateFormat) {
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
+        if (mappingData.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -97,9 +97,9 @@ function getBarDateSeriesHandlingMappings() {
   return [
     {
       path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
-        if (renderingInfoInput.dateFormat) {
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
+        if (mappingData.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -127,7 +127,7 @@ function getColumnPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, renderingInfoInput, id) {
+      mapToSpec: function(prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -176,7 +176,7 @@ function getBarPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, renderingInfoInput, id) {
+      mapToSpec: function(prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -259,7 +259,7 @@ function getHeightMappings() {
   return [
     {
       path: "toolRuntimeConfig.displayOptions.size",
-      mapToSpec: function(size, spec, renderingInfoInput) {
+      mapToSpec: function(size, spec, mappingData) {
         let aspectRatio;
         if (size === "prominent") {
           aspectRatio = 9 / 16;
@@ -273,7 +273,7 @@ function getHeightMappings() {
           height = 240;
         }
         // increase the height if hideAxisLabel option is unchecked
-        if (renderingInfoInput.item.options.hideAxisLabel === false) {
+        if (mappingData.item.options.hideAxisLabel === false) {
           height = height + 20;
         }
         objectPath.set(spec, "height", height);

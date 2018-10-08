@@ -53,8 +53,8 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.annotations",
-      mapToSpec: function(annotationOptions, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
+      mapToSpec: function(annotationOptions, spec, mappingData) {
+        const item = mappingData.item;
         // this option is only available if we have exactly one data series
         if (item.data[0].length !== 2) {
           return;
@@ -172,13 +172,11 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.lineChartOptions.minValue",
-      mapToSpec: function(minValue, spec, renderingInfoInput) {
+      mapToSpec: function(minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMinValue = dataHelpers.getMinValue(
-          renderingInfoInput.item.data
-        );
+        const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
           minValue = dataMinValue;
         }
@@ -189,13 +187,11 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.lineChartOptions.maxValue",
-      mapToSpec: function(maxValue, spec, renderingInfoInput) {
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(renderingInfoInput.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(
-          renderingInfoInput.item.data
-        );
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -251,8 +247,8 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.lineChartOptions.isStockChart",
-      mapToSpec: function(isStockChart, spec, renderingInfoInput) {
-        const item = renderingInfoInput.item;
+      mapToSpec: function(isStockChart, spec, mappingData) {
+        const item = mappingData.item;
         if (!isStockChart) {
           return;
         }
