@@ -109,7 +109,8 @@ module.exports = {
         toolRuntimeConfigForWebSVG = {
           axis: request.payload.toolRuntimeConfig.axis,
           text: request.payload.toolRuntimeConfig.text,
-          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
+          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes,
+          displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
         };
       }
 

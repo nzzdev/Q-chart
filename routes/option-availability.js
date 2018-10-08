@@ -6,8 +6,7 @@ const getFirstColumnSerie = require("../helpers/dateSeries.js")
 const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 
-const configuredDivergingColorSchemes = require('../helpers/colorSchemes.js').getConfiguredDivergingColorSchemes();
-
+const configuredDivergingColorSchemes = require("../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
 function isBarChart(item) {
   return (
@@ -76,7 +75,7 @@ module.exports = {
       } catch (e) {
         return {
           available: false
-        }
+        };
       }
     }
 
@@ -97,7 +96,9 @@ module.exports = {
     if (request.params.optionName === "arrow.colorScheme") {
       return {
         available:
-          isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload) && configuredDivergingColorSchemes
+          isArrowChart(request.payload) &&
+          hasNoCustomVegaSpec(request.payload) &&
+          configuredDivergingColorSchemes
       };
     }
 
@@ -128,7 +129,10 @@ module.exports = {
       };
     }
 
-    if (request.params.optionName === "chartType" || request.params.optionName === "hideAxisLabel") {
+    if (
+      request.params.optionName === "chartType" ||
+      request.params.optionName === "hideAxisLabel"
+    ) {
       return {
         available: hasNoCustomVegaSpec(request.payload)
       };
@@ -140,7 +144,8 @@ module.exports = {
       request.params.optionName === "colorOverwrite"
     ) {
       return {
-        available: hasNoCustomVegaSpec(request.payload) && !isArrowChart(request.payload)
+        available:
+          hasNoCustomVegaSpec(request.payload) && !isArrowChart(request.payload)
       };
     }
 
@@ -158,7 +163,10 @@ module.exports = {
         available = true;
       }
 
-      if (isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload)) {
+      if (
+        isArrowChart(request.payload) &&
+        hasNoCustomVegaSpec(request.payload)
+      ) {
         available = true;
       }
 
@@ -194,6 +202,17 @@ module.exports = {
     if (request.params.optionName === "annotations.diff") {
       return {
         available: isDotplot(request.payload) || isArrowChart(request.payload)
+      };
+    }
+
+    if (request.params.optionName === "displayWeight") {
+      const options = request.payload.options;
+      return {
+        available:
+          isLineChart(request.payload) ||
+          ((options.chartType === "Bar" ||
+            options.chartType === "StackedBar") &&
+            options.barOptions.isBarChart === false)
       };
     }
 

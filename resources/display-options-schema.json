@@ -6,6 +6,23 @@
     "hideTitle": {
       "type": "boolean",
       "title": "Titel ausblenden"
+    },
+    "size": {
+      "title": "Gewichtung",
+      "type": "string",
+      "default": "basic",
+      "enum": ["basic", "prominent"],
+      "Q:options": {
+        "selectType": "radio",
+        "enum_titles": ["standard", "prominent"],
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "withData": true,
+            "endpoint": "option-availability/displayWeight"
+          }
+        ]
+      }
     }
   }
 }

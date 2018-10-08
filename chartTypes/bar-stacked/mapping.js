@@ -11,7 +11,8 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
-function shouldHaveLabelsOnTopOfBar(item, config) {
+function shouldHaveLabelsOnTopOfBar(mappingData) {
+  const item = mappingData.item;
   // this does not work for positive and negative values. so if we have both, we do not show the labels on top
   const minValue = dataHelpers.getMinValue(item.data);
   const maxValue = dataHelpers.getMaxValue(item.data);
@@ -19,23 +20,24 @@ function shouldHaveLabelsOnTopOfBar(item, config) {
     return false;
   }
 
-  const longestLabel = getLongestDataLabel(item, config, true);
+  const longestLabel = getLongestDataLabel(mappingData, true);
   const textItem = {
     text: longestLabel
   };
   const longestLabelWidth = textMetrics.width(textItem);
 
-  if (config.width / 3 < longestLabelWidth) {
+  if (mappingData.width / 3 < longestLabelWidth) {
     return true;
   }
   return false;
 }
 
-module.exports = function getMapping(config = {}) {
+module.exports = function getMapping() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
@@ -81,7 +83,7 @@ module.exports = function getMapping(config = {}) {
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
 
-        if (shouldHaveLabelsOnTopOfBar(item, config)) {
+        if (shouldHaveLabelsOnTopOfBar(mappingData)) {
           spec.axes[1].labels = false;
 
           // flush the X axis labels if we have the labels on top of the bar
@@ -98,7 +100,7 @@ module.exports = function getMapping(config = {}) {
           // if we have a date series, we need to format the label accordingly
           // otherwise we use the exact xValue as the label
           const labelText = {};
-          if (config.dateFormat) {
+          if (mappingData.dateFormat) {
             const d3format =
               intervals[item.options.dateSeriesOptions.interval].d3format;
             labelText.signal = `timeFormat(datum.xValue, '${
@@ -130,8 +132,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item, id) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         // check if all rows sum up to 100
         const stackedSums = itemData
           .slice(1)
@@ -158,8 +160,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec, item) {
+      path: "item.options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, "axes.1.title", undefined);
@@ -168,12 +170,12 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, item) {
+      path: "item.options.barOptions.maxValue",
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -183,7 +185,7 @@ module.exports = function getMapping(config = {}) {
       }
     }
   ]
-    .concat(commonMappings.getBarDateSeriesHandlingMappings(config))
-    .concat(commonMappings.getBarPrognosisMappings(config))
-    .concat(commonMappings.getBarLabelColorMappings(config));
+    .concat(commonMappings.getBarDateSeriesHandlingMappings())
+    .concat(commonMappings.getBarPrognosisMappings())
+    .concat(commonMappings.getBarLabelColorMappings());
 };

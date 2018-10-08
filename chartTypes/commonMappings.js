@@ -5,13 +5,14 @@ const d3 = {
   timeFormat: require("d3-time-format").timeFormat
 };
 
-function getLineDateSeriesHandlingMappings(config = {}) {
+function getLineDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
         if (
-          config.dateFormat &&
+          mappingData.dateFormat &&
           item.options.lineChartOptions &&
           item.options.lineChartOptions.isStockChart !== true
         ) {
@@ -21,8 +22,9 @@ function getLineDateSeriesHandlingMappings(config = {}) {
       }
     },
     {
-      path: "options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, item) {
+      path: "item.options.dateSeriesOptions.interval",
+      mapToSpec: function(interval, spec, mappingData) {
+        const item = mappingData.item;
         // only use this option if we have a valid dateFormat
         if (spec.scales[0].type === "time") {
           if (process.env.FEAT_VARIABLE_HOUR_STEP === true) {
@@ -61,12 +63,13 @@ function getLineDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getColumnDateSeriesHandlingMappings(config = {}) {
+function getColumnDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
+        if (mappingData.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -90,12 +93,13 @@ function getColumnDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getBarDateSeriesHandlingMappings(config = {}) {
+function getBarDateSeriesHandlingMappings() {
   return [
     {
-      path: "data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, item) {
-        if (config.dateFormat) {
+      path: "item.data", // various settings that are not tied to an option
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
+        if (mappingData.dateFormat) {
           const d3format =
             intervals[item.options.dateSeriesOptions.interval].d3format;
 
@@ -119,11 +123,11 @@ function getBarDateSeriesHandlingMappings(config = {}) {
   ];
 }
 
-function getColumnPrognosisMappings(config) {
+function getColumnPrognosisMappings() {
   return [
     {
-      path: "options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, item, id) {
+      path: "item.options.dateSeriesOptions.prognosisStart",
+      mapToSpec: function(prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -168,11 +172,11 @@ function getColumnPrognosisMappings(config) {
   ];
 }
 
-function getBarPrognosisMappings(config) {
+function getBarPrognosisMappings() {
   return [
     {
-      path: "options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, item, id) {
+      path: "item.options.dateSeriesOptions.prognosisStart",
+      mapToSpec: function(prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -215,11 +219,11 @@ function getBarPrognosisMappings(config) {
   ];
 }
 
-function getColumnLabelColorMappings(config) {
+function getColumnLabelColorMappings() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item, id) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }
@@ -233,11 +237,11 @@ function getColumnLabelColorMappings(config) {
   ];
 }
 
-function getBarLabelColorMappings(config) {
+function getBarLabelColorMappings() {
   return [
     {
       path: "data",
-      mapToSpec: function(itemData, spec, item, id) {
+      mapToSpec: function(itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }
@@ -251,6 +255,33 @@ function getBarLabelColorMappings(config) {
   ];
 }
 
+function getHeightMappings() {
+  return [
+    {
+      path: "toolRuntimeConfig.displayOptions.size",
+      mapToSpec: function(size, spec, mappingData) {
+        let aspectRatio;
+        if (size === "prominent") {
+          aspectRatio = 9 / 16;
+        } else {
+          aspectRatio = 3 / 7;
+        }
+        let height = spec.width * aspectRatio;
+
+        // minimum height is 240px
+        if (height < 240) {
+          height = 240;
+        }
+        // increase the height if hideAxisLabel option is unchecked
+        if (mappingData.item.options.hideAxisLabel === false) {
+          height = height + 20;
+        }
+        objectPath.set(spec, "height", height);
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
@@ -258,5 +289,6 @@ module.exports = {
   getColumnPrognosisMappings: getColumnPrognosisMappings,
   getBarPrognosisMappings: getBarPrognosisMappings,
   getColumnLabelColorMappings: getColumnLabelColorMappings,
-  getBarLabelColorMappings: getBarLabelColorMappings
+  getBarLabelColorMappings: getBarLabelColorMappings,
+  getHeightMappings: getHeightMappings
 };

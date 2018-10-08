@@ -13,11 +13,11 @@ const textMetrics = require("vega").textMetrics;
 
 const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
-module.exports = function getMapping(config = {}) {
+module.exports = function getMapping() {
   return [
     {
-      path: "data",
-      mapToSpec: function(itemData, spec, item) {
+      path: "item.data",
+      mapToSpec: function(itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
@@ -126,8 +126,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec, item) {
+      path: "item.options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, "axes.1.title", undefined);
@@ -136,12 +136,12 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.arrowOptions.minValue",
-      mapToSpec: function(minValue, spec, item) {
+      path: "item.options.arrowOptions.minValue",
+      mapToSpec: function(minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMinValue = dataHelpers.getMinValue(item.data);
+        const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
           minValue = dataMinValue;
         }
@@ -151,12 +151,12 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.arrowOptions.maxValue",
-      mapToSpec: function(maxValue, spec, item) {
+      path: "item.options.arrowOptions.maxValue",
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -166,8 +166,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.arrowOptions.colorScheme",
-      mapToSpec: function(colorScheme, spec, item) {
+      path: "item.options.arrowOptions.colorScheme",
+      mapToSpec: function(colorScheme, spec) {
         if (
           configuredDivergingColorSchemes &&
           configuredDivergingColorSchemes[colorScheme]
@@ -181,8 +181,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.first",
-      mapToSpec: function(showFirstAnimation, spec, item) {
+      path: "item.options.annotations.first",
+      mapToSpec: function(showFirstAnimation, spec) {
         if (!showFirstAnimation) {
           return;
         }
@@ -229,8 +229,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.last",
-      mapToSpec: function(showLastAnnotation, spec, item) {
+      path: "item.options.annotations.last",
+      mapToSpec: function(showLastAnnotation, spec) {
         if (!showLastAnnotation) {
           return;
         }
@@ -277,8 +277,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.annotations.diff",
-      mapToSpec: function(showDiffAnnotation, spec, item) {
+      path: "item.options.annotations.diff",
+      mapToSpec: function(showDiffAnnotation, spec) {
         if (!showDiffAnnotation) {
           return;
         }
@@ -333,5 +333,5 @@ module.exports = function getMapping(config = {}) {
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       }
     }
-  ].concat(commonMappings.getBarLabelColorMappings(config));
+  ].concat(commonMappings.getBarLabelColorMappings());
 };
