@@ -8,7 +8,7 @@
       "title": "Titel ausblenden"
     },
     "size": {
-      "title": "Gewicht",
+      "title": "Gewichtung",
       "type": "string",
       "default": "basic",
       "enum": ["basic", "prominent"],
