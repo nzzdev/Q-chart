@@ -75,6 +75,12 @@ module.exports = {
       )}`.replace(/-/g, "")
     };
 
+    if (item.downloadData) {
+      context.linkToCSV = `${
+        request.payload.toolRuntimeConfig.toolBaseUrl
+      }/download-data?appendItemToPayload=${request.query._id}`;
+    }
+
     const renderingInfo = {};
 
     // if we have the width in toolRuntimeConfig.size

@@ -22,4 +22,5 @@
   {%- else %}Quelle: nicht angegeben{%- endif %}
 
   {%- if item.acronym %} &ndash; Grafik: {{ item.acronym }}{%- endif %}
+  {%- if item.downloadData -%}<br /><a href="{{linkToCSV}}">Daten herunterladen</a>{%- endif %}
 </div>

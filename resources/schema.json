@@ -76,6 +76,11 @@
       },
       "minItems": 1
     },
+    "downloadData": {
+      "title": "Daten zum herunterladen anbieten",
+      "type": "boolean",
+      "default": false
+    },
     "vegaSpec": {
       "title": "Vega-Spezifikation",
       "type": "object",
