@@ -75,10 +75,10 @@ module.exports = {
       )}`.replace(/-/g, "")
     };
 
-    if (item.downloadData) {
+    if (item.allowDownloadData) {
       context.linkToCSV = `${
         request.payload.toolRuntimeConfig.toolBaseUrl
-      }/download-data?appendItemToPayload=${request.query._id}`;
+      }/data?appendItemToPayload=${request.query._id}`;
     }
 
     const renderingInfo = {};

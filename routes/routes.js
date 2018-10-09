@@ -13,5 +13,5 @@ module.exports = [
   require("./notification/shouldBeLineChart.js"),
   require("./notification/shouldBeBars.js"),
   require("./locales.js"),
-  require("./download-data.js")
+  require("./data.js")
 ].concat(require("./schema.js"));

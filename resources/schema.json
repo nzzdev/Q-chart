@@ -76,7 +76,7 @@
       },
       "minItems": 1
     },
-    "downloadData": {
+    "allowDownloadData": {
       "title": "Daten zum herunterladen anbieten",
       "type": "boolean",
       "default": false

@@ -3,7 +3,7 @@ const slugify = require("slugify");
 
 module.exports = {
   method: "POST",
-  path: "/download-data",
+  path: "/data",
   options: {
     cors: true,
     validate: {
