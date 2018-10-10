@@ -100,7 +100,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
 
   // apply default toolRuntimeConfig
   if (!toolRuntimeConfig.hasOwnProperty("displayOptions")) {
-    toolRuntime.displayOptions = {};
+    toolRuntimeConfig.displayOptions = {};
   }
   if (!toolRuntimeConfig.displayOptions.hasOwnProperty("size")) {
     toolRuntimeConfig.displayOptions.size = "basic";
