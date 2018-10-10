@@ -89,14 +89,11 @@ async function getColorSchemes(target) {
       ]
     }
   };
-  colorSchemes['diverging_one'] = [];
-  colorSchemes['diverging_one'][2] = [
-    sophieVizColorVars["diverging-one-2"]["s-viz-color-diverging-one-2-1"],
-    sophieVizColorVars["diverging-one-2"]["s-viz-color-diverging-one-2-2"]
-  ];
-  colorSchemes['diverging_one'][3] = [
+  colorSchemes["diverging_one"] = [];
+  colorSchemes["diverging_one"][2] = [];
+  colorSchemes["diverging_one"][3] = [
     sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-1"],
-    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-2"],
+    sophieColorVars.general["s-color-gray-5"],
     sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
   ];
   return colorSchemes;

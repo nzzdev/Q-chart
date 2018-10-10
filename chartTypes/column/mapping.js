@@ -5,10 +5,10 @@ const dataHelpers = require("../../helpers/data.js");
 
 const commonMappings = require("../commonMappings.js");
 
-module.exports = function getMapping(config = {}) {
+module.exports = function getMapping() {
   return [
     {
-      path: "data",
+      path: "item.data",
       mapToSpec: function(itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
@@ -46,8 +46,8 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec, item) {
+      path: "item.options.hideAxisLabel",
+      mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
@@ -56,12 +56,12 @@ module.exports = function getMapping(config = {}) {
       }
     },
     {
-      path: "options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, item) {
+      path: "item.options.barOptions.maxValue",
+      mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
-        const dataMaxValue = dataHelpers.getMaxValue(item.data);
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
           maxValue = dataMaxValue;
         }
@@ -71,7 +71,8 @@ module.exports = function getMapping(config = {}) {
       }
     }
   ]
-    .concat(commonMappings.getColumnDateSeriesHandlingMappings(config))
-    .concat(commonMappings.getColumnPrognosisMappings(config))
-    .concat(commonMappings.getColumnLabelColorMappings(config));
+    .concat(commonMappings.getColumnDateSeriesHandlingMappings())
+    .concat(commonMappings.getColumnPrognosisMappings())
+    .concat(commonMappings.getColumnLabelColorMappings())
+    .concat(commonMappings.getHeightMappings());
 };

@@ -3,8 +3,7 @@ const Boom = require("boom");
 const vega = require("vega");
 const clone = require("clone");
 const deepmerge = require("deepmerge");
-const getSpecWithMappedItem = require("../../helpers/itemVegaMapping.js")
-  .getSpecWithMappedItem;
+const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
 const vegaConfigHelper = require("../../helpers/vegaConfig.js");
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
@@ -52,28 +51,31 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   return config;
 }
 
-async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
-  const mappingConfig = {
-    width: width,
-    colorSchemes: toolRuntimeConfig.colorSchemes
+async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
+  const mappingData = {
+    item: item,
+    toolRuntimeConfig: toolRuntimeConfig
   };
-
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
   if (chartTypeConfig.data.handleDateSeries) {
     // if we have a date series, we change the date values to date objects
-    // and set the detected dateFormat to the mappingConfig to be used within the mapping functions
+    // and set the detected dateFormat to the mappingData to be used within the mapping functions
     if (dateSeries.isDateSeriesData(item.data)) {
-      mappingConfig.dateFormat = dateSeries.getDateFormatForData(item.data);
-      item.data = dateSeries.getDataWithDateParsed(item.data);
+      mappingData.dateFormat = dateSeries.getDateFormatForData(
+        mappingData.item.data
+      );
+      mappingData.item.data = dateSeries.getDataWithDateParsed(
+        mappingData.item.data
+      );
     }
   }
 
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
-    item,
+    mappingData.item,
     templateSpec.config,
-    toolRuntimeConfig
+    mappingData.toolRuntimeConfig
   );
 
   // set the size to the spec
@@ -82,20 +84,14 @@ async function getSpec(item, width, toolRuntimeConfig, chartType, id) {
   // this will be the compiled spec from template and mapping
   let spec;
   try {
-    spec = getSpecWithMappedItem(
-      item,
-      id,
-      chartType,
-      templateSpec,
-      mappingConfig
-    );
+    spec = getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
     throw new Boom(err);
   }
   return spec;
 }
 
-async function getSvg(item, width, toolRuntimeConfig, id, request) {
+async function getSvg(id, request, width, item, toolRuntimeConfig) {
   // first and foremost: cast all the floats in strings to actual floats
   item.data = getDataWithStringsCastedToFloats(item.data);
 
@@ -113,7 +109,7 @@ async function getSvg(item, width, toolRuntimeConfig, id, request) {
     spec.data[0].values = clone(item.data);
   } else if (item.options.chartType) {
     try {
-      spec = await getSpec(item, width, toolRuntimeConfig, chartType, id);
+      spec = await getSpec(id, width, chartType, item, toolRuntimeConfig);
     } catch (err) {
       console.log(err);
       throw err;
@@ -213,11 +209,11 @@ module.exports = {
 
     const webSvg = {
       markup: await getSvg(
-        item,
-        request.query.width,
-        toolRuntimeConfig,
         request.query.id,
-        request
+        request,
+        request.query.width,
+        item,
+        toolRuntimeConfig
       )
     };
 

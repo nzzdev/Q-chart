@@ -75,6 +75,12 @@ module.exports = {
       )}`.replace(/-/g, "")
     };
 
+    if (item.allowDownloadData) {
+      context.linkToCSV = `${
+        request.payload.toolRuntimeConfig.toolBaseUrl
+      }/data?appendItemToPayload=${request.query._id}`;
+    }
+
     const renderingInfo = {};
 
     // if we have the width in toolRuntimeConfig.size
@@ -109,7 +115,8 @@ module.exports = {
         toolRuntimeConfigForWebSVG = {
           axis: request.payload.toolRuntimeConfig.axis,
           text: request.payload.toolRuntimeConfig.text,
-          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes
+          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes,
+          displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
         };
       }
 

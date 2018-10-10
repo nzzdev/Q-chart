@@ -124,15 +124,15 @@ const highlightZeroGridLineIfPositiveAndNegative = {
   process: function(svg, spec, item, toolRuntimeConfig, id) {
     // return early if there are only positive values
     if (
-      dataHelpers.getMinValue(item.data) > 0 &&
-      dataHelpers.getMaxValue(item.data) > 0
+      dataHelpers.getMinValue(item.data) >= 0 &&
+      dataHelpers.getMaxValue(item.data) >= 0
     ) {
       return svg;
     }
     // return early if there are only negative values
     if (
-      dataHelpers.getMinValue(item.data) < 0 &&
-      dataHelpers.getMaxValue(item.data) < 0
+      dataHelpers.getMinValue(item.data) <= 0 &&
+      dataHelpers.getMaxValue(item.data) <= 0
     ) {
       return svg;
     }
