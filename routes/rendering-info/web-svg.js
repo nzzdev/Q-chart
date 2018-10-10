@@ -70,11 +70,6 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     }
   }
 
-  // apply default toolRuntimeConfig
-  if (!mappingData.toolRuntimeConfig.displayOptions.size) {
-    mappingData.toolRuntimeConfig.displayOptions.size = "basic";
-  }
-
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
@@ -96,12 +91,20 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   return spec;
 }
 
-async function getSvg(id, request, width, item, toolRuntimeConfig) {
+async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   // first and foremost: cast all the floats in strings to actual floats
   item.data = getDataWithStringsCastedToFloats(item.data);
 
   // first we need to know if there is a chartType and which one
   const chartType = getChartTypeForItemAndWidth(item, width);
+
+  // apply default toolRuntimeConfig
+  if (!toolRuntimeConfig.hasOwnProperty("displayOptions")) {
+    toolRuntime.displayOptions = {};
+  }
+  if (!toolRuntimeConfig.displayOptions.hasOwnProperty("size")) {
+    toolRuntimeConfig.displayOptions.size = "basic";
+  }
 
   let spec;
   if (item.vegaSpec) {
