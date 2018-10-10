@@ -70,6 +70,11 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     }
   }
 
+  // apply default toolRuntimeConfig
+  if (!mappingData.toolRuntimeConfig.displayOptions.size) {
+    mappingData.toolRuntimeConfig.displayOptions.size = "basic";
+  }
+
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
