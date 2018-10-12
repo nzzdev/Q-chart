@@ -54,7 +54,8 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
 async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   const mappingData = {
     item: item,
-    toolRuntimeConfig: toolRuntimeConfig
+    toolRuntimeConfig: toolRuntimeConfig,
+    width: width
   };
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
   if (chartTypeConfig.data.handleDateSeries) {
