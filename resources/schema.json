@@ -147,7 +147,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["vegaSpec"],
                 "endpoint": "option-availability/chartType"
               }
             ],
@@ -199,7 +199,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["vegaSpec", "options.chartType"],
                 "endpoint": "option-availability/highlightDataSeries"
               }
             ]
@@ -213,7 +213,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["vegaSpec"],
                 "endpoint": "option-availability/hideAxisLabel"
               }
             ],
@@ -241,7 +241,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType"],
                     "endpoint": "option-availability/annotations.first"
                   }
                 ]
@@ -254,7 +254,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType"],
                     "endpoint": "option-availability/annotations.last"
                   }
                 ]
@@ -267,7 +267,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType"],
                     "endpoint": "option-availability/annotations.max"
                   }
                 ]
@@ -280,7 +280,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType"],
                     "endpoint": "option-availability/annotations.min"
                   }
                 ]
@@ -293,7 +293,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType"],
                     "endpoint": "option-availability/annotations.diff"
                   }
                 ]
@@ -304,7 +304,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["options.chartType", "vegaSpec", "data"],
                 "endpoint": "option-availability/annotations"
               }
             ]
@@ -317,7 +317,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["options.chartType", "vegaSpec"],
                 "endpoint": "option-availability/bar"
               }
             ]
@@ -357,7 +357,11 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": [
+                      "options.chartType",
+                      "options.barOptions.isBarChart",
+                      "vegaSpec"
+                    ],
                     "endpoint": "option-availability/forceBarsOnSmall"
                   }
                 ]
@@ -376,7 +380,13 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": [
+                  "data",
+                  "vegaSpec",
+                  "options.chartType",
+                  "options.barOptions.isBarChart",
+                  "options.barOptions.forceBarsOnSmall"
+                ],
                 "endpoint": "option-availability/dateseries"
               }
             ]
@@ -424,7 +434,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["options.chartType", "vegaSpec"],
                 "endpoint": "option-availability/line"
               }
             ]
@@ -465,7 +475,7 @@
                 "availabilityChecks": [
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["data", "options.chartType", "vegaSpec"],
                     "endpoint": "option-availability/line.isStockChart"
                   }
                 ]
@@ -481,7 +491,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["options.chartType", "vegaSpec"],
                 "endpoint": "option-availability/dotplot"
               }
             ]
@@ -508,7 +518,7 @@
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["options.chartType", "vegaSpec"],
                 "endpoint": "option-availability/arrow"
               }
             ]
@@ -534,7 +544,7 @@
                   },
                   {
                     "type": "ToolEndpoint",
-                    "withData": true,
+                    "data": ["options.chartType", "vegaSpec"],
                     "endpoint": "option-availability/arrow.colorScheme"
                   }
                 ]
@@ -553,7 +563,7 @@
               },
               {
                 "type": "ToolEndpoint",
-                "withData": true,
+                "data": ["vegaSpec", "options.chartType"],
                 "endpoint": "option-availability/colorOverwrite"
               }
             ],
