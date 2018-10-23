@@ -140,7 +140,6 @@ module.exports = {
 
     if (
       request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "highlightDataSeries" ||
       request.params.optionName === "colorOverwrite"
     ) {
       return {
@@ -206,13 +205,11 @@ module.exports = {
     }
 
     if (request.params.optionName === "displayWeight") {
-      const options = request.payload.options;
       return {
         available:
           isLineChart(request.payload) ||
-          ((options.chartType === "Bar" ||
-            options.chartType === "StackedBar") &&
-            options.barOptions.isBarChart === false)
+          (isBarChart(request.payload) &&
+            !request.payload.options.barOptions.isBarChart)
       };
     }
 
