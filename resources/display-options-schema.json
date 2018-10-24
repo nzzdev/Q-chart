@@ -18,8 +18,8 @@
         "availabilityChecks": [
           {
             "type": "ToolEndpoint",
-            "data": ["options.chartType", "options.barOptions.isBarChart"],
-            "endpoint": "option-availability/displayWeight"
+            "endpoint": "option-availability/displayWeight",
+            "fields": ["options.chartType", "options.barOptions.isBarChart"]
           }
         ]
       }
