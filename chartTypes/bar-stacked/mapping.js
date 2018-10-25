@@ -183,6 +183,15 @@ module.exports = function getMapping() {
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
       }
+    },
+    {
+      path: "item.data",
+      mapToSpec: function(data, spec, mappingData) {
+        // if we will only display one single bar, we should not show the Y axis label
+        if (data.length === 2) {
+          objectPath.set(spec, "axes.1.labels", false);
+        }
+      }
     }
   ]
     .concat(commonMappings.getBarDateSeriesHandlingMappings())

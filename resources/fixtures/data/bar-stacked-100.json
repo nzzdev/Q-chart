@@ -15,7 +15,7 @@
   ],
   "options": {
     "chartType": "StackedBar",
-    "hideAxisLabel": false,
+    "hideAxisLabel": true,
     "barOptions": {
       "isBarChart": false,
       "forceBarsOnSmall": true
