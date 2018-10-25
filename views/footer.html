@@ -4,17 +4,15 @@
   {%- endif %}
   {%- if item.sources.length > 0 %}
     {%- if item.sources.length > 1 %}
-      Quellen:&nbsp;
+      Quellen:
     {%- else %}
-      Quelle:&nbsp;
+      Quelle:
     {%- endif %}
     
     {%- for source in item.sources %}
       
       {%- if source.text !== "" %}
-        {%- if source.link and source.link.isValid %}<a href="{{ source.link.url }}" target="blank" rel="noopener noreferrer">{{ source.text }}</a>
-        {%- else %} {{ source.text }}{%- endif %}
-        {% if not loop.last %}, {% endif %}
+        {%- if source.link and source.link.isValid %}<a href="{{ source.link.url }}" target="blank" rel="noopener noreferrer">{{ source.text }}</a>{%- else %} {{ source.text }}{%- endif %}{% if not loop.last %}, {% endif %}
       {%- endif %}
 
     {%- endfor %}
