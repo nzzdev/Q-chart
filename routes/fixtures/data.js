@@ -8,6 +8,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/arrow-two-categories-same-value.json`),
   require(`${fixtureDataDirectory}/bar-color-overwrite-highlight.json`),
   require(`${fixtureDataDirectory}/bar-dates-days-prognosis.json`),
+  require(`${fixtureDataDirectory}/bar-dates-days-year-interval.json`),
   require(`${fixtureDataDirectory}/bar-dates-null-values.json`),
   require(`${fixtureDataDirectory}/bar-dates-quarter.json`),
   require(`${fixtureDataDirectory}/bar-dates-years.json`),
