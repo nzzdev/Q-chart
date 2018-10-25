@@ -57,7 +57,7 @@
     },
     "dateSeriesOptions": {
       "interval": "year",
-      "prognosisStart": false
+      "prognosisStart": null
     },
     "lineChartOptions": {},
     "colorOverwrite": [],
