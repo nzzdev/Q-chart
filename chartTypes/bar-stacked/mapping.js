@@ -110,7 +110,7 @@ module.exports = function getMapping() {
             labelText.field = "xValue";
           }
 
-          spec.marks[0].marks[0].marks.push({
+          const labelMark = {
             type: "text",
             name: "bar-top-label",
             from: {
@@ -127,7 +127,16 @@ module.exports = function getMapping() {
                 }
               }
             }
-          });
+          };
+
+          // if all the values are negative, we right align the label
+          const maxValue = dataHelpers.getMaxValue(itemData);
+          if (maxValue <= 0) {
+            labelMark.encode.update.x = { signal: "width" };
+            labelMark.encode.update.align = { value: "right" };
+          }
+
+          spec.marks[0].marks[0].marks.push(labelMark);
         }
       }
     },
@@ -182,6 +191,15 @@ module.exports = function getMapping() {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
+      }
+    },
+    {
+      path: "item.data",
+      mapToSpec: function(data, spec, mappingData) {
+        // if we will only display one single bar, we should not show the Y axis label
+        if (data.length === 2) {
+          objectPath.set(spec, "axes.1.labels", false);
+        }
       }
     }
   ]

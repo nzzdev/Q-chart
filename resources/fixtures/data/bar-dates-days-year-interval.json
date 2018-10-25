@@ -266,6 +266,10 @@
     {
       "link": {},
       "text": "FRED"
+    },
+    {
+      "link": { "isValid": true, "url": "https://nzz.ch"},
+      "text": "NZZ"
     }
   ],
   "options": {

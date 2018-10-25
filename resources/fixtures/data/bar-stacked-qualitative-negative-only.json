@@ -1,21 +1,26 @@
 {
-  "title": "FIXTURE: StackedBar - 100",
+  "title": "FIXTURE: StackedBar - qualitative - negative only",
   "subtitle": "some subtitle here",
   "data": [
     [
-      "Abstimmung",
-      "Ja: 46.02%",
-      "Nein: 53.98%"
+      "Cat",
+      "A",
+      "B"
     ],
     [
-      "in %",
-      "46.02",
-      "53.98"
+      "A very long label so it's on top of bars",
+      "-1000",
+      "-200"
+    ],
+    [
+      "B",
+      "-200",
+      "-50"
     ]
   ],
   "options": {
     "chartType": "StackedBar",
-    "hideAxisLabel": true,
+    "hideAxisLabel": false,
     "barOptions": {
       "isBarChart": false,
       "forceBarsOnSmall": true
