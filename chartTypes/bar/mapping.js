@@ -109,7 +109,7 @@ module.exports = function getMapping() {
             labelText.field = "xValue";
           }
 
-          spec.marks[0].marks[0].marks.push({
+          const labelMark = {
             type: "text",
             name: "bar-top-label",
             from: {
@@ -126,7 +126,16 @@ module.exports = function getMapping() {
                 }
               }
             }
-          });
+          };
+
+          // if all the values are negative, we right align the label
+          const maxValue = dataHelpers.getMaxValue(itemData);
+          if (maxValue <= 0) {
+            labelMark.encode.update.x = { signal: "width" };
+            labelMark.encode.update.align = { value: "right" };
+          }
+
+          spec.marks[0].marks[0].marks.push(labelMark);
         }
       }
     },
