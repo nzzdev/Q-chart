@@ -154,8 +154,10 @@
             "selectType": "radio",
             "dynamicEnum": {
               "type": "ToolEndpoint",
-              "withData": true,
-              "endpoint": "dynamic-enum/chartType"
+              "config": {
+                "endpoint": "dynamic-enum/chartType",
+                "fields": ["data"]
+              }
             },
             "availabilityChecks": [
               {
@@ -212,8 +214,10 @@
           "Q:options": {
             "dynamicEnum": {
               "type": "ToolEndpoint",
-              "withData": true,
-              "endpoint": "dynamic-enum/highlightDataSeries"
+              "config": {
+                "endpoint": "dynamic-enum/highlightDataSeries",
+                "fields": ["data"]
+              }
             },
             "availabilityChecks": [
               {
@@ -465,8 +469,10 @@
               "Q:options": {
                 "dynamicEnum": {
                   "type": "ToolEndpoint",
-                  "withData": true,
-                  "endpoint": "dynamic-enum/prognosisStart"
+                  "config": {
+                    "endpoint": "dynamic-enum/prognosisStart",
+                    "fields": ["data"]
+                  }
                 }
               }
             }
