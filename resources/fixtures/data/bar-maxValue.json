@@ -15,7 +15,12 @@
     ]
   ],
   "allowDownloadData": false,
-  "sources": [],
+  "sources": [
+    {
+      "link": { "isValid": true, "url": "https://nzz.ch"},
+      "text": "NZZ"
+    }
+  ],
   "options": {
     "chartType": "Bar",
     "hideAxisLabel": false,
