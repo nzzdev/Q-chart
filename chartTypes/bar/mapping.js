@@ -150,7 +150,7 @@ module.exports = function getMapping() {
       }
     },
     {
-      path: "options.barOptions.maxValue",
+      path: "item.options.barOptions.maxValue",
       mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);

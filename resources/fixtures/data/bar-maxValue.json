@@ -1,0 +1,49 @@
+{
+  "title": "FIXTURE: Bar - maxValue",
+  "data": [
+    [
+      "Gruppe",
+      "Zustimmung"
+    ],
+    [
+      "Abgewanderte CDU-Wähler",
+      "73"
+    ],
+    [
+      "Abgewanderte SPD-Wähler",
+      "53"
+    ]
+  ],
+  "allowDownloadData": false,
+  "sources": [
+    {
+      "link": { "isValid": true, "url": "https://nzz.ch"},
+      "text": "NZZ"
+    }
+  ],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": false,
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": true,
+      "forceBarsOnSmall": false,
+      "maxValue": 100
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}

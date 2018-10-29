@@ -1,0 +1,26 @@
+{
+  "title": "FIXTURE: Bar - Single",
+  "subtitle": "some subtitle here",
+  "data": [
+    [
+      "A",
+      "B"
+    ],
+    [
+      "C",
+      "42"
+    ]
+  ],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "barOptions": {
+      "isBarChart": true,
+      "forceBarsOnSmall": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "colorOverwrite": [],
+    "highlightDataSeries": null
+  }
+}
