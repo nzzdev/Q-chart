@@ -1,5 +1,7 @@
 # NZZ Storytelling Q Chart
 
+**Maintainer**: [benib](https://github.com/benib)
+
 This is Q Chart. It uses vega https://github.com/vega/vega to render SVGs on the server.
 
 ## Deployment / Configuration
