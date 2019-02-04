@@ -41,11 +41,13 @@ module.exports = function getMapping() {
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
         // set the barWidth depending on the number of bars we will get
-        const numberOfBars = (itemData.length - 1) * itemData[0].length;
+        const numberOfBars = (itemData.length - 1) * (itemData[0].length - 1);
         const barWidthSignal = spec.signals.find(signal => {
           return signal.name === "barWidth";
         });
-        if (numberOfBars > 10) {
+        if (numberOfBars === 1) {
+          barWidthSignal.value = 48;
+        } else if (numberOfBars > 10) {
           barWidthSignal.value = 16;
         } else {
           barWidthSignal.value = 24;
