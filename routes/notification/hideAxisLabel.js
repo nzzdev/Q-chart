@@ -10,9 +10,7 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        data: Joi.any().required()
-      }
+      payload: Joi.object().required()
     },
     cors: true,
     cache: {
@@ -22,9 +20,11 @@ module.exports = {
   },
   handler: function(request, h) {
     try {
-      const data = request.payload.data[0];
-      const hideAxisLabel = request.payload.data[1];
-      if (!hideAxisLabel && dateSeries.isDateSeriesData(data)) {
+      const item = request.payload.item;
+      if (
+        !item.options.hideAxisLabel &&
+        dateSeries.isDateSeriesData(item.data)
+      ) {
         return {
           message: {
             title: "notifications.hideAxisLabel.title",

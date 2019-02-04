@@ -11,24 +11,21 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        data: Joi.array().required(),
-        options: Joi.object().required()
-      }
+      payload: Joi.object().required()
     },
     cors: true,
     tags: ["api"]
   },
   handler: function(request, h) {
     try {
-      const data = request.payload.data[0];
-      const chartType = request.payload.data[1];
-      const amountOfRows = array2d.height(data);
+      const item = request.payload.item;
+      const options = request.payload.options;
+      const amountOfRows = array2d.height(item.data);
       if (
-        chartType !== "Line" &&
-        data[0] &&
-        amountOfRows > request.payload.options.limit &&
-        dateSeries.isDateSeriesData(data)
+        item.options.chartType !== "Line" &&
+        item.data[0] &&
+        amountOfRows > options.limit &&
+        dateSeries.isDateSeriesData(item.data)
       ) {
         return {
           message: {
