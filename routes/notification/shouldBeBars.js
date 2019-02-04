@@ -10,28 +10,22 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        data: Joi.array().required(),
-        options: Joi.object().required()
-      }
+      payload: Joi.object().required()
     },
     cors: true,
     tags: ["api"]
   },
   handler: function(request, h) {
     try {
-      const data = request.payload.data[0];
-      const chartType = request.payload.data[1];
-      const isBarChart = request.payload.data[2];
-      const forceBarsOnSmall = request.payload.data[3];
-
+      const item = request.payload.item;
+      const options = request.payload.options;
       if (
-        data[0] &&
-        ["Bar", "StackedBar"].includes(chartType) &&
-        !isBarChart &&
-        !forceBarsOnSmall &&
-        data[0].length > request.payload.options.limit &&
-        !dateSeries.isDateSeriesData(data)
+        item.data[0] &&
+        ["Bar", "StackedBar"].includes(item.options.chartType) &&
+        !item.options.barOptions.isBarChart &&
+        !item.options.barOptions.forceBarsOnSmall &&
+        item.data[0].length > options.limit &&
+        !dateSeries.isDateSeriesData(item.data)
       ) {
         return {
           message: {
