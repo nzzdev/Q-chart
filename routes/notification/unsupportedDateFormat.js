@@ -11,24 +11,22 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        data: Joi.array().required()
-      }
+      payload: Joi.object().required()
     },
     cors: true,
     tags: ["api"]
   },
   handler: function(request, h) {
     try {
-      const data = request.payload.data[0];
+      const item = request.payload.item;
       // if this is a correct date series, we do not have a problem
-      if (helpers.isDateSeriesData(data)) {
+      if (helpers.isDateSeriesData(item.data)) {
         return null;
       }
 
       // a wrong date format is detected by strings with two dots or slashes or dashes separating numbers
       for (let separator of separators) {
-        for (let row of data.slice(1)) {
+        for (let row of item.data.slice(1)) {
           let parts = row[0].split(separator);
           if (
             parts.length === 3 &&

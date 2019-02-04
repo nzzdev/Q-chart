@@ -40,37 +40,36 @@ module.exports = {
     cors: true
   },
   handler: function(request, h) {
+    const item = request.payload.item;
     if (request.params.optionName === "bar") {
       return {
-        available:
-          isBarChart(request.payload) && hasNoCustomVegaSpec(request.payload)
+        available: isBarChart(item) && hasNoCustomVegaSpec(item)
       };
     }
 
     if (request.params.optionName === "forceBarsOnSmall") {
       return {
         available:
-          isBarChart(request.payload) &&
-          !request.payload.options.barOptions.isBarChart &&
-          hasNoCustomVegaSpec(request.payload)
+          isBarChart(item) &&
+          !item.options.barOptions.isBarChart &&
+          hasNoCustomVegaSpec(item)
       };
     }
 
     if (request.params.optionName === "line") {
       return {
-        available:
-          isLineChart(request.payload) && hasNoCustomVegaSpec(request.payload)
+        available: isLineChart(item) && hasNoCustomVegaSpec(item)
       };
     }
 
     if (request.params.optionName === "line.isStockChart") {
       try {
-        const serie = getFirstColumnSerie(request.payload.data);
+        const serie = getFirstColumnSerie(item.data);
         return {
           available:
             isDateSeries(serie) &&
-            isLineChart(request.payload) &&
-            hasNoCustomVegaSpec(request.payload)
+            isLineChart(item) &&
+            hasNoCustomVegaSpec(item)
         };
       } catch (e) {
         return {
@@ -81,23 +80,21 @@ module.exports = {
 
     if (request.params.optionName === "dotplot") {
       return {
-        available:
-          isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)
+        available: isDotplot(item) && hasNoCustomVegaSpec(item)
       };
     }
 
     if (request.params.optionName === "arrow") {
       return {
-        available:
-          isArrowChart(request.payload) && hasNoCustomVegaSpec(request.payload)
+        available: isArrowChart(item) && hasNoCustomVegaSpec(item)
       };
     }
 
     if (request.params.optionName === "arrow.colorScheme") {
       return {
         available:
-          isArrowChart(request.payload) &&
-          hasNoCustomVegaSpec(request.payload) &&
+          isArrowChart(item) &&
+          hasNoCustomVegaSpec(item) &&
           configuredDivergingColorSchemes
       };
     }
@@ -105,7 +102,7 @@ module.exports = {
     if (request.params.optionName === "dateseries") {
       // check first if the chart type actually supports date series handling
       // first we need to know if there is a chartType and which one
-      const chartType = getChartTypeForItemAndWidth(request.payload, 400); // just hardcode a small width here
+      const chartType = getChartTypeForItemAndWidth(item, 400); // just hardcode a small width here
 
       const chartTypeConfig = require(`../chartTypes/${chartType}/config.js`);
       if (!chartTypeConfig.data.handleDateSeries) {
@@ -117,9 +114,8 @@ module.exports = {
       let isAvailable;
 
       try {
-        const serie = getFirstColumnSerie(request.payload.data);
-        isAvailable =
-          isDateSeries(serie) && hasNoCustomVegaSpec(request.payload);
+        const serie = getFirstColumnSerie(item.data);
+        isAvailable = isDateSeries(serie) && hasNoCustomVegaSpec(item);
       } catch (e) {
         isAvailable = false;
       }
@@ -134,39 +130,34 @@ module.exports = {
       request.params.optionName === "hideAxisLabel"
     ) {
       return {
-        available: hasNoCustomVegaSpec(request.payload)
+        available: hasNoCustomVegaSpec(item)
       };
     }
 
     if (
       request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "highlightDataSeries" ||
       request.params.optionName === "colorOverwrite"
     ) {
       return {
-        available:
-          hasNoCustomVegaSpec(request.payload) && !isArrowChart(request.payload)
+        available: hasNoCustomVegaSpec(item) && !isArrowChart(item)
       };
     }
 
     if (request.params.optionName === "annotations") {
       let available = false;
       if (
-        isLineChart(request.payload) &&
-        hasNoCustomVegaSpec(request.payload) &&
-        request.payload.data[0].length === 2 // only if there is just one data series
+        isLineChart(item) &&
+        hasNoCustomVegaSpec(item) &&
+        item.data[0].length === 2 // only if there is just one data series
       ) {
         available = true;
       }
 
-      if (isDotplot(request.payload) && hasNoCustomVegaSpec(request.payload)) {
+      if (isDotplot(item) && hasNoCustomVegaSpec(item)) {
         available = true;
       }
 
-      if (
-        isArrowChart(request.payload) &&
-        hasNoCustomVegaSpec(request.payload)
-      ) {
+      if (isArrowChart(item) && hasNoCustomVegaSpec(item)) {
         available = true;
       }
 
@@ -177,42 +168,39 @@ module.exports = {
 
     if (request.params.optionName === "annotations.first") {
       return {
-        available: isLineChart(request.payload) || isArrowChart(request.payload)
+        available: isLineChart(item) || isArrowChart(item)
       };
     }
 
     if (request.params.optionName === "annotations.last") {
       return {
-        available: isLineChart(request.payload) || isArrowChart(request.payload)
+        available: isLineChart(item) || isArrowChart(item)
       };
     }
 
     if (request.params.optionName === "annotations.max") {
       return {
-        available: isLineChart(request.payload) || isDotplot(request.payload)
+        available: isLineChart(item) || isDotplot(item)
       };
     }
 
     if (request.params.optionName === "annotations.min") {
       return {
-        available: isLineChart(request.payload) || isDotplot(request.payload)
+        available: isLineChart(item) || isDotplot(item)
       };
     }
 
     if (request.params.optionName === "annotations.diff") {
       return {
-        available: isDotplot(request.payload) || isArrowChart(request.payload)
+        available: isDotplot(item) || isArrowChart(item)
       };
     }
 
     if (request.params.optionName === "displayWeight") {
-      const options = request.payload.options;
       return {
         available:
-          isLineChart(request.payload) ||
-          ((options.chartType === "Bar" ||
-            options.chartType === "StackedBar") &&
-            options.barOptions.isBarChart === false)
+          isLineChart(item) ||
+          (isBarChart(item) && !item.options.barOptions.isBarChart)
       };
     }
 

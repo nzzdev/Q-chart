@@ -9,21 +9,18 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
-        data: Joi.array().required(),
-        options: Joi.object().required()
-      }
+      payload: Joi.object().required()
     },
     cors: true,
     tags: ["api"]
   },
   handler: function(request, h) {
     try {
-      const data = request.payload.data[0];
-      const chartType = request.payload.data[1];
+      const item = request.payload.item;
+      const options = request.payload.options;
       if (
-        chartType === "StackedBar" &&
-        data[0].length === request.payload.options.limit
+        item.options.chartType === "StackedBar" &&
+        item.data[0].length === options.limit
       ) {
         return {
           message: {
