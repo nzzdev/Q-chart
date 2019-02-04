@@ -201,20 +201,35 @@ module.exports = {
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
 
-    if (configuredDivergingColorSchemes) {
-      for (const colorScheme of configuredDivergingColorSchemes) {
-        if (
-          toolRuntimeConfig.hasOwnProperty("colorSchemes") &&
-          toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-        ) {
-          registerColorSchemes(
-            "discrete",
-            colorScheme.scheme_name,
-            toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-          );
-        }
-      }
+    // register any configured color schemes
+    if (toolRuntimeConfig.hasOwnProperty("colorSchemes")) {
+      Object.keys(toolRuntimeConfig.colorSchemes).forEach(colorSchemeType => {
+        Object.keys(toolRuntimeConfig.colorSchemes[colorSchemeType]).forEach(
+          colorSchemeName => {
+            registerColorSchemes(
+              colorSchemeType,
+              colorSchemeName,
+              toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
+            );
+          }
+        );
+      });
     }
+
+    // if (configuredDivergingColorSchemes) {
+    //   for (const colorScheme of configuredDivergingColorSchemes) {
+    //     if (
+    //       toolRuntimeConfig.hasOwnProperty("colorSchemes") &&
+    //       toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
+    //     ) {
+    //       registerColorSchemes(
+    //         "discrete",
+    //         colorScheme.scheme_name,
+    //         toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
+    //       );
+    //     }
+    //   }
+    // }
 
     const webSvg = {
       markup: await getSvg(

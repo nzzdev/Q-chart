@@ -69,7 +69,20 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "general" // take this from config
+      },
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    },
+    {
+      "name": "colorScaleLight",
+      "type": "ordinal",
+      "range": {
+        "scheme": "general_light" // is it possible to adapt this from config maybe?
+      },
       "domain": {
         "data": "table",
         "field": "cValue"
@@ -210,10 +223,10 @@
                       "value": 0
                     }
                   ],
-                  "fill": {
+                  "fill": [{
                     "scale": "colorScale",
                     "field": "cValue"
-                  }
+                  }]
                 }
               }
             }

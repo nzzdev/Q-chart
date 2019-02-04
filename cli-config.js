@@ -58,8 +58,8 @@ async function getColorSchemes(target) {
     sophieVars[sophieModulesPerTarget[target].vizColor.name];
 
   const colorSchemes = {
-    category: {
-      default: [
+    categorical: {
+      general: [
         sophieVizColorVars.general["s-viz-color-one-5"],
         sophieVizColorVars.general["s-viz-color-two-5"],
         sophieVizColorVars.general["s-viz-color-three-5"],
@@ -73,7 +73,7 @@ async function getColorSchemes(target) {
         sophieVizColorVars.general["s-viz-color-eleven-5"],
         sophieVizColorVars.general["s-viz-color-twelve-5"]
       ],
-      light: [
+      general_light: [
         sophieVizColorVars.general["s-viz-color-one-1"],
         sophieVizColorVars.general["s-viz-color-two-1"],
         sophieVizColorVars.general["s-viz-color-three-1"],
@@ -87,15 +87,22 @@ async function getColorSchemes(target) {
         sophieVizColorVars.general["s-viz-color-eleven-1"],
         sophieVizColorVars.general["s-viz-color-twelve-1"]
       ]
+    },
+    discrete: {
+      diverging_one: [
+        [],
+        [],
+        [
+          // we only need the diverging color scheme for 3 items arrays
+          sophieVizColorVars["diverging-one-3"][
+            "s-viz-color-diverging-one-3-1"
+          ],
+          sophieColorVars.general["s-color-gray-5"],
+          sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
+        ]
+      ]
     }
   };
-  colorSchemes["diverging_one"] = [];
-  colorSchemes["diverging_one"][2] = [];
-  colorSchemes["diverging_one"][3] = [
-    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-1"],
-    sophieColorVars.general["s-color-gray-5"],
-    sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
-  ];
   return colorSchemes;
 }
 
