@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "d3-time-format": "^2.1.1",
     "decimal.js": "^10.0.1",
     "deepmerge": "^2.0.1",
-    "hapi": "^17.0.1",
+    "hapi": "^17.8.3",
     "hoek": "^5.0.2",
     "inert": "^5.0.1",
     "moment-timezone": "^0.5.16",
