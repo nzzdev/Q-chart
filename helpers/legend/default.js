@@ -2,21 +2,20 @@ const clone = require("clone");
 const dateSeries = require("../dateSeries.js");
 const d3config = require("../../config/d3.js");
 const d3timeFormat = require("d3-time-format");
-const vegaConfigHelpers = require("../vegaConfig.js");
+const colorSchemeHelpers = require("../colorSchemes.js");
 
 function getLegendModel(item, toolRuntimeConfig) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!item.options.chartType || item.vegaSpec) {
     return null;
   }
-  const colorRange = vegaConfigHelpers.getComputedCategoryColorRange(
+  const colorRange = colorSchemeHelpers.getComputedCategoricalColorScheme(
     item,
     toolRuntimeConfig
   );
   const legendModel = {};
 
-
-  let legendType = 'default';
+  let legendType = "default";
   if (item.options.chartType.toLowerCase() === "line") {
     legendType = "line";
   }

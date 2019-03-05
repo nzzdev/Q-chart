@@ -24,17 +24,28 @@ function hasHighlight(item) {
 
 // this computes the color scheme based on the color schemes default and default_light given in toolRuntimeConfig
 // and takes the option "highlightDataSeries" into account
-function getComputeCategoricalColorScheme(item, toolRuntimeConfig) {
+function getComputedCategoricalColorScheme(item, toolRuntimeConfig) {
+  if (
+    !toolRuntimeConfig.colorSchemes.categorical.default.hasOwnProperty(
+      "normal"
+    ) ||
+    !toolRuntimeConfig.colorSchemes.categorical.default.hasOwnProperty("light")
+  ) {
+    throw new Error(
+      "toolRuntimeConfig.colorSchemes.categorical.default doesn't include normal and light properties, not able to compute color scheme"
+    );
+  }
+
   // the default is to use the color scheme given in toolRuntimeConfig
-  let scheme = toolRuntimeConfig.colorSchemes.categorical.default;
+  let scheme = toolRuntimeConfig.colorSchemes.categorical.default.normal;
 
   // handle highlightDataSeries option
   if (hasHighlight(item)) {
     // set the complete scheme to the light variant
-    scheme = toolRuntimeConfig.colorSchemes.categorical.default_light;
+    scheme = toolRuntimeConfig.colorSchemes.categorical.default.light;
     // set the highlighted one to the default color
     scheme[item.options.highlightDataSeries] =
-      toolRuntimeConfig.colorSchemes.categorical.default[
+      toolRuntimeConfig.colorSchemes.categorical.default.normal[
         item.options.highlightDataSeries
       ];
   }
@@ -65,5 +76,5 @@ function getComputeCategoricalColorScheme(item, toolRuntimeConfig) {
 
 module.exports = {
   getConfiguredDivergingColorSchemes: getConfiguredDivergingColorSchemes,
-  getComputeCategoricalColorScheme: getComputeCategoricalColorScheme
+  getComputedCategoricalColorScheme: getComputedCategoricalColorScheme
 };

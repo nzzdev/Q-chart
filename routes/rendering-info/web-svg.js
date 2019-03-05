@@ -4,16 +4,14 @@ const vega = require("vega");
 const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
-const vegaConfigHelper = require("../../helpers/vegaConfig.js");
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
-const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
-  .getExactPixelWidth;
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
 const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
+const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -40,7 +38,7 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
 
   // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
   // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = vegaConfigHelper.getComputedCategoryColorRange(
+  const categoryRange = colorSchemeHelpers.getComputedCategoricalColorScheme(
     item,
     toolRuntimeConfig
   );
@@ -206,11 +204,31 @@ module.exports = {
       Object.keys(toolRuntimeConfig.colorSchemes).forEach(colorSchemeType => {
         Object.keys(toolRuntimeConfig.colorSchemes[colorSchemeType]).forEach(
           colorSchemeName => {
-            registerColorSchemes(
-              colorSchemeType,
-              colorSchemeName,
-              toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
-            );
+            // if this is an array, we register the scheme directly
+            if (
+              Array.isArray(
+                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
+              )
+            ) {
+              registerColorSchemes(
+                colorSchemeType,
+                colorSchemeName,
+                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
+              );
+            } else {
+              // otherwise we assume it's an object and register them as variants of the same scheme
+              Object.keys(
+                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
+              ).forEach(colorSchemeVariant => {
+                registerColorSchemes(
+                  colorSchemeType,
+                  `${colorSchemeName}_${colorSchemeVariant}`,
+                  toolRuntimeConfig.colorSchemes[colorSchemeType][
+                    colorSchemeName
+                  ]
+                );
+              });
+            }
           }
         );
       });
