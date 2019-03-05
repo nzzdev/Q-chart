@@ -162,7 +162,124 @@ The tool structure follows the general structure of each Q tool. Further informa
 
 ## Options
 
+### Chart type
+
+The following chart types are available:
+
+- Bars
+- Stacked Bars
+- Line
+- Dot Plot
+- Arrow (only if exactly two data series)
+
+### highlightDataSeries
+
+This option is not available for arrow charts.
+For any other chart type it changes the color of all but the highlighted data series to the light variant.
+
+### hideAxisLabel
+
+If checked, the label on the X axis is hidden. This is mostly useful if you have dates on the X-axis.
+
+### annotations
+
+Only available for linecharts with a single line.
+
+### barOptions
+
+These are only available if the chartType is `bar` or `stackedBar`
+
+#### isBarChart
+
+If true, the bars are rendered horizontally (not columns).
+
+#### forceBarsOnSmall
+
+If true the bars are rendered horizontally if the width is below 500px.
+
+#### maxValue
+
+If defined this is the max value of the domain used for the axis. This is useful if you want to have multiple columm/bar charts comparable.
+
 [to the top](#table-of-contents)
+
+### dateSeriesOptions
+
+Only available if a date series is detected in the first column of the data array.
+
+#### interval
+
+One of `["year", "quarter", "month", "day", "hour"]`. This is used for the tick interval and the label format of the dates on the X axis.
+
+#### prognosisStart
+
+This is a `dynamicEnum` resulting in the selected index to be stored with the item. It marks the beginning of the prognosis in a data series.
+For linecharts this results in a dashed line after this point. For bar/column charts the bars get striped.
+
+### lineChartOptions
+
+Only available for Line Charts
+
+#### minValue
+
+The Y-axis minimum value. Be careful to not create misleading charts!
+
+#### maxValue
+
+The Y-axis maximum value.
+
+#### reverseYScale
+
+If checked, the Y scale is reverse. Useful if a decreasing number is a positive thing.
+
+#### lineInterpolation
+
+Only available for users with the `expert-chart` role. One of `["linear", "step-before", "step-after", "monotone"]`.
+This is a direct mapping to vegas line mark option `interpolation`. Only the mentioned interpolations are allowed though. See also https://vega.github.io/vega/docs/marks/line/
+
+#### isStockChart
+
+If checked the X axis is not interpreted as a date series anymore. This is usefule if you have stock market data where there is no trading during the night and you only show one or a couple of days/hours. This results in only the first and the last tick on the X axis beging labeled.
+
+### dotplotOptions
+
+Only available for Dot Plots.
+
+#### connectDots
+
+Results in a line beging drawn between the dots.
+
+#### minValue
+
+The min value for the Y axis
+
+#### maxValue
+
+The max value for the Y axis
+
+### arrowOptions
+
+Only available for Arrow Charts.
+
+#### minValue
+
+The min value for the Y axis
+
+#### maxValue
+
+The max value for the Y axis
+
+#### colorScheme
+
+Stores the key from one of the color schemes defined in the `DIVERGING_COLOR_SCHEMES` env var. The json-schema gets built dynamically on runtime in `resources/dynamicSchema.js` where the env var is read and the `enum` options for `colorScheme` get set using the configured color schemes.
+This is useful to have different diverging color schemes available for different datasets.
+The actual colors for these schemes need to get passed in `toolRuntimeConfig.colorSchemes` where there needs to be a color scheme with the name configured as the `scheme_name` in `DIVERGING_COLOR_SCHEMES` given.
+
+### colorOverwrite
+
+This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. It changes the color at the specified position in the category color scheme (given in `toolRuntimeConfig.colorSchemes.category`) to the color given in this option.
+The option is an array of objects with `color`, `colorBright` and `position` values. The `color` is used if no highlighting is in place. The `colorBright` is used if any other data series than the one at `position` is highlighted.
+This will be refactored for Q-chart 2.
 
 ## LICENSE
 
