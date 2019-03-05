@@ -1,5 +1,7 @@
 # Q-chart
 
+[![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart)
+
 **maintainer**: [benib](https://github.com/benib)
 
 Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q](https://q.tools)
@@ -8,6 +10,10 @@ Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q]
 
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Development](#development)
+- [Tool implemetation details](#tool-implemetation-details)
+- [Features](#features)
+- [Options](#options)
 
 ## Installation
 
@@ -137,7 +143,7 @@ When changing or implementing...
 
 [to the top](#table-of-contents)
 
-## Tool implentation details
+## Tool implemetation details
 
 The tool structure follows the general structure of each Q tool. Further information can be found in [Q server documentation - Developing tools](https://nzzdev.github.io/Q-server/developing-tools.html).
 
