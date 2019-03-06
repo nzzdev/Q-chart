@@ -8,7 +8,7 @@
     "test": "lab -a code -c -P tests --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
-  "license": "",
+  "license": "MIT",
   "dependencies": {
     "ajv": "^5.5.0",
     "array2d": "0.0.5",
