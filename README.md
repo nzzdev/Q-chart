@@ -1,6 +1,4 @@
-# Q-chart
-
-[![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart)
+# Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart)
 
 **maintainer**: [benib](https://github.com/benib)
 
