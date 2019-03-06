@@ -115,10 +115,10 @@ The `toolRuntimeConfig` is also configured in `cli-config.js` to be used with ht
 
 ## Development
 
-Start the Q dev server:
+Start the Q dev server
 
 ```
-$ npx @nzz/q-cli server -c /path/to/Q-chart/cli-config.js
+$ npx @nzz/q-cli server -c cli-config.js
 ```
 
 Run the Q tool:
