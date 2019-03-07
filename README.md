@@ -116,13 +116,13 @@ The `toolRuntimeConfig` is also configured in `cli-config.js` to be used with ht
 Start the Q dev server
 
 ```
-$ npx @nzz/q-cli server -c cli-config.js
+npx @nzz/q-cli server -c cli-config.js
 ```
 
 Run the Q tool:
 
 ```
-$ node index.js
+node index.js
 ```
 
 [to the top](#table-of-contents)
@@ -134,7 +134,7 @@ The testing framework used in this repository is [Code](https://github.com/hapij
 Run the tests:
 
 ```
-$ npm run test
+npm run test
 ```
 
 ### Implementing a new test
