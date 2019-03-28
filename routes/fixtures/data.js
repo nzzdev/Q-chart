@@ -18,6 +18,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-qualitative-single-serie.json`),
   require(`${fixtureDataDirectory}/bar-single.json`),
   require(`${fixtureDataDirectory}/bar-stacked-100.json`),
+  require(`${fixtureDataDirectory}/bar-stacked-dates-many-bars.json`),
   require(`${fixtureDataDirectory}/bar-stacked-days-prognosis.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative-only.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
