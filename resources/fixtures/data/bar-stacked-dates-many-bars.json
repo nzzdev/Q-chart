@@ -1,0 +1,100 @@
+{
+  "title": "FIXTURE: StackedBar - many bars ",
+  "data": [
+    ["Jahr", "Grüne/GLP", "SP", "LdU", "CVP/CSP", "FDP", "SVP"],
+    ["1869 bis 1897", "0", "0", "0", "0", "7", "0"],
+    ["1899", "0", "1", "0", "0", "6", "0"],
+    ["1903", "0", "1", "0", "0", "6", "0"],
+    ["1907", "0", "1", "0", "0", "6", "0"],
+    ["1911", "0", "1", "0", "0", "6", "0"],
+    ["1915", "0", "1", "0", "0", "6", "0"],
+    ["1919", "0", "1", "0", "0", "4", "2"],
+    ["1923", "0", "1", "0", "0", "4", "2"],
+    ["1927", "0", "1", "0", "0", "4", "2"],
+    ["1931", "0", "2", "0", "0", "3", "2"],
+    ["1935", "0", "2", "0", "0", "3", "2"],
+    ["1939", "0", "3", "0", "0", "3", "1"],
+    ["1943", "0", "2", "0", "0", "3", "2"],
+    ["1947", "0", "2", "0", "0", "3", "2"],
+    ["1951", "0", "2", "1", "0", "2", "2"],
+    ["1955", "0", "2", "1", "0", "2", "2"],
+    ["1959", "0", "2", "1", "0", "2", "2"],
+    ["1963", "0", "1", "1", "1", "2", "2"],
+    ["1967", "0", "1", "1", "1", "2", "2"],
+    ["1971", "0", "1", "1", "1", "2", "2"],
+    ["1975", "0", "1", "1", "1", "2", "2"],
+    ["1979", "0", "1", "1", "1", "2", "2"],
+    ["1983", "0", "1", "1", "1", "2", "2"],
+    ["1987", "0", "1", "1", "1", "2", "2"],
+    ["1991", "0", "2", "1", "1", "2", "1"],
+    ["1995", "1", "1", "0", "1", "2", "2"],
+    ["1999", "1", "1", "0", "1", "2", "2"],
+    ["2003", "1", "2", "0", "0", "2", "2"],
+    ["2007", "0", "2", "0", "1", "2", "2"],
+    ["2011", "1", "2", "0", "0", "2", "2"],
+    ["2015", "0", "2", "0", "1", "2", "2"],
+    ["2019", "1", "2", "0", "1", "1", "2"]
+  ],
+  "allowDownloadData": false,
+  "sources": [
+    {
+      "link": {
+        "url": "https://rr.zh.ch/internet/regierungsrat/de/der_regierungsrat/mitglieder/_jcr_content/contentPar/morethemes/morethemesitems/41_1320159459871.spooler.download.1517244377784.pdf/Stammbaum_RR_SR.pdf",
+        "isValid": true
+      },
+      "text": "Staatskanzlei des Kantons Zürich"
+    }
+  ],
+  "options": {
+    "chartType": "StackedBar",
+    "hideAxisLabel": false,
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": true,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwrite": [
+      {
+        "color": "#0084c7",
+        "position": 5,
+        "colorBright": "#000000"
+      },
+      {
+        "color": "#408b3d",
+        "position": 6
+      },
+      {
+        "color": "#c31906",
+        "position": 2
+      },
+      {
+        "color": "#da467d",
+        "position": 3
+      },
+      {
+        "color": "#d28b00",
+        "position": 4
+      },
+      {
+        "color": "#54ba00",
+        "position": 1
+      }
+    ],
+    "highlightDataSeries": null
+  },
+  "subtitle": "Regierungsratssitze nach Parteien",
+  "notes": "Ersatzwahlen werden nicht speziell aufgeführt. LdU: Landesring der Unabhängigen. Die Vorgängerparteien werden in die Zählung mit eingeschlossen. Im Fall der FDP: Demokratische Partei, Liberale Partei, Freisinnige Partei. Im Fall der SVP: Bauern-, Gewerbe- und Bürgerpartei. Im Fall der SP: Grütlianer."
+}
