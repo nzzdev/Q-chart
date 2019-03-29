@@ -46,12 +46,18 @@ module.exports = function getMapping() {
         const barWidthSignal = spec.signals.find(signal => {
           return signal.name === "barWidth";
         });
+        const groupPaddingSignal = spec.signals.find(signal => {
+          return signal.name === "groupPadding";
+        });
+
         if (numberOfBars === 1) {
           barWidthSignal.value = 48;
         } else if (numberOfBars > 10) {
           barWidthSignal.value = 16;
+          groupPaddingSignal.value = 8;
         } else {
           barWidthSignal.value = 24;
+          groupPaddingSignal.value = 16;
         }
 
         // check if we need to shorten the number labels
