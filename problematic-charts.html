@@ -1,0 +1,68 @@
+<html>
+  <script>
+    /*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
+    (function( w ){
+      var loadJS = function( src, cb ){
+        "use strict";
+        var ref = w.document.getElementsByTagName( "script" )[ 0 ];
+        var script = w.document.createElement( "script" );
+        script.src = src;
+        script.async = true;
+        ref.parentNode.insertBefore( script, ref );
+        if (cb && typeof(cb) === "function") {
+          script.onload = cb;
+        }
+        return script;
+      };
+      // commonjs
+      if( typeof module !== "undefined" ){
+        module.exports = loadJS;
+      }
+      else {
+        w.loadJS = loadJS;
+      }
+    }( typeof global !== "undefined" ? global : this ));
+  </script>
+
+  <div id="container" style="width: 350px;"></div>
+
+  <script>
+    const view = {"total_rows":23,"offset":0,"rows":[
+{"id":"0e7eba3bf306b37fb2526c6a53ad83db","key":"0e7eba3bf306b37fb2526c6a53ad83db","value":1},
+{"id":"26699fa3e25826d315de993281d558e0","key":"26699fa3e25826d315de993281d558e0","value":1},
+{"id":"2fda8838c97a0b167e2eae1dcaaa56a1","key":"2fda8838c97a0b167e2eae1dcaaa56a1","value":1},
+{"id":"319d7909d04a768352009a0fadea58c6","key":"319d7909d04a768352009a0fadea58c6","value":1},
+{"id":"49d89945ea5c1791d04fc147e19bafc0","key":"49d89945ea5c1791d04fc147e19bafc0","value":1},
+{"id":"525f23afd1ab41045af92034d64719ba","key":"525f23afd1ab41045af92034d64719ba","value":1},
+{"id":"551a2318faa7284eda123c0fd8106453","key":"551a2318faa7284eda123c0fd8106453","value":1},
+{"id":"5868be12d7c05a84b79f6858000167c0","key":"5868be12d7c05a84b79f6858000167c0","value":1},
+{"id":"61a73efff540cfe86f1a99a013d74719","key":"61a73efff540cfe86f1a99a013d74719","value":1},
+{"id":"65071972b0c9c90901b07bc7aca4d431","key":"65071972b0c9c90901b07bc7aca4d431","value":1},
+{"id":"84d11faf26ff3ed97649bfcd0ad1c488","key":"84d11faf26ff3ed97649bfcd0ad1c488","value":1},
+{"id":"a7be53348d1b0fbbae6e09aa4bc0e60e","key":"a7be53348d1b0fbbae6e09aa4bc0e60e","value":1},
+{"id":"a8e28f3742f0e675654dd119d0ed4887","key":"a8e28f3742f0e675654dd119d0ed4887","value":1},
+{"id":"b2d38f26154b2b01c483f5923f61ef2f","key":"b2d38f26154b2b01c483f5923f61ef2f","value":1},
+{"id":"b5618390df15400dee93e29a439b519b","key":"b5618390df15400dee93e29a439b519b","value":1},
+{"id":"b5618390df15400dee93e29a43a94fba","key":"b5618390df15400dee93e29a43a94fba","value":1},
+{"id":"b6f0fe707bd7e234aa8c41dcb6e14c8c","key":"b6f0fe707bd7e234aa8c41dcb6e14c8c","value":1},
+{"id":"b72e0cd4cda29e3eeeeade292f544da6","key":"b72e0cd4cda29e3eeeeade292f544da6","value":1},
+{"id":"b7f73fcfa6ceb1b0f01681d0c2d4fd9f","key":"b7f73fcfa6ceb1b0f01681d0c2d4fd9f","value":1},
+{"id":"c05b7e7c1da0913b42ff31a70035750a","key":"c05b7e7c1da0913b42ff31a70035750a","value":1},
+{"id":"c8fd21e27b70123c2548c8018e001551","key":"c8fd21e27b70123c2548c8018e001551","value":1},
+{"id":"dabae6eaf5a5bc814a19fac90ecd8fa8","key":"dabae6eaf5a5bc814a19fac90ecd8fa8","value":1},
+{"id":"db5994c05b47ac781d8c046db066363c","key":"db5994c05b47ac781d8c046db066363c","value":1}
+]};
+
+
+    const containerElement = document.querySelector('#container');
+    for (let item of view.rows) {
+      const qItemElement = document.createElement('div');
+      qItemElement.setAttribute('class', `q-item`);
+      qItemElement.setAttribute('id', `q-${item.id}`);
+      containerElement.appendChild(qItemElement);
+    }
+
+    loadJS('https://storytelling.nzz.ch/Q/old-loader-for-swiss-vote-screenshot-views.js');
+  </script>
+
+</html>

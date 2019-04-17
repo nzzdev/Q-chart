@@ -24,39 +24,34 @@
     "font": "nzz-sans-serif"
   },
   "colorSchemes": {
-    "category": {
-      "default": [
-        "#3952EE",
-        "#ebbd22",
-        "#24b39c",
-        "#e66e4a",
-        "#ad4bac",
-        "#38a650",
-        "#d64b47",
-        "#0ba9d9",
-        "#6c43c0",
-        "#bbd215",
-        "#b3611d",
-        "#c5c294"
-      ],
-      "light": [
-        "#d6dcff",
-        "#fff0bf",
-        "#c7f0e9",
-        "#ffdcd1",
-        "#fcdcfc",
-        "#c9f5d2",
-        "#ffd3d1",
-        "#cee9f2",
-        "#e2daf2",
-        "#f3fabb",
-        "#ffdcbf",
-        "#edece1"
-      ]
-    },
-    "diverging_one":[null,null,[],["#e66e4a","#b6b6be","#6c43c0"]]
+    "categorical_normal": [
+      "#3952EE",
+      "#ebbd22",
+      "#24b39c",
+      "#e66e4a",
+      "#ad4bac",
+      "#38a650",
+      "#d64b47",
+      "#0ba9d9",
+      "#6c43c0",
+      "#bbd215",
+      "#b3611d",
+      "#c5c294"
+    ],
+    "categorical_light": [
+      "#d6dcff",
+      "#fff0bf",
+      "#c7f0e9",
+      "#ffdcd1",
+      "#fcdcfc",
+      "#c9f5d2",
+      "#ffd3d1",
+      "#cee9f2",
+      "#e2daf2",
+      "#f3fabb",
+      "#ffdcbf",
+      "#edece1"
+    ],
+    "diverging_one": ["#e66e4a", "#b6b6be", "#6c43c0"]
   }
 }
-
-
-

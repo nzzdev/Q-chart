@@ -36,17 +36,12 @@
       "transform": [
         {
           "type": "stack",
-          "groupby": [
-            "xValue"
-          ],
+          "groupby": ["xValue"],
           "sort": {
             "field": "cValue"
           },
           "field": "yValue",
-          "as": [
-            "startY",
-            "endY"
-          ]
+          "as": ["startY", "endY"]
         }
       ]
     }
@@ -85,7 +80,9 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "categorical_computed"
+      },
       "domain": {
         "data": "table",
         "field": "cValue"
@@ -161,9 +158,7 @@
               "transform": [
                 {
                   "type": "aggregate",
-                  "groupby": [
-                    "xValue"
-                  ]
+                  "groupby": ["xValue"]
                 }
               ]
             }

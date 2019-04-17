@@ -67,7 +67,9 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "categorical_computed"
+      },
       "domain": {
         "data": "table",
         "field": "cValue"

@@ -10,7 +10,6 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
-const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 const vegaConfig = require("../../config/vega-default.json");
@@ -32,18 +31,6 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config passed in toolRuntimeConfig
   if (toolRuntimeConfig.hasOwnProperty("text")) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
-  }
-
-  config.range = {};
-
-  // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
-  // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = colorSchemeHelpers.getComputedCategoricalColorScheme(
-    item,
-    toolRuntimeConfig
-  );
-  if (categoryRange) {
-    config.range.category = categoryRange;
   }
 
   return config;
@@ -160,18 +147,10 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
     }
   } catch (err) {
     request.server.log(["error"], err);
-    return err;
+    throw err;
   }
 
   return svg;
-}
-
-function registerColorSchemes(type, name, values) {
-  if (type === "discrete") {
-    vega.schemeDiscretized(name, values);
-  } else {
-    vega.scheme(name, values);
-  }
 }
 
 module.exports = {
@@ -185,12 +164,12 @@ module.exports = {
       query: {
         width: Joi.number().required(),
         noCache: Joi.boolean(),
-        toolRuntimeConfig: Joi.object().optional(),
+        toolRuntimeConfig: Joi.object(),
         id: Joi.string().required()
       },
       payload: {
-        item: Joi.object().required(),
-        toolRuntimeConfig: Joi.object().optional()
+        item: Joi.object(),
+        toolRuntimeConfig: Joi.object()
       }
     }
   },
@@ -199,73 +178,30 @@ module.exports = {
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
 
-    // register any configured color schemes
-    if (toolRuntimeConfig.hasOwnProperty("colorSchemes")) {
-      Object.keys(toolRuntimeConfig.colorSchemes).forEach(colorSchemeType => {
-        Object.keys(toolRuntimeConfig.colorSchemes[colorSchemeType]).forEach(
-          colorSchemeName => {
-            // if this is an array, we register the scheme directly
-            if (
-              Array.isArray(
-                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
-              )
-            ) {
-              registerColorSchemes(
-                colorSchemeType,
-                colorSchemeName,
-                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
-              );
-            } else {
-              // otherwise we assume it's an object and register them as variants of the same scheme
-              Object.keys(
-                toolRuntimeConfig.colorSchemes[colorSchemeType][colorSchemeName]
-              ).forEach(colorSchemeVariant => {
-                registerColorSchemes(
-                  colorSchemeType,
-                  `${colorSchemeName}_${colorSchemeVariant}`,
-                  toolRuntimeConfig.colorSchemes[colorSchemeType][
-                    colorSchemeName
-                  ]
-                );
-              });
-            }
-          }
+    colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
+
+    try {
+      const webSvg = {
+        markup: await getSvg(
+          request.query.id,
+          request,
+          request.query.width,
+          item,
+          toolRuntimeConfig
+        )
+      };
+
+      const response = h.response(webSvg);
+      if (!request.query.noCache) {
+        response.header(
+          "cache-control",
+          "public, max-age=60, s-maxage=60, stale-while-revalidate=86400, stale-if-error=86400"
         );
-      });
+      }
+      return response;
+    } catch (e) {
+      debugger;
+      throw e;
     }
-
-    // if (configuredDivergingColorSchemes) {
-    //   for (const colorScheme of configuredDivergingColorSchemes) {
-    //     if (
-    //       toolRuntimeConfig.hasOwnProperty("colorSchemes") &&
-    //       toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-    //     ) {
-    //       registerColorSchemes(
-    //         "discrete",
-    //         colorScheme.scheme_name,
-    //         toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-    //       );
-    //     }
-    //   }
-    // }
-
-    const webSvg = {
-      markup: await getSvg(
-        request.query.id,
-        request,
-        request.query.width,
-        item,
-        toolRuntimeConfig
-      )
-    };
-
-    const response = h.response(webSvg);
-    if (!request.query.noCache) {
-      response.header(
-        "cache-control",
-        "public, max-age=60, s-maxage=60, stale-while-revalidate=86400, stale-if-error=86400"
-      );
-    }
-    return response;
   }
 };

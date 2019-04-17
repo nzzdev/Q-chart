@@ -48,7 +48,9 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "categorical_computed"
+      },
       "domain": {
         "data": "table",
         "field": "cValue"
@@ -130,10 +132,12 @@
               "width": {
                 "signal": "bandwidth('barPositionScale') - columnMargin"
               },
-              "fill": {
-                "scale": "colorScale",
-                "signal": "datum.cValue"
-              }
+              "fill": [
+                {
+                  "scale": "colorScale",
+                  "field": "cValue"
+                }
+              ]
             }
           }
         }

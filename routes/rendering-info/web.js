@@ -21,6 +21,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
 const legend = require("../../helpers/legend/index.js");
+const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 module.exports = {
   method: "POST",
@@ -32,12 +33,24 @@ module.exports = {
       },
       payload: {
         item: Joi.object(),
-        toolRuntimeConfig: Joi.object()
+        toolRuntimeConfig: Joi.object().keys({
+          colorSchemes: Joi.object().keys({
+            categorical_normal: Joi.array().required(),
+            categorical_light: Joi.array().required()
+          })
+        })
       }
     }
   },
   handler: async function(request, h) {
     const item = request.payload.item;
+
+    // we need to register the color schemes configured by toolRuntimeConfig first
+    // they are used for the legend later on therefore they cannot be configured in the web-svg handler only
+    colorSchemeHelpers.registerColorSchemes(
+      item,
+      request.payload.toolRuntimeConfig
+    );
 
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);

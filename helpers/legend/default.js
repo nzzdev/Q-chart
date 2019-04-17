@@ -2,17 +2,13 @@ const clone = require("clone");
 const dateSeries = require("../dateSeries.js");
 const d3config = require("../../config/d3.js");
 const d3timeFormat = require("d3-time-format");
-const colorSchemeHelpers = require("../colorSchemes.js");
+const vega = require("vega");
 
-function getLegendModel(item, toolRuntimeConfig) {
+function getLegendModel(item) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!item.options.chartType || item.vegaSpec) {
     return null;
   }
-  const colorRange = colorSchemeHelpers.getComputedCategoricalColorScheme(
-    item,
-    toolRuntimeConfig
-  );
   const legendModel = {};
 
   let legendType = "default";
@@ -27,7 +23,7 @@ function getLegendModel(item, toolRuntimeConfig) {
     const dataSeries = item.data[0].slice(1).map((label, index) => {
       return {
         label: label,
-        color: colorRange[index],
+        color: vega.scheme("categorical_computed")[index], // we use the categorical_computed scheme here, this is also used in the vega specs to color bars/lines
         iconType: legendType
       };
     });

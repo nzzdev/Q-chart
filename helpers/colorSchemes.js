@@ -1,3 +1,4 @@
+const vega = require("vega");
 let configuredDivergingColorSchemes;
 if (process.env.DIVERGING_COLOR_SCHEMES) {
   try {
@@ -24,30 +25,28 @@ function hasHighlight(item) {
 
 // this computes the color scheme based on the color schemes default and default_light given in toolRuntimeConfig
 // and takes the option "highlightDataSeries" into account
-function getComputedCategoricalColorScheme(item, toolRuntimeConfig) {
-  if (
-    !toolRuntimeConfig.colorSchemes.categorical.default.hasOwnProperty(
-      "normal"
-    ) ||
-    !toolRuntimeConfig.colorSchemes.categorical.default.hasOwnProperty("light")
-  ) {
+function getComputedCategoricalColorScheme(item) {
+  // the default is to use the categorical_normal scheme
+  let scheme = vega.scheme("categorical_normal");
+  if (!scheme) {
     throw new Error(
-      "toolRuntimeConfig.colorSchemes.categorical.default doesn't include normal and light properties, not able to compute color scheme"
+      "the scheme categorical_normal needs to be registered first"
     );
   }
-
-  // the default is to use the color scheme given in toolRuntimeConfig
-  let scheme = toolRuntimeConfig.colorSchemes.categorical.default.normal;
 
   // handle highlightDataSeries option
   if (hasHighlight(item)) {
     // set the complete scheme to the light variant
-    scheme = toolRuntimeConfig.colorSchemes.categorical.default.light;
+    scheme = vega.scheme("categorical_light");
+    if (!scheme) {
+      throw new Error(
+        "the scheme categorical_light needs to be registered first"
+      );
+    }
     // set the highlighted one to the default color
-    scheme[item.options.highlightDataSeries] =
-      toolRuntimeConfig.colorSchemes.categorical.default.normal[
-        item.options.highlightDataSeries
-      ];
+    scheme[item.options.highlightDataSeries] = vega.scheme(
+      "categorical_normal"
+    )[item.options.highlightDataSeries];
   }
 
   // handle custom color overwrites
@@ -74,7 +73,30 @@ function getComputedCategoricalColorScheme(item, toolRuntimeConfig) {
   return scheme;
 }
 
+// register any configured color schemes
+function registerColorSchemes(item, toolRuntimeConfig) {
+  if (!toolRuntimeConfig.colorSchemes) {
+    return;
+  }
+  Object.keys(toolRuntimeConfig.colorSchemes).forEach(colorSchemeName => {
+    vega.scheme(
+      colorSchemeName,
+      toolRuntimeConfig.colorSchemes[colorSchemeName]
+    );
+  });
+  const computedScheme = getComputedCategoricalColorScheme(item);
+  if (computedScheme) {
+    vega.scheme(
+      "categorical_computed",
+      getComputedCategoricalColorScheme(item)
+    );
+  } else {
+    throw new Error("failed to compute categorical_computed scheme");
+  }
+}
+
 module.exports = {
   getConfiguredDivergingColorSchemes: getConfiguredDivergingColorSchemes,
-  getComputedCategoricalColorScheme: getComputedCategoricalColorScheme
+  getComputedCategoricalColorScheme: getComputedCategoricalColorScheme,
+  registerColorSchemes: registerColorSchemes
 };

@@ -70,18 +70,7 @@
       "name": "colorScale",
       "type": "ordinal",
       "range": {
-        "scheme": "general" // take this from config
-      },
-      "domain": {
-        "data": "table",
-        "field": "cValue"
-      }
-    },
-    {
-      "name": "colorScaleLight",
-      "type": "ordinal",
-      "range": {
-        "scheme": "general_light" // is it possible to adapt this from config maybe?
+        "scheme": "categorical_computed"
       },
       "domain": {
         "data": "table",
@@ -185,9 +174,7 @@
               "transform": [
                 {
                   "type": "aggregate",
-                  "groupby": [
-                    "xValue"
-                  ]
+                  "groupby": ["xValue"]
                 }
               ]
             }
@@ -223,10 +210,12 @@
                       "value": 0
                     }
                   ],
-                  "fill": [{
-                    "scale": "colorScale",
-                    "field": "cValue"
-                  }]
+                  "fill": [
+                    {
+                      "scale": "colorScale",
+                      "field": "cValue"
+                    }
+                  ]
                 }
               }
             }

@@ -50,17 +50,15 @@ function getLegendModel(item, toolRuntimeConfig) {
 
   if (hasOnlyPositiveChanges(item)) {
     if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][2];
+      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][2];
     } else {
-      arrowColor = vega.schemeDiscretized("redblue")[3][2];
+      arrowColor = vega.scheme("redblue")(1);
     }
   } else if (hasOnlyNegativeOrZeroChanges(item)) {
     if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][0];
+      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][0];
     } else {
-      arrowColor = vega.schemeDiscretized("redblue")[3][0];
+      arrowColor = vega.scheme("redblue")(0);
     }
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
@@ -70,8 +68,10 @@ function getLegendModel(item, toolRuntimeConfig) {
   } else {
     // use the middle color of the color scheme if given
     if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][1];
+      // arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][1];
+      arrowColor = vega.scheme(colorSchemeName)(0.5);
+    } else {
+      arrowColor = vega.scheme("redblue")(0.5);
     }
   }
 

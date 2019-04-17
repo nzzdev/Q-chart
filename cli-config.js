@@ -58,52 +58,51 @@ async function getColorSchemes(target) {
     sophieVars[sophieModulesPerTarget[target].vizColor.name];
 
   const colorSchemes = {
-    categorical: {
-      default: {
-        normal: [
-          sophieVizColorVars.general["s-viz-color-one-5"],
-          sophieVizColorVars.general["s-viz-color-two-5"],
-          sophieVizColorVars.general["s-viz-color-three-5"],
-          sophieVizColorVars.general["s-viz-color-four-5"],
-          sophieVizColorVars.general["s-viz-color-five-5"],
-          sophieVizColorVars.general["s-viz-color-six-5"],
-          sophieVizColorVars.general["s-viz-color-seven-5"],
-          sophieVizColorVars.general["s-viz-color-eight-5"],
-          sophieVizColorVars.general["s-viz-color-nine-5"],
-          sophieVizColorVars.general["s-viz-color-ten-5"],
-          sophieVizColorVars.general["s-viz-color-eleven-5"],
-          sophieVizColorVars.general["s-viz-color-twelve-5"]
-        ],
-        light: [
-          sophieVizColorVars.general["s-viz-color-one-1"],
-          sophieVizColorVars.general["s-viz-color-two-1"],
-          sophieVizColorVars.general["s-viz-color-three-1"],
-          sophieVizColorVars.general["s-viz-color-four-1"],
-          sophieVizColorVars.general["s-viz-color-five-1"],
-          sophieVizColorVars.general["s-viz-color-six-1"],
-          sophieVizColorVars.general["s-viz-color-seven-1"],
-          sophieVizColorVars.general["s-viz-color-eight-1"],
-          sophieVizColorVars.general["s-viz-color-nine-1"],
-          sophieVizColorVars.general["s-viz-color-ten-1"],
-          sophieVizColorVars.general["s-viz-color-eleven-1"],
-          sophieVizColorVars.general["s-viz-color-twelve-1"]
-        ]
-      }
-    },
-    discrete: {
-      diverging_one: [
-        [],
-        [],
-        [
-          // we only need the diverging color scheme for 3 items arrays
-          sophieVizColorVars["diverging-one-3"][
-            "s-viz-color-diverging-one-3-1"
-          ],
-          sophieColorVars.general["s-color-gray-5"],
-          sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
-        ]
-      ]
-    }
+    categorical_normal: [
+      sophieVizColorVars.general["s-viz-color-one-5"],
+      sophieVizColorVars.general["s-viz-color-two-5"],
+      sophieVizColorVars.general["s-viz-color-three-5"],
+      sophieVizColorVars.general["s-viz-color-four-5"],
+      sophieVizColorVars.general["s-viz-color-five-5"],
+      sophieVizColorVars.general["s-viz-color-six-5"],
+      sophieVizColorVars.general["s-viz-color-seven-5"],
+      sophieVizColorVars.general["s-viz-color-eight-5"],
+      sophieVizColorVars.general["s-viz-color-nine-5"],
+      sophieVizColorVars.general["s-viz-color-ten-5"],
+      sophieVizColorVars.general["s-viz-color-eleven-5"],
+      sophieVizColorVars.general["s-viz-color-twelve-5"]
+    ],
+    categorical_light: [
+      sophieVizColorVars.general["s-viz-color-one-1"],
+      sophieVizColorVars.general["s-viz-color-two-1"],
+      sophieVizColorVars.general["s-viz-color-three-1"],
+      sophieVizColorVars.general["s-viz-color-four-1"],
+      sophieVizColorVars.general["s-viz-color-five-1"],
+      sophieVizColorVars.general["s-viz-color-six-1"],
+      sophieVizColorVars.general["s-viz-color-seven-1"],
+      sophieVizColorVars.general["s-viz-color-eight-1"],
+      sophieVizColorVars.general["s-viz-color-nine-1"],
+      sophieVizColorVars.general["s-viz-color-ten-1"],
+      sophieVizColorVars.general["s-viz-color-eleven-1"],
+      sophieVizColorVars.general["s-viz-color-twelve-1"]
+    ],
+    diverging_one: [
+      sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-1"],
+      sophieColorVars.general["s-color-gray-5"],
+      sophieVizColorVars["diverging-one-3"]["s-viz-color-diverging-one-3-3"]
+    ],
+    diverging_two: [
+      sophieVizColorVars["diverging-two-3"]["s-viz-color-diverging-two-3-1"],
+      sophieColorVars.general["s-color-gray-5"],
+      sophieVizColorVars["diverging-two-3"]["s-viz-color-diverging-two-3-3"]
+    ],
+    diverging_three: [
+      sophieVizColorVars["diverging-three-3"][
+        "s-viz-color-diverging-three-3-1"
+      ],
+      sophieColorVars.general["s-color-gray-5"],
+      sophieVizColorVars["diverging-three-3"]["s-viz-color-diverging-three-3-3"]
+    ]
   };
   return colorSchemes;
 }
@@ -160,7 +159,6 @@ async function getConfig() {
         ]
       },
       context: {
-        // context is target based
         stylesheets: [
           {
             url: "https://context-service.st.nzz.ch/stylesheet/all/nzz.ch.css"
