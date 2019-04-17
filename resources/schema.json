@@ -202,32 +202,57 @@
           "default": "Bar"
         },
         "highlightDataSeries": {
-          "title": "Hervorhebung",
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "ToolEndpoint",
-              "config": {
-                "endpoint": "dynamic-enum/highlightDataSeries",
-                "fields": ["data"]
-              }
-            },
-            "availabilityChecks": [
-              {
+          "title": "Hervorhebungen von Datenreihen",
+          "type": "array",
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicEnum": {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "option-availability/highlightDataSeries",
-                  "fields": ["vegaSpec", "options.chartType"]
+                  "endpoint": "dynamic-enum/highlightDataSeries",
+                  "fields": ["data"]
                 }
-              }
-            ]
+              },
+              "availabilityChecks": [
+                {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "option-availability/highlightDataSeries",
+                    "fields": ["vegaSpec", "options.chartType"]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "highlightDataRows": {
+          "title": "Hervorhebungen von Zeilen",
+          "type": "array",
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicEnum": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-enum/highlightDataRows",
+                  "fields": ["data"]
+                }
+              },
+              "availabilityChecks": [
+                {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "option-availability/highlightDataRows",
+                    "fields": ["vegaSpec", "options.chartType"]
+                  }
+                }
+              ]
+            }
           }
         },
         "hideAxisLabel": {
@@ -617,8 +642,8 @@
             }
           }
         },
-        "colorOverwrite": {
-          "title": "Farben",
+        "colorOverwritesSeries": {
+          "title": "Farben Datenreihen",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
@@ -631,7 +656,7 @@
               {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "option-availability/colorOverwrite",
+                  "endpoint": "option-availability/colorOverwriteSeries",
                   "fields": ["vegaSpec", "options.chartType"]
                 }
               }
@@ -649,7 +674,7 @@
                 "type": "string",
                 "Q:type": "color"
               },
-              "colorBright": {
+              "colorLight": {
                 "title": "Farbe hell",
                 "type": "string",
                 "Q:type": "color"
@@ -694,6 +719,104 @@
                 "Q:options": {
                   "enum_titles": [
                     "",
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16,
+                    17,
+                    18,
+                    19,
+                    20,
+                    21,
+                    22,
+                    23,
+                    24
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "colorOverwriteRows": {
+          "title": "Farben Zeilen",
+          "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              },
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/colorOverwriteRows",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ],
+            "compact": true,
+            "expandable": {
+              "itemLabelProperty": "color"
+            }
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "title": "Farbe normal",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "colorBright": {
+                "title": "Farbe hell",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "position": {
+                "title": "Position",
+                "type": "number",
+                "enum": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24
+                ],
+                "Q:options": {
+                  "enum_titles": [
                     1,
                     2,
                     3,

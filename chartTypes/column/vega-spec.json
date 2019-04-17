@@ -49,7 +49,18 @@
       "name": "colorScale",
       "type": "ordinal",
       "range": {
-        "scheme": "categorical_computed"
+        "scheme": "categorical_normal"
+      },
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    },
+    {
+      "name": "colorScaleLight",
+      "type": "ordinal",
+      "range": {
+        "scheme": "categorical_light"
       },
       "domain": {
         "data": "table",
@@ -133,6 +144,16 @@
                 "signal": "bandwidth('barPositionScale') - columnMargin"
               },
               "fill": [
+                {
+                  "test": "datum.isHighlighted === true",
+                  "scale": "colorScale",
+                  "field": "cValue"
+                },
+                {
+                  "test": "datum.isHighlighted === false",
+                  "scale": "colorScaleLight",
+                  "field": "cValue"
+                },
                 {
                   "scale": "colorScale",
                   "field": "cValue"

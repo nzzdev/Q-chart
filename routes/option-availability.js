@@ -136,7 +136,9 @@ module.exports = {
 
     if (
       request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "colorOverwrite"
+      request.params.optionName === "highlightDataRows" ||
+      request.params.optionName === "colorOverwriteSeries" ||
+      request.params.optionName === "colorOverwriteRows"
     ) {
       return {
         available: hasNoCustomVegaSpec(item) && !isArrowChart(item)

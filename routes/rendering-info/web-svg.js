@@ -200,7 +200,6 @@ module.exports = {
       }
       return response;
     } catch (e) {
-      debugger;
       throw e;
     }
   }
