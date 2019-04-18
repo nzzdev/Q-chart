@@ -204,6 +204,17 @@
         "highlightDataSeries": {
           "title": "Hervorhebungen von Datenreihen",
           "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataSeries",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ]
+          },
           "items": {
             "title": "Hervorhebung",
             "type": "number",
@@ -215,22 +226,24 @@
                   "endpoint": "dynamic-enum/highlightDataSeries",
                   "fields": ["data"]
                 }
-              },
-              "availabilityChecks": [
-                {
-                  "type": "ToolEndpoint",
-                  "config": {
-                    "endpoint": "option-availability/highlightDataSeries",
-                    "fields": ["vegaSpec", "options.chartType"]
-                  }
-                }
-              ]
+              }
             }
           }
         },
         "highlightDataRows": {
           "title": "Hervorhebungen von Zeilen",
           "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataRows",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ]
+          },
           "items": {
             "title": "Hervorhebung",
             "type": "number",
@@ -242,16 +255,7 @@
                   "endpoint": "dynamic-enum/highlightDataRows",
                   "fields": ["data"]
                 }
-              },
-              "availabilityChecks": [
-                {
-                  "type": "ToolEndpoint",
-                  "config": {
-                    "endpoint": "option-availability/highlightDataRows",
-                    "fields": ["vegaSpec", "options.chartType"]
-                  }
-                }
-              ]
+              }
             }
           }
         },
