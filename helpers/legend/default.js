@@ -23,7 +23,7 @@ function getLegendModel(item) {
     const dataSeries = item.data[0].slice(1).map((label, index) => {
       return {
         label: label,
-        color: vega.scheme("categorical_computed_normal")[index], // we need to calculate highlighting of series here to get the right colors in the legend
+        color: vega.scheme("categorical_computed_series_highlight")[index], // we need to calculate highlighting of series here to get the right colors in the legend
         iconType: legendType
       };
     });

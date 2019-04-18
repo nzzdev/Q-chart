@@ -14,14 +14,14 @@ function getConfiguredDivergingColorSchemes() {
   return configuredDivergingColorSchemes;
 }
 
-// function hasHighlight(item) {
-//   return (
-//     item.options !== undefined &&
-//     item.options.highlightDataSeries !== undefined &&
-//     Array.isArray(item.options.highlightDataSeries) &&
-//     item.options.highlightDataSeries.length > 0
-//   );
-// }
+function hasSeriesHighlight(item) {
+  return (
+    item.options !== undefined &&
+    item.options.highlightDataSeries !== undefined &&
+    Array.isArray(item.options.highlightDataSeries) &&
+    item.options.highlightDataSeries.length > 0
+  );
+}
 
 // this computes the color schemes categorical_computed_normal and categorical_computed_light based on color overwrites
 function getComputedCategoricalColorSchemes(item) {
@@ -58,6 +58,24 @@ function getComputedCategoricalColorSchemes(item) {
         schemes.categorical_computed_light[colorOverwrite.position - 1] =
           colorOverwrite.colorLight;
       }
+    }
+  }
+
+  // compute a colorscheme containing normal/light colors depending on the highlightDataSeries options.
+  // this scheme is used for the legend only
+  schemes.categorical_computed_series_highlight = JSON.parse(
+    JSON.stringify(schemes.categorical_computed_normal)
+  );
+
+  // handle highlightDataSeries option
+  if (hasSeriesHighlight(item)) {
+    schemes.categorical_computed_series_highlight = JSON.parse(
+      JSON.stringify(schemes.categorical_computed_light)
+    );
+
+    for (const highlightSerieIndex of item.options.highlightDataSeries) {
+      schemes.categorical_computed_series_highlight[highlightSerieIndex] =
+        schemes.categorical_computed_normal[highlightSerieIndex];
     }
   }
 
