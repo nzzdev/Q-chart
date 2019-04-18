@@ -47,32 +47,27 @@ function getLegendModel(item, toolRuntimeConfig) {
   let lastLabel = item.data[0][2];
 
   const colorSchemeName = getColorSchemeName(item);
+  let colorInterpolatorFunction;
+  if (colorSchemeName) {
+    colorInterpolatorFunction = vega.interpolateColors(
+      vega.scheme(colorSchemeName),
+      "lab"
+    );
+  } else {
+    colorInterpolatorFunction = vega.scheme("redblue");
+  }
 
   if (hasOnlyPositiveChanges(item)) {
-    if (colorSchemeName) {
-      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][2];
-    } else {
-      arrowColor = vega.scheme("redblue")(1);
-    }
+    arrowColor = colorInterpolatorFunction(1);
   } else if (hasOnlyNegativeOrZeroChanges(item)) {
-    if (colorSchemeName) {
-      arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][0];
-    } else {
-      arrowColor = vega.scheme("redblue")(0);
-    }
+    arrowColor = colorInterpolatorFunction(0);
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels
     firstLabel = item.data[0][2];
     lastLabel = item.data[0][1];
   } else {
-    // use the middle color of the color scheme if given
-    if (colorSchemeName) {
-      // arrowColor = toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][1];
-      arrowColor = vega.scheme(colorSchemeName)(0.5);
-    } else {
-      arrowColor = vega.scheme("redblue")(0.5);
-    }
+    arrowColor = colorInterpolatorFunction(0.5);
   }
 
   return {
