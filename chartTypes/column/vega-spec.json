@@ -49,7 +49,7 @@
       "name": "colorScale",
       "type": "ordinal",
       "range": {
-        "scheme": "categorical_normal"
+        "scheme": "categorical_computed_normal"
       },
       "domain": {
         "data": "table",
@@ -60,7 +60,7 @@
       "name": "colorScaleLight",
       "type": "ordinal",
       "range": {
-        "scheme": "categorical_light"
+        "scheme": "categorical_computed_light"
       },
       "domain": {
         "data": "table",

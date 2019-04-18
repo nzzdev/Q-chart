@@ -136,12 +136,33 @@ module.exports = {
 
     if (
       request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "highlightDataRows" ||
       request.params.optionName === "colorOverwriteSeries" ||
       request.params.optionName === "colorOverwriteRows"
     ) {
       return {
         available: hasNoCustomVegaSpec(item) && !isArrowChart(item)
+      };
+    }
+
+    // highlighting rows does not make sense for Line Charts (this should use an value annotation feature)
+    // for arrow charts it is not implemented yet, but would make sense to do that in a future version
+    if (request.params.optionName === "highlightDataRows") {
+      return {
+        available:
+          hasNoCustomVegaSpec(item) && !isArrowChart(item) && !isLineChart(item)
+      };
+    }
+
+    // color overwriting the rows is only possible if there are no more than 2 data series
+    // this is done to be able to generate a reasonable legend with only two items using grayscale colors
+    // having more than two dataseries would make the legend weird and probably would never be used anyway.
+    // if we figure out that the case exists in the future, we can think about ways of solving this.
+    if (request.params.optionName === "colorOverwriteRows") {
+      return {
+        available:
+          hasNoCustomVegaSpec(item) &&
+          !isArrowChart(item) &&
+          item.data[0].length < 4
       };
     }
 

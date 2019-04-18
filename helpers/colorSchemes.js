@@ -30,9 +30,14 @@ function getComputedCategoricalColorSchemes(item) {
       "the schemes categorical_normal and categorical_light need to be registered first"
     );
   }
+  // clone the schemes to not overwrite the original
   const schemes = {
-    categorical_computed_normal: vega.scheme("categorical_normal"),
-    categorical_computed_light: vega.scheme("categorical_light")
+    categorical_computed_normal: JSON.parse(
+      JSON.stringify(vega.scheme("categorical_normal"))
+    ),
+    categorical_computed_light: JSON.parse(
+      JSON.stringify(vega.scheme("categorical_light"))
+    )
   };
 
   // handle custom color overwrites for data series

@@ -45,61 +45,6 @@ module.exports = function getMapping() {
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
       }
     },
-
-    {
-      path: "item.options.highlightDataRows",
-      mapToSpec: function(highlightDataRows, spec) {
-        if (highlightDataRows.length === 0) {
-          return;
-        }
-        spec.data[0].values.map(value => {
-          if (highlightDataRows.includes(value.xIndex)) {
-            value.isHighlighted = true;
-          } else {
-            value.isHighlighted = false;
-          }
-        });
-      }
-    },
-    {
-      path: "item.options.highlightDataSeries",
-      mapToSpec: function(highlightDataSeries, spec) {
-        if (highlightDataSeries.length === 0) {
-          return;
-        }
-        spec.data[0].values.map(value => {
-          // if isHighlighted is already set to false, we return here
-          // highlight rows and highlight columns are in an AND relationship to result in a highlighted column
-          if (value.isHighlighted === false) {
-            return;
-          }
-          if (highlightDataSeries.includes(value.cValue)) {
-            value.isHighlighted = true;
-          } else {
-            value.isHighlighted = false;
-          }
-        });
-      }
-    },
-    {
-      path: "item.options.colorOverwritesRows",
-      mapToSpec: function(colorOverwritesRows, spec) {
-        for (const colorOverwrite of colorOverwritesRows) {
-          //   // if we do not have a valid color or position, ignore this
-          if (!colorOverwrite.color || Number.isNaN(colorOverwrite.position)) {
-            continue;
-          }
-          spec.data[0].values.map(value => {
-            if (value.xIndex === colorOverwrite.position) {
-              value.color = colorOverwrite.color;
-              if (colorOverwrite.colorLight) {
-                value.colorLight = colorOverwrite.colorLight;
-              }
-            }
-          });
-        }
-      }
-    },
     {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
@@ -127,6 +72,7 @@ module.exports = function getMapping() {
       }
     }
   ]
+    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())

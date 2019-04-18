@@ -99,6 +99,7 @@ module.exports = function getMapping() {
       }
     }
   ]
+    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
