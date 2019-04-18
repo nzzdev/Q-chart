@@ -35,7 +35,10 @@ function getComputedCategoricalColorSchemes(item) {
     categorical_computed_light: vega.scheme("categorical_light")
   };
 
-  // handle custom color overwrites
+  // handle custom color overwrites for data series
+  // we can only handle series color overwrites here, row highlights have to be handled by
+  // adding a property to the data and then selectively applying this color in the fill config for the row
+  // this is done in the mapping of the single chart type where it makes sense
   if (Array.isArray(item.options.colorOverwritesSeries)) {
     for (const colorOverwrite of item.options.colorOverwritesSeries) {
       // if we do not have a valid color or position, ignore this
@@ -43,11 +46,11 @@ function getComputedCategoricalColorSchemes(item) {
         continue;
       }
 
-      categorical_computed_normal[colorOverwrite.position - 1] =
+      schemes.categorical_computed_normal[colorOverwrite.position - 1] =
         colorOverwrite.color;
 
       if (colorOverwrite.colorLight) {
-        categorical_computed_light[colorOverwrite.position - 1] =
+        schemes.categorical_computed_light[colorOverwrite.position - 1] =
           colorOverwrite.colorLight;
       }
     }

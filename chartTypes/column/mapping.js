@@ -82,6 +82,25 @@ module.exports = function getMapping() {
       }
     },
     {
+      path: "item.options.colorOverwritesRows",
+      mapToSpec: function(colorOverwritesRows, spec) {
+        for (const colorOverwrite of colorOverwritesRows) {
+          //   // if we do not have a valid color or position, ignore this
+          if (!colorOverwrite.color || Number.isNaN(colorOverwrite.position)) {
+            continue;
+          }
+          spec.data[0].values.map(value => {
+            if (value.xIndex === colorOverwrite.position) {
+              value.color = colorOverwrite.color;
+              if (colorOverwrite.colorLight) {
+                value.colorLight = colorOverwrite.colorLight;
+              }
+            }
+          });
+        }
+      }
+    },
+    {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
         if (hideAxisLabel === true) {

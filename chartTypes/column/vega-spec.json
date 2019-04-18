@@ -145,6 +145,14 @@
               },
               "fill": [
                 {
+                  "test": "datum.colorLight && datum.isHighlighted === false",
+                  "field": "colorLight"
+                },
+                {
+                  "test": "datum.color && datum.isHighlighted === true",
+                  "field": "color"
+                },
+                {
                   "test": "datum.isHighlighted === true",
                   "scale": "colorScale",
                   "field": "cValue"
@@ -153,6 +161,10 @@
                   "test": "datum.isHighlighted === false",
                   "scale": "colorScaleLight",
                   "field": "cValue"
+                },
+                {
+                  "test": "datum.color",
+                  "field": "color"
                 },
                 {
                   "scale": "colorScale",

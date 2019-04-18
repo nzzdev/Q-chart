@@ -749,7 +749,7 @@
             }
           }
         },
-        "colorOverwriteRows": {
+        "colorOverwritesRows": {
           "title": "Farben Zeilen",
           "type": "array",
           "Q:options": {
@@ -781,7 +781,7 @@
                 "type": "string",
                 "Q:type": "color"
               },
-              "colorBright": {
+              "colorLight": {
                 "title": "Farbe hell",
                 "type": "string",
                 "Q:type": "color"
