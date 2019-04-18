@@ -58,6 +58,17 @@ async function getColorSchemes(target) {
     sophieVars[sophieModulesPerTarget[target].vizColor.name];
 
   const colorSchemes = {
+    grays: [
+      sophieColorVars.general["s-color-gray-1"],
+      sophieColorVars.general["s-color-gray-2"],
+      sophieColorVars.general["s-color-gray-3"],
+      sophieColorVars.general["s-color-gray-4"],
+      sophieColorVars.general["s-color-gray-5"],
+      sophieColorVars.general["s-color-gray-6"],
+      sophieColorVars.general["s-color-gray-7"],
+      sophieColorVars.general["s-color-gray-8"],
+      sophieColorVars.general["s-color-gray-9"]
+    ],
     categorical_normal: [
       sophieVizColorVars.general["s-viz-color-one-5"],
       sophieVizColorVars.general["s-viz-color-two-5"],

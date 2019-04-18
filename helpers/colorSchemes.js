@@ -1,4 +1,5 @@
 const vega = require("vega");
+const optionsHelpers = require("./options.js");
 let configuredDivergingColorSchemes;
 if (process.env.DIVERGING_COLOR_SCHEMES) {
   try {
@@ -12,15 +13,6 @@ if (process.env.DIVERGING_COLOR_SCHEMES) {
 
 function getConfiguredDivergingColorSchemes() {
   return configuredDivergingColorSchemes;
-}
-
-function hasSeriesHighlight(item) {
-  return (
-    item.options !== undefined &&
-    item.options.highlightDataSeries !== undefined &&
-    Array.isArray(item.options.highlightDataSeries) &&
-    item.options.highlightDataSeries.length > 0
-  );
 }
 
 // this computes the color schemes categorical_computed_normal and categorical_computed_light based on color overwrites
@@ -68,7 +60,7 @@ function getComputedCategoricalColorSchemes(item) {
   );
 
   // handle highlightDataSeries option
-  if (hasSeriesHighlight(item)) {
+  if (optionsHelpers.hasSeriesHighlight(item)) {
     schemes.categorical_computed_series_highlight = JSON.parse(
       JSON.stringify(schemes.categorical_computed_light)
     );

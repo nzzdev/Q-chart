@@ -3,8 +3,9 @@ const dateSeries = require("../dateSeries.js");
 const d3config = require("../../config/d3.js");
 const d3timeFormat = require("d3-time-format");
 const vega = require("vega");
+const optionsHelpers = require("../options.js");
 
-function getLegendModel(item) {
+function getLegendModel(item, toolRuntimeConfig) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!item.options.chartType || item.vegaSpec) {
     return null;
@@ -21,9 +22,27 @@ function getLegendModel(item) {
   // only add the series if we have more than one
   if (item.data[0].slice(1).length > 1) {
     const dataSeries = item.data[0].slice(1).map((label, index) => {
+      let color = vega.scheme("categorical_computed_series_highlight")[index];
+
+      // in case we have row color overwrites (only possible if we have not more than 2 data series)
+      // we show the legend with gray colors (as the dataseries colors do not match the overwritten colors)
+      if (
+        item.options.colorOverwritesRows.length > 0 &&
+        item.data[0].slice(1).length <= 2
+      ) {
+        if (
+          optionsHelpers.hasSeriesHighlight(item) &&
+          !item.options.highlightDataSeries.includes(index)
+        ) {
+          color = toolRuntimeConfig.colorSchemes.grays[4];
+        } else {
+          color = toolRuntimeConfig.colorSchemes.grays[8];
+        }
+      }
+
       return {
         label: label,
-        color: vega.scheme("categorical_computed_series_highlight")[index], // we need to calculate highlighting of series here to get the right colors in the legend
+        color: color,
         iconType: legendType
       };
     });

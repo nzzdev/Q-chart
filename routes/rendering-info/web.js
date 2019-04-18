@@ -131,6 +131,8 @@ module.exports = {
           colorSchemes: request.payload.toolRuntimeConfig.colorSchemes,
           displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
         };
+        // remove the grays as they are only needed for the legend
+        delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
       }
 
       let requestMethod;
