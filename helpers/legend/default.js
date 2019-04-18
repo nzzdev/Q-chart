@@ -27,6 +27,7 @@ function getLegendModel(item, toolRuntimeConfig) {
       // in case we have row color overwrites (only possible if we have not more than 2 data series)
       // we show the legend with gray colors (as the dataseries colors do not match the overwritten colors)
       if (
+        item.options.colorOverwritesRows &&
         item.options.colorOverwritesRows.length > 0 &&
         item.data[0].slice(1).length <= 2
       ) {
