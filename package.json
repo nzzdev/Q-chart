@@ -5,14 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js",
-    "test": "lab -a code -c -P tests --verbose --leaks"
+    "test": "lab -a @hapi/code -c -P tests --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "MIT",
   "dependencies": {
+    "@hapi/hapi": "^18.3.1",
+    "@hapi/boom": "^7.4.2",
+    "@hapi/inert": "^5.2.0",
+    "@hapi/joi": "^15.0.0",
+    "@hapi/hoek": "^6.2.1",
     "ajv": "^5.5.0",
     "array2d": "0.0.5",
-    "boom": "^7.1.1",
     "canvas": "^1.6.11",
     "canvas-prebuilt": "^1.6.11",
     "clone": "^2.1.1",
@@ -21,9 +25,6 @@
     "d3-time-format": "^2.1.1",
     "decimal.js": "^10.0.1",
     "deepmerge": "^2.0.1",
-    "hapi": "^17.8.3",
-    "hoek": "^5.0.2",
-    "inert": "^5.0.1",
     "moment-timezone": "^0.5.16",
     "node-fetch": "^1.7.3",
     "nunjucks": "^3.2.0",
@@ -32,12 +33,12 @@
     "vega": "^4.4.0"
   },
   "devDependencies": {
+    "@hapi/lab": "^18.1.2",
+    "@hapi/code": "^5.3.1",
     "autoprefixer": "^7.1.6",
-    "code": "^5.1.2",
     "cssnano": "^3.10.0",
     "glob": "^7.1.3",
-    "jsdom": "^13.1.0",
-    "lab": "^18.0.2",
+    "jsdom": "^15.0.0",
     "postcss": "^6.0.14",
     "postcss-import": "^11.0.0",
     "sass": "^1.19.0"
