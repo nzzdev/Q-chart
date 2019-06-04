@@ -134,13 +134,36 @@ module.exports = {
       };
     }
 
-    if (
-      request.params.optionName === "highlightDataSeries" ||
-      request.params.optionName === "colorOverwriteSeries" ||
-      request.params.optionName === "colorOverwriteRows"
-    ) {
+    if (request.params.optionName === "highlightDataSeries") {
       return {
         available: hasNoCustomVegaSpec(item) && !isArrowChart(item)
+      };
+    }
+
+    // you can only overwrite series if no row colors are overwritten
+    if (request.params.optionName === "colorOverwritesSeries") {
+      return {
+        available:
+          (!Array.isArray(item.options.colorOverwriteRows) ||
+            item.options.colorOverwriteRows.length === 0) &&
+          hasNoCustomVegaSpec(item) &&
+          !isArrowChart(item)
+      };
+    }
+
+    // you can only overwrite rows if no series colors are overwritten and
+    // color overwriting the rows is only possible if there are no more than 2 data series
+    // this is done to be able to generate a reasonable legend with only two items using grayscale colors
+    // having more than two dataseries would make the legend weird and probably would never be used anyway.
+    // if we figure out that the case exists in the future, we can think about ways of solving this.
+    if (request.params.optionName === "colorOverwritesRows") {
+      return {
+        available:
+          (!Array.isArray(item.options.colorOverwritesSeries) ||
+            item.options.colorOverwritesSeries.length === 0) &&
+          item.data[0].length < 4 &&
+          hasNoCustomVegaSpec(item) &&
+          !isArrowChart(item)
       };
     }
 
@@ -150,19 +173,6 @@ module.exports = {
       return {
         available:
           hasNoCustomVegaSpec(item) && !isArrowChart(item) && !isLineChart(item)
-      };
-    }
-
-    // color overwriting the rows is only possible if there are no more than 2 data series
-    // this is done to be able to generate a reasonable legend with only two items using grayscale colors
-    // having more than two dataseries would make the legend weird and probably would never be used anyway.
-    // if we figure out that the case exists in the future, we can think about ways of solving this.
-    if (request.params.optionName === "colorOverwriteRows") {
-      return {
-        available:
-          hasNoCustomVegaSpec(item) &&
-          !isArrowChart(item) &&
-          item.data[0].length < 4
       };
     }
 

@@ -144,7 +144,6 @@
       "type": "string"
     },
     "options": {
-      "title": "Allgemeine Optionen",
       "type": "object",
       "properties": {
         "chartType": {
@@ -392,7 +391,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "isBarChart": {
@@ -569,7 +569,6 @@
             }
           }
         },
-
         "dotplotOptions": {
           "title": "Optionen für Dot Plots",
           "type": "object",
@@ -647,7 +646,7 @@
           }
         },
         "colorOverwritesSeries": {
-          "title": "Farben Datenreihen",
+          "title": "Datenreihenfarbe",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
@@ -660,8 +659,12 @@
               {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "option-availability/colorOverwriteSeries",
-                  "fields": ["vegaSpec", "options.chartType"]
+                  "endpoint": "option-availability/colorOverwritesSeries",
+                  "fields": [
+                    "vegaSpec",
+                    "options.chartType",
+                    "options.colorOverwritesRows"
+                  ]
                 }
               }
             ],
@@ -754,7 +757,7 @@
           }
         },
         "colorOverwritesRows": {
-          "title": "Farben Zeilen",
+          "title": "Zeilenfarbe",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
@@ -767,8 +770,13 @@
               {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "option-availability/colorOverwriteRows",
-                  "fields": ["vegaSpec", "options.chartType"]
+                  "endpoint": "option-availability/colorOverwritesRows",
+                  "fields": [
+                    "vegaSpec",
+                    "data",
+                    "options.chartType",
+                    "options.colorOverwritesSeries"
+                  ]
                 }
               }
             ],
