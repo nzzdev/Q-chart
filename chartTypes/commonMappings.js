@@ -287,7 +287,10 @@ function getBarColumnDotHighlightColorOverwriteMappings() {
     {
       path: "item.options.highlightDataRows",
       mapToSpec: function(highlightDataRows, spec) {
-        if (highlightDataRows.length === 0) {
+        if (
+          !Array.isArray(highlightDataRows) ||
+          highlightDataRows.length === 0
+        ) {
           return;
         }
         spec.data[0].values.map(value => {
@@ -302,7 +305,10 @@ function getBarColumnDotHighlightColorOverwriteMappings() {
     {
       path: "item.options.highlightDataSeries",
       mapToSpec: function(highlightDataSeries, spec) {
-        if (highlightDataSeries.length === 0) {
+        if (
+          !Array.isArray(highlightDataSeries) ||
+          highlightDataSeries.length === 0
+        ) {
           return;
         }
         spec.data[0].values.map(value => {
