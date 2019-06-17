@@ -200,64 +200,6 @@
           },
           "default": "Bar"
         },
-        "highlightDataSeries": {
-          "title": "Hervorhebungen von Datenreihen",
-          "type": "array",
-          "Q:options": {
-            "availabilityChecks": [
-              {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "option-availability/highlightDataSeries",
-                  "fields": ["vegaSpec", "options.chartType"]
-                }
-              }
-            ]
-          },
-          "items": {
-            "title": "Hervorhebung",
-            "type": "number",
-            "default": 0,
-            "Q:options": {
-              "dynamicEnum": {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "dynamic-enum/highlightDataSeries",
-                  "fields": ["data"]
-                }
-              }
-            }
-          }
-        },
-        "highlightDataRows": {
-          "title": "Hervorhebungen von Zeilen",
-          "type": "array",
-          "Q:options": {
-            "availabilityChecks": [
-              {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "option-availability/highlightDataRows",
-                  "fields": ["vegaSpec", "options.chartType"]
-                }
-              }
-            ]
-          },
-          "items": {
-            "title": "Hervorhebung",
-            "type": "number",
-            "default": 0,
-            "Q:options": {
-              "dynamicEnum": {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "dynamic-enum/highlightDataRows",
-                  "fields": ["data"]
-                }
-              }
-            }
-          }
-        },
         "hideAxisLabel": {
           "title": "Achsenbeschriftung ausblenden",
           "type": "boolean",
@@ -285,6 +227,83 @@
                 }
               }
             ]
+          }
+        },
+        "highlightDataSeries": {
+          "title": "Hervorhebungen von Datenreihen",
+          "type": "array",
+          "Q:options": {
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/highlighDataSeries",
+                "fields": ["data"]
+              }
+            },
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataSeries",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ],
+            "layout": "compact",
+            "sortable": false
+          },
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicEnum": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-enum/highlightDataSeries",
+                  "fields": ["data"]
+                }
+              },
+              "layout": "compact"
+            }
+          }
+        },
+        "highlightDataRows": {
+          "title": "Hervorhebungen von Zeilen",
+          "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataRows",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ],
+            "layout": "compact",
+            "sortable": false
+          },
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicSchema": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-schema/highlighDataRowsItem",
+                  "fields": ["data"]
+                }
+              },
+              "dynamicEnum": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-enum/highlightDataRows",
+                  "fields": ["data"]
+                }
+              }
+            }
           }
         },
         "annotations": {
@@ -519,7 +538,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "minValue": {
@@ -581,7 +601,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "connectDots": {
@@ -610,7 +631,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "minValue": {
@@ -668,10 +690,11 @@
                 }
               }
             ],
-            "compact": true,
+            "layout": "compact",
             "expandable": {
-              "itemLabelProperty": "color"
-            }
+              "itemLabelTemplate": "${color} - ${position}"
+            },
+            "sortable": false
           },
           "items": {
             "type": "object",
@@ -780,10 +803,11 @@
                 }
               }
             ],
-            "compact": true,
+            "layout": "compact",
             "expandable": {
-              "itemLabelProperty": "color"
-            }
+              "itemLabelProperties": ["color", "position"]
+            },
+            "sortable": false
           },
           "items": {
             "type": "object",
