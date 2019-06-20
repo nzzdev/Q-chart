@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js",
-    "test": "lab -a code -c -P tests --verbose --leaks"
+    "test": "lab -a code -P tests --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "nunjucks": "^3.2.0",
     "object-path": "^0.11.4",
     "slugify": "^1.3.1",
-    "vega": "^4.4.0"
+    "vega": "^5.3.5"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

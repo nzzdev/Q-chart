@@ -29,7 +29,20 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "categorical_computed_normal"
+      },
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    },
+    {
+      "name": "colorScaleLight",
+      "type": "ordinal",
+      "range": {
+        "scheme": "categorical_computed_light"
+      },
       "domain": {
         "data": "table",
         "field": "cValue"

@@ -5,6 +5,7 @@ module.exports = [
   require("./script.js"),
   require("./option-availability.js"),
   require("./dynamic-enum.js"),
+  require("./dynamic-schema.js"),
   require("./health.js"),
   require("./fixtures/data.js"),
   require("./notification/hideAxisLabel.js"),

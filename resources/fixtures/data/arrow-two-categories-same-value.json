@@ -2,33 +2,18 @@
   "title": "FIXTURE: Arrow - 2 categories - same value - min max",
   "subtitle": "some subtitle here",
   "data": [
-    [
-      "Cat",
-      "from",
-      "to"
-    ],
-    [
-      "A",
-      "1000",
-      "-1000"
-    ],
-    [
-      "B",
-      "200",
-      "200"
-    ],
-    [
-      "C",
-      "-400",
-      "200"
-    ]
+    ["Cat", "from", "to"],
+    ["A", "1000", "-1000"],
+    ["B", "200", "200"],
+    ["C", "-400", "200"]
   ],
   "options": {
     "chartType": "Arrow",
     "hideAxisLabel": false,
     "arrowOptions": {
       "minValue": -1500,
-      "maxValue": 1500
+      "maxValue": 1500,
+      "colorScheme": 0
     },
     "annotations": {
       "diff": true,
