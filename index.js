@@ -62,7 +62,7 @@ async function init() {
 
   testCanvasFontMeasure();
 
-  await server.register(require("inert"));
+  await server.register(require("@hapi/inert"));
 
   server.route(routes);
 
