@@ -133,8 +133,11 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
     try {
       postprocessings = require(`../../chartTypes/${chartType}/postprocessings.js`);
     } catch (err) {
-      // we do not have postprocessing for this chartType
-      // as we do not need to have them, we just silently ignore the error here
+      // we ignore errors that come from the chartType not having a postprocessing.js file
+      // everything else gets rethrown
+      if (err.code !== "MODULE_NOT_FOUND") {
+        throw err;
+      }
     }
     try {
       if (postprocessings) {
