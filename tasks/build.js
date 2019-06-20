@@ -1,7 +1,7 @@
 const fs = require("fs");
 const crypto = require("crypto");
 
-const sass = require("node-sass");
+const sass = require("sass");
 const postcss = require("postcss");
 const postcssImport = require("postcss-import");
 const autoprefixer = require("autoprefixer");
