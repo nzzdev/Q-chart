@@ -15,7 +15,7 @@ module.exports.migrate = function(item) {
     }
   }
 
-  // colorOverwrite is renamed to colorOverwriteSeries and colorBright is renamed to colorLight
+  // colorOverwrite is renamed to colorOverwritesSeries and colorBright is renamed to colorLight
   if (item.options.colorOverwrite) {
     item.options.colorOverwritesSeries = item.options.colorOverwrite.map(
       colorOverwrite => {
