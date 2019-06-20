@@ -1,5 +1,7 @@
 const fs = require("fs");
 const fetch = require("node-fetch");
+const { registerFont } = require("canvas");
+
 async function loadFonts(fonts) {
   console.log("loading fonts", fonts);
   if (!Array.isArray(fonts)) {
@@ -17,36 +19,17 @@ async function loadFonts(fonts) {
       `${__dirname}/resources/fonts/${font.filename}`,
       fontFileBuffer
     );
+    registerFont(`${__dirname}/resources/fonts/${font.filename}`, {
+      family: font.name
+    });
   }
 }
 
 function testCanvasFontMeasure() {
-  // try to load canvas and log errors if it doesn't work
-  // this code is from vega
-  let canvas;
-  ["canvas", "canvas-prebuilt"].some(function(libName) {
-    try {
-      console.log(`trying to load ${libName}`);
-      canvas = require(libName);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  if (typeof canvas !== "function") {
-    console.log("failed to load canvas");
-  } else {
-    console.log(
-      "canvas loaded",
-      canvas.name,
-      "canvas version:",
-      canvas.version,
-      "cairo version:",
-      canvas.cairoVersion
-    );
-  }
   try {
-    const testCanvas = new canvas(1, 1);
-    const context = testCanvas.getContext("2d");
+    const { createCanvas } = require("canvas");
+    const canvas = createCanvas(200, 200);
+    const context = canvas.getContext("2d");
     context.font = "100 11px nzz-sans-serif";
     console.log(
       "text width measure test: ",

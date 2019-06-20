@@ -7,10 +7,6 @@ const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
 
-const getLongestDataLabel = require("../../helpers/data.js")
-  .getLongestDataLabel;
-const textMetrics = require("vega").textMetrics;
-
 module.exports = function getMapping() {
   return [
     {
@@ -337,5 +333,7 @@ module.exports = function getMapping() {
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       }
     }
-  ].concat(commonMappings.getBarLabelColorMappings());
+  ]
+    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
+    .concat(commonMappings.getBarLabelColorMappings());
 };

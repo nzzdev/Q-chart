@@ -57,6 +57,7 @@
     {
       "name": "colorScale",
       "type": "quantile",
+      "interpolate": "lab",
       "range": {
         "scheme": "redblue",
         "count": 3
@@ -112,9 +113,7 @@
               "transform": [
                 {
                   "type": "aggregate",
-                  "groupby": [
-                    "xValue"
-                  ]
+                  "groupby": ["xValue"]
                 }
               ]
             }

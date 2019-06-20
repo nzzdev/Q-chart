@@ -211,6 +211,7 @@ module.exports = function getMapping() {
       }
     }
   ]
+    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
     .concat(commonMappings.getBarDateSeriesHandlingMappings())
     .concat(commonMappings.getBarPrognosisMappings())
     .concat(commonMappings.getBarLabelColorMappings());

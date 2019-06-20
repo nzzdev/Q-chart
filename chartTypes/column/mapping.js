@@ -55,6 +55,7 @@ module.exports = function getMapping() {
         }
       }
     },
+
     {
       path: "item.options.barOptions.maxValue",
       mapToSpec: function(maxValue, spec, mappingData) {
@@ -71,6 +72,7 @@ module.exports = function getMapping() {
       }
     }
   ]
+    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
