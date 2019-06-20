@@ -1,5 +1,5 @@
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
+const Boom = require("@hapi/boom");
 const vega = require("vega");
 const clone = require("clone");
 const deepmerge = require("deepmerge");

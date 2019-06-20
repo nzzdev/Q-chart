@@ -1,7 +1,5 @@
 const querystring = require("querystring");
-
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
 

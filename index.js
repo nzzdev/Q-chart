@@ -1,6 +1,5 @@
 const fs = require("fs");
 const fetch = require("node-fetch");
-
 const { registerFont } = require("canvas");
 
 async function loadFonts(fonts) {
@@ -20,7 +19,6 @@ async function loadFonts(fonts) {
       `${__dirname}/resources/fonts/${font.filename}`,
       fontFileBuffer
     );
-
     registerFont(`${__dirname}/resources/fonts/${font.filename}`, {
       family: font.name
     });
@@ -42,7 +40,7 @@ function testCanvasFontMeasure() {
   }
 }
 
-const Hapi = require("hapi");
+const Hapi = require("@hapi/hapi");
 
 const server = Hapi.server({
   port: process.env.PORT || 3000,

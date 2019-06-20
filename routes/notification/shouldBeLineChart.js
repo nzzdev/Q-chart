@@ -1,5 +1,4 @@
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
 const array2d = require("array2d");
 const dateSeries = require("../../helpers/dateSeries.js");
 

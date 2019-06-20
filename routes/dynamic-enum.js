@@ -1,5 +1,5 @@
-const Boom = require("boom");
-const Joi = require("joi");
+const Boom = require("@hapi/boom");
+const Joi = require("@hapi/joi");
 const getFirstColumnSerie = require("../helpers/dateSeries.js")
   .getFirstColumnSerie;
 
