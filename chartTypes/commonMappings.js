@@ -338,7 +338,7 @@ function getBarColumnDotHighlightColorOverwriteMappings() {
             continue;
           }
           spec.data[0].values.map(value => {
-            if (value.xIndex === colorOverwrite.position) {
+            if (value.xIndex === colorOverwrite.position - 1) {
               value.color = colorOverwrite.color;
               if (colorOverwrite.colorLight) {
                 value.colorLight = colorOverwrite.colorLight;
