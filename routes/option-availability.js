@@ -166,7 +166,8 @@ module.exports = {
             item.options.colorOverwritesSeries.length === 0) &&
           item.data[0].length < 4 &&
           hasNoCustomVegaSpec(item) &&
-          !isArrowChart(item)
+          !isArrowChart(item) &&
+          !isLineChart(item)
       };
     }
 
