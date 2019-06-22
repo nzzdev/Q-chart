@@ -5,8 +5,14 @@ const getFirstColumnSerie = require("../helpers/dateSeries.js")
 
 function getChartTypeEnumWithTitles(item) {
   const chartTypes = {
-    enum: ["Bar", "StackedBar", "Line", "Dotplot"],
-    enum_titles: ["Säulen", "Gestapelte Säulen", "Linien", "Dot Plot"]
+    enum: ["Bar", "StackedBar", "Line", "Area", "Dotplot"],
+    enum_titles: [
+      "Säulen",
+      "Gestapelte Säulen",
+      "Linien",
+      "Flächen",
+      "Dot Plot"
+    ]
   };
   try {
     if (item.data[0].length === 3) {

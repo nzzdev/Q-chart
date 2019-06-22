@@ -596,6 +596,40 @@
             }
           }
         },
+        "areaChartOptions": {
+          "title": "Optionen für Flächendiagramme",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/area",
+                  "fields": ["options.chartType", "vegaSpec"]
+                }
+              }
+            ],
+            "expandable": true
+          },
+          "properties": {
+            "areaInterpolation": {
+              "title": "Interpolation der Flächen",
+              "type": "string",
+              "default": "linear",
+              "enum": ["linear", "step-after", "monotone"],
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "UserHasRole",
+                    "config": {
+                      "role": "expert-chart"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
         "dotplotOptions": {
           "title": "Optionen für Dot Plots",
           "type": "object",

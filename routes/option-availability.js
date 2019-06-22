@@ -18,6 +18,10 @@ function isLineChart(item) {
   return item.options.chartType === "Line";
 }
 
+function isAreaChart(item) {
+  return item.options.chartType === "Area";
+}
+
 function isDotplot(item) {
   return item.options.chartType === "Dotplot";
 }
@@ -59,6 +63,12 @@ module.exports = {
     if (request.params.optionName === "line") {
       return {
         available: isLineChart(item) && hasNoCustomVegaSpec(item)
+      };
+    }
+
+    if (request.params.optionName === "area") {
+      return {
+        available: isAreaChart(item) && hasNoCustomVegaSpec(item)
       };
     }
 
@@ -167,7 +177,8 @@ module.exports = {
           item.data[0].length < 4 &&
           hasNoCustomVegaSpec(item) &&
           !isArrowChart(item) &&
-          !isLineChart(item)
+          !isLineChart(item) &&
+          !isAreaChart(item)
       };
     }
 
@@ -176,7 +187,10 @@ module.exports = {
     if (request.params.optionName === "highlightDataRows") {
       return {
         available:
-          hasNoCustomVegaSpec(item) && !isArrowChart(item) && !isLineChart(item)
+          hasNoCustomVegaSpec(item) &&
+          !isArrowChart(item) &&
+          !isLineChart(item) &&
+          !isAreaChart(item)
       };
     }
 
