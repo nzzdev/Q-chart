@@ -2,28 +2,23 @@
   "notifications": {
     "hideAxisLabel": {
       "title": "Achsenbeschriftung nötig?",
-      "body":
-        "Wenn die Achsenbeschriftung selbsterklärend ist, lassen wir sie besser weg. Wähle dafür «Achsenbeschriftung ausblenden» an."
+      "body": "Wenn die Achsenbeschriftung selbsterklärend ist, lassen wir sie besser weg. Wähle dafür «Achsenbeschriftung ausblenden» an."
     },
     "shouldBeBarChart": {
       "title": "Diagrammtyp nicht ideal",
-      "body":
-        "Vielleicht ist es besser, auf Diagrammtyp «Säulen» zu wechseln. Bei nur einer Datenspalte ist das oft klarer."
+      "body": "Vielleicht ist es besser, auf Diagrammtyp «Säulen» zu wechseln. Bei nur einer Datenspalte ist das oft klarer."
     },
     "shouldBeLineChart": {
       "title": "Diagrammtyp nicht ideal",
-      "body":
-        "Für so viele Datenpunkte ist vermutlich ein Liniendiagramm besser geeignet."
+      "body": "Für so viele Datenpunkte ist vermutlich ein Liniendiagramm besser geeignet."
     },
     "shouldBeBars": {
       "title": "Sehr viele Spalten",
-      "body":
-        "Wenn Labels sich überlappen, solltest du die Option «Balken für mobile» oder «Balken statt Säulen» anwählen."
+      "body": "Wenn Labels sich überlappen, solltest du die Option «Balken für mobile» oder «Balken statt Säulen» anwählen."
     },
     "unsupportedDateFormat": {
       "title": "Ungültiges Datumsformat",
-      "body":
-        "Spalte A enthält wahrscheinlich ein nicht unterstütztes Datumsformat. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
+      "body": "Spalte A enthält wahrscheinlich ein nicht unterstütztes Datumsformat. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
     }
   }
 }
