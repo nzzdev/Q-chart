@@ -566,7 +566,7 @@
               "title": "Interpolation der Linien",
               "type": "string",
               "default": "linear",
-              "enum": ["linear", "step-before", "step-after", "monotone"],
+              "enum": ["linear", "step-after", "monotone"],
               "Q:options": {
                 "availabilityChecks": [
                   {

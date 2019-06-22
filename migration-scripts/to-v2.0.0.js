@@ -13,6 +13,7 @@ module.exports.migrate = function(item) {
     } else {
       item.options.highlightDataSeries = [item.options.highlightDataSeries];
     }
+    result.isChanged = true;
   }
 
   // colorOverwrite is renamed to colorOverwritesSeries and colorBright is renamed to colorLight
@@ -27,6 +28,17 @@ module.exports.migrate = function(item) {
       }
     );
     delete item.options.colorOverwrite;
+    result.isChanged = true;
+  }
+
+  // remove lineInterpolation step-before
+  if (item.options.lineChartOptions) {
+    if (item.options.lineChartOptions.lineInterpolation) {
+      if (item.options.lineChartOptions.lineInterpolation === "step-before") {
+        item.options.lineChartOptions.lineInterpolation = "linear";
+        result.isChanged = true;
+      }
+    }
   }
   result.item = item;
   return result;
