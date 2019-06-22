@@ -5,15 +5,15 @@ const d3timeFormat = require("d3-time-format");
 const vega = require("vega");
 const optionsHelpers = require("../options.js");
 
-function getLegendModel(item, toolRuntimeConfig) {
+function getLegendModel(item, toolRuntimeConfig, chartType) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
-  if (!item.options.chartType || item.vegaSpec) {
+  if (!chartType || item.vegaSpec) {
     return null;
   }
   const legendModel = {};
 
   let legendType = "default";
-  if (item.options.chartType.toLowerCase() === "line") {
+  if (chartType === "line") {
     legendType = "line";
   }
 
@@ -51,9 +51,13 @@ function getLegendModel(item, toolRuntimeConfig) {
   }
 
   // prognosis
+  const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
+
   legendModel.hasPrognosis =
     item.options.dateSeriesOptions &&
-    Number.isInteger(item.options.dateSeriesOptions.prognosisStart);
+    Number.isInteger(item.options.dateSeriesOptions.prognosisStart) &&
+    chartTypeConfig.data.handleDateSeries === true; // not all chart types handle data series, if they don't, no progonsis should be shown in any case
+
   if (legendModel.hasPrognosis) {
     const { prognosisStart, interval } = item.options.dateSeriesOptions;
 

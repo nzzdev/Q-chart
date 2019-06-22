@@ -64,8 +64,8 @@ module.exports = {
     }
 
     let legendType = "default";
+    const chartType = getChartTypeForItemAndWidth(item, 300);
     try {
-      const chartType = getChartTypeForItemAndWidth(item, 300);
       const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
       if (chartTypeConfig.legend.type) {
         legendType = chartTypeConfig.legend.type;
@@ -79,7 +79,8 @@ module.exports = {
       displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
       legend: legend[legendType].getLegendModel(
         item,
-        request.payload.toolRuntimeConfig
+        request.payload.toolRuntimeConfig,
+        chartType
       ),
       id: `q_chart_${request.query._id}_${Math.floor(
         Math.random() * 100000
