@@ -272,6 +272,13 @@
           "title": "Hervorhebungen von Zeilen",
           "type": "array",
           "Q:options": {
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/highlightDataRows",
+                "fields": ["data"]
+              }
+            },
             "availabilityChecks": [
               {
                 "type": "ToolEndpoint",

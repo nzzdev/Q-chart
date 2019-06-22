@@ -24,6 +24,18 @@ module.exports = {
       }
     }
 
+    if (request.params.optionName === "highlightDataRows") {
+      try {
+        return {
+          maxItems: item.data.length - 2 // the number of data rows - 1
+        };
+      } catch {
+        return {
+          maxItems: undefined
+        };
+      }
+    }
+
     if (request.params.optionName === "highlighDataRowsItem") {
       try {
         return {
