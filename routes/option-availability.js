@@ -147,8 +147,8 @@ module.exports = {
     if (request.params.optionName === "colorOverwritesSeries") {
       return {
         available:
-          (!Array.isArray(item.options.colorOverwriteRows) ||
-            item.options.colorOverwriteRows.length === 0) &&
+          (!Array.isArray(item.options.colorOverwritesRows) ||
+            item.options.colorOverwritesRows.length === 0) &&
           hasNoCustomVegaSpec(item) &&
           !isArrowChart(item)
       };
