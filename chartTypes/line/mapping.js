@@ -104,8 +104,8 @@ module.exports = function getMappings() {
               maxValue.xValue.toString() === firstValue.xValue.toString()
                 ? "left"
                 : maxValue.xValue.toString() === lastValue.xValue.toString()
-                  ? "right"
-                  : "center",
+                ? "right"
+                : "center",
             verticalAlign: !item.options.lineChartOptions.reverseYScale
               ? "top"
               : "bottom"
@@ -118,8 +118,8 @@ module.exports = function getMappings() {
               minValue.xValue.toString() === firstValue.xValue.toString()
                 ? "left"
                 : minValue.xValue.toString() === lastValue.xValue.toString()
-                  ? "right"
-                  : "center",
+                ? "right"
+                : "center",
             verticalAlign: !item.options.lineChartOptions.reverseYScale
               ? "bottom"
               : "top"
@@ -307,5 +307,6 @@ module.exports = function getMappings() {
     }
   ]
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
-    .concat(commonMappings.getHeightMappings());
+    .concat(commonMappings.getHeightMappings())
+    .concat(commonMappings.getHighlightMapping());
 };

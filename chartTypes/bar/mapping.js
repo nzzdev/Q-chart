@@ -173,7 +173,8 @@ module.exports = function getMapping() {
       }
     }
   ]
-    .concat(commonMappings.getBarColumnDotHighlightColorOverwriteMappings())
+    .concat(commonMappings.getColorOverwritesRowsMappings())
+    .concat(commonMappings.getHighlightMapping())
     .concat(commonMappings.getBarDateSeriesHandlingMappings())
     .concat(commonMappings.getBarPrognosisMappings())
     .concat(commonMappings.getBarLabelColorMappings());

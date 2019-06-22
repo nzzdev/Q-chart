@@ -282,7 +282,7 @@ function getHeightMappings() {
   ];
 }
 
-function getBarColumnDotHighlightColorOverwriteMappings() {
+function getHighlightMapping() {
   return [
     {
       path: "item.options.highlightDataRows",
@@ -324,7 +324,12 @@ function getBarColumnDotHighlightColorOverwriteMappings() {
           }
         });
       }
-    },
+    }
+  ];
+}
+
+function getColorOverwritesRowsMappings() {
+  return [
     {
       path: "item.options.colorOverwritesRows",
       mapToSpec: function(colorOverwritesRows, spec, mappingData) {
@@ -360,5 +365,6 @@ module.exports = {
   getColumnLabelColorMappings: getColumnLabelColorMappings,
   getBarLabelColorMappings: getBarLabelColorMappings,
   getHeightMappings: getHeightMappings,
-  getBarColumnDotHighlightColorOverwriteMappings: getBarColumnDotHighlightColorOverwriteMappings
+  getHighlightMapping: getHighlightMapping,
+  getColorOverwritesRowsMappings: getColorOverwritesRowsMappings
 };

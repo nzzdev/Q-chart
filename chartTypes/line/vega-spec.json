@@ -113,16 +113,32 @@
                 "scale": "yScale",
                 "field": "yValue"
               },
-              "stroke": {
-                "scale": "colorScale",
-                "field": "cValue"
-              },
               "strokeWidth": {
                 "value": 2
               },
               "defined": {
                 "signal": "datum.yValue !== null"
-              }
+              },
+              "stroke": [
+                {
+                  "test": "datum.isHighlighted === true",
+                  "scale": "colorScale",
+                  "field": "cValue"
+                },
+                {
+                  "test": "datum.isHighlighted === false",
+                  "scale": "colorScaleLight",
+                  "field": "cValue"
+                },
+                {
+                  "test": "datum.color",
+                  "field": "color"
+                },
+                {
+                  "scale": "colorScale",
+                  "field": "cValue"
+                }
+              ]
             }
           }
         }
