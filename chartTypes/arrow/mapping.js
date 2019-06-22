@@ -305,6 +305,10 @@ module.exports = function getMapping() {
             enter: {
               text: [
                 {
+                  test: "datum.diffToNext == 0",
+                  value: ""
+                },
+                {
                   test: "datum.diffToNext > 0",
                   signal: `format(datum.diffToNext, "+${
                     d3config.formatLocale.decimal
