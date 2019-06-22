@@ -726,61 +726,14 @@
                     "type": "null"
                   }
                 ],
-                "enum": [
-                  null,
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6,
-                  7,
-                  8,
-                  9,
-                  10,
-                  11,
-                  12,
-                  13,
-                  14,
-                  15,
-                  16,
-                  17,
-                  18,
-                  19,
-                  20,
-                  21,
-                  22,
-                  23,
-                  24
-                ],
                 "Q:options": {
-                  "enum_titles": [
-                    "",
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24
-                  ]
+                  "dynamicSchema": {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "dynamic-schema/colorOverwritesSeriesItem",
+                      "fields": ["data"]
+                    }
+                  }
                 }
               }
             }
@@ -812,7 +765,7 @@
             ],
             "layout": "compact",
             "expandable": {
-              "itemLabelProperties": ["color", "position"]
+              "itemLabelTemplate": "${color} - ${position}"
             },
             "sortable": false
           },
@@ -831,60 +784,22 @@
               },
               "position": {
                 "title": "Position",
-                "type": "number",
-                "enum": [
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6,
-                  7,
-                  8,
-                  9,
-                  10,
-                  11,
-                  12,
-                  13,
-                  14,
-                  15,
-                  16,
-                  17,
-                  18,
-                  19,
-                  20,
-                  21,
-                  22,
-                  23,
-                  24
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
                 ],
                 "Q:options": {
-                  "enum_titles": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24
-                  ]
+                  "dynamicSchema": {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "dynamic-schema/colorOverwritesRowsItem",
+                      "fields": ["data"]
+                    }
+                  }
                 }
               }
             }

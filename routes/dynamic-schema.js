@@ -46,6 +46,40 @@ module.exports = {
       }
     }
 
+    if (request.params.optionName === "colorOverwritesSeriesItem") {
+      try {
+        return {
+          enum: [null].concat(
+            item.data[0].slice(1).map((val, index) => index + 1)
+          ),
+          "Q:options": {
+            enum_titles: [""].concat(
+              item.data[0]
+                .slice(1)
+                .map((val, index) => `${index + 1} - (${val})`)
+            )
+          }
+        };
+      } catch {
+        return {};
+      }
+    }
+
+    if (request.params.optionName === "colorOverwritesRowsItem") {
+      try {
+        return {
+          enum: [null].concat(item.data.map((row, index) => index + 1)),
+          "Q:options": {
+            enum_titles: [""].concat(
+              item.data.map((row, index) => `${index + 1} - (${row[0]})`)
+            )
+          }
+        };
+      } catch {
+        return {};
+      }
+    }
+
     return Boom.badRequest();
   }
 };
