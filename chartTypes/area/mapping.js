@@ -62,6 +62,16 @@ module.exports = function getMappings() {
       }
     },
     {
+      path: "item.options.areaChartOptions.showAsStreamGraph",
+      mapToSpec: function(showAsStreamGraph, spec) {
+        if (showAsStreamGraph) {
+          objectPath.set(spec, "data.0.transform.0.offset", "center");
+          objectPath.set(spec, "scales.1.nice", false); // set nice for the Y scale to false to draw stream from top to bottom
+          delete spec.axes[1];
+        }
+      }
+    },
+    {
       path: "item.options.dateSeriesOptions.prognosisStart",
       mapToSpec: function(prognosisStart, spec) {
         if (prognosisStart === null) {
