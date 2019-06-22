@@ -245,7 +245,7 @@
                 "type": "ToolEndpoint",
                 "config": {
                   "endpoint": "option-availability/highlightDataSeries",
-                  "fields": ["vegaSpec", "options.chartType"]
+                  "fields": ["data", "vegaSpec", "options.chartType"]
                 }
               }
             ],

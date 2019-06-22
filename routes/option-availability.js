@@ -136,7 +136,10 @@ module.exports = {
 
     if (request.params.optionName === "highlightDataSeries") {
       return {
-        available: hasNoCustomVegaSpec(item) && !isArrowChart(item)
+        available:
+          hasNoCustomVegaSpec(item) &&
+          !isArrowChart(item) &&
+          item.data[0].length > 2
       };
     }
 
