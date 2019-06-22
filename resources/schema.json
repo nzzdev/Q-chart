@@ -607,6 +607,12 @@
                   "endpoint": "option-availability/area",
                   "fields": ["options.chartType", "vegaSpec"]
                 }
+              },
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
               }
             ],
             "expandable": true
