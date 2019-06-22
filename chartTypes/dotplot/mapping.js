@@ -310,11 +310,17 @@ module.exports = function getMapping() {
           from: { data: "diffAnnotationSeries" },
           encode: {
             enter: {
-              text: {
-                signal: `format(datum.diffToPrevious, "${
-                  d3config.formatLocale.decimal
-                }")`
-              },
+              text: [
+                {
+                  test: "datum.diffToPrevious == 0",
+                  value: ""
+                },
+                {
+                  signal: `format(datum.diffToPrevious, "${
+                    d3config.formatLocale.decimal
+                  }")`
+                }
+              ],
               y: {
                 signal:
                   "dotGroupHeight / 2 - 4 - (datum.posCorrectionFactor * 11)"
