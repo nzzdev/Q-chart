@@ -35,7 +35,7 @@ function hasOnlyNegativeOrZeroChanges(item) {
   return true;
 }
 
-function getLegendModel(item, toolRuntimeConfig) {
+function getLegendModel(item, toolRuntimeConfig, chartType) {
   // this only works if we have exactly two data columns
   if (item.data[0].length !== 3) {
     return null;
