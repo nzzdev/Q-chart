@@ -123,7 +123,7 @@ function getBarDateSeriesHandlingMappings() {
   ];
 }
 
-function getColumnPrognosisMappings() {
+function getColumnAreaPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
@@ -150,7 +150,7 @@ function getColumnPrognosisMappings() {
         });
 
         const prognosisMarks = clone(spec.marks[0]);
-        prognosisMarks.name = "prognosisColumn";
+        prognosisMarks.name = "prognosisArea";
         if (prognosisMarks.from.facet) {
           prognosisMarks.from.facet.data = "prognosis";
         } else {
@@ -360,7 +360,7 @@ module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
   getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
-  getColumnPrognosisMappings: getColumnPrognosisMappings,
+  getColumnAreaPrognosisMappings: getColumnAreaPrognosisMappings,
   getBarPrognosisMappings: getBarPrognosisMappings,
   getColumnLabelColorMappings: getColumnLabelColorMappings,
   getBarLabelColorMappings: getBarLabelColorMappings,

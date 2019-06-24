@@ -60,33 +60,9 @@ module.exports = function getMappings() {
           );
         }
       }
-    },
-    {
-      path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec) {
-        if (prognosisStart === null) {
-          return;
-        }
-        // add the signal
-        objectPath.push(spec, "signals", {
-          name: "prognosisStart",
-          value: prognosisStart
-        });
-
-        // split the marks at the prognosisStart index
-        const lineMark = clone(spec.marks[0].marks[0]);
-        lineMark.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex <= prognosisStart"
-        };
-        const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
-        lineMarkPrognosis.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex >= prognosisStart"
-        };
-        lineMarkPrognosis.style = "prognosisLine";
-        spec.marks[0].marks = [lineMark, lineMarkPrognosis];
-      }
     }
   ]
+    .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())
     .concat(commonMappings.getHighlightMapping());

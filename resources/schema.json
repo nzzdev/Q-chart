@@ -602,6 +602,12 @@
           "Q:options": {
             "availabilityChecks": [
               {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              },
+              {
                 "type": "ToolEndpoint",
                 "config": {
                   "endpoint": "option-availability/area",
@@ -616,17 +622,7 @@
               "title": "Interpolation der Flächen",
               "type": "string",
               "default": "linear",
-              "enum": ["linear", "step-after", "monotone"],
-              "Q:options": {
-                "availabilityChecks": [
-                  {
-                    "type": "UserHasRole",
-                    "config": {
-                      "role": "expert-chart"
-                    }
-                  }
-                ]
-              }
+              "enum": ["linear", "step-after", "monotone"]
             }
           }
         },

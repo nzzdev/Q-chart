@@ -102,7 +102,7 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColorOverwritesRowsMappings())
     .concat(commonMappings.getHighlightMapping())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
-    .concat(commonMappings.getColumnPrognosisMappings())
+    .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
     .concat(commonMappings.getHeightMappings());
 };
