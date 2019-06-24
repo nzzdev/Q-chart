@@ -39,7 +39,10 @@ module.exports = {
     if (request.params.optionName === "highlighDataRowsItem") {
       try {
         return {
-          title: `${item.data[0][0]} wählen`
+          title: `${item.data[0][0]} wählen`,
+          "Q:options": {
+            buttonLabel: "Hervorhebung"
+          }
         };
       } catch {
         return {};
