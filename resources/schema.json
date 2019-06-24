@@ -612,11 +612,6 @@
             "expandable": true
           },
           "properties": {
-            "showAsStreamGraph": {
-              "title": "Als Stream anzeigen",
-              "type": "boolean",
-              "default": false
-            },
             "areaInterpolation": {
               "title": "Interpolation der Flächen",
               "type": "string",
