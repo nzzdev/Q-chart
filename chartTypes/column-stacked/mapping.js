@@ -34,10 +34,7 @@ module.exports = function getMapping() {
               };
             });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
+          .flat();
 
         const numberOfDataSeriesSignal = spec.signals.find(
           signal => signal.name === "numberOfDataSeries"

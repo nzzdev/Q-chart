@@ -43,10 +43,7 @@ module.exports = function getMappings() {
                   };
                 });
               })
-              .reduce((acc, cur) => {
-                // flatten the array
-                return acc.concat(cur);
-              }, [])
+              .flat()
           }
         ];
       }

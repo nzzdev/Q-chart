@@ -119,10 +119,7 @@ module.exports = function getMapping() {
                 return a.cValue - b.cValue;
               });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
+          .flat();
       }
     },
     {
