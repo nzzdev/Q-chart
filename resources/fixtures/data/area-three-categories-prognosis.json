@@ -1,0 +1,34 @@
+{
+  "title": "FIXTURE: Area - three categories - prognosis",
+  "data": [
+    ["Jahr", "A", "B", "C"],
+    ["2018", "10", "40", "30"],
+    ["2019", "25", "23", "10"],
+    ["2020", "30", "20", "30"],
+    ["2021", "43", "40", "3"]
+  ],
+  "allowDownloadData": false,
+  "sources": [],
+  "options": {
+    "chartType": "Area",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [],
+    "annotations": {},
+    "barOptions": { "isBarChart": false, "forceBarsOnSmall": false },
+    "dateSeriesOptions": { "interval": "year", "prognosisStart": 1 },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {},
+    "arrowOptions": { "colorScheme": 0 },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [],
+    "areaChartOptions": {
+      "areaInterpolation": "linear",
+      "showAsStreamGraph": true
+    }
+  }
+}

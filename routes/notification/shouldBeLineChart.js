@@ -1,6 +1,8 @@
 const Joi = require("@hapi/joi");
 const array2d = require("array2d");
 const dateSeries = require("../../helpers/dateSeries.js");
+const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
+  .getChartTypeForItemAndWidth;
 
 module.exports = {
   method: "POST",
@@ -20,8 +22,9 @@ module.exports = {
       const item = request.payload.item;
       const options = request.payload.options;
       const amountOfRows = array2d.height(item.data);
+      const chartType = getChartTypeForItemAndWidth(item, 300);
       if (
-        item.options.chartType !== "Line" &&
+        !(chartType === "line" || chartType === "area") && //only apply this if we don't have a line or area chart already
         item.data[0] &&
         amountOfRows > options.limit &&
         dateSeries.isDateSeriesData(item.data)

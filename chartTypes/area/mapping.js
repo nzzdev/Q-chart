@@ -1,11 +1,10 @@
-const objectPath = require("object-path");
-const array2d = require("array2d");
 const clone = require("clone");
+const objectPath = require("object-path");
+const intervals = require("../../helpers/dateSeries.js").intervals;
 const dataHelpers = require("../../helpers/data.js");
-
 const commonMappings = require("../commonMappings.js");
 
-module.exports = function getMapping() {
+module.exports = function getMappings() {
   return [
     {
       path: "item.data",
@@ -34,15 +33,7 @@ module.exports = function getMapping() {
               };
             });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
-
-        const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
-        );
-        numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
+          .flat();
       }
     },
     {
@@ -55,27 +46,21 @@ module.exports = function getMapping() {
         }
       }
     },
-
     {
-      path: "item.options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, mappingData) {
-        // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
-
-        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
-        if (dataMaxValue > maxValue) {
-          maxValue = dataMaxValue;
+      path: "item.options.areaChartOptions.areaInterpolation",
+      mapToSpec: function(interpolation, spec) {
+        if (interpolation) {
+          objectPath.set(
+            spec,
+            "marks.0.marks.0.encode.enter.interpolate.value",
+            interpolation
+          );
         }
-
-        objectPath.set(spec, "scales.1.nice", false);
-        objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
       }
     }
   ]
-    .concat(commonMappings.getColorOverwritesRowsMappings())
-    .concat(commonMappings.getHighlightMapping())
-    .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnAreaPrognosisMappings())
-    .concat(commonMappings.getColumnLabelColorMappings())
-    .concat(commonMappings.getHeightMappings());
+    .concat(commonMappings.getLineDateSeriesHandlingMappings())
+    .concat(commonMappings.getHeightMappings())
+    .concat(commonMappings.getHighlightMapping());
 };

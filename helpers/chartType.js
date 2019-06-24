@@ -3,8 +3,13 @@ function getChartTypeForItemAndWidth(item, width) {
   if (item.vegaSpec !== undefined && item.vegaSpec !== "") {
     return null;
   }
+
   if (item.options.chartType === "Line") {
     return "line";
+  }
+
+  if (item.options.chartType === "Area") {
+    return "area";
   }
 
   if (item.options.chartType === "Dotplot") {
