@@ -10,6 +10,10 @@ const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
 const textMetrics = require("vega").textMetrics;
 
+const { createCanvas } = require("canvas");
+const canvas = createCanvas(200, 200);
+const context = canvas.getContext("2d");
+
 function shouldHaveLabelsOnTopOfBar(mappingData) {
   const item = mappingData.item;
   // this does not work for positive and negative values. so if we have both, we do not show the labels on top
@@ -62,6 +66,15 @@ module.exports = function getMapping() {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
+        // set the font that will be used for the text marks here to the context
+        // we will measure the length of every label and add this to the data just below
+        context.font =
+          mappingData.toolRuntimeConfig.text.fontWeight +
+          " " +
+          mappingData.toolRuntimeConfig.text.fontSize +
+          " " +
+          mappingData.toolRuntimeConfig.text.font;
+
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
           .map((row, rowIndex) => {
@@ -76,7 +89,8 @@ module.exports = function getMapping() {
                 xValue: x,
                 xIndex: rowIndex,
                 yValue: value,
-                cValue: index
+                cValue: index,
+                labelWidth: context.measureText(value).width
               };
             });
           })
@@ -142,6 +156,65 @@ module.exports = function getMapping() {
 
           spec.marks[0].marks[0].marks.push(labelMark);
         }
+      }
+    },
+    {
+      path: "item.options.annotations.valuesOnBars",
+      mapToSpec: function(valuesOnBars, spec) {
+        const valuePadding = 2;
+        const valueLabelMark = {
+          type: "text",
+          from: {
+            data: "series"
+          },
+          encode: {
+            enter: {
+              y: {
+                scale: "barPositionBand",
+                field: "cValue"
+              },
+              dy: {
+                signal: "barWidth / 2"
+              },
+              baseline: {
+                value: "middle"
+              },
+              x: {
+                scale: "xScale",
+                field: "yValue"
+              },
+              dx: [
+                {
+                  test: "scale('xScale', datum.yValue) > datum.labelWidth",
+                  value: -valuePadding
+                },
+                {
+                  value: valuePadding
+                }
+              ],
+              text: {
+                field: "yValue"
+              },
+              align: [
+                {
+                  test: `scale('xScale', datum.yValue) > datum.labelWidth + ${valuePadding *
+                    2}`,
+                  value: "right"
+                },
+                {
+                  value: "left"
+                }
+              ]
+            }
+          }
+        };
+        // add the value label marks
+        spec.marks[0].marks[0].marks.push(valueLabelMark);
+
+        // hide things on the X axis
+        objectPath.set(spec, "axes.0.grid", false);
+        objectPath.set(spec, "axes.0.ticks", false);
+        objectPath.set(spec, "axes.0.labels", false);
       }
     },
     {

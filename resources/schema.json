@@ -410,6 +410,21 @@
                   }
                 ]
               }
+            },
+            "valuesOnBars": {
+              "title": "Werte auf Balken beschriften",
+              "type": "boolean",
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "option-availability/annotations.valuesOnBars",
+                      "fields": ["options.chartType", "options.barOptions"]
+                    }
+                  }
+                ]
+              }
             }
           },
           "Q:options": {
