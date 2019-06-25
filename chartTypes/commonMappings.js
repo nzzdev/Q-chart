@@ -282,7 +282,7 @@ function getHeightMappings() {
   ];
 }
 
-function getHighlightMapping() {
+function getHighlightRowsMapping() {
   return [
     {
       path: "item.options.highlightDataRows",
@@ -301,7 +301,12 @@ function getHighlightMapping() {
           }
         });
       }
-    },
+    }
+  ];
+}
+
+function getHighlightSeriesMapping() {
+  return [
     {
       path: "item.options.highlightDataSeries",
       mapToSpec: function(highlightDataSeries, spec) {
@@ -365,6 +370,7 @@ module.exports = {
   getColumnLabelColorMappings: getColumnLabelColorMappings,
   getBarLabelColorMappings: getBarLabelColorMappings,
   getHeightMappings: getHeightMappings,
-  getHighlightMapping: getHighlightMapping,
+  getHighlightRowsMapping: getHighlightRowsMapping,
+  getHighlightSeriesMapping: getHighlightSeriesMapping,
   getColorOverwritesRowsMappings: getColorOverwritesRowsMappings
 };

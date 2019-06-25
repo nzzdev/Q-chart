@@ -62,5 +62,5 @@ module.exports = function getMappings() {
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())
-    .concat(commonMappings.getHighlightMapping());
+    .concat(commonMappings.getHighlightSeriesMapping());
 };
