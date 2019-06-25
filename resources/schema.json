@@ -229,6 +229,25 @@
             ]
           }
         },
+        "hideLegend": {
+          "title": "Legende ausblenden",
+          "type": "boolean",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/hideLegend",
+                  "fields": [
+                    "data",
+                    "options.chartType",
+                    "options.colorOverwritesRows"
+                  ]
+                }
+              }
+            ]
+          }
+        },
         "highlightDataSeries": {
           "title": "Hervorhebungen von Datenreihen",
           "type": "array",

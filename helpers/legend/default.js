@@ -5,7 +5,7 @@ const d3timeFormat = require("d3-time-format");
 const vega = require("vega");
 const optionsHelpers = require("../options.js");
 
-function getLegendModel(item, toolRuntimeConfig, chartType) {
+async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
   if (!chartType || item.vegaSpec) {
     return null;
@@ -18,6 +18,23 @@ function getLegendModel(item, toolRuntimeConfig, chartType) {
   }
 
   legendModel.legendItems = [];
+
+  // do not include legend if hideLegend is true and the availabilityCheck for it's option is true
+  if (item.options.hideLegend === true) {
+    try {
+      const availabilityCheckRes = await server.inject({
+        url: "/option-availability/hideLegend",
+        method: "POST",
+        payload: { item: item }
+      });
+      if (availabilityCheckRes.result.available === true) {
+        return null;
+      }
+    } catch (e) {
+      server.log(["error"], e);
+      // just log the error and move on with whatever logic there is for the legend...
+    }
+  }
 
   // only add the series if we have more than one
   if (item.data[0].slice(1).length > 1) {

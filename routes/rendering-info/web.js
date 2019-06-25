@@ -77,10 +77,11 @@ module.exports = {
     const context = {
       item: item,
       displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
-      legend: legend[legendType].getLegendModel(
+      legend: await legend[legendType].getLegendModel(
         item,
         request.payload.toolRuntimeConfig,
-        chartType
+        chartType,
+        request.server
       ),
       id: `q_chart_${request.query._id}_${Math.floor(
         Math.random() * 100000

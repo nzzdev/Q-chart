@@ -255,6 +255,16 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "hideLegend") {
+      return {
+        available:
+          !isArrowChart(item) &&
+          item.data[0].length > 2 &&
+          Array.isArray(item.options.colorOverwritesRows) &&
+          item.options.colorOverwritesRows.length > 0
+      };
+    }
+
     return Boom.badRequest();
   }
 };
