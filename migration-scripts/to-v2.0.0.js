@@ -9,7 +9,7 @@ module.exports.migrate = function(item) {
   // highlightDataSeries is now an array in v2
   if (item.options.highlightDataSeries !== undefined) {
     if (item.options.highlightDataSeries === null) {
-      delete item.options.highlightDataSeries;
+      item.options.highlightDataSeries = [];
     } else {
       item.options.highlightDataSeries = [item.options.highlightDataSeries];
     }
@@ -17,7 +17,10 @@ module.exports.migrate = function(item) {
   }
 
   // colorOverwrite is renamed to colorOverwritesSeries and colorBright is renamed to colorLight
-  if (item.options.colorOverwrite) {
+  if (
+    item.options.colorOverwrite &&
+    Array.isArray(item.options.colorOverwrite)
+  ) {
     item.options.colorOverwritesSeries = item.options.colorOverwrite.map(
       colorOverwrite => {
         return {
