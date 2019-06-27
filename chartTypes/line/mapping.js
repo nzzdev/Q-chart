@@ -305,6 +305,5 @@ module.exports = function getMappings() {
   ]
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())
-    .concat(commonMappings.getHighlightRowsMapping())
     .concat(commonMappings.getHighlightSeriesMapping());
 };
