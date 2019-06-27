@@ -45,6 +45,6 @@
       "interval": "day",
       "prognosisStart": null
     },
-    "highlightDataSeries": null
+    "highlightDataSeries": []
   }
 }

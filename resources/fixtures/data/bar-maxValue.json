@@ -17,7 +17,10 @@
   "allowDownloadData": false,
   "sources": [
     {
-      "link": { "isValid": true, "url": "https://nzz.ch"},
+      "link": {
+        "isValid": true,
+        "url": "https://nzz.ch"
+      },
       "text": "NZZ"
     }
   ],
@@ -43,7 +46,7 @@
     "arrowOptions": {
       "colorScheme": 0
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

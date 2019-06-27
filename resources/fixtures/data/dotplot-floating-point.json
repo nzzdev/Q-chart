@@ -60,7 +60,7 @@
     "dotplotOptions": {
       "connectDots": true
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

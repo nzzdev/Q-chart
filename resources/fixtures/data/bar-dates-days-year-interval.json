@@ -268,7 +268,10 @@
       "text": "FRED"
     },
     {
-      "link": { "isValid": true, "url": "https://nzz.ch"},
+      "link": {
+        "isValid": true,
+        "url": "https://nzz.ch"
+      },
       "text": "NZZ"
     }
   ],
@@ -283,10 +286,10 @@
       "interval": "year",
       "prognosisStart": null
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null,
+    "highlightDataSeries": [],
     "annotations": {
       "first": false
-    }
+    },
+    "colorOverwritesSeries": []
   }
 }

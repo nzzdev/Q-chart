@@ -22,7 +22,7 @@
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

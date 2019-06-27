@@ -41,29 +41,31 @@
       "reverseYScale": false,
       "lineInterpolation": "linear"
     },
-    "colorOverwrite": [
+    "highlightDataSeries": [
+      2
+    ],
+    "colorOverwritesSeries": [
       {
         "color": "#23288c",
-        "colorBright": "#c0c4f0",
+        "colorLight": "#c0c4f0",
         "position": 1
       },
       {
         "color": "#ba9b20",
-        "colorBright": "#f5e49f",
+        "colorLight": "#f5e49f",
         "position": 2
       },
       {
         "color": "#bf5d30",
-        "colorBright": "#f5cab8",
+        "colorLight": "#f5cab8",
         "position": 3
       },
       {
         "color": "#29a0a6",
-        "colorBright": "#b9eaed",
+        "colorLight": "#b9eaed",
         "position": 4
       }
-    ],
-    "highlightDataSeries": 2
+    ]
   },
   "acronym": "bue."
 }

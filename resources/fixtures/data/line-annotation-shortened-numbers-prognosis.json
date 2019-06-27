@@ -271,8 +271,8 @@
       "lineInterpolation": "linear",
       "isStockChart": false
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   },
   "tool": "chart"
 }
