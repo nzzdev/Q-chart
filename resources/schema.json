@@ -746,6 +746,13 @@
                 }
               }
             ],
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/colorOverwritesSeries",
+                "fields": ["data"]
+              }
+            },
             "layout": "compact",
             "expandable": {
               "itemLabelTemplate": "${color} - ${position}"
