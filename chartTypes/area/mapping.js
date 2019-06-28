@@ -57,6 +57,16 @@ module.exports = function getMappings() {
           );
         }
       }
+    },
+    {
+      path: "item.options.areaChartOptions.stackType",
+      mapToSpec: function(stackType, spec) {
+        if (stackType) {
+          objectPath.set(spec, "data.0.transform.0.offset", "center");
+          objectPath.set(spec, "scales.1.nice", false); // set nice for the Y scale to false to draw stream from top to bottom
+          delete spec.axes[1]; // delete the y axis
+        }
+      }
     }
   ]
     .concat(commonMappings.getColumnAreaPrognosisMappings())

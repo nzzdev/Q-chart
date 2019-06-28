@@ -642,6 +642,15 @@
               "type": "string",
               "default": "linear",
               "enum": ["linear", "step-after", "monotone"]
+            },
+            "stackType": {
+              "title": "Typ",
+              "type": "string",
+              "default": "zero",
+              "enum": ["zero", "center"],
+              "Q:options": {
+                "enum_title": ["normal", "stream"]
+              }
             }
           }
         },
