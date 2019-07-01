@@ -251,7 +251,6 @@
       "grid": false,
       "labels": true,
       "ticks": false,
-      "labelSeparation": 4,
       "encode": {
         "title": {
           "update": {

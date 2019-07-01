@@ -189,13 +189,13 @@ module.exports = {
 
     // tmp: migrate the data to v2.0.0 schema.
     // this can be removed once the migration on the db is run
-    const migrationResult = await request.server.inject({
+    const migrationResponse = await request.server.inject({
       url: "/migration",
       method: "POST",
       payload: { item: item }
     });
-    if (migrationResult.statusCode === 200) {
-      item = migrationResult.item;
+    if (migrationResponse.statusCode === 200) {
+      item = migrationResponse.result.item;
     }
 
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
