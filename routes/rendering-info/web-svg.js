@@ -183,9 +183,20 @@ module.exports = {
     }
   },
   handler: async function(request, h) {
-    const item = request.payload.item;
+    let item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
+    // tmp: migrate the data to v2.0.0 schema.
+    // this can be removed once the migration on the db is run
+    const migrationResult = await request.server.inject({
+      url: "/migration",
+      method: "POST",
+      payload: { item: item }
+    });
+    if (migrationResult.statusCode === 200) {
+      item = migrationResult.item;
+    }
 
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
 
