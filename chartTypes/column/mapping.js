@@ -34,10 +34,7 @@ module.exports = function getMapping() {
               };
             });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
+          .flat();
 
         const numberOfDataSeriesSignal = spec.signals.find(
           signal => signal.name === "numberOfDataSeries"
@@ -55,6 +52,7 @@ module.exports = function getMapping() {
         }
       }
     },
+
     {
       path: "item.options.barOptions.maxValue",
       mapToSpec: function(maxValue, spec, mappingData) {
@@ -71,8 +69,11 @@ module.exports = function getMapping() {
       }
     }
   ]
+    .concat(commonMappings.getColorOverwritesRowsMappings())
+    .concat(commonMappings.getHighlightRowsMapping())
+    .concat(commonMappings.getHighlightSeriesMapping())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
-    .concat(commonMappings.getColumnPrognosisMappings())
+    .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
     .concat(commonMappings.getHeightMappings());
 };

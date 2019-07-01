@@ -2,33 +2,65 @@ const clone = require("clone");
 const dateSeries = require("../dateSeries.js");
 const d3config = require("../../config/d3.js");
 const d3timeFormat = require("d3-time-format");
-const vegaConfigHelpers = require("../vegaConfig.js");
+const vega = require("vega");
+const optionsHelpers = require("../options.js");
 
-function getLegendModel(item, toolRuntimeConfig) {
+async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
   // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
-  if (!item.options.chartType || item.vegaSpec) {
+  if (!chartType || item.vegaSpec) {
     return null;
   }
-  const colorRange = vegaConfigHelpers.getComputedCategoryColorRange(
-    item,
-    toolRuntimeConfig
-  );
   const legendModel = {};
 
-
-  let legendType = 'default';
-  if (item.options.chartType.toLowerCase() === "line") {
+  let legendType = "default";
+  if (chartType === "line") {
     legendType = "line";
   }
 
   legendModel.legendItems = [];
 
+  // do not include legend if hideLegend is true and the availabilityCheck for it's option is true
+  if (item.options.hideLegend === true) {
+    try {
+      const availabilityCheckRes = await server.inject({
+        url: "/option-availability/hideLegend",
+        method: "POST",
+        payload: { item: item }
+      });
+      if (availabilityCheckRes.result.available === true) {
+        return null;
+      }
+    } catch (e) {
+      server.log(["error"], e);
+      // just log the error and move on with whatever logic there is for the legend...
+    }
+  }
+
   // only add the series if we have more than one
   if (item.data[0].slice(1).length > 1) {
     const dataSeries = item.data[0].slice(1).map((label, index) => {
+      let color = vega.scheme("categorical_computed_series_highlight")[index];
+
+      // in case we have row color overwrites (only possible if we have not more than 2 data series)
+      // we show the legend with gray colors (as the dataseries colors do not match the overwritten colors)
+      if (
+        item.options.colorOverwritesRows &&
+        item.options.colorOverwritesRows.length > 0 &&
+        item.data[0].slice(1).length <= 2
+      ) {
+        if (
+          optionsHelpers.hasSeriesHighlight(item) &&
+          !item.options.highlightDataSeries.includes(index)
+        ) {
+          color = toolRuntimeConfig.colorSchemes.grays[4];
+        } else {
+          color = toolRuntimeConfig.colorSchemes.grays[8];
+        }
+      }
+
       return {
         label: label,
-        color: colorRange[index],
+        color: color,
         iconType: legendType
       };
     });
@@ -36,9 +68,13 @@ function getLegendModel(item, toolRuntimeConfig) {
   }
 
   // prognosis
+  const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
+
   legendModel.hasPrognosis =
     item.options.dateSeriesOptions &&
-    Number.isInteger(item.options.dateSeriesOptions.prognosisStart);
+    Number.isInteger(item.options.dateSeriesOptions.prognosisStart) &&
+    chartTypeConfig.data.handleDateSeries === true; // not all chart types handle data series, if they don't, no progonsis should be shown in any case
+
   if (legendModel.hasPrognosis) {
     const { prognosisStart, interval } = item.options.dateSeriesOptions;
 

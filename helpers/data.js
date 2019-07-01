@@ -31,6 +31,15 @@ function getDataWithStringsCastedToFloats(data) {
   });
 }
 
+function getWithOnlyStringsInFirstColumn(data) {
+  return data.map(row => {
+    if (row[0] === null || row[0] === undefined) {
+      row[0] = "";
+    }
+    return row;
+  });
+}
+
 function getLongestDataLabel(mappingData, transposed = false) {
   const item = mappingData.item;
   data = clone(item.data);
@@ -53,10 +62,6 @@ function getLongestDataLabel(mappingData, transposed = false) {
       return formatDate(label);
     })
     .reduce((prev, current) => {
-      // if we have a date series, we need to format the label here
-      if (mappingData.dateFormat) {
-      }
-
       if (prev.length > current.length) {
         return prev;
       }
@@ -148,5 +153,6 @@ module.exports = {
   getFlatData: getFlatData,
   getMaxValue: getMaxValue,
   getMinValue: getMinValue,
-  getDivisor: getDivisor
+  getDivisor: getDivisor,
+  getWithOnlyStringsInFirstColumn: getWithOnlyStringsInFirstColumn
 };

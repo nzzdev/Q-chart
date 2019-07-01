@@ -119,10 +119,7 @@ module.exports = function getMapping() {
                 return a.cValue - b.cValue;
               });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
+          .flat();
       }
     },
     {
@@ -304,6 +301,10 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: [
+                {
+                  test: "datum.diffToNext == 0",
+                  value: ""
+                },
                 {
                   test: "datum.diffToNext > 0",
                   signal: `format(datum.diffToNext, "+${

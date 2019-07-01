@@ -2,37 +2,30 @@
   "notifications": {
     "hideAxisLabel": {
       "title": "Is the axis label necessary?",
-      "body":
-        "If the axis label is self-explanatory, we better leave it out. Select «hide axis label»."
+      "body": "If the axis label is self-explanatory, we better leave it out. Select «hide axis label»."
     },
     "shouldBeBarChart": {
       "title": "Chart type not ideal",
-      "body":
-        "Maybe it's better to switch to chart type «Bar». This is often clearer with just one data column."
+      "body": "Maybe it's better to switch to chart type «Bar». This is often clearer with just one data column."
     },
     "shouldBeLineChart": {
       "title": "Chart type not ideal",
-      "body":
-        "For so many data points, a line chart is probably more appropriate."
+      "body": "For so many data points, a line chart is probably more appropriate."
     },
     "shouldBeBars": {
       "title": "Many columns",
-      "body":
-        "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
+      "body": "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
     },
     "unsupportedDateFormat": {
       "title": "Unsupported Datumsformat",
-      "body":
-        "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."
+      "body": "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."
     }
   },
   "Diagramm": "Diagram",
   "Titel": "Title",
-  "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;":
-    "The title brings the core message of the graphic to the point.",
+  "Der Titel bringt die Kernaussage der Grafik auf den Punkt&#46;": "The title brings the core message of the graphic to the point.",
   "Untertitel": "Subtitle",
-  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;":
-    "The subtitle names precisely what can be seen in the graphic, including units.",
+  "Der Untertitel benennt präzise, was in der Grafik zu sehen ist, inklusive Einheiten&#46;": "The subtitle names precisely what can be seen in the graphic, including units.",
   "Daten": "Data",
   "Vega-Spezifikation": "Vega specification",
   "Quelle(n)": "Sources",
@@ -46,8 +39,12 @@
   "Säulen": "Bars",
   "Gestapelte Säulen": "Stacked Bars",
   "Linien": "Line",
+  "Flächen": "Area",
   "Dot Plot": "Dot Plot",
   "Hervorhebung": "Highlight",
+  "Hervorhebungen von Datenreihen": "Highlight series",
+  "Datenreihenfarbe": "Color for serie",
+  "Hervorhebungen von Zeilen": "Highlight rows",
   "Achsenbeschriftung ausblenden": "Hide axis label",
   "Beschriftungen": "Annotations",
   "erster Wert": "First value",
@@ -68,9 +65,11 @@
   "Stunden": "Hours",
   "Start Prognose": "Start forecast",
   "Optionen für Liniendiagramme": "Options for line charts",
+  "Optionen für Flächendiagramme": "Options for area charts",
   "Minimaler Wert auf Y-Achse": "Minimum value on Y-axis",
   "Y-Achse invertieren": "Invert the Y axis",
   "Interpolation der Linien": "Interpolation of the lines",
+  "Interpolation der Flächen": "Interpolation of the areas",
   "Intraday-Chart": "Intraday-Chart",
   "Optionen für Dot Plots": "Options for Dot Plots",
   "Punkte verbinden": "Connect points",

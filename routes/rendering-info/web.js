@@ -1,7 +1,5 @@
 const querystring = require("querystring");
-
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
 
@@ -21,6 +19,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
   .getDataWithStringsCastedToFloats;
 const legend = require("../../helpers/legend/index.js");
+const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 module.exports = {
   method: "POST",
@@ -32,12 +31,33 @@ module.exports = {
       },
       payload: {
         item: Joi.object(),
-        toolRuntimeConfig: Joi.object()
+        toolRuntimeConfig: Joi.object().keys({
+          colorSchemes: Joi.object().keys({
+            categorical_normal: Joi.array().required(),
+            categorical_light: Joi.array().required()
+          })
+        })
       }
     }
   },
   handler: async function(request, h) {
-    const item = request.payload.item;
+    let item = request.payload.item;
+    const toolRuntimeConfig = request.payload.toolRuntimeConfig;
+
+    // tmp: migrate the data to v2.0.0 schema.
+    // this can be removed once the migration on the db is run
+    const migrationResult = await request.server.inject({
+      url: "/migration",
+      method: "POST",
+      payload: { item: item }
+    });
+    if (migrationResult.statusCode === 200) {
+      item = migrationResult.item;
+    }
+
+    // we need to register the color schemes configured by toolRuntimeConfig first
+    // they are used for the legend later on therefore they cannot be configured in the web-svg handler only
+    colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
 
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
@@ -53,8 +73,8 @@ module.exports = {
     }
 
     let legendType = "default";
+    const chartType = getChartTypeForItemAndWidth(item, 300);
     try {
-      const chartType = getChartTypeForItemAndWidth(item, 300);
       const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
       if (chartTypeConfig.legend.type) {
         legendType = chartTypeConfig.legend.type;
@@ -65,10 +85,12 @@ module.exports = {
 
     const context = {
       item: item,
-      displayOptions: request.payload.toolRuntimeConfig.displayOptions || {},
-      legend: legend[legendType].getLegendModel(
+      displayOptions: toolRuntimeConfig.displayOptions || {},
+      legend: await legend[legendType].getLegendModel(
         item,
-        request.payload.toolRuntimeConfig
+        toolRuntimeConfig,
+        chartType,
+        request.server
       ),
       id: `q_chart_${request.query._id}_${Math.floor(
         Math.random() * 100000
@@ -77,7 +99,7 @@ module.exports = {
 
     if (item.allowDownloadData) {
       context.linkToCSV = `${
-        request.payload.toolRuntimeConfig.toolBaseUrl
+        toolRuntimeConfig.toolBaseUrl
       }/data?appendItemToPayload=${request.query._id}`;
     }
 
@@ -85,9 +107,7 @@ module.exports = {
 
     // if we have the width in toolRuntimeConfig.size
     // we can send the svg right away
-    const exactPixelWidth = getExactPixelWidth(
-      request.payload.toolRuntimeConfig
-    );
+    const exactPixelWidth = getExactPixelWidth(toolRuntimeConfig);
     if (typeof exactPixelWidth === "number") {
       const svgResponse = await request.server.inject({
         method: "POST",
@@ -113,11 +133,13 @@ module.exports = {
       // so no need to send it along here
       if (!item.vegaSpec) {
         toolRuntimeConfigForWebSVG = {
-          axis: request.payload.toolRuntimeConfig.axis,
-          text: request.payload.toolRuntimeConfig.text,
-          colorSchemes: request.payload.toolRuntimeConfig.colorSchemes,
-          displayOptions: request.payload.toolRuntimeConfig.displayOptions || {}
+          axis: toolRuntimeConfig.axis,
+          text: toolRuntimeConfig.text,
+          colorSchemes: toolRuntimeConfig.colorSchemes,
+          displayOptions: toolRuntimeConfig.displayOptions || {}
         };
+        // remove the grays as they are only needed for the legend
+        delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
       }
 
       let requestMethod;
@@ -168,8 +190,11 @@ module.exports = {
               element: document.querySelector("#${context.id}")
             };
             function ${functionName}() {
+              if (!${dataObject}.width) {
+                return;
+              }
               fetch("${
-                request.payload.toolRuntimeConfig.toolBaseUrl
+                toolRuntimeConfig.toolBaseUrl
               }/rendering-info/web-svg?${querystring.stringify(
             queryParams
           )}&width=" + ${dataObject}.width, {
@@ -181,6 +206,9 @@ module.exports = {
                 }
               })
               .then(function(response) {
+                if (!response) {
+                  return {};
+                }
                 return response.json();
               })
               .then(function(renderingInfo) {
@@ -192,12 +220,18 @@ module.exports = {
               });
             }
             window.q_domready.then(function() {
+              if (!${dataObject}.element) {
+                return;
+              }
               ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
               ${functionName}();
             });
             window.addEventListener('resize', function() {
               if (requestAnimationFrame) {
                 requestAnimationFrame(function() {
+                  if (!${dataObject}.element) {
+                    return;
+                  }
                   var newWidth = ${dataObject}.element.getBoundingClientRect().width;
                   if (newWidth !== ${dataObject}.width) {
                     ${dataObject}.width = newWidth;

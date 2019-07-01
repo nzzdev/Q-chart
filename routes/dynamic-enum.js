@@ -1,12 +1,18 @@
-const Boom = require("boom");
-const Joi = require("joi");
+const Boom = require("@hapi/boom");
+const Joi = require("@hapi/joi");
 const getFirstColumnSerie = require("../helpers/dateSeries.js")
   .getFirstColumnSerie;
 
 function getChartTypeEnumWithTitles(item) {
   const chartTypes = {
-    enum: ["Bar", "StackedBar", "Line", "Dotplot"],
-    enum_titles: ["Säulen", "Gestapelte Säulen", "Linien", "Dot Plot"]
+    enum: ["Bar", "StackedBar", "Line", "Area", "Dotplot"],
+    enum_titles: [
+      "Säulen",
+      "Gestapelte Säulen",
+      "Linien",
+      "Flächen",
+      "Dot Plot"
+    ]
   };
   try {
     if (item.data[0].length === 3) {
@@ -19,19 +25,34 @@ function getChartTypeEnumWithTitles(item) {
   return chartTypes;
 }
 
-function getHighlightEnum(item) {
+function getHighlightSeriesEnum(item) {
   if (item.data.length < 1) {
-    return [null];
+    return [];
   }
-  // constructs an array like [null,0,1,2,3,...] with as many indexes as there are data columns
-  return [null].concat([...item.data[0].slice(1).keys()]);
+  // constructs an array like [0,1,2,3,...] with as many indexes as there are data columns
+  return [...item.data[0].slice(1).keys()];
 }
 
-function getHighlightEnumTitles(item) {
+function getHighlightSeriesEnumTitles(item) {
   if (item.data.length < 1) {
-    return ["keine"];
+    return [];
   }
-  return ["keine"].concat(item.data[0].slice(1));
+  return item.data[0].slice(1);
+}
+
+function getHighlightRowsEnum(item) {
+  if (item.data.length < 1) {
+    return [];
+  }
+  // constructs an array like [0,1,2,3,...] with as many indexes as there are data rows
+  return [...item.data.slice(1).keys()];
+}
+
+function getHighlightRowsEnumTitles(item) {
+  if (item.data.length < 1) {
+    return [];
+  }
+  return item.data.map(row => row[0]).slice(1);
 }
 
 function getPrognosisStartEnum(item) {
@@ -67,8 +88,15 @@ module.exports = {
 
     if (request.params.optionName === "highlightDataSeries") {
       return {
-        enum: getHighlightEnum(item),
-        enum_titles: getHighlightEnumTitles(item)
+        enum: getHighlightSeriesEnum(item),
+        enum_titles: getHighlightSeriesEnumTitles(item)
+      };
+    }
+
+    if (request.params.optionName === "highlightDataRows") {
+      return {
+        enum: getHighlightRowsEnum(item),
+        enum_titles: getHighlightRowsEnumTitles(item)
       };
     }
 

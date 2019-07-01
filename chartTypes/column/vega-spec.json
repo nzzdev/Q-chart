@@ -48,7 +48,20 @@
     {
       "name": "colorScale",
       "type": "ordinal",
-      "range": "category",
+      "range": {
+        "scheme": "categorical_computed_normal"
+      },
+      "domain": {
+        "data": "table",
+        "field": "cValue"
+      }
+    },
+    {
+      "name": "colorScaleLight",
+      "type": "ordinal",
+      "range": {
+        "scheme": "categorical_computed_light"
+      },
       "domain": {
         "data": "table",
         "field": "cValue"
@@ -130,10 +143,34 @@
               "width": {
                 "signal": "bandwidth('barPositionScale') - columnMargin"
               },
-              "fill": {
-                "scale": "colorScale",
-                "signal": "datum.cValue"
-              }
+              "fill": [
+                {
+                  "test": "datum.colorLight && datum.isHighlighted === false",
+                  "field": "colorLight"
+                },
+                {
+                  "test": "datum.color && datum.isHighlighted === true",
+                  "field": "color"
+                },
+                {
+                  "test": "datum.isHighlighted === true",
+                  "scale": "colorScale",
+                  "field": "cValue"
+                },
+                {
+                  "test": "datum.isHighlighted === false",
+                  "scale": "colorScaleLight",
+                  "field": "cValue"
+                },
+                {
+                  "test": "datum.color",
+                  "field": "color"
+                },
+                {
+                  "scale": "colorScale",
+                  "field": "cValue"
+                }
+              ]
             }
           }
         }
@@ -147,6 +184,7 @@
       "grid": false,
       "domain": false,
       "ticks": false,
+      "labelSeparation": 4,
       "encode": {
         "title": {
           "update": {
@@ -171,7 +209,8 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
-      "tickCount": 4
+      "tickCount": 4,
+      "labelSeparation": 4
     }
   ],
   "autosize": {

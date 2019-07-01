@@ -1,19 +1,15 @@
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require("@hapi/joi");
+const Boom = require("@hapi/boom");
 const vega = require("vega");
 const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
-const vegaConfigHelper = require("../../helpers/vegaConfig.js");
-const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
-  .getDataWithStringsCastedToFloats;
-const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
-  .getExactPixelWidth;
+const dataHelpers = require("../../helpers/data.js");
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
-const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
+const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -34,18 +30,6 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config passed in toolRuntimeConfig
   if (toolRuntimeConfig.hasOwnProperty("text")) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
-  }
-
-  config.range = {};
-
-  // set the range configs by taking the passed ranges from toolRuntimeConfig and any possible
-  // item options into account (highlighting is an example of an option changing the range)
-  const categoryRange = vegaConfigHelper.getComputedCategoryColorRange(
-    item,
-    toolRuntimeConfig
-  );
-  if (categoryRange) {
-    config.range.category = categoryRange;
   }
 
   return config;
@@ -71,6 +55,13 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     }
   }
 
+  // if we do not have a dateseries, we transform all null/undefined values in the first column to empty strings to not display null in the chart
+  if (!mappingData.dateFormat) {
+    mappingData.item.data = dataHelpers.getWithOnlyStringsInFirstColumn(
+      mappingData.item.data
+    );
+  }
+
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
@@ -94,7 +85,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
 
 async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   // first and foremost: cast all the floats in strings to actual floats
-  item.data = getDataWithStringsCastedToFloats(item.data);
+  item.data = dataHelpers.getDataWithStringsCastedToFloats(item.data);
 
   // first we need to know if there is a chartType and which one
   const chartType = getChartTypeForItemAndWidth(item, width);
@@ -148,8 +139,11 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
     try {
       postprocessings = require(`../../chartTypes/${chartType}/postprocessings.js`);
     } catch (err) {
-      // we do not have postprocessing for this chartType
-      // as we do not need to have them, we just silently ignore the error here
+      // we ignore errors that come from the chartType not having a postprocessing.js file
+      // everything else gets rethrown
+      if (err.code !== "MODULE_NOT_FOUND") {
+        throw err;
+      }
     }
     try {
       if (postprocessings) {
@@ -162,18 +156,10 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
     }
   } catch (err) {
     request.server.log(["error"], err);
-    return err;
+    throw err;
   }
 
   return svg;
-}
-
-function registerColorSchemes(type, name, values) {
-  if (type === "discrete") {
-    vega.schemeDiscretized(name, values);
-  } else {
-    vega.scheme(name, values);
-  }
 }
 
 module.exports = {
@@ -187,52 +173,54 @@ module.exports = {
       query: {
         width: Joi.number().required(),
         noCache: Joi.boolean(),
-        toolRuntimeConfig: Joi.object().optional(),
+        toolRuntimeConfig: Joi.object(),
         id: Joi.string().required()
       },
       payload: {
-        item: Joi.object().required(),
-        toolRuntimeConfig: Joi.object().optional()
+        item: Joi.object(),
+        toolRuntimeConfig: Joi.object()
       }
     }
   },
   handler: async function(request, h) {
-    const item = request.payload.item;
+    let item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
 
-    if (configuredDivergingColorSchemes) {
-      for (const colorScheme of configuredDivergingColorSchemes) {
-        if (
-          toolRuntimeConfig.hasOwnProperty("colorSchemes") &&
-          toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-        ) {
-          registerColorSchemes(
-            "discrete",
-            colorScheme.scheme_name,
-            toolRuntimeConfig.colorSchemes[colorScheme.scheme_name]
-          );
-        }
+    // tmp: migrate the data to v2.0.0 schema.
+    // this can be removed once the migration on the db is run
+    const migrationResult = await request.server.inject({
+      url: "/migration",
+      method: "POST",
+      payload: { item: item }
+    });
+    if (migrationResult.statusCode === 200) {
+      item = migrationResult.item;
+    }
+
+    colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
+
+    try {
+      const webSvg = {
+        markup: await getSvg(
+          request.query.id,
+          request,
+          request.query.width,
+          item,
+          toolRuntimeConfig
+        )
+      };
+
+      const response = h.response(webSvg);
+      if (!request.query.noCache) {
+        response.header(
+          "cache-control",
+          "public, max-age=60, s-maxage=60, stale-while-revalidate=86400, stale-if-error=86400"
+        );
       }
+      return response;
+    } catch (e) {
+      throw e;
     }
-
-    const webSvg = {
-      markup: await getSvg(
-        request.query.id,
-        request,
-        request.query.width,
-        item,
-        toolRuntimeConfig
-      )
-    };
-
-    const response = h.response(webSvg);
-    if (!request.query.noCache) {
-      response.header(
-        "cache-control",
-        "public, max-age=60, s-maxage=60, stale-while-revalidate=86400, stale-if-error=86400"
-      );
-    }
-    return response;
   }
 };

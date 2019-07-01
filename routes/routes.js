@@ -5,6 +5,7 @@ module.exports = [
   require("./script.js"),
   require("./option-availability.js"),
   require("./dynamic-enum.js"),
+  require("./dynamic-schema.js"),
   require("./health.js"),
   require("./fixtures/data.js"),
   require("./notification/hideAxisLabel.js"),
@@ -13,5 +14,6 @@ module.exports = [
   require("./notification/shouldBeLineChart.js"),
   require("./notification/shouldBeBars.js"),
   require("./locales.js"),
-  require("./data.js")
+  require("./data.js"),
+  require("./migration.js")
 ].concat(require("./schema.js"));

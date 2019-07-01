@@ -19,7 +19,7 @@ function reverseLineOrder(svg, spec, item, toolRuntimeConfig) {
 
 module.exports = [
   commonPostprocessings.hideRepeatingTickLabels,
-  commonPostprocessings.highlightTicksWithVisibleValues,
+  commonPostprocessings.hideTicksWithoutLabels,
   commonPostprocessings.highlightZeroGridLineIfPositiveAndNegative,
   commonPostprocessings.addOutlineToAnnotationLabels,
   {

@@ -7,10 +7,6 @@ const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
 
-const getLongestDataLabel = require("../../helpers/data.js")
-  .getLongestDataLabel;
-const textMetrics = require("vega").textMetrics;
-
 module.exports = function getMapping() {
   return [
     {
@@ -131,10 +127,7 @@ module.exports = function getMapping() {
                 return a.cValue - b.cValue;
               });
           })
-          .reduce((acc, cur) => {
-            // flatten the array
-            return acc.concat(cur);
-          }, []);
+          .flat();
       }
     },
     {
@@ -314,11 +307,17 @@ module.exports = function getMapping() {
           from: { data: "diffAnnotationSeries" },
           encode: {
             enter: {
-              text: {
-                signal: `format(datum.diffToPrevious, "${
-                  d3config.formatLocale.decimal
-                }")`
-              },
+              text: [
+                {
+                  test: "datum.diffToPrevious == 0",
+                  value: ""
+                },
+                {
+                  signal: `format(datum.diffToPrevious, "${
+                    d3config.formatLocale.decimal
+                  }")`
+                }
+              ],
               y: {
                 signal:
                   "dotGroupHeight / 2 - 4 - (datum.posCorrectionFactor * 11)"
@@ -337,5 +336,9 @@ module.exports = function getMapping() {
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       }
     }
-  ].concat(commonMappings.getBarLabelColorMappings());
+  ]
+    .concat(commonMappings.getColorOverwritesRowsMappings())
+    .concat(commonMappings.getHighlightRowsMapping())
+    .concat(commonMappings.getHighlightSeriesMapping())
+    .concat(commonMappings.getBarLabelColorMappings());
 };

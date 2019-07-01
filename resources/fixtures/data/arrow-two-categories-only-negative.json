@@ -26,15 +26,17 @@
   "options": {
     "chartType": "Arrow",
     "hideAxisLabel": false,
-    "dotplotOptions": {
-    },
+    "dotplotOptions": {},
     "annotations": {
       "first": true,
       "last": true
     },
+    "arrowOptions": {
+      "colorScheme": 0
+    },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

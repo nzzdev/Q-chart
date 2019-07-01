@@ -1,0 +1,37 @@
+{
+  "title": "FIXTURE: Bar - color overwrite rows",
+  "subtitle": "Colorcolorcolor",
+  "data": [
+    ["Country", "America", "Mexico"],
+    ["GDP", "18570000000", "1046000000000"],
+    ["Population", "800372000000", "127500000000"]
+  ],
+  "sources": [],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "hideLegend": true,
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear"
+    },
+    "highlightDataSeries": [],
+    "colorOverwritesRows": [
+      {
+        "color": "#FF0000",
+        "colorLight": "#110000",
+        "position": 1
+      }
+    ]
+  },
+  "acronym": "bue."
+}

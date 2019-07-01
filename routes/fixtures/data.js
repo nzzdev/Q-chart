@@ -3,10 +3,12 @@ const fixtureDataDirectory = "../../resources/fixtures/data";
 // provide every fixture data file present in ../../resources/fixtures/data
 // has to be in sync with files created in build task - see ../../tasks/build.js
 const fixtureData = [
+  require(`${fixtureDataDirectory}/area-three-categories-prognosis.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-only-negative.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-only-positive.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-same-value.json`),
   require(`${fixtureDataDirectory}/bar-color-overwrite-highlight.json`),
+  require(`${fixtureDataDirectory}/bar-color-overwrite-rows.json`),
   require(`${fixtureDataDirectory}/bar-dates-days-prognosis.json`),
   require(`${fixtureDataDirectory}/bar-dates-days-year-interval.json`),
   require(`${fixtureDataDirectory}/bar-dates-null-values.json`),

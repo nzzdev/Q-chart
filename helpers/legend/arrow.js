@@ -35,7 +35,7 @@ function hasOnlyNegativeOrZeroChanges(item) {
   return true;
 }
 
-function getLegendModel(item, toolRuntimeConfig) {
+function getLegendModel(item, toolRuntimeConfig, chartType) {
   // this only works if we have exactly two data columns
   if (item.data[0].length !== 3) {
     return null;
@@ -47,32 +47,27 @@ function getLegendModel(item, toolRuntimeConfig) {
   let lastLabel = item.data[0][2];
 
   const colorSchemeName = getColorSchemeName(item);
+  let colorInterpolatorFunction;
+  if (colorSchemeName) {
+    colorInterpolatorFunction = vega.interpolateColors(
+      vega.scheme(colorSchemeName),
+      "lab"
+    );
+  } else {
+    colorInterpolatorFunction = vega.scheme("redblue");
+  }
 
   if (hasOnlyPositiveChanges(item)) {
-    if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][2];
-    } else {
-      arrowColor = vega.schemeDiscretized("redblue")[3][2];
-    }
+    arrowColor = colorInterpolatorFunction(1);
   } else if (hasOnlyNegativeOrZeroChanges(item)) {
-    if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][0];
-    } else {
-      arrowColor = vega.schemeDiscretized("redblue")[3][0];
-    }
+    arrowColor = colorInterpolatorFunction(0);
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels
     firstLabel = item.data[0][2];
     lastLabel = item.data[0][1];
   } else {
-    // use the middle color of the color scheme if given
-    if (colorSchemeName) {
-      arrowColor =
-        toolRuntimeConfig.colorSchemes[getColorSchemeName(item)][3][1];
-    }
+    arrowColor = colorInterpolatorFunction(0.5);
   }
 
   return {

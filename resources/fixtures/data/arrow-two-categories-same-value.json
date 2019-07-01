@@ -28,7 +28,8 @@
     "hideAxisLabel": false,
     "arrowOptions": {
       "minValue": -1500,
-      "maxValue": 1500
+      "maxValue": 1500,
+      "colorScheme": 0
     },
     "annotations": {
       "diff": true,
@@ -37,7 +38,7 @@
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

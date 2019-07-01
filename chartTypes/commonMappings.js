@@ -123,7 +123,7 @@ function getBarDateSeriesHandlingMappings() {
   ];
 }
 
-function getColumnPrognosisMappings() {
+function getColumnAreaPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
@@ -150,7 +150,7 @@ function getColumnPrognosisMappings() {
         });
 
         const prognosisMarks = clone(spec.marks[0]);
-        prognosisMarks.name = "prognosisColumn";
+        prognosisMarks.name = "prognosisArea";
         if (prognosisMarks.from.facet) {
           prognosisMarks.from.facet.data = "prognosis";
         } else {
@@ -282,13 +282,95 @@ function getHeightMappings() {
   ];
 }
 
+function getHighlightRowsMapping() {
+  return [
+    {
+      path: "item.options.highlightDataRows",
+      mapToSpec: function(highlightDataRows, spec) {
+        if (
+          !Array.isArray(highlightDataRows) ||
+          highlightDataRows.length === 0
+        ) {
+          return;
+        }
+        spec.data[0].values.map(value => {
+          if (highlightDataRows.includes(value.xIndex)) {
+            value.isHighlighted = true;
+          } else {
+            value.isHighlighted = false;
+          }
+        });
+      }
+    }
+  ];
+}
+
+function getHighlightSeriesMapping() {
+  return [
+    {
+      path: "item.options.highlightDataSeries",
+      mapToSpec: function(highlightDataSeries, spec) {
+        if (
+          !Array.isArray(highlightDataSeries) ||
+          highlightDataSeries.length === 0
+        ) {
+          return;
+        }
+        spec.data[0].values.map(value => {
+          // if isHighlighted is already set to false, we return here
+          // highlight rows and highlight columns are in an AND relationship to result in a highlighted column
+          if (value.isHighlighted === false) {
+            return;
+          }
+          if (highlightDataSeries.includes(value.cValue)) {
+            value.isHighlighted = true;
+          } else {
+            value.isHighlighted = false;
+          }
+        });
+      }
+    }
+  ];
+}
+
+function getColorOverwritesRowsMappings() {
+  return [
+    {
+      path: "item.options.colorOverwritesRows",
+      mapToSpec: function(colorOverwritesRows, spec, mappingData) {
+        // do not handle colorOverwriteRows if we have more than two dataseries.
+        if (mappingData.item.data[0].length > 3) {
+          return;
+        }
+        for (const colorOverwrite of colorOverwritesRows) {
+          //   // if we do not have a valid color or position, ignore this
+          if (!colorOverwrite.color || Number.isNaN(colorOverwrite.position)) {
+            continue;
+          }
+          spec.data[0].values.map(value => {
+            if (value.xIndex === colorOverwrite.position - 1) {
+              value.color = colorOverwrite.color;
+              if (colorOverwrite.colorLight) {
+                value.colorLight = colorOverwrite.colorLight;
+              }
+            }
+          });
+        }
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
   getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
-  getColumnPrognosisMappings: getColumnPrognosisMappings,
+  getColumnAreaPrognosisMappings: getColumnAreaPrognosisMappings,
   getBarPrognosisMappings: getBarPrognosisMappings,
   getColumnLabelColorMappings: getColumnLabelColorMappings,
   getBarLabelColorMappings: getBarLabelColorMappings,
-  getHeightMappings: getHeightMappings
+  getHeightMappings: getHeightMappings,
+  getHighlightRowsMapping: getHighlightRowsMapping,
+  getHighlightSeriesMapping: getHighlightSeriesMapping,
+  getColorOverwritesRowsMappings: getColorOverwritesRowsMappings
 };

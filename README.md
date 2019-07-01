@@ -86,23 +86,14 @@ toolRuntimeConfig: {
     font: 'Roboto'
   },
   colorSchemes: { // to be refactored for Q-chart v2
-    category: {
-      default: ['#FF0000','#00FF00','#0000FF'], // any number of colors. used for categorial data
-      light: ['#AA0000','#00AA00','#0000AA'], // the same number of colors, used when on category is highlighted (then the others are shown in this color)
+    categorical_normal: ['#FF0000','#00FF00','#0000FF'], // any number of colors. used for categorial data
+    categorical_light: ['#AA0000','#00AA00','#0000AA'], // the same number of colors, used when on category is highlighted (then the others are shown in this color),
+    grays: ['#D3D3D3', ....] // a bunch of grays, currently only the 4th and 8th grays are used for the legend in some special cases with colorOverwrites
     },
-    "diverging_one": [ // all color schemes but category get directly registered using `vega.schemeDiscretized(name, values)`
-      [
-        "gray"
-      ],
-      [
-        "red",
-        "green"
-      ],
-      [
-        "red",
-        "gray",
-        "green"
-      ]
+    "diverging_one": [ // 3 color codes per array, they get registered using vega.scheme()
+      "#...",
+      "#...",
+      "#..."
     ]
   }
 }
@@ -294,11 +285,17 @@ Stores the key from one of the color schemes defined in the `DIVERGING_COLOR_SCH
 This is useful to have different diverging color schemes available for different datasets.
 The actual colors for these schemes need to get passed in `toolRuntimeConfig.colorSchemes` where there needs to be a color scheme with the name configured as the `scheme_name` in `DIVERGING_COLOR_SCHEMES` given.
 
-#### colorOverwrite
+#### colorOverwritesSeries
 
-This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. It changes the color at the specified position in the category color scheme (given in `toolRuntimeConfig.colorSchemes.category`) to the color given in this option.
-The option is an array of objects with `color`, `colorBright` and `position` values. The `color` is used if no highlighting is in place. The `colorBright` is used if any other data series than the one at `position` is highlighted.
-This will be refactored for Q-chart 2.
+This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. It changes the colors at the specified positions in the category color scheme (given in `toolRuntimeConfig.colorSchemes.categorical_normal`/`toolRuntimeConfig.colorSchemes.categorical_light`) to the color given in this option.
+The option is an array of objects with `color`, `colorLight` and `position` values. The `color` is used if no highlighting is in place. The `colorLight` is used if any other data series than the one at `position` is highlighted.
+This is only available if no `colorOverwritesRows` is given.
+
+#### colorOverwritesRows
+
+This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. It changes the colors of the rows at the specified positions to the color given in this option.
+The option is an array of objects with `color`, `colorLight` and `position` values. The `color` is used if no highlighting is in place. The `colorLight` is used if any other data series than the one at `position` is highlighted.
+This is only available if no `colorOverwritesSeries` is given.
 
 ## LICENSE
 

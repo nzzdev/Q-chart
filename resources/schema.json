@@ -144,7 +144,6 @@
       "type": "string"
     },
     "options": {
-      "title": "Allgemeine Optionen",
       "type": "object",
       "properties": {
         "chartType": {
@@ -201,35 +200,6 @@
           },
           "default": "Bar"
         },
-        "highlightDataSeries": {
-          "title": "Hervorhebung",
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "ToolEndpoint",
-              "config": {
-                "endpoint": "dynamic-enum/highlightDataSeries",
-                "fields": ["data"]
-              }
-            },
-            "availabilityChecks": [
-              {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "option-availability/highlightDataSeries",
-                  "fields": ["vegaSpec", "options.chartType"]
-                }
-              }
-            ]
-          }
-        },
         "hideAxisLabel": {
           "title": "Achsenbeschriftung ausblenden",
           "type": "boolean",
@@ -257,6 +227,109 @@
                 }
               }
             ]
+          }
+        },
+        "hideLegend": {
+          "title": "Legende ausblenden",
+          "type": "boolean",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/hideLegend",
+                  "fields": [
+                    "data",
+                    "options.chartType",
+                    "options.colorOverwritesRows"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "highlightDataSeries": {
+          "title": "Hervorhebungen von Datenreihen",
+          "type": "array",
+          "Q:options": {
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/highlighDataSeries",
+                "fields": ["data"]
+              }
+            },
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataSeries",
+                  "fields": ["data", "vegaSpec", "options.chartType"]
+                }
+              }
+            ],
+            "layout": "compact",
+            "sortable": false
+          },
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicEnum": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-enum/highlightDataSeries",
+                  "fields": ["data"]
+                }
+              },
+              "layout": "compact"
+            }
+          }
+        },
+        "highlightDataRows": {
+          "title": "Hervorhebungen von Zeilen",
+          "type": "array",
+          "Q:options": {
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/highlightDataRows",
+                "fields": ["data"]
+              }
+            },
+            "availabilityChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/highlightDataRows",
+                  "fields": ["vegaSpec", "options.chartType"]
+                }
+              }
+            ],
+            "layout": "compact",
+            "sortable": false
+          },
+          "items": {
+            "title": "Hervorhebung",
+            "type": "number",
+            "default": 0,
+            "Q:options": {
+              "dynamicSchema": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-schema/highlighDataRowsItem",
+                  "fields": ["data"]
+                }
+              },
+              "dynamicEnum": {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "dynamic-enum/highlightDataRows",
+                  "fields": ["data"]
+                }
+              }
+            }
           }
         },
         "annotations": {
@@ -363,7 +436,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "isBarChart": {
@@ -490,7 +564,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "minValue": {
@@ -510,7 +585,7 @@
               "title": "Interpolation der Linien",
               "type": "string",
               "default": "linear",
-              "enum": ["linear", "step-before", "step-after", "monotone"],
+              "enum": ["linear", "step-after", "monotone"],
               "Q:options": {
                 "availabilityChecks": [
                   {
@@ -540,7 +615,45 @@
             }
           }
         },
-
+        "areaChartOptions": {
+          "title": "Optionen für Flächendiagramme",
+          "type": "object",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              },
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/area",
+                  "fields": ["options.chartType", "vegaSpec"]
+                }
+              }
+            ],
+            "expandable": true
+          },
+          "properties": {
+            "areaInterpolation": {
+              "title": "Interpolation der Flächen",
+              "type": "string",
+              "default": "linear",
+              "enum": ["linear", "step-after", "monotone"]
+            },
+            "stackType": {
+              "title": "Typ",
+              "type": "string",
+              "default": "zero",
+              "enum": ["zero", "center"],
+              "Q:options": {
+                "enum_titles": ["normal", "stream"]
+              }
+            }
+          }
+        },
         "dotplotOptions": {
           "title": "Optionen für Dot Plots",
           "type": "object",
@@ -553,7 +666,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "connectDots": {
@@ -582,7 +696,8 @@
                   "fields": ["options.chartType", "vegaSpec"]
                 }
               }
-            ]
+            ],
+            "expandable": true
           },
           "properties": {
             "minValue": {
@@ -617,8 +732,8 @@
             }
           }
         },
-        "colorOverwrite": {
-          "title": "Farben",
+        "colorOverwritesSeries": {
+          "title": "Datenreihenfarbe",
           "type": "array",
           "Q:options": {
             "availabilityChecks": [
@@ -631,15 +746,27 @@
               {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "option-availability/colorOverwrite",
-                  "fields": ["vegaSpec", "options.chartType"]
+                  "endpoint": "option-availability/colorOverwritesSeries",
+                  "fields": [
+                    "vegaSpec",
+                    "options.chartType",
+                    "options.colorOverwritesRows"
+                  ]
                 }
               }
             ],
-            "compact": true,
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/colorOverwritesSeries",
+                "fields": ["data"]
+              }
+            },
+            "layout": "compact",
             "expandable": {
-              "itemLabelProperty": "color"
-            }
+              "itemLabelTemplate": "${color} - ${position}"
+            },
+            "sortable": false
           },
           "items": {
             "type": "object",
@@ -649,7 +776,7 @@
                 "type": "string",
                 "Q:type": "color"
               },
-              "colorBright": {
+              "colorLight": {
                 "title": "Farbe hell",
                 "type": "string",
                 "Q:type": "color"
@@ -664,61 +791,80 @@
                     "type": "null"
                   }
                 ],
-                "enum": [
-                  null,
-                  1,
-                  2,
-                  3,
-                  4,
-                  5,
-                  6,
-                  7,
-                  8,
-                  9,
-                  10,
-                  11,
-                  12,
-                  13,
-                  14,
-                  15,
-                  16,
-                  17,
-                  18,
-                  19,
-                  20,
-                  21,
-                  22,
-                  23,
-                  24
+                "Q:options": {
+                  "dynamicSchema": {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "dynamic-schema/colorOverwritesSeriesItem",
+                      "fields": ["data"]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "colorOverwritesRows": {
+          "title": "Zeilenfarbe",
+          "type": "array",
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              },
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "option-availability/colorOverwritesRows",
+                  "fields": [
+                    "vegaSpec",
+                    "data",
+                    "options.chartType",
+                    "options.colorOverwritesSeries"
+                  ]
+                }
+              }
+            ],
+            "layout": "compact",
+            "expandable": {
+              "itemLabelTemplate": "${color} - ${position}"
+            },
+            "sortable": false
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "color": {
+                "title": "Farbe normal",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "colorLight": {
+                "title": "Farbe hell",
+                "type": "string",
+                "Q:type": "color"
+              },
+              "position": {
+                "title": "Position",
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
                 ],
                 "Q:options": {
-                  "enum_titles": [
-                    "",
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16,
-                    17,
-                    18,
-                    19,
-                    20,
-                    21,
-                    22,
-                    23,
-                    24
-                  ]
+                  "dynamicSchema": {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "dynamic-schema/colorOverwritesRowsItem",
+                      "fields": ["data"]
+                    }
+                  }
                 }
               }
             }

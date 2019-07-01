@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require("@hapi/joi");
 const helpers = require("../../helpers/dateSeries.js");
 
 const separators = [".", "/", "-"];
