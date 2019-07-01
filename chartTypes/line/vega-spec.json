@@ -84,8 +84,7 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
-      "tickCount": 4,
-      "labelSeparation": 4
+      "tickCount": 4
     }
   ],
   "marks": [
