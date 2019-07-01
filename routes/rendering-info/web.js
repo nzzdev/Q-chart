@@ -183,6 +183,9 @@ module.exports = {
               element: document.querySelector("#${context.id}")
             };
             function ${functionName}() {
+              if (!${dataObject}.width) {
+                return;
+              }
               fetch("${
                 request.payload.toolRuntimeConfig.toolBaseUrl
               }/rendering-info/web-svg?${querystring.stringify(
@@ -196,6 +199,9 @@ module.exports = {
                 }
               })
               .then(function(response) {
+                if (!response) {
+                  return {};
+                }
                 return response.json();
               })
               .then(function(renderingInfo) {
@@ -207,12 +213,18 @@ module.exports = {
               });
             }
             window.q_domready.then(function() {
+              if (!${dataObject}.element) {
+                return;
+              }
               ${dataObject}.width = ${dataObject}.element.getBoundingClientRect().width;
               ${functionName}();
             });
             window.addEventListener('resize', function() {
               if (requestAnimationFrame) {
                 requestAnimationFrame(function() {
+                  if (!${dataObject}.element) {
+                    return;
+                  }
                   var newWidth = ${dataObject}.element.getBoundingClientRect().width;
                   if (newWidth !== ${dataObject}.width) {
                     ${dataObject}.width = newWidth;
