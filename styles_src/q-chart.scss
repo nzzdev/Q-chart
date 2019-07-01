@@ -1,6 +1,6 @@
 @mixin clearfix {
   &::after {
-    content: '';
+    content: "";
     display: table;
     clear: both;
   }
@@ -11,8 +11,4 @@
   svg {
     overflow: visible;
   }
-}
-
-.q-chart__subtitle {
-  margin-bottom: 12px;
 }
