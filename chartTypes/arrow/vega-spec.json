@@ -209,7 +209,8 @@
       "domain": false,
       "grid": true,
       "ticks": true,
-      "tickCount": 6
+      "tickCount": 6,
+      "labelSeparation": 4
     },
     {
       "orient": "left",
@@ -218,6 +219,7 @@
       "grid": true,
       "labels": true,
       "ticks": false,
+      "labelSeparation": 4,
       "encode": {
         "title": {
           "update": {
