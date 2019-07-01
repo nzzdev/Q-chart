@@ -649,7 +649,7 @@
               "default": "zero",
               "enum": ["zero", "center"],
               "Q:options": {
-                "enum_title": ["normal", "stream"]
+                "enum_titles": ["normal", "stream"]
               }
             }
           }

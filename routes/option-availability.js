@@ -182,7 +182,7 @@ module.exports = {
       };
     }
 
-    // highlighting rows does not make sense for Line Charts (this should use an value annotation feature)
+    // highlighting rows does not make sense for Line Charts (this should use a value annotation feature)
     // for arrow charts it is not implemented yet, but would make sense to do that in a future version
     if (request.params.optionName === "highlightDataRows") {
       return {
