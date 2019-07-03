@@ -198,7 +198,8 @@
       "domain": false,
       "grid": true,
       "ticks": true,
-      "tickCount": 6
+      "tickCount": 6,
+      "labelSeparation": 4
     },
     {
       "orient": "left",

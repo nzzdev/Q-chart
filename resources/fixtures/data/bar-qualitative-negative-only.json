@@ -58,12 +58,12 @@
     "arrowOptions": {
       "colorScheme": 0
     },
-    "colorOverwrite": [
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": [
       {
         "color": "#e66e4a",
         "position": 1
       }
-    ],
-    "highlightDataSeries": null
+    ]
   }
 }

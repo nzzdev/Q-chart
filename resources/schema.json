@@ -657,6 +657,15 @@
               "type": "string",
               "default": "linear",
               "enum": ["linear", "step-after", "monotone"]
+            },
+            "stackType": {
+              "title": "Typ",
+              "type": "string",
+              "default": "zero",
+              "enum": ["zero", "center"],
+              "Q:options": {
+                "enum_titles": ["normal", "stream"]
+              }
             }
           }
         },
@@ -761,6 +770,13 @@
                 }
               }
             ],
+            "dynamicSchema": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-schema/colorOverwritesSeries",
+                "fields": ["data"]
+              }
+            },
             "layout": "compact",
             "expandable": {
               "itemLabelTemplate": "${color} - ${position}"

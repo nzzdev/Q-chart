@@ -1,18 +1,6 @@
-@mixin clearfix {
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-}
-
 .q-chart {
   opacity: 1 !important;
   svg {
     overflow: visible;
   }
-}
-
-.q-chart__subtitle {
-  margin-bottom: 12px;
 }

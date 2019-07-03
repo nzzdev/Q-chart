@@ -415,11 +415,13 @@
       "maxValue": 100,
       "isStockChart": false
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": 1,
+    "highlightDataSeries": [
+      1
+    ],
     "annotations": {
       "first": false
-    }
+    },
+    "colorOverwritesSeries": []
   },
   "tool": "chart",
   "notes": "Aktive Stunden sind die Stunden im Zeitraum vom 22.8. bis 30.8., in denen unsere Leser/-innen Begriffe eingegeben haben",

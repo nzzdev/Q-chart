@@ -90,7 +90,7 @@
       "minValue": 90,
       "maxValue": 110
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

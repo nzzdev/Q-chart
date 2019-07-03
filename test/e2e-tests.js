@@ -13,6 +13,9 @@ const routes = require("../routes/routes.js");
 
 const toolRuntimeConfig = require("./config/toolRuntimeConfig.json");
 
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 let server;
 
 before(async () => {
@@ -93,21 +96,32 @@ lab.experiment("stylesheets endpoint", () => {
 });
 
 lab.experiment("fixture data endpoint", () => {
-  it("returns 34 fixture data items for /fixtures/data", async () => {
+  it("returns 35 fixture data items for /fixtures/data", async () => {
     const response = await server.inject("/fixtures/data");
     expect(response.statusCode).to.be.equal(200);
-    expect(response.result.length).to.be.equal(34);
+    expect(response.result.length).to.be.equal(35);
   });
 });
 
-// all the fixtures render
+// all the fixtures render with an svg
 lab.experiment("all fixtures render", async () => {
   const fixtureFiles = glob.sync(
     `${__dirname}/../resources/fixtures/data/*.json`
   );
+  toolRuntimeConfig.size = {
+    width: [
+      {
+        value: 300,
+        comparison: "="
+      }
+    ]
+  };
   for (let fixtureFile of fixtureFiles) {
+    const width = Math.floor(Math.random() * (800 - 350)) + 350;
     const fixture = require(fixtureFile);
-    it(`doesnt fail in rendering fixture ${fixture.title}`, async () => {
+    it(`doesnt fail in rendering fixture ${
+      fixture.title
+    } with width: ${width}`, async () => {
       const request = {
         method: "POST",
         url: "/rendering-info/web",
@@ -117,7 +131,12 @@ lab.experiment("all fixtures render", async () => {
         }
       };
       const response = await server.inject(request);
-      expect(response.statusCode).to.be.equal(200);
+      const markup = response.result.markup;
+      const dom = new JSDOM(markup);
+      const svgElement = dom.window.document.querySelector(
+        ".q-chart-svg-container svg"
+      );
+      expect(svgElement.innerHTML.length).to.be.greaterThan(200);
     });
   }
 });

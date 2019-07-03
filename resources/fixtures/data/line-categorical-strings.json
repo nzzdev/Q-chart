@@ -56,8 +56,8 @@
     "arrowOptions": {
       "colorScheme": 0
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   },
   "tool": "chart",
   "department": "Storytelling / Infografik",

@@ -4,8 +4,7 @@ const vega = require("vega");
 const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
-const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
-  .getDataWithStringsCastedToFloats;
+const dataHelpers = require("../../helpers/data.js");
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const dateSeries = require("../../helpers/dateSeries.js");
@@ -56,6 +55,13 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     }
   }
 
+  // if we do not have a dateseries, we transform all null/undefined values in the first column to empty strings to not display null in the chart
+  if (!mappingData.dateFormat) {
+    mappingData.item.data = dataHelpers.getWithOnlyStringsInFirstColumn(
+      mappingData.item.data
+    );
+  }
+
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
@@ -79,7 +85,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
 
 async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   // first and foremost: cast all the floats in strings to actual floats
-  item.data = getDataWithStringsCastedToFloats(item.data);
+  item.data = dataHelpers.getDataWithStringsCastedToFloats(item.data);
 
   // first we need to know if there is a chartType and which one
   const chartType = getChartTypeForItemAndWidth(item, width);
@@ -177,9 +183,20 @@ module.exports = {
     }
   },
   handler: async function(request, h) {
-    const item = request.payload.item;
+    let item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
+
+    // tmp: migrate the data to v2.0.0 schema.
+    // this can be removed once the migration on the db is run
+    const migrationResponse = await request.server.inject({
+      url: "/migration",
+      method: "POST",
+      payload: { item: item }
+    });
+    if (migrationResponse.statusCode === 200) {
+      item = migrationResponse.result.item;
+    }
 
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
 

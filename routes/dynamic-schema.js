@@ -49,6 +49,16 @@ module.exports = {
       }
     }
 
+    if (request.params.optionName === "colorOverwritesSeries") {
+      try {
+        return {
+          maxItems: item.data[0].length - 1 // the number of data series
+        };
+      } catch {
+        return {};
+      }
+    }
+
     if (request.params.optionName === "colorOverwritesSeriesItem") {
       try {
         return {

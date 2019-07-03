@@ -48,7 +48,7 @@ const hideRepeatingBarTopLabels = {
   }
 };
 
-const highlightTicksWithVisibleValues = {
+const hideTicksWithoutLabels = {
   process: function(svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
@@ -62,33 +62,27 @@ const highlightTicksWithVisibleValues = {
     const tickNodes = tickGroup.querySelectorAll("line");
 
     // first run to return if we have no hidden labels
-    const visibleLabelsIndexes = [];
-    let hasHiddenLabels = false;
+    const hiddenLabelsIndexes = [];
     for (let i = 0; i < textNodes.length; i++) {
       const textNode = textNodes.item(i);
       // if the textNode is visible
-      if (textNode.getAttribute("style").includes("opacity: 1")) {
-        visibleLabelsIndexes.push(i);
-      } else {
-        hasHiddenLabels = true;
+      if (!textNode.getAttribute("style").includes("opacity: 1")) {
+        hiddenLabelsIndexes.push(i);
       }
     }
 
-    // if there are no labels hidden, we do not highlight the ticks
-    if (visibleLabelsIndexes.length === textNodes.length) {
+    // if there are no hidden labels, we return here as there is nothing left to do
+    if (hiddenLabelsIndexes.length === 0) {
       return svg;
     }
 
-    for (let visibleLabelIndex of visibleLabelsIndexes) {
-      tickNodes.item(visibleLabelIndex).setAttribute(
+    for (let hiddenLabelIndex of hiddenLabelsIndexes) {
+      tickNodes.item(hiddenLabelIndex).setAttribute(
         "style",
         tickNodes
-          .item(visibleLabelIndex)
+          .item(hiddenLabelIndex)
           .getAttribute("style")
-          .replace(
-            `stroke: ${toolRuntimeConfig.axis.tickColor}`,
-            `stroke: ${toolRuntimeConfig.axis.labelColor}`
-          )
+          .replace(`opacity: 1`, `opacity: 0`)
       );
     }
     return document.body.innerHTML;
@@ -239,7 +233,7 @@ const addOutlineToAnnotationLabels = {
 module.exports = {
   hideRepeatingTickLabels: hideRepeatingTickLabels,
   hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
-  highlightTicksWithVisibleValues: highlightTicksWithVisibleValues,
+  hideTicksWithoutLabels: hideTicksWithoutLabels,
   addPrognosisPattern: addPrognosisPattern,
   highlightZeroGridLineIfPositiveAndNegative: highlightZeroGridLineIfPositiveAndNegative,
   addOutlineToAnnotationLabels: addOutlineToAnnotationLabels

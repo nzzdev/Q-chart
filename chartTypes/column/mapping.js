@@ -70,7 +70,8 @@ module.exports = function getMapping() {
     }
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
-    .concat(commonMappings.getHighlightMapping())
+    .concat(commonMappings.getHighlightRowsMapping())
+    .concat(commonMappings.getHighlightSeriesMapping())
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())

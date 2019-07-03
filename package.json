@@ -1,20 +1,21 @@
 {
   "name": "q-chart",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js",
-    "test": "lab -a @hapi/code -P tests --verbose --leaks"
+    "test": "lab -a @hapi/code -P tests --verbose --leaks",
+    "test-prod-charts": "lab -a @hapi/code -P e2e-prod --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "^7.4.2",
     "@hapi/hapi": "^18.3.1",
-    "@hapi/hoek": "^6.2.1",
-    "@hapi/inert": "^5.2.0",
-    "@hapi/joi": "^15.0.0",
+    "@hapi/hoek": "^8.0.1",
+    "@hapi/inert": "^5.2.1",
+    "@hapi/joi": "^15.1.0",
     "ajv": "^6.10.0",
     "array2d": "0.0.5",
     "canvas": "^2.5.0",
@@ -23,7 +24,7 @@
     "d3-format": "^1.3.2",
     "d3-time-format": "^2.1.3",
     "decimal.js": "^10.2.0",
-    "deepmerge": "^3.2.1",
+    "deepmerge": "^3.3.0",
     "jsdom": "^15.1.1",
     "moment-timezone": "^0.5.25",
     "node-fetch": "^2.6.0",
@@ -34,12 +35,12 @@
   },
   "devDependencies": {
     "@hapi/code": "^5.3.1",
-    "@hapi/lab": "^18.1.2",
-    "autoprefixer": "^7.1.6",
+    "@hapi/lab": "^19.1.0",
+    "autoprefixer": "^9.6.0",
     "cssnano": "^4.1.10",
-    "glob": "^7.1.3",
-    "postcss": "^6.0.14",
-    "postcss-import": "^11.0.0",
-    "sass": "^1.19.0"
+    "glob": "^7.1.4",
+    "postcss": "^7.0.17",
+    "postcss-import": "^12.0.1",
+    "sass": "^1.22.1"
   }
 }

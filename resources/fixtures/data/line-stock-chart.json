@@ -1,6 +1,6 @@
 {
   "title": "FIXTURE: line - stockchart",
-  "subtitle": "Kurs in Pfund",  
+  "subtitle": "Kurs in Pfund",
   "data": [
     [
       null,
@@ -2285,7 +2285,7 @@
       "minValue": 1810,
       "isStockChart": true
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

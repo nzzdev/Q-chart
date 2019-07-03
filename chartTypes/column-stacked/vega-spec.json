@@ -148,6 +148,7 @@
       "grid": false,
       "domain": false,
       "ticks": false,
+      "labelSeparation": 4,
       "encode": {
         "title": {
           "update": {

@@ -79,7 +79,7 @@
       "prognosisStart": null
     },
     "lineChartOptions": {},
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }

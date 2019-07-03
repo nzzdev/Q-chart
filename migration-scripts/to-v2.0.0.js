@@ -7,7 +7,11 @@ module.exports.migrate = function(item) {
   };
 
   // highlightDataSeries is now an array in v2
-  if (item.options.highlightDataSeries !== undefined) {
+  // do not run this if it is already an array so already migrated
+  if (
+    item.options.highlightDataSeries !== undefined &&
+    !Array.isArray(item.options.highlightDataSeries)
+  ) {
     if (item.options.highlightDataSeries === null) {
       item.options.highlightDataSeries = [];
     } else {

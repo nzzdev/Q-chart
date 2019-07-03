@@ -4025,8 +4025,8 @@
       "minValue": 20,
       "maxValue": 30
     },
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   },
   "tool": "chart"
 }

@@ -59,6 +59,7 @@
       "labelBound": true,
       "labelFlushOffset": 0,
       "labelOverlap": "parity",
+      "labelSeparation": 4,
       "encode": {
         "title": {
           "update": {

@@ -26,14 +26,13 @@
   "options": {
     "chartType": "Arrow",
     "hideAxisLabel": false,
-    "dotplotOptions": {
-    },
+    "dotplotOptions": {},
     "annotations": {
       "diff": true
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},
-    "colorOverwrite": [],
-    "highlightDataSeries": null
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
   }
 }
