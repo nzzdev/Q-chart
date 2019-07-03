@@ -160,18 +160,20 @@ module.exports = function getMapping() {
     },
     {
       path: "item.options.annotations.valuesOnBars",
-      mapToSpec: function(valuesOnBars, spec) {
+      mapToSpec: function(valuesOnBars, spec, mappingData) {
+        if (!valuesOnBars) {
+          return;
+        }
         const valuePadding = 2;
         const valueLabelMark = {
           type: "text",
           from: {
-            data: "series"
+            data: "bar"
           },
           encode: {
             enter: {
               y: {
-                scale: "barPositionBand",
-                field: "cValue"
+                field: "y"
               },
               dy: {
                 signal: "barWidth / 2"
@@ -180,34 +182,46 @@ module.exports = function getMapping() {
                 value: "middle"
               },
               x: {
-                scale: "xScale",
-                field: "yValue"
+                field: "x2"
               },
               dx: [
                 {
-                  test: "scale('xScale', datum.yValue) > datum.labelWidth",
-                  value: -valuePadding
+                  test: "datum.x2 < datum.datum.labelWidth",
+                  value: valuePadding
                 },
                 {
-                  value: valuePadding
+                  value: -valuePadding
+                }
+              ],
+              fill: [
+                {
+                  test: "datum.x2 < datum.datum.labelWidth",
+                  value: mappingData.toolRuntimeConfig.text.fill
+                },
+                {
+                  test: "contrast('black', datum.fill) > 4.5",
+                  value: mappingData.toolRuntimeConfig.text.fill
+                },
+                {
+                  value: "white"
                 }
               ],
               text: {
-                field: "yValue"
+                field: "x2"
               },
               align: [
                 {
-                  test: `scale('xScale', datum.yValue) > datum.labelWidth + ${valuePadding *
-                    2}`,
-                  value: "right"
+                  test: "datum.x2 < datum.datum.labelWidth + 4",
+                  value: "left"
                 },
                 {
-                  value: "left"
+                  value: "right"
                 }
               ]
             }
           }
         };
+
         // add the value label marks
         spec.marks[0].marks[0].marks.push(valueLabelMark);
 

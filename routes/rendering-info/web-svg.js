@@ -18,6 +18,31 @@ vega.timeFormatLocale(d3config.timeFormatLocale);
 // thats the default and might get overwritten by a prerender function of a chart type
 vega.formatLocale(d3config.formatLocale);
 
+// borrowed from https://github.com/gka/chroma.js/blob/master/src/ops/luminance.js
+const luminance_x = x => {
+  x /= 255;
+  return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+};
+
+// register vega expression functions
+vega.expressionFunction("contrast", function(color1, color2) {
+  const c1 = vega.expressionFunction("rgb")(color1);
+  const c2 = vega.expressionFunction("rgb")(color2);
+  // this is according to https://en.wikipedia.org/wiki/Rec._709
+  const l1 =
+    luminance_x(c1.r) * 0.2126 +
+    luminance_x(c1.g) * 0.7152 +
+    luminance_x(c1.b) * 0.0722;
+  const l2 =
+    luminance_x(c2.r) * 0.2126 +
+    luminance_x(c2.g) * 0.7152 +
+    luminance_x(c2.b) * 0.0722;
+  const contrast =
+    l1 > l2 ? (l1 + 0.05) / (l2 + 0.05) : (l2 + 0.05) / (l1 + 0.05);
+
+  return contrast;
+});
+
 function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config to the template vega spec to allow changes in the config through mappings
   let config = deepmerge(vegaConfig, baseConfig || {});
@@ -132,6 +157,9 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
 
     const view = new vega.View(dataflow).renderer("none").initialize();
     view.logLevel(vega.Warn);
+
+    const scenegraph = view.scenegraph();
+
     svg = await view.toSVG();
 
     // post processing
