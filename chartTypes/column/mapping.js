@@ -67,6 +67,53 @@ module.exports = function getMapping() {
         objectPath.set(spec, "scales.1.nice", false);
         objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
       }
+    },
+    {
+      path: "item.options.annotations.valuesOnBars",
+      mapToSpec: function(valuesOnBars, spec, mappingData) {
+        if (!valuesOnBars) {
+          return;
+        }
+        const valuePadding = 2;
+        const valueLabelMark = {
+          type: "text",
+          from: {
+            data: "bar"
+          },
+          encode: {
+            enter: {
+              y: {
+                signal: `datum.y - ${valuePadding}`
+              },
+              baseline: {
+                value: "bottom"
+              },
+              x: {
+                signal: "datum.x + (datum.width / 2)"
+              },
+              fill: [
+                {
+                  value: mappingData.toolRuntimeConfig.text.fill
+                }
+              ],
+              text: {
+                field: "datum.yValue"
+              },
+              align: {
+                value: "center"
+              }
+            }
+          }
+        };
+
+        // add the value label marks
+        spec.marks[0].marks.push(valueLabelMark);
+
+        // hide things on the X axis
+        objectPath.set(spec, "axes.1.grid", false);
+        objectPath.set(spec, "axes.1.ticks", false);
+        objectPath.set(spec, "axes.1.labels", false);
+      }
     }
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())

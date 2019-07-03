@@ -262,11 +262,7 @@ module.exports = {
     if (request.params.optionName === "annotations.valuesOnBars") {
       try {
         return {
-          available:
-            isBarChart(item) &&
-            !isStackedBarChart(item) &&
-            (item.options.barOptions.isBarChart ||
-              item.options.barOptions.forceBarsOnSmall)
+          available: isBarChart(item) && !isStackedBarChart(item)
         };
       } catch (e) {
         return {
