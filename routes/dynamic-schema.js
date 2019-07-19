@@ -81,10 +81,14 @@ module.exports = {
     if (request.params.optionName === "colorOverwritesRowsItem") {
       try {
         return {
-          enum: [null].concat(item.data.map((row, index) => index + 1)),
+          enum: [null].concat(
+            item.data.slice(1).map((row, index) => index + 1)
+          ),
           "Q:options": {
             enum_titles: [""].concat(
-              item.data.map((row, index) => `${index + 1} - (${row[0]})`)
+              item.data
+                .slice(1)
+                .map((row, index) => `${index + 1} - (${row[0]})`)
             )
           }
         };
