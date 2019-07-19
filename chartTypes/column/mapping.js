@@ -74,6 +74,13 @@ module.exports = function getMapping() {
         if (!valuesOnBars) {
           return;
         }
+
+        // TODO: to work against to overlapping values problem we decided to do a logic around this:
+        //
+        // only show values if max 10 columns
+        // measure the labels to check if there is enough space to show them, and don't if there is not
+        // name the option somehow: "show values on bars if possible"
+
         const valuePadding = 2;
         const valueLabelMark = {
           type: "text",
