@@ -176,7 +176,8 @@ module.exports = function getMapping() {
               },
               dx: [
                 {
-                  test: "datum.x2 < datum.datum.labelWidth",
+                  test: `datum.x2 < datum.datum.labelWidth + ${valuePadding *
+                    2}`,
                   value: valuePadding
                 },
                 {
@@ -185,7 +186,8 @@ module.exports = function getMapping() {
               ],
               fill: [
                 {
-                  test: "datum.x2 < datum.datum.labelWidth",
+                  test: `datum.x2 < datum.datum.labelWidth + ${valuePadding *
+                    2}`,
                   value: mappingData.toolRuntimeConfig.text.fill
                 },
                 {
