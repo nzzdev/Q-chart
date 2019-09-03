@@ -19,12 +19,12 @@ vega.timeFormatLocale(d3config.timeFormatLocale);
 vega.formatLocale(d3config.formatLocale);
 
 // borrowed from https://github.com/gka/chroma.js/blob/master/src/ops/luminance.js
-const luminance_x = x => {
+function luminance_x(x) {
   x /= 255;
   return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
-};
+}
 
-// register vega expression functions
+// register vega expression functions to measure contrast
 vega.expressionFunction("contrast", function(color1, color2) {
   const c1 = vega.expressionFunction("rgb")(color1);
   const c2 = vega.expressionFunction("rgb")(color2);
@@ -157,8 +157,6 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
 
     const view = new vega.View(dataflow).renderer("none").initialize();
     view.logLevel(vega.Warn);
-
-    const scenegraph = view.scenegraph();
 
     svg = await view.toSVG();
 
