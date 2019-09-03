@@ -412,7 +412,7 @@
               }
             },
             "valuesOnBars": {
-              "title": "Werte auf Balken beschriften",
+              "title": "Werte auf Balken beschriften (wenn möglich)",
               "type": "boolean",
               "Q:options": {
                 "availabilityChecks": [

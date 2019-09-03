@@ -5,6 +5,8 @@ const dataHelpers = require("../../helpers/data.js");
 
 const commonMappings = require("../commonMappings.js");
 
+const textMeasure = require("../../helpers/textMeasure.js");
+
 module.exports = function getMapping() {
   return [
     {
@@ -75,11 +77,34 @@ module.exports = function getMapping() {
           return;
         }
 
-        // TODO: to work against to overlapping values problem we decided to do a logic around this:
-        //
-        // only show values if max 10 columns
+        const numberOfDataSeriesSignal = spec.signals.find(
+          signal => signal.name === "numberOfDataSeries"
+        );
+
+        // One idea to limit the chance of overlapping was to limit it to 10 dataseries
+        // as we measure now, this is not needed. The code stays here for reference
+        // only show values if max 10 columns (to have less chance of overlapping)
+        // if (numberOfDataSeriesSignal.value >= 10) {
+        //   return;
+        // }
+
         // measure the labels to check if there is enough space to show them, and don't if there is not
         // name the option somehow: "show values on bars if possible"
+        const labelsSortedByLength = spec.data[0].values
+          .map(entry => entry.yValue)
+          .sort((a, b) => {
+            if (a && b) {
+              return b.toString().length - a.toString().length;
+            } else if (!a) {
+              return 1;
+            } else if (!b) {
+              return -1;
+            }
+          });
+        const longestLabelWidth = textMeasure.getLabelTextWidth(
+          labelsSortedByLength[0],
+          mappingData.toolRuntimeConfig
+        );
 
         const valuePadding = 2;
         const valueLabelMark = {
@@ -103,9 +128,16 @@ module.exports = function getMapping() {
                   value: mappingData.toolRuntimeConfig.text.fill
                 }
               ],
-              text: {
-                field: "datum.yValue"
-              },
+              text: [
+                {
+                  test: `datum.width > ${longestLabelWidth}`, // only show the labels if they are less wide than the rects of the columns
+                  // test: `columnWidth > ${longestLabelWidth}`, // this would be an alternative, showing the labels if they are less wide than the column + its margin
+                  field: "datum.yValue"
+                },
+                {
+                  value: ""
+                }
+              ],
               align: {
                 value: "center"
               }

@@ -8,11 +8,8 @@ const commonMappings = require("../commonMappings.js");
 
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
-const textMetrics = require("vega").textMetrics;
 
-const { createCanvas } = require("canvas");
-const canvas = createCanvas(200, 200);
-const context = canvas.getContext("2d");
+const textMeasure = require("../../helpers/textMeasure.js");
 
 function shouldHaveLabelsOnTopOfBar(mappingData) {
   const item = mappingData.item;
@@ -24,10 +21,10 @@ function shouldHaveLabelsOnTopOfBar(mappingData) {
   }
 
   const longestLabel = getLongestDataLabel(mappingData, true);
-  const textItem = {
-    text: longestLabel
-  };
-  const longestLabelWidth = textMetrics.width(textItem);
+  const longestLabelWidth = textMeasure.getLabelTextWidth(
+    longestLabel,
+    mappingData.toolRuntimeConfig
+  );
 
   if (mappingData.width / 3 < longestLabelWidth) {
     return true;
@@ -66,15 +63,6 @@ module.exports = function getMapping() {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(itemData);
 
-        // set the font that will be used for the text marks here to the context
-        // we will measure the length of every label and add this to the data just below
-        context.font =
-          mappingData.toolRuntimeConfig.text.fontWeight +
-          " " +
-          mappingData.toolRuntimeConfig.text.fontSize +
-          " " +
-          mappingData.toolRuntimeConfig.text.font;
-
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
           .map((row, rowIndex) => {
@@ -90,7 +78,10 @@ module.exports = function getMapping() {
                 xIndex: rowIndex,
                 yValue: value,
                 cValue: index,
-                labelWidth: context.measureText(value).width
+                labelWidth: textMeasure.getLabelTextWidth(
+                  value,
+                  mappingData.toolRuntimeConfig
+                )
               };
             });
           })
@@ -121,9 +112,7 @@ module.exports = function getMapping() {
           if (mappingData.dateFormat) {
             const d3format =
               intervals[item.options.dateSeriesOptions.interval].d3format;
-            labelText.signal = `timeFormat(datum.xValue, '${
-              intervals[item.options.dateSeriesOptions.interval].d3format
-            }')`;
+            labelText.signal = `timeFormat(datum.xValue, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`;
           } else {
             labelText.field = "xValue";
           }
