@@ -4,7 +4,9 @@ const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 const intervals = require("../../helpers/dateSeries.js").intervals;
 const d3config = require("../../config/d3.js");
-const d3Format = require("d3-format");
+const d3format = require("d3-format");
+const locale = d3format.formatLocale(d3config.formatLocale);
+const format = locale.format(d3config.specifier);
 
 const commonMappings = require("../commonMappings.js");
 
@@ -81,7 +83,7 @@ module.exports = function getMapping() {
                 yValue: value,
                 cValue: index,
                 labelWidth: textMeasure.getLabelTextWidth(
-                  d3Format.format(d3config.formatLocale.decimal)(value),
+                  format(value),
                   mappingData.toolRuntimeConfig
                 )
               };
@@ -200,7 +202,7 @@ module.exports = function getMapping() {
                 }
               ],
               text: {
-                signal: `format(datum.datum.yValue, "${d3config.formatLocale.decimal}")`
+                signal: `format(datum.datum.yValue, "${d3config.specifier}")`
               },
               align: [
                 {

@@ -105,9 +105,9 @@ module.exports = function getMapping() {
             }
           });
         const longestColumnLabelWidth = textMeasure.getLabelTextWidth(
-          d3Format.format(d3config.formatLocale.decimal)(
-            labelsSortedByLength[0]
-          ),
+          d3Format
+            .formatLocale(d3config.formatLocale)
+            .format(labelsSortedByLength[0]),
           mappingData.toolRuntimeConfig
         );
 
@@ -166,7 +166,7 @@ module.exports = function getMapping() {
                 }
               ],
               text: {
-                signal: `format(datum.datum.yValue, "${d3config.formatLocale.decimal}")`
+                signal: `format(datum.datum.yValue, "${d3config.specifier}")`
               },
               align: {
                 value: "center"

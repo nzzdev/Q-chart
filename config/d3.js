@@ -1,15 +1,18 @@
 module.exports = {
+  specifier: ",~r",
   formatLocale: {
     decimal: ",",
     thousands: " ", // this is a viertelgeviert U+2005
-    grouping: [3]
-    // "currency": ["", "\u00a0CHF"]
+    grouping: [3],
+    type: " "
+    // "currency": ["", "\u00a0CHF"],
   },
   formatLocaleNoGrouping: {
     decimal: ",",
     thousands: " ", // this is a viertelgeviert U+2005
-    grouping: false
-    // "currency": ["", "\u00a0CHF"]
+    grouping: false,
+    type: " "
+    // "currency": ["", "\u00a0CHF"],
   },
   timeFormatLocale: {
     dateTime: "%A, der %e. %B %Y, %X",
