@@ -114,8 +114,8 @@ module.exports = function getMapping() {
           const dataflow = vega.parse(spec);
           const view = new vega.View(dataflow).renderer("none").initialize();
           view.run();
-          const columnWidth = view.getState().subcontext[0].signals
-            .binnedColumnWidth;
+          const state = view.getState();
+          const columnWidth = state.subcontext[0].signals.binnedColumnWidth;
 
           availableSpace = columnWidth;
 
@@ -123,7 +123,7 @@ module.exports = function getMapping() {
             // if there is only one data series, we take 2/3 of the group margin to the available space
             // 2/3 because there is 1/2 of the margin on each side of the column, but we do not take the complete space to ensure some space between labels
             availableSpace +=
-              (view.getState().subcontext[0].signals.groupMargin * 2) / 3;
+              (state.subcontext[0].signals.columnMargin * 2) / 3;
           }
         } catch (e) {
           // if we can't take the columnWidth from the state, we will not apply this config option
