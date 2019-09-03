@@ -125,14 +125,16 @@ module.exports = function getMapping() {
           if (view.signal("numberOfDataSeries") === 1) {
             // if there is only one data series, we take 2/3 of the group margin to the available space
             // 2/3 because there is 1/2 of the margin on each side of the column, but we do not take the complete space to ensure some space between labels
-            availableSpace +=
-              (state.subcontext[0].signals.columnMargin * 2) / 3;
+            if (state.subcontext[0].signals.columnMargin) {
+              availableSpace +=
+                (state.subcontext[0].signals.columnMargin * 2) / 3;
+            }
           }
         } catch (e) {
           // if we can't take the columnWidth from the state, we will not apply this config option
         }
 
-        if (availableSpace === undefined) {
+        if (availableSpace === undefined || Number.isNaN(availableSpace)) {
           return;
         }
 
