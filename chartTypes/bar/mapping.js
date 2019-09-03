@@ -179,7 +179,7 @@ module.exports = function getMapping() {
               },
               dx: [
                 {
-                  test: `datum.x2 < datum.datum.labelWidth + ${valuePadding *
+                  test: `datum.width < datum.datum.labelWidth + ${valuePadding *
                     2}`,
                   value: valuePadding
                 },
@@ -189,7 +189,7 @@ module.exports = function getMapping() {
               ],
               fill: [
                 {
-                  test: `datum.x2 < datum.datum.labelWidth + ${valuePadding *
+                  test: `datum.width < datum.datum.labelWidth + ${valuePadding *
                     2}`,
                   value: mappingData.toolRuntimeConfig.text.fill
                 },
@@ -206,7 +206,7 @@ module.exports = function getMapping() {
               },
               align: [
                 {
-                  test: "datum.x2 < datum.datum.labelWidth + 4",
+                  test: "datum.width < datum.datum.labelWidth + 4",
                   value: "left"
                 },
                 {
