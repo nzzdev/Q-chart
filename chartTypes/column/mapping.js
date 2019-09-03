@@ -1,7 +1,7 @@
 const objectPath = require("object-path");
-const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
+const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
 
@@ -161,7 +161,7 @@ module.exports = function getMapping() {
                 }
               ],
               text: {
-                field: "datum.yValue"
+                signal: `format(datum.datum.yValue, "${d3config.formatLocale.decimal}")`
               },
               align: {
                 value: "center"

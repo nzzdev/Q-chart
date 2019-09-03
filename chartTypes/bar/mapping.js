@@ -3,6 +3,7 @@ const array2d = require("array2d");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 const intervals = require("../../helpers/dateSeries.js").intervals;
+const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
 
@@ -196,7 +197,7 @@ module.exports = function getMapping() {
                 }
               ],
               text: {
-                field: "x2"
+                signal: `format(datum.datum.yValue, "${d3config.formatLocale.decimal}")`
               },
               align: [
                 {
