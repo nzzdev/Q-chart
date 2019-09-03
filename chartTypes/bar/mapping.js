@@ -4,6 +4,7 @@ const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 const intervals = require("../../helpers/dateSeries.js").intervals;
 const d3config = require("../../config/d3.js");
+const d3Format = require("d3-format");
 
 const commonMappings = require("../commonMappings.js");
 
@@ -80,7 +81,7 @@ module.exports = function getMapping() {
                 yValue: value,
                 cValue: index,
                 labelWidth: textMeasure.getLabelTextWidth(
-                  value,
+                  d3Format.format(d3config.formatLocale.decimal)(value),
                   mappingData.toolRuntimeConfig
                 )
               };

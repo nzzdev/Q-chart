@@ -2,6 +2,7 @@ const objectPath = require("object-path");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 const d3config = require("../../config/d3.js");
+const d3Format = require("d3-format");
 
 const commonMappings = require("../commonMappings.js");
 
@@ -104,7 +105,9 @@ module.exports = function getMapping() {
             }
           });
         const longestColumnLabelWidth = textMeasure.getLabelTextWidth(
-          labelsSortedByLength[0],
+          d3Format.format(d3config.formatLocale.decimal)(
+            labelsSortedByLength[0]
+          ),
           mappingData.toolRuntimeConfig
         );
 
