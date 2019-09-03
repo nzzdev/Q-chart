@@ -7,6 +7,8 @@ const commonMappings = require("../commonMappings.js");
 
 const textMeasure = require("../../helpers/textMeasure.js");
 
+const vega = require("vega");
+
 module.exports = function getMapping() {
   return [
     {
@@ -77,13 +79,13 @@ module.exports = function getMapping() {
           return;
         }
 
-        const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
-        );
-
         // One idea to limit the chance of overlapping was to limit it to 10 dataseries
         // as we measure now, this is not needed. The code stays here for reference
         // only show values if max 10 columns (to have less chance of overlapping)
+
+        // const numberOfDataSeriesSignal = spec.signals.find(
+        //   signal => signal.name === "numberOfDataSeries"
+        // );
         // if (numberOfDataSeriesSignal.value >= 10) {
         //   return;
         // }
@@ -101,10 +103,40 @@ module.exports = function getMapping() {
               return -1;
             }
           });
-        const longestLabelWidth = textMeasure.getLabelTextWidth(
+        const longestColumnLabelWidth = textMeasure.getLabelTextWidth(
           labelsSortedByLength[0],
           mappingData.toolRuntimeConfig
         );
+
+        let availableSpace;
+        try {
+          // let vega calculate the view once here, to be able to get the actual column width
+          const dataflow = vega.parse(spec);
+          const view = new vega.View(dataflow).renderer("none").initialize();
+          view.run();
+          const columnWidth = view.getState().subcontext[0].signals
+            .binnedColumnWidth;
+
+          availableSpace = columnWidth;
+
+          if (view.signal("numberOfDataSeries") === 1) {
+            // if there is only one data series, we take 2/3 of the group margin to the available space
+            // 2/3 because there is 1/2 of the margin on each side of the column, but we do not take the complete space to ensure some space between labels
+            availableSpace +=
+              (view.getState().subcontext[0].signals.groupMargin * 2) / 3;
+          }
+        } catch (e) {
+          // if we can't take the columnWidth from the state, we will not apply this config option
+        }
+
+        if (availableSpace === undefined) {
+          return;
+        }
+
+        // if the column is less wide than the longestLabel, we do not apply this option
+        if (availableSpace < longestColumnLabelWidth) {
+          return;
+        }
 
         const valuePadding = 2;
         const valueLabelMark = {
@@ -128,16 +160,9 @@ module.exports = function getMapping() {
                   value: mappingData.toolRuntimeConfig.text.fill
                 }
               ],
-              text: [
-                {
-                  test: `datum.width > ${longestLabelWidth}`, // only show the labels if they are less wide than the rects of the columns
-                  // test: `columnWidth > ${longestLabelWidth}`, // this would be an alternative, showing the labels if they are less wide than the column + its margin
-                  field: "datum.yValue"
-                },
-                {
-                  value: ""
-                }
-              ],
+              text: {
+                field: "datum.yValue"
+              },
               align: {
                 value: "center"
               }
