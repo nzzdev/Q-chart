@@ -216,7 +216,7 @@ module.exports = function getMapping() {
             objectPath.set(spec, "axes.1.values", [0]);
 
             // add some offset to have space between the bottom placed labels on the bar and the axis labels
-            objectPath.set(spec, "axes.0.offset", 4);
+            objectPath.set(spec, "axes.0.offset", 10);
           }
         }
       }
