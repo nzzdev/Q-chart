@@ -203,16 +203,15 @@ module.exports = function getMapping() {
               "axes.1.gridColor",
               mappingData.toolRuntimeConfig.axis.labelColor
             );
-            objectPath.set(spec, "axes.1.domain", false);
-            objectPath.set(spec, "axes.1.ticks", false);
             objectPath.set(spec, "axes.1.values", [0]);
-            objectPath.set(spec, "axes.1.labels", false);
-
             // add some offset to have space between the bottom placed labels on the bar and the axis labels
             objectPath.set(spec, "axes.0.offset", 4);
           }
 
-          // hide things on the X axis
+          objectPath.set(spec, "axes.1.domain", false);
+          objectPath.set(spec, "axes.1.ticks", false);
+          objectPath.set(spec, "axes.1.labels", false);
+
           objectPath.set(spec, "axes.0.grid", false);
           objectPath.set(spec, "axes.0.ticks", false);
           objectPath.set(spec, "axes.0.labels", true);

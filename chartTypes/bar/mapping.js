@@ -308,15 +308,16 @@ module.exports = function getMapping() {
             mappingData.toolRuntimeConfig.axis.labelColor
           );
 
-          objectPath.set(spec, "axes.0.domain", false);
-          objectPath.set(spec, "axes.0.ticks", false);
           objectPath.set(spec, "axes.0.values", [0]);
-          objectPath.set(spec, "axes.0.labels", false);
+
           // make sure the axis is drawn on top, so it's in front of positive and negative bars
           objectPath.set(spec, "axes.0.zindex", 1);
         }
 
-        // hide things on the X axis
+        objectPath.set(spec, "axes.0.ticks", false);
+        objectPath.set(spec, "axes.0.domain", false);
+        objectPath.set(spec, "axes.0.labels", false);
+
         objectPath.set(spec, "axes.1.grid", false);
         objectPath.set(spec, "axes.1.ticks", false);
         objectPath.set(spec, "axes.1.labels", true);
