@@ -158,7 +158,7 @@ module.exports = function getMapping() {
           return;
         }
 
-        const valuePadding = 2;
+        const valuePadding = 4;
         const tests = {
           positiveInBar: `datum.datum.yValue >= 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
             2}`,
@@ -317,7 +317,7 @@ module.exports = function getMapping() {
         // hide things on the X axis
         objectPath.set(spec, "axes.1.grid", false);
         objectPath.set(spec, "axes.1.ticks", false);
-        objectPath.set(spec, "axes.1.labels", false);
+        objectPath.set(spec, "axes.1.labels", true);
       }
     },
     {

@@ -143,7 +143,7 @@ module.exports = function getMapping() {
             return;
           }
 
-          const valuePadding = 2;
+          const valuePadding = 4;
           const valueLabelMark = {
             type: "text",
             from: {
@@ -207,12 +207,15 @@ module.exports = function getMapping() {
             objectPath.set(spec, "axes.1.ticks", false);
             objectPath.set(spec, "axes.1.values", [0]);
             objectPath.set(spec, "axes.1.labels", false);
+
+            // add some offset to have space between the bottom placed labels on the bar and the axis labels
+            objectPath.set(spec, "axes.0.offset", 4);
           }
 
           // hide things on the X axis
           objectPath.set(spec, "axes.0.grid", false);
           objectPath.set(spec, "axes.0.ticks", false);
-          objectPath.set(spec, "axes.0.labels", false);
+          objectPath.set(spec, "axes.0.labels", true);
         }
       }
     ]);
