@@ -96,10 +96,10 @@ lab.experiment("stylesheets endpoint", () => {
 });
 
 lab.experiment("fixture data endpoint", () => {
-  it("returns 35 fixture data items for /fixtures/data", async () => {
+  it("returns 36 fixture data items for /fixtures/data", async () => {
     const response = await server.inject("/fixtures/data");
     expect(response.statusCode).to.be.equal(200);
-    expect(response.result.length).to.be.equal(35);
+    expect(response.result.length).to.be.equal(36);
   });
 });
 
@@ -119,9 +119,7 @@ lab.experiment("all fixtures render", async () => {
   for (let fixtureFile of fixtureFiles) {
     const width = Math.floor(Math.random() * (800 - 350)) + 350;
     const fixture = require(fixtureFile);
-    it(`doesnt fail in rendering fixture ${
-      fixture.title
-    } with width: ${width}`, async () => {
+    it(`doesnt fail in rendering fixture ${fixture.title} with width: ${width}`, async () => {
       const request = {
         method: "POST",
         url: "/rendering-info/web",
