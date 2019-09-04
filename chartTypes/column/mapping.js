@@ -151,12 +151,24 @@ module.exports = function getMapping() {
           },
           encode: {
             enter: {
-              y: {
-                signal: `datum.y - ${valuePadding}`
-              },
-              baseline: {
-                value: "bottom"
-              },
+              y: [
+                {
+                  test: "datum.yValue >= 0",
+                  signal: `datum.y - ${valuePadding}`
+                },
+                {
+                  signal: `datum.y2 + ${valuePadding}`
+                }
+              ],
+              baseline: [
+                {
+                  test: "datum.yValue >= 0",
+                  value: "bottom"
+                },
+                {
+                  value: "top"
+                }
+              ],
               x: {
                 signal: "datum.x + (datum.width / 2)"
               },
