@@ -219,7 +219,7 @@ module.exports = function getMapping() {
             objectPath.set(spec, "axes.0.offset", 10);
 
             // make sure the axis is drawn on top, so it's in front of positive and negative bars
-            objectPath.set(spec, "axes.0.zindex", 1);
+            objectPath.set(spec, "axes.1.zindex", 1);
           }
         }
       }
