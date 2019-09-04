@@ -102,5 +102,6 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
-    .concat(commonMappings.getHeightMappings());
+    .concat(commonMappings.getHeightMappings())
+    .concat(commonMappings.getColumnAxisPositioningMappings());
 };
