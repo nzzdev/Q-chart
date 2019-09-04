@@ -267,8 +267,8 @@ function getHeightMappings() {
         let height = spec.width * aspectRatio;
 
         // minimum height is 240px
-        if (height < 240) {
-          height = 240;
+        if (height < Math.min(240, spec.width)) {
+          height = Math.min(240, spec.width);
         }
         // increase the height if hideAxisLabel option is unchecked
         if (mappingData.item.options.hideAxisLabel === false) {
