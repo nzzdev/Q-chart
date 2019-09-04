@@ -35,8 +35,7 @@ const labelTemplate = {
   encode: {
     update: {
       text: {
-        signal: `format(datum.yValue, "${d3config.formatLocale.decimal}")`
-        // field: "yValue"
+        signal: `format(datum.yValue, "${d3config.specifier}")`
       },
       fontWeight: {
         value: "100"

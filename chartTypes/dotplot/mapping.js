@@ -222,9 +222,7 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${
-                  d3config.formatLocale.decimal
-                }")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`
               },
               y: {
                 signal: "dotGroupHeight / 2"
@@ -260,9 +258,7 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${
-                  d3config.formatLocale.decimal
-                }")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`
               },
               y: {
                 signal: "dotGroupHeight / 2"
@@ -313,9 +309,7 @@ module.exports = function getMapping() {
                   value: ""
                 },
                 {
-                  signal: `format(datum.diffToPrevious, "${
-                    d3config.formatLocale.decimal
-                  }")`
+                  signal: `format(datum.diffToPrevious, "${d3config.specifier}")`
                 }
               ],
               y: {

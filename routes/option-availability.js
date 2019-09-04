@@ -14,6 +14,10 @@ function isBarChart(item) {
   );
 }
 
+function isStackedBarChart(item) {
+  return item.options.chartType === "StackedBar";
+}
+
 function isLineChart(item) {
   return item.options.chartType === "Line";
 }
@@ -197,9 +201,17 @@ module.exports = {
     if (request.params.optionName === "annotations") {
       let available = false;
       if (
-        isLineChart(item) &&
+        (isLineChart(item) || isBarChart(item)) &&
         hasNoCustomVegaSpec(item) &&
         item.data[0].length === 2 // only if there is just one data series
+      ) {
+        available = true;
+      }
+
+      if (
+        isBarChart(item) &&
+        !isStackedBarChart(item) &&
+        hasNoCustomVegaSpec(item)
       ) {
         available = true;
       }
@@ -245,6 +257,18 @@ module.exports = {
       return {
         available: isDotplot(item) || isArrowChart(item)
       };
+    }
+
+    if (request.params.optionName === "annotations.valuesOnBars") {
+      try {
+        return {
+          available: isBarChart(item) && !isStackedBarChart(item)
+        };
+      } catch (e) {
+        return {
+          available: false
+        };
+      }
     }
 
     if (request.params.optionName === "displayWeight") {

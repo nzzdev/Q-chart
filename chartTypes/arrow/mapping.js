@@ -195,9 +195,7 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${
-                  d3config.formatLocale.decimal
-                }")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`
               },
               y: {
                 signal: "arrowGroupHeight / 2"
@@ -243,9 +241,7 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${
-                  d3config.formatLocale.decimal
-                }")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`
               },
               y: {
                 signal: "arrowGroupHeight / 2"
@@ -307,14 +303,10 @@ module.exports = function getMapping() {
                 },
                 {
                   test: "datum.diffToNext > 0",
-                  signal: `format(datum.diffToNext, "+${
-                    d3config.formatLocale.decimal
-                  }")`
+                  signal: `format(datum.diffToNext, "+${d3config.specifier}")`
                 },
                 {
-                  signal: `format(datum.diffToNext, "${
-                    d3config.formatLocale.decimal
-                  }")`
+                  signal: `format(datum.diffToNext, "${d3config.specifier}")`
                 }
               ],
               y: {

@@ -2,22 +2,10 @@
   "title": "FIXTURE: Bar - color overwrite - highlight",
   "subtitle": "Colorcolorcolor",
   "data": [
+    ["Country", "America", "Mexico", "Switzerland", "Dem. Republic of Congo"],
+    ["GDP", "18570000000", "1046000000000", "659800000000", "35000000000"],
     [
-      "Country",
-      "America",
-      "Mexico",
-      "Switzerland",
-      "Dem. Republic of Congo"
-    ],
-    [
-      "GDP",
-      "18570000000",
-      "1046000000000",
-      "659800000000",
-      "35000000000"
-    ],
-    [
-      "Population",
+      "Populationasda",
       "800372000000",
       "127500000000",
       "83720000000",
@@ -28,10 +16,12 @@
   "options": {
     "chartType": "Bar",
     "hideAxisLabel": true,
-    "annotations": {},
+    "annotations": {
+      "valuesOnBars": true
+    },
     "barOptions": {
       "isBarChart": false,
-      "forceBarsOnSmall": false
+      "forceBarsOnSmall": true
     },
     "dateSeriesOptions": {
       "interval": "year",
