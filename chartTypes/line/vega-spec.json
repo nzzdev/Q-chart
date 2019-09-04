@@ -120,6 +120,9 @@
               "defined": {
                 "signal": "datum.yValue !== null"
               },
+              "strokeJoin": {
+                "value": "round"
+              },
               "stroke": [
                 {
                   "test": "datum.isHighlighted === true",
