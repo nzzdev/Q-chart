@@ -1,7 +1,7 @@
 const clone = require("clone");
 const objectPath = require("object-path");
 
-function getMappedSpec(id, chartType, spec, mappingData) {
+async function getMappedSpec(id, chartType, spec, mappingData) {
   const modifiedSpec = clone(spec);
   let mappings;
   try {
@@ -17,7 +17,7 @@ function getMappedSpec(id, chartType, spec, mappingData) {
       if (itemValue === undefined) {
         continue;
       }
-      mapping.mapToSpec(itemValue, modifiedSpec, mappingData, id);
+      await mapping.mapToSpec(itemValue, modifiedSpec, mappingData, id);
     }
   } catch (err) {
     throw err;

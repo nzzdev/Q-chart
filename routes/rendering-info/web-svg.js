@@ -101,7 +101,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   // this will be the compiled spec from template and mapping
   let spec;
   try {
-    spec = getMappedSpec(id, chartType, templateSpec, mappingData);
+    spec = await getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
     throw new Boom(err);
   }
@@ -155,7 +155,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
       // we probably do not have prerender for this chartType
     }
 
-    const view = new vega.View(dataflow).renderer("none").initialize();
+    const view = new vega.View(dataflow).renderer("svg").initialize();
     view.logLevel(vega.Warn);
 
     svg = await view.toSVG();

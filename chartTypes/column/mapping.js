@@ -72,148 +72,6 @@ module.exports = function getMapping() {
         objectPath.set(spec, "scales.1.nice", false);
         objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
       }
-    },
-    {
-      path: "item.options.annotations.valuesOnBars",
-      mapToSpec: function(valuesOnBars, spec, mappingData) {
-        if (!valuesOnBars) {
-          return;
-        }
-
-        // One idea to limit the chance of overlapping was to limit it to 10 dataseries
-        // as we measure now, this is not needed. The code stays here for reference
-        // only show values if max 10 columns (to have less chance of overlapping)
-
-        // const numberOfDataSeriesSignal = spec.signals.find(
-        //   signal => signal.name === "numberOfDataSeries"
-        // );
-        // if (numberOfDataSeriesSignal.value >= 10) {
-        //   return;
-        // }
-
-        // measure the labels to check if there is enough space to show them, and don't if there is not
-        // name the option somehow: "show values on bars if possible"
-        const labelsSortedByLength = spec.data[0].values
-          .map(entry => entry.yValue)
-          .sort((a, b) => {
-            if (a && b) {
-              return b.toString().length - a.toString().length;
-            } else if (!a) {
-              return 1;
-            } else if (!b) {
-              return -1;
-            }
-          });
-        const longestColumnLabelWidth = textMeasure.getLabelTextWidth(
-          d3Format
-            .formatLocale(d3config.formatLocale)
-            .format(labelsSortedByLength[0]),
-          mappingData.toolRuntimeConfig
-        );
-
-        let availableSpace;
-        try {
-          // let vega calculate the view once here, to be able to get the actual column width
-          const dataflow = vega.parse(spec);
-          const view = new vega.View(dataflow).renderer("none").initialize();
-          view.run();
-          const state = view.getState();
-          const columnWidth = state.subcontext[0].signals.binnedColumnWidth;
-
-          availableSpace = columnWidth;
-
-          if (view.signal("numberOfDataSeries") === 1) {
-            // if there is only one data series, we take 2/3 of the group margin to the available space
-            // 2/3 because there is 1/2 of the margin on each side of the column, but we do not take the complete space to ensure some space between labels
-            if (state.subcontext[0].signals.columnMargin) {
-              availableSpace +=
-                (state.subcontext[0].signals.columnMargin * 2) / 3;
-            }
-          }
-        } catch (e) {
-          // if we can't take the columnWidth from the state, we will not apply this config option
-        }
-
-        if (availableSpace === undefined || Number.isNaN(availableSpace)) {
-          return;
-        }
-
-        // if the column is less wide than the longestLabel, we do not apply this option
-        if (availableSpace < longestColumnLabelWidth) {
-          return;
-        }
-
-        const valuePadding = 2;
-        const valueLabelMark = {
-          type: "text",
-          from: {
-            data: "bar"
-          },
-          encode: {
-            enter: {
-              y: [
-                {
-                  test: "datum.datum.yValue >= 0",
-                  signal: `datum.y - ${valuePadding}`
-                },
-                {
-                  signal: `datum.y2 + ${valuePadding}`
-                }
-              ],
-              baseline: [
-                {
-                  test: "datum.datum.yValue >= 0",
-                  value: "bottom"
-                },
-                {
-                  value: "top"
-                }
-              ],
-              x: {
-                signal: "datum.x + (datum.width / 2)"
-              },
-              fill: [
-                {
-                  value: mappingData.toolRuntimeConfig.text.fill
-                }
-              ],
-              text: {
-                signal: `format(datum.datum.yValue, "${d3config.specifier}")`
-              },
-              align: {
-                value: "center"
-              }
-            }
-          }
-        };
-
-        // add the value label marks
-        spec.marks[0].marks.push(valueLabelMark);
-
-        // if we have positive and negative values, we want a 0 baseline to be included
-        const max = dataHelpers.getMaxValue(mappingData.item.data);
-        const min = dataHelpers.getMinValue(mappingData.item.data);
-        if (max >= 0 && min < 0) {
-          // keep the 0 tick line only
-          // hide the domain
-          // do not show labels
-          objectPath.set(spec, "axes.1.grid", true);
-          objectPath.set(
-            spec,
-            "axes.1.gridColor",
-            mappingData.toolRuntimeConfig.axis.labelColor
-          );
-          objectPath.set(spec, "axes.1.domain", false);
-          objectPath.set(spec, "axes.1.ticks", false);
-          objectPath.set(spec, "axes.1.values", [0]);
-          objectPath.set(spec, "axes.1.labels", false);
-        }
-
-        // hide things on the X axis
-        objectPath.set(spec, "axes.0.grid", false);
-        objectPath.set(spec, "axes.0.ticks", false);
-        objectPath.set(spec, "axes.0.labels", false);
-      }
     }
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
@@ -222,5 +80,140 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColumnDateSeriesHandlingMappings())
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
-    .concat(commonMappings.getHeightMappings());
+    .concat(commonMappings.getHeightMappings())
+    .concat([
+      {
+        path: "item.options.annotations.valuesOnBars",
+        mapToSpec: async function(valuesOnBars, spec, mappingData) {
+          if (!valuesOnBars) {
+            return;
+          }
+
+          // measure the labels to check if there is enough space to show them, and don't if there is not
+          // name the option somehow: "show values on bars if possible"
+          const labelsSortedByLength = spec.data[0].values
+            .map(entry => entry.yValue)
+            .sort((a, b) => {
+              if (a && b) {
+                return b.toString().length - a.toString().length;
+              } else if (!a) {
+                return 1;
+              } else if (!b) {
+                return -1;
+              }
+            });
+          const longestColumnLabelWidth = textMeasure.getLabelTextWidth(
+            d3Format
+              .formatLocale(d3config.formatLocale)
+              .format(labelsSortedByLength[0]),
+            mappingData.toolRuntimeConfig
+          );
+
+          let availableSpace;
+          try {
+            // let vega calculate the view once here, to be able to get the actual column width
+            const dataflow = vega.parse(spec);
+            const view = new vega.View(dataflow).renderer("svg").initialize();
+            await view.runAsync();
+            const state = view.getState();
+
+            const binnedColumnWidth =
+              state.subcontext[0].signals.binnedColumnWidth;
+
+            availableSpace = binnedColumnWidth;
+
+            if (view.signal("numberOfDataSeries") === 1) {
+              // if there is only one data series, we take 2/3 of the group margin to the available space
+              // 2/3 because there is 1/2 of the margin on each side of the column, but we do not take the complete space to ensure some space between labels
+              if (state.subcontext[0].signals.columnMargin) {
+                availableSpace +=
+                  (state.subcontext[0].signals.columnMargin * 2) / 3;
+              }
+            }
+          } catch (e) {
+            // if we can't take the binnedColumnWidth from the state, we will not apply this config option
+          }
+
+          if (availableSpace === undefined || Number.isNaN(availableSpace)) {
+            return;
+          }
+
+          // if the column is less wide than the longestLabel, we do not apply this option
+          if (availableSpace < longestColumnLabelWidth) {
+            return;
+          }
+
+          const valuePadding = 2;
+          const valueLabelMark = {
+            type: "text",
+            from: {
+              data: "bar"
+            },
+            encode: {
+              enter: {
+                y: [
+                  {
+                    test: "datum.datum.yValue >= 0",
+                    signal: `datum.y - ${valuePadding}`
+                  },
+                  {
+                    signal: `datum.y2 + ${valuePadding}`
+                  }
+                ],
+                baseline: [
+                  {
+                    test: "datum.datum.yValue >= 0",
+                    value: "bottom"
+                  },
+                  {
+                    value: "top"
+                  }
+                ],
+                x: {
+                  signal: "datum.x + (datum.width / 2)"
+                },
+                fill: [
+                  {
+                    value: mappingData.toolRuntimeConfig.text.fill
+                  }
+                ],
+                text: {
+                  signal: `format(datum.datum.yValue, "${d3config.specifier}")`
+                },
+                align: {
+                  value: "center"
+                }
+              }
+            }
+          };
+
+          // add the value label marks
+          spec.marks[0].marks.push(valueLabelMark);
+
+          // if we have positive and negative values, we want a 0 baseline to be included
+          const max = dataHelpers.getMaxValue(mappingData.item.data);
+          const min = dataHelpers.getMinValue(mappingData.item.data);
+          if (max >= 0 && min < 0) {
+            // keep the 0 tick line only
+            // hide the domain
+            // do not show labels
+            objectPath.set(spec, "axes.1.grid", true);
+            objectPath.set(
+              spec,
+              "axes.1.gridColor",
+              mappingData.toolRuntimeConfig.axis.labelColor
+            );
+            objectPath.set(spec, "axes.1.domain", false);
+            objectPath.set(spec, "axes.1.ticks", false);
+            objectPath.set(spec, "axes.1.values", [0]);
+            objectPath.set(spec, "axes.1.labels", false);
+          }
+
+          // hide things on the X axis
+          objectPath.set(spec, "axes.0.grid", false);
+          objectPath.set(spec, "axes.0.ticks", false);
+          objectPath.set(spec, "axes.0.labels", false);
+        }
+      }
+    ]);
 };
