@@ -81,6 +81,7 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getColumnLabelColorMappings())
     .concat(commonMappings.getHeightMappings())
+    .concat(commonMappings.getColumnAxisPositioningMappings())
     .concat([
       {
         path: "item.options.annotations.valuesOnBars",
