@@ -5,6 +5,8 @@ const d3 = {
   timeFormat: require("d3-time-format").timeFormat
 };
 
+const dataHelpers = require("../helpers/data.js");
+
 function getLineDateSeriesHandlingMappings() {
   return [
     {
@@ -78,9 +80,7 @@ function getColumnDateSeriesHandlingMappings() {
             labels: {
               update: {
                 text: {
-                  signal: `timeFormat(datum.value, '${
-                    intervals[item.options.dateSeriesOptions.interval].d3format
-                  }')`
+                  signal: `timeFormat(datum.value, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`
                 }
               }
             }
@@ -108,9 +108,7 @@ function getBarDateSeriesHandlingMappings() {
             labels: {
               update: {
                 text: {
-                  signal: `timeFormat(datum.value, '${
-                    intervals[item.options.dateSeriesOptions.interval].d3format
-                  }')`
+                  signal: `timeFormat(datum.value, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`
                 }
               }
             }
@@ -269,8 +267,8 @@ function getHeightMappings() {
         let height = spec.width * aspectRatio;
 
         // minimum height is 240px
-        if (height < 240) {
-          height = 240;
+        if (height < Math.min(240, spec.width)) {
+          height = Math.min(240, spec.width);
         }
         // increase the height if hideAxisLabel option is unchecked
         if (mappingData.item.options.hideAxisLabel === false) {
@@ -361,16 +359,74 @@ function getColorOverwritesRowsMappings() {
   ];
 }
 
+function getColumnAxisPositioningMappings() {
+  return [
+    {
+      path: "item.data",
+      mapToSpec: function(data, spec, mappingData) {
+        // if we have positive and negative values, we want a 0 baseline to be included
+        const max = dataHelpers.getMaxValue(data);
+
+        // if we have only negative values
+        // we move the X axis to the top
+        if (max <= 0) {
+          objectPath.set(spec, "axes.0.orient", "top");
+          objectPath.set(spec, "axes.0.labelPadding", -5);
+          // if we still have a title for this axis, move it to the top
+          const title = objectPath.get(spec, "axes.0.encode.title");
+          if (title) {
+            objectPath.set(
+              spec,
+              "axes.0.encode.title.update.baseline.value",
+              "bottom"
+            );
+            objectPath.set(spec, "axes.0.encode.title.update.y.value", -30);
+          }
+        }
+      }
+    }
+  ];
+}
+
+function getBarAxisPositioningMappings() {
+  return [
+    {
+      path: "item.data",
+      mapToSpec: function(data, spec, mappingData) {
+        // if we have positive and negative values, we want a 0 baseline to be included
+        const max = dataHelpers.getMaxValue(data);
+
+        // if we have only negative values
+        // we move the X axis to the top
+        if (max <= 0) {
+          objectPath.set(spec, "axes.1.orient", "right");
+          // if we still have a title for this axis, move it to the top
+          const title = objectPath.get(spec, "axes.1.encode.title");
+          if (title) {
+            objectPath.set(
+              spec,
+              "axes.1.encode.title.update.align.value",
+              "left"
+            );
+          }
+        }
+      }
+    }
+  ];
+}
+
 module.exports = {
-  getLineDateSeriesHandlingMappings: getLineDateSeriesHandlingMappings,
-  getColumnDateSeriesHandlingMappings: getColumnDateSeriesHandlingMappings,
-  getBarDateSeriesHandlingMappings: getBarDateSeriesHandlingMappings,
-  getColumnAreaPrognosisMappings: getColumnAreaPrognosisMappings,
-  getBarPrognosisMappings: getBarPrognosisMappings,
-  getColumnLabelColorMappings: getColumnLabelColorMappings,
-  getBarLabelColorMappings: getBarLabelColorMappings,
-  getHeightMappings: getHeightMappings,
-  getHighlightRowsMapping: getHighlightRowsMapping,
-  getHighlightSeriesMapping: getHighlightSeriesMapping,
-  getColorOverwritesRowsMappings: getColorOverwritesRowsMappings
+  getLineDateSeriesHandlingMappings,
+  getColumnDateSeriesHandlingMappings,
+  getBarDateSeriesHandlingMappings,
+  getColumnAreaPrognosisMappings,
+  getBarPrognosisMappings,
+  getColumnLabelColorMappings,
+  getBarLabelColorMappings,
+  getHeightMappings,
+  getHighlightRowsMapping,
+  getHighlightSeriesMapping,
+  getColorOverwritesRowsMappings,
+  getColumnAxisPositioningMappings,
+  getBarAxisPositioningMappings
 };

@@ -95,7 +95,7 @@ module.exports = function getMapping() {
           spec.axes[0].labelFlush = true;
 
           // align the axis alignment to the left if the labels are inside the chart
-          spec.axes[1].encode.title.update.align = "left";
+          spec.axes[1].encode.title.update.align.value = "left";
 
           const labelHeightSignal = spec.signals.find(
             signal => signal.name === "labelHeight"
@@ -108,9 +108,7 @@ module.exports = function getMapping() {
           if (mappingData.dateFormat) {
             const d3format =
               intervals[item.options.dateSeriesOptions.interval].d3format;
-            labelText.signal = `timeFormat(datum.xValue, '${
-              intervals[item.options.dateSeriesOptions.interval].d3format
-            }')`;
+            labelText.signal = `timeFormat(datum.xValue, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`;
           } else {
             labelText.field = "xValue";
           }
@@ -213,5 +211,6 @@ module.exports = function getMapping() {
     .concat(commonMappings.getHighlightSeriesMapping())
     .concat(commonMappings.getBarDateSeriesHandlingMappings())
     .concat(commonMappings.getBarPrognosisMappings())
-    .concat(commonMappings.getBarLabelColorMappings());
+    .concat(commonMappings.getBarLabelColorMappings())
+    .concat(commonMappings.getBarAxisPositioningMappings());
 };

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
   "signals": [
     {
       "name": "height",
@@ -274,6 +275,7 @@
       "grid": false,
       "labels": true,
       "ticks": false,
+      "labelPadding": 5,
       "encode": {
         "title": {
           "update": {
@@ -290,7 +292,7 @@
               "value": 0
             },
             "y": {
-              "value": -30
+              "value": -20
             }
           }
         }

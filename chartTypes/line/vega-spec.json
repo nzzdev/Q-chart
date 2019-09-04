@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
   "autosize": {
     "type": "fit"
   },
@@ -84,7 +84,8 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
-      "tickCount": 4
+      "tickCount": 4,
+      "labelPadding": 2
     }
   ],
   "marks": [
@@ -119,6 +120,9 @@
               },
               "defined": {
                 "signal": "datum.yValue !== null"
+              },
+              "strokeJoin": {
+                "value": "round"
               },
               "stroke": [
                 {
