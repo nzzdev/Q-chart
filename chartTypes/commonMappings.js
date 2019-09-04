@@ -371,6 +371,7 @@ function getColumnAxisPositioningMappings() {
         // we move the X axis to the top
         if (max <= 0) {
           objectPath.set(spec, "axes.0.orient", "top");
+          objectPath.set(spec, "axes.0.labelPadding", -5);
           // if we still have a title for this axis, move it to the top
           const title = objectPath.get(spec, "axes.0.encode.title");
           if (title) {
