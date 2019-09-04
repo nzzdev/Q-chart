@@ -275,6 +275,7 @@
       "grid": false,
       "labels": true,
       "ticks": false,
+      "labelPadding": 2,
       "encode": {
         "title": {
           "update": {

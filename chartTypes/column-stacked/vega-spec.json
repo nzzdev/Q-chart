@@ -173,7 +173,8 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
-      "tickCount": 4
+      "tickCount": 4,
+      "labelPadding": 2
     }
   ],
   "autosize": {
