@@ -108,9 +108,7 @@ module.exports = function getMapping() {
           if (mappingData.dateFormat) {
             const d3format =
               intervals[item.options.dateSeriesOptions.interval].d3format;
-            labelText.signal = `timeFormat(datum.xValue, '${
-              intervals[item.options.dateSeriesOptions.interval].d3format
-            }')`;
+            labelText.signal = `timeFormat(datum.xValue, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`;
           } else {
             labelText.field = "xValue";
           }
@@ -213,5 +211,6 @@ module.exports = function getMapping() {
     .concat(commonMappings.getHighlightSeriesMapping())
     .concat(commonMappings.getBarDateSeriesHandlingMappings())
     .concat(commonMappings.getBarPrognosisMappings())
-    .concat(commonMappings.getBarLabelColorMappings());
+    .concat(commonMappings.getBarLabelColorMappings())
+    .concat(commonMappings.getBarAxisPositioningMappings());
 };
