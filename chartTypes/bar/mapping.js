@@ -307,22 +307,20 @@ module.exports = function getMapping() {
         objectPath.set(spec, "axes.1.ticks", false);
         objectPath.set(spec, "axes.1.labels", true);
 
-        if (min < 0) {
-          // keep the 0 tick line only
-          // hide the domain
-          // do not show labels
-          objectPath.set(spec, "axes.0.grid", true);
-          objectPath.set(
-            spec,
-            "axes.0.gridColor",
-            mappingData.toolRuntimeConfig.axis.labelColor
-          );
+        // keep the 0 tick line only
+        // hide the domain
+        // do not show labels
+        objectPath.set(spec, "axes.0.grid", true);
+        objectPath.set(
+          spec,
+          "axes.0.gridColor",
+          mappingData.toolRuntimeConfig.axis.labelColor
+        );
 
-          objectPath.set(spec, "axes.0.values", [0]);
+        objectPath.set(spec, "axes.0.values", [0]);
 
-          // make sure the axis is drawn on top, so it's in front of positive and negative bars
-          objectPath.set(spec, "axes.0.zindex", 1);
-        }
+        // make sure the axis is drawn on top, so it's in front of positive and negative bars
+        objectPath.set(spec, "axes.0.zindex", 1);
       }
     },
     {
