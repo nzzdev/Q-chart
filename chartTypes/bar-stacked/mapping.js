@@ -95,7 +95,7 @@ module.exports = function getMapping() {
           spec.axes[0].labelFlush = true;
 
           // align the axis alignment to the left if the labels are inside the chart
-          spec.axes[1].encode.title.update.align = "left";
+          spec.axes[1].encode.title.update.align.value = "left";
 
           const labelHeightSignal = spec.signals.find(
             signal => signal.name === "labelHeight"
