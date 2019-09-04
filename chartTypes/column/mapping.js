@@ -217,6 +217,9 @@ module.exports = function getMapping() {
 
             // add some offset to have space between the bottom placed labels on the bar and the axis labels
             objectPath.set(spec, "axes.0.offset", 10);
+
+            // make sure the axis is drawn on top, so it's in front of positive and negative bars
+            objectPath.set(spec, "axes.0.zindex", 1);
           }
         }
       }
