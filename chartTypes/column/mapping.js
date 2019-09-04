@@ -198,9 +198,14 @@ module.exports = function getMapping() {
           // hide the domain
           // do not show labels
           objectPath.set(spec, "axes.1.grid", true);
+          objectPath.set(
+            spec,
+            "axes.1.gridColor",
+            mappingData.toolRuntimeConfig.axis.labelColor
+          );
           objectPath.set(spec, "axes.1.domain", false);
-          objectPath.set(spec, "axes.1.ticks", [0]);
-          objectPath.set(spec, "axes.1.tickCount", 1);
+          objectPath.set(spec, "axes.1.ticks", false);
+          objectPath.set(spec, "axes.1.values", [0]);
           objectPath.set(spec, "axes.1.labels", false);
         }
 
