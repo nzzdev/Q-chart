@@ -153,7 +153,7 @@ module.exports = function getMapping() {
             enter: {
               y: [
                 {
-                  test: "datum.yValue >= 0",
+                  test: "datum.datum.yValue >= 0",
                   signal: `datum.y - ${valuePadding}`
                 },
                 {
@@ -162,7 +162,7 @@ module.exports = function getMapping() {
               ],
               baseline: [
                 {
-                  test: "datum.yValue >= 0",
+                  test: "datum.datum.yValue >= 0",
                   value: "bottom"
                 },
                 {
@@ -190,10 +190,24 @@ module.exports = function getMapping() {
         // add the value label marks
         spec.marks[0].marks.push(valueLabelMark);
 
+        // if we have positive and negative values, we want a 0 baseline to be included
+        const max = dataHelpers.getMaxValue(mappingData.item.data);
+        const min = dataHelpers.getMinValue(mappingData.item.data);
+        if (max >= 0 && min < 0) {
+          // keep the 0 tick line only
+          // hide the domain
+          // do not show labels
+          objectPath.set(spec, "axes.1.grid", true);
+          objectPath.set(spec, "axes.1.domain", false);
+          objectPath.set(spec, "axes.1.ticks", [0]);
+          objectPath.set(spec, "axes.1.tickCount", 1);
+          objectPath.set(spec, "axes.1.labels", false);
+        }
+
         // hide things on the X axis
-        objectPath.set(spec, "axes.1.grid", false);
-        objectPath.set(spec, "axes.1.ticks", false);
-        objectPath.set(spec, "axes.1.labels", false);
+        objectPath.set(spec, "axes.0.grid", false);
+        objectPath.set(spec, "axes.0.ticks", false);
+        objectPath.set(spec, "axes.0.labels", false);
       }
     }
   ]
