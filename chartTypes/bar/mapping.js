@@ -157,7 +157,19 @@ module.exports = function getMapping() {
         if (!valuesOnBars) {
           return;
         }
+
         const valuePadding = 2;
+        const tests = {
+          positiveInBar: `datum.datum.yValue >= 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
+            2}`,
+          positiveRightOfBar: `datum.datum.yValue >= 0 && (width - datum.x2) > datum.datum.labelWidth + ${valuePadding}`,
+          positiveElse: "datum.datum.yValue >= 0",
+          negativeInBar: `datum.datum.yValue < 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
+            2}`,
+          negativeLeftOfBar: `datum.datum.yValue < 0 && (datum.x) > datum.datum.labelWidth + ${valuePadding}`,
+          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > 4.5`
+        };
+
         const valueLabelMark = {
           type: "text",
           from: {
@@ -174,45 +186,107 @@ module.exports = function getMapping() {
               baseline: {
                 value: "middle"
               },
-              x: {
-                field: "x2"
-              },
+              x: [
+                {
+                  test: tests.positiveInBar,
+                  field: "x2"
+                },
+                {
+                  test: tests.positiveRightOfBar,
+                  field: "x2"
+                },
+                {
+                  test: tests.positiveElse,
+                  field: "x"
+                },
+                {
+                  test: tests.negativeInBar,
+                  field: "x"
+                },
+                {
+                  test: tests.negativeLeftOfBar,
+                  field: "x"
+                },
+                {
+                  field: "x2"
+                }
+              ],
+              align: [
+                {
+                  test: tests.positiveInBar,
+                  value: "right"
+                },
+                {
+                  test: tests.positiveRightOfBar,
+                  value: "left"
+                },
+                {
+                  test: tests.positiveElse,
+                  value: "right"
+                },
+                {
+                  test: tests.negativeInBar,
+                  value: "left"
+                },
+                {
+                  test: tests.negativeLeftOfBar,
+                  value: "right"
+                },
+                {
+                  value: "left"
+                }
+              ],
               dx: [
                 {
-                  test: `datum.width < datum.datum.labelWidth + ${valuePadding *
-                    2}`,
+                  test: tests.positiveInBar,
+                  value: -valuePadding
+                },
+                {
+                  test: tests.positiveRightOfBar,
                   value: valuePadding
                 },
                 {
+                  test: tests.positiveElse,
                   value: -valuePadding
+                },
+                {
+                  test: tests.negativeInBar,
+                  value: valuePadding
+                },
+                {
+                  test: tests.negativeLeftOfBar,
+                  value: -valuePadding
+                },
+                {
+                  value: valuePadding
                 }
               ],
               fill: [
                 {
-                  test: `datum.width < datum.datum.labelWidth + ${valuePadding *
-                    2}`,
+                  test:
+                    tests.positiveInBar + " && " + tests.contrastFineForDark,
                   value: mappingData.toolRuntimeConfig.text.fill
                 },
                 {
-                  test: "contrast('black', datum.fill) > 4.5",
-                  value: mappingData.toolRuntimeConfig.text.fill
-                },
-                {
+                  test: tests.positiveInBar,
                   value: "white"
+                },
+                {
+                  test:
+                    tests.negativeInBar + " && " + tests.contrastFineForDark,
+                  value: mappingData.toolRuntimeConfig.text.fill
+                },
+                {
+                  test: tests.negativeInBar,
+                  value: "white"
+                },
+                {
+                  value: mappingData.toolRuntimeConfig.text.fill
                 }
               ],
               text: {
                 signal: `format(datum.datum.yValue, "${d3config.specifier}")`
-              },
-              align: [
-                {
-                  test: "datum.width < datum.datum.labelWidth + 4",
-                  value: "left"
-                },
-                {
-                  value: "right"
-                }
-              ]
+              }
             }
           }
         };
