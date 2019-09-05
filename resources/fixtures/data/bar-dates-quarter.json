@@ -82,7 +82,7 @@
     },
     "dateSeriesOptions": {
       "interval": "quarter",
-      "prognosisStart": null
+      "prognosisStart": 9
     },
     "lineChartOptions": {},
     "highlightDataSeries": [],
