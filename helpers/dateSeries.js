@@ -16,7 +16,7 @@ const dateFormats = {
   YYYY: {
     match: /^ *(?:1[0-9]|2[0-9])\d{2} *$/,
     parse: /^ *(\d{4}) *$/,
-    precision: "year",
+    interval: "year",
     d3format: "%Y",
     getDate: parsed => {
       return new Date(parsed[1], 0, 1);
@@ -25,7 +25,7 @@ const dateFormats = {
   "YYYY-H": {
     match: /^ *[12]\d{3}[ \-\/]?[hH][12] *$/,
     parse: /^ *(\d{4})[ \-\/]?[hH]([12]) *$/,
-    precision: "month",
+    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[1], (parsed[2] - 1) * 6, 1);
@@ -34,7 +34,7 @@ const dateFormats = {
   "H-YYYY": {
     match: /^ *[hH][12][ \-\/][12]\d{3} *$/,
     parse: /^ *[hH]([12])[ \-\/](\d{4}) *$/,
-    precision: "month",
+    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[2], (parsed[1] - 1) * 6, 1);
@@ -43,7 +43,7 @@ const dateFormats = {
   "YYYY-Q": {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
-    precision: "quarter",
+    interval: "quarter",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[1], (parsed[2] - 1) * 3, 1);
@@ -52,7 +52,7 @@ const dateFormats = {
   "Q-YYYY": {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
-    precision: "quarter",
+    interval: "quarter",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[2], (parsed[1] - 1) * 3, 1);
@@ -61,7 +61,7 @@ const dateFormats = {
   "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-    precision: "month",
+    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[1], parsed[2] - 1, 1);
@@ -70,7 +70,7 @@ const dateFormats = {
   "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
-    precision: "month",
+    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[2], parsed[1] - 1, 1);
@@ -79,7 +79,7 @@ const dateFormats = {
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    precision: "week",
+    interval: "week",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
@@ -88,7 +88,7 @@ const dateFormats = {
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    precision: "day",
+    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
@@ -97,7 +97,7 @@ const dateFormats = {
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    precision: "day",
+    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[4], parsed[1] - 1, parsed[3]);
@@ -106,7 +106,7 @@ const dateFormats = {
   "DD/MM/YYYY": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    precision: "day",
+    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[4], parsed[3] - 1, parsed[1]);
@@ -115,7 +115,7 @@ const dateFormats = {
   "YYYY-MM-DD": {
     match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    precision: "day",
+    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[1], parsed[3] - 1, parsed[4]);
@@ -124,7 +124,7 @@ const dateFormats = {
   "MM/DD/YYYY HH:MM": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: "minutes",
+    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -145,7 +145,7 @@ const dateFormats = {
   "DD.MM.YYYY HH:MM": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: "minutes",
+    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -166,7 +166,7 @@ const dateFormats = {
   "YYYY-MM-DD HH:MM": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    precision: "minutes",
+    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -187,7 +187,7 @@ const dateFormats = {
   "MM/DD/YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: "seconds",
+    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -208,7 +208,7 @@ const dateFormats = {
   "DD.MM.YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: "seconds",
+    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -229,7 +229,7 @@ const dateFormats = {
   "YYYY-MM-DD HH:MM:SS": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    precision: "seconds",
+    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -336,6 +336,11 @@ const intervals = {
     vegaInterval: { interval: "year", step: 1 }
   },
   quarter: {
+    // the formatFunction is only used for the legend for now
+    // there is no easy way to teach the time formatter in vega about quarters
+    formatFunction: date => {
+      return "Q" + (date.getMonth() / 3 + 1) + " " + date.getFullYear();
+    },
     d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 3 }
   },

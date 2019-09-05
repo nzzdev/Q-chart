@@ -85,9 +85,21 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
     const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
 
     d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
-    const formatDate = d3timeFormat.timeFormat(
-      dateSeries.dateFormats[dateFormat].d3format
-    );
+
+    // get the intervalConfig for the detected date series format
+    const intervalConfig =
+      dateSeries.intervals[dateSeries.dateFormats[dateFormat].interval];
+
+    let formatDate;
+    if (intervalConfig.formatFunction instanceof Function) {
+      formatDate = intervalConfig.formatFunction;
+    } else if (intervalConfig.d3format) {
+      formatDate = d3timeFormat.timeFormat(intervalConfig.d3format);
+    } else {
+      console.error(
+        "no formatFunction or d3format defined for the date format of the prognosisStart value"
+      );
+    }
 
     let legendLabel = "Prognose ";
     if (prognosisStart !== dataWithDateParsed.slice(1).length - 1) {

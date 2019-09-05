@@ -263,9 +263,7 @@ module.exports = function getMappings() {
           labels: {
             update: {
               text: {
-                signal: `timeFormat(timeParse(datum.value, "%Y-%m-%dT%H:%M:%S.%L%Z"), '${
-                  intervals[item.options.dateSeriesOptions.interval].d3format
-                }')`
+                signal: `timeFormat(timeParse(datum.value, "%Y-%m-%dT%H:%M:%S.%L%Z"), '${d3format}')`
               }
             }
           }
