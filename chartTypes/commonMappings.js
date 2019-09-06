@@ -1,6 +1,7 @@
 const objectPath = require("object-path");
 const clone = require("clone");
 const intervals = require("../helpers/dateSeries.js").intervals;
+
 const d3 = {
   timeFormat: require("d3-time-format").timeFormat
 };
@@ -26,6 +27,9 @@ function getLineDateSeriesHandlingMappings() {
     {
       path: "item.options.dateSeriesOptions.interval",
       mapToSpec: function(interval, spec, mappingData) {
+        if (interval === "auto") {
+          interval = mappingData.dateFormat.interval;
+        }
         const item = mappingData.item;
         // only use this option if we have a valid dateFormat
         if (spec.scales[0].type === "time") {
@@ -70,17 +74,22 @@ function getColumnDateSeriesHandlingMappings() {
     {
       path: "item.data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, mappingData) {
+        let interval;
+        if (item.options.dateSeriesOptions.interval === "auto") {
+          interval = mappingData.dateFormat.interval;
+        } else {
+          interval = item.options.dateSeriesOptions.interval;
+        }
         const item = mappingData.item;
         if (mappingData.dateFormat) {
-          const d3format =
-            intervals[item.options.dateSeriesOptions.interval].d3format;
+          const d3format = intervals[interval].d3format;
 
           // format the labels for the X axis according to the interval d3format
           spec.axes[0].encode = Object.assign({}, spec.axes[0].encode, {
             labels: {
               update: {
                 text: {
-                  signal: `timeFormat(datum.value, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`
+                  signal: `timeFormat(datum.value, '${d3format}')`
                 }
               }
             }
@@ -99,16 +108,21 @@ function getBarDateSeriesHandlingMappings() {
       path: "item.data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, mappingData) {
         const item = mappingData.item;
+        let interval;
+        if (item.options.dateSeriesOptions.interval === "auto") {
+          interval = mappingData.dateFormat.interval;
+        } else {
+          interval = item.options.dateSeriesOptions.interval;
+        }
         if (mappingData.dateFormat) {
-          const d3format =
-            intervals[item.options.dateSeriesOptions.interval].d3format;
+          const d3format = intervals[interval].d3format;
 
           // format the labels for the X axis according to the interval d3format
           spec.axes[1].encode = Object.assign({}, spec.axes[1].encode, {
             labels: {
               update: {
                 text: {
-                  signal: `timeFormat(datum.value, '${intervals[item.options.dateSeriesOptions.interval].d3format}')`
+                  signal: `timeFormat(datum.value, '${d3format}')`
                 }
               }
             }
@@ -410,21 +424,6 @@ function getBarAxisPositioningMappings() {
             );
           }
         }
-      }
-    }
-  ];
-}
-
-function getIntervalMapping() {
-  return [
-    {
-      path: "item.options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, mappingData) {
-        if (interval !== "auto") {
-          return;
-        }
-        // todo: detect date series format in data
-        // set the interval option value to the value associated with the detected date series format
       }
     }
   ];

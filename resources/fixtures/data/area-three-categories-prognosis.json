@@ -1,5 +1,5 @@
 {
-  "title": "FIXTURE: Area - three categories - prognosis",
+  "title": "FIXTURE: Area - three categories - prognosis - auto date interval",
   "data": [
     [
       "Jahr",
@@ -45,7 +45,7 @@
       "forceBarsOnSmall": false
     },
     "dateSeriesOptions": {
-      "interval": "year",
+      "interval": "auto",
       "prognosisStart": 1
     },
     "lineChartOptions": {

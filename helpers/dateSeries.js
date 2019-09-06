@@ -355,17 +355,27 @@ const intervals = {
   hour: {
     d3format: "%d.%m. %H Uhr",
     vegaInterval: { interval: "hour", step: 1 }
+  },
+  minute: {
+    // the same as hours for now, TODO: improve this
+    d3format: "%d.%m. %H Uhr",
+    vegaInterval: { interval: "hour", step: 1 }
+  },
+  second: {
+    // the same as hours for now, TODO: improve this
+    d3format: "%d.%m. %H Uhr",
+    vegaInterval: { interval: "hour", step: 1 }
   }
 };
 
 module.exports = {
-  dateFormats: dateFormats,
-  isDateSeries: isDateSeries,
-  isDateSeriesData: isDateSeriesData,
-  getFirstColumnSerie: getFirstColumnSerie,
-  getDateFormatForSerie: getDateFormatForSerie,
-  getDateFormatForValue: getDateFormatForValue,
-  getDataWithDateParsed: getDataWithDateParsed,
-  getDateFormatForData: getDateFormatForData,
-  intervals: intervals
+  dateFormats,
+  isDateSeries,
+  isDateSeriesData,
+  getFirstColumnSerie,
+  getDateFormatForSerie,
+  getDateFormatForValue,
+  getDataWithDateParsed,
+  getDateFormatForData,
+  intervals
 };
