@@ -415,6 +415,21 @@ function getBarAxisPositioningMappings() {
   ];
 }
 
+function getIntervalMapping() {
+  return [
+    {
+      path: "item.options.dateSeriesOptions.interval",
+      mapToSpec: function(interval, spec, mappingData) {
+        if (interval !== "auto") {
+          return;
+        }
+        // todo: detect date series format in data
+        // set the interval option value to the value associated with the detected date series format
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings,

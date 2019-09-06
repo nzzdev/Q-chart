@@ -1,6 +1,5 @@
 const clone = require("clone");
 const objectPath = require("object-path");
-const intervals = require("../../helpers/dateSeries.js").intervals;
 const dataHelpers = require("../../helpers/data.js");
 const commonMappings = require("../commonMappings.js");
 
