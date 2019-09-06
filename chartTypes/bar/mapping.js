@@ -167,7 +167,7 @@ module.exports = function getMapping() {
           negativeInBar: `datum.datum.yValue < 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
             2}`,
           negativeLeftOfBar: `datum.datum.yValue < 0 && (datum.x) > datum.datum.labelWidth + ${valuePadding}`,
-          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > 4.5`
+          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > contrast('white', datum.fill)`
         };
 
         const valueLabelMark = {
