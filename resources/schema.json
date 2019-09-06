@@ -533,7 +533,7 @@
             "interval": {
               "title": "Angezeigtes Intervall",
               "type": "string",
-              "default": "year",
+              "default": "auto",
               "enum": ["auto", "year", "quarter", "month", "day", "hour"],
               "Q:options": {
                 "enum_titles": [
