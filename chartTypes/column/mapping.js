@@ -191,10 +191,6 @@ module.exports = function getMapping() {
           // add the value label marks
           spec.marks[0].marks.push(valueLabelMark);
 
-          // if we have positive and negative values, we want a 0 baseline to be included
-          const max = dataHelpers.getMaxValue(mappingData.item.data);
-          const min = dataHelpers.getMinValue(mappingData.item.data);
-
           objectPath.set(spec, "axes.1.grid", false);
           objectPath.set(spec, "axes.1.domain", false);
           objectPath.set(spec, "axes.1.ticks", false);

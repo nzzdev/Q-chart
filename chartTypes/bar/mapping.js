@@ -294,18 +294,15 @@ module.exports = function getMapping() {
         // add the value label marks
         spec.marks[0].marks[0].marks.push(valueLabelMark);
 
-        // if we have positive and negative values, we want a 0 baseline to be included
-        const max = dataHelpers.getMaxValue(mappingData.item.data);
-        const min = dataHelpers.getMinValue(mappingData.item.data);
-
         objectPath.set(spec, "axes.0.grid", false);
         objectPath.set(spec, "axes.0.ticks", false);
         objectPath.set(spec, "axes.0.domain", false);
         objectPath.set(spec, "axes.0.labels", false);
 
+        // the grid and the ticks of the y axis should get hidden
+        // the labels follow any settings handled before
         objectPath.set(spec, "axes.1.grid", false);
         objectPath.set(spec, "axes.1.ticks", false);
-        objectPath.set(spec, "axes.1.labels", true);
 
         // keep the 0 tick line only
         // hide the domain
