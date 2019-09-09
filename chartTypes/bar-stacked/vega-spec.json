@@ -243,7 +243,8 @@
       "labels": true,
       "ticks": true,
       "tickCount": 4,
-      "labelSeparation": 4
+      "labelSeparation": 4,
+      "format": "~r"
     },
     {
       "orient": "left",
@@ -253,7 +254,6 @@
       "labels": true,
       "ticks": false,
       "labelPadding": 5,
-      "format": "~r",
       "encode": {
         "title": {
           "update": {
