@@ -5,7 +5,8 @@ module.exports = {
     thousands: " ", // this is a viertelgeviert U+2005
     grouping: undefined,
     type: " ",
-    minus: "−" // U+2212
+    // minus: "−" // U+2212 minus sign
+    minus: "–" // U+2013
     // "currency": ["", "\u00a0CHF"],
   },
   formatLocaleNoGrouping: {
@@ -13,7 +14,7 @@ module.exports = {
     thousands: " ", // this is a viertelgeviert U+2005
     grouping: [3],
     type: " ",
-    minus: "−" // U+2212
+    minus: "–" // U+2013
     // "currency": ["", "\u00a0CHF"],
   },
   timeFormatLocale: {
