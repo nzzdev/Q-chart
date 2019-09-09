@@ -3,15 +3,17 @@
   "subtitle": "Colorcolorcolor",
   "data": [
     ["Country", "America", "Mexico"],
-    ["GDP", "18570000000", "1046000000000"],
-    ["Population", "800372000000", "127500000000"]
+    ["GDP", "-185", "104"],
+    ["Population", "800", "127"]
   ],
   "sources": [],
   "options": {
     "chartType": "Bar",
     "hideAxisLabel": true,
     "hideLegend": true,
-    "annotations": {},
+    "annotations": {
+      "valuesOnBars": true
+    },
     "barOptions": {
       "isBarChart": false,
       "forceBarsOnSmall": false
