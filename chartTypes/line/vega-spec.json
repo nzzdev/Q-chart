@@ -87,7 +87,8 @@
       "grid": true,
       "labels": true,
       "tickCount": 4,
-      "labelPadding": 2
+      "labelPadding": 2,
+      "format": "~r"
     }
   ],
   "marks": [
