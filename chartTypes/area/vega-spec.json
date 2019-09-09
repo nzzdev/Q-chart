@@ -72,6 +72,7 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "labelFlush": true,
       "labelBound": true,
       "labelFlushOffset": 0,
@@ -101,6 +102,7 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "tickCount": 4,
       "labelPadding": 2
     }
@@ -170,7 +172,6 @@
   ],
   "config": {
     "axis": {
-      "labels": true,
       "labelAngle": 0
     }
   }

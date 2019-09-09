@@ -240,6 +240,7 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "ticks": true,
       "tickCount": 4,
       "labelSeparation": 4

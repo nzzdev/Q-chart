@@ -146,6 +146,7 @@
       "orient": "bottom",
       "scale": "xScale",
       "grid": false,
+      "labels": true,
       "domain": false,
       "ticks": false,
       "labelSeparation": 4,
@@ -172,6 +173,7 @@
       "orient": "left",
       "scale": "yScale",
       "domain": false,
+      "labels": true,
       "grid": true,
       "tickCount": 4,
       "labelPadding": 2
@@ -188,7 +190,6 @@
       "zero": true,
       "grid": true,
       "gridColor": "#e9e9ee",
-      "labels": true,
       "labelAngle": 0,
       "labelBound": false,
       "labelFlush": false,

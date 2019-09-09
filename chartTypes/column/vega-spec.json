@@ -182,6 +182,7 @@
       "orient": "bottom",
       "scale": "xScale",
       "grid": false,
+      "labels": true,
       "domain": false,
       "ticks": false,
       "labelSeparation": 4,
@@ -209,6 +210,7 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "tickCount": 4,
       "labelPadding": 2
     }
