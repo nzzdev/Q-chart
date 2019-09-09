@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "@hapi/boom": "^7.4.3",
     "@hapi/hapi": "^18.3.2",
-    "@hapi/hoek": "^8.2.2",
+    "@hapi/hoek": "^8.2.4",
     "@hapi/inert": "^5.2.1",
     "@hapi/joi": "^15.1.1",
     "ajv": "^6.10.2",
@@ -21,7 +21,7 @@
     "canvas": "^2.6.0",
     "clone": "^2.1.2",
     "d3-array": "^2.3.1",
-    "d3-format": "^1.3.2",
+    "d3-format": "^1.4.1",
     "d3-time-format": "^2.1.3",
     "decimal.js": "^10.2.0",
     "deepmerge": "^4.0.0",
@@ -30,7 +30,7 @@
     "node-fetch": "^2.6.0",
     "nunjucks": "^3.2.0",
     "object-path": "^0.11.4",
-    "slugify": "^1.3.4",
+    "slugify": "^1.3.5",
     "vega": "^5.6.0"
   },
   "devDependencies": {
@@ -39,8 +39,8 @@
     "autoprefixer": "^9.6.1",
     "cssnano": "^4.1.10",
     "glob": "^7.1.4",
-    "postcss": "^7.0.17",
+    "postcss": "^7.0.18",
     "postcss-import": "^12.0.1",
-    "sass": "^1.22.10"
+    "sass": "^1.23.0-module.beta.1"
   }
 }
