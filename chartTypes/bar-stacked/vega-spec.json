@@ -240,6 +240,7 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "ticks": true,
       "tickCount": 4,
       "labelSeparation": 4
@@ -252,6 +253,7 @@
       "labels": true,
       "ticks": false,
       "labelPadding": 5,
+      "format": "~r",
       "encode": {
         "title": {
           "update": {

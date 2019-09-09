@@ -276,6 +276,7 @@
       "labels": true,
       "ticks": false,
       "labelPadding": 5,
+      "format": "~r",
       "encode": {
         "title": {
           "update": {
