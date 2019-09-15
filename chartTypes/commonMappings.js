@@ -74,13 +74,14 @@ function getColumnDateSeriesHandlingMappings() {
     {
       path: "item.data", // various settings that are not tied to an option
       mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
         let interval;
         if (item.options.dateSeriesOptions.interval === "auto") {
           interval = mappingData.dateFormat.interval;
         } else {
           interval = item.options.dateSeriesOptions.interval;
         }
-        const item = mappingData.item;
+
         if (mappingData.dateFormat) {
           const d3format = intervals[interval].d3format;
 
