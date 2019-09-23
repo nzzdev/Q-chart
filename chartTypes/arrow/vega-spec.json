@@ -221,7 +221,6 @@
       "labels": true,
       "ticks": false,
       "labelPadding": 2,
-      "format": "~r",
       "encode": {
         "title": {
           "update": {
