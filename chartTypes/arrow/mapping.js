@@ -302,11 +302,7 @@ module.exports = function getMapping() {
                   value: ""
                 },
                 {
-                  test: "datum.diffToNext > 0",
                   signal: `format(datum.diffToNext, "+${d3config.specifier}")`
-                },
-                {
-                  signal: `format(datum.diffToNext, "${d3config.specifier}")`
                 }
               ],
               y: {
