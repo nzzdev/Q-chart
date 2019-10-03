@@ -34,10 +34,6 @@ function isArrowChart(item) {
   return item.options.chartType === "Arrow";
 }
 
-function hasNoCustomVegaSpec(item) {
-  return item.vegaSpec === undefined || item.vegaSpec === "";
-}
-
 module.exports = {
   method: "POST",
   path: "/option-availability/{optionName}",
@@ -51,28 +47,25 @@ module.exports = {
     const item = request.payload.item;
     if (request.params.optionName === "bar") {
       return {
-        available: isBarChart(item) && hasNoCustomVegaSpec(item)
+        available: isBarChart(item)
       };
     }
 
     if (request.params.optionName === "forceBarsOnSmall") {
       return {
-        available:
-          isBarChart(item) &&
-          !item.options.barOptions.isBarChart &&
-          hasNoCustomVegaSpec(item)
+        available: isBarChart(item) && !item.options.barOptions.isBarChart
       };
     }
 
     if (request.params.optionName === "line") {
       return {
-        available: isLineChart(item) && hasNoCustomVegaSpec(item)
+        available: isLineChart(item)
       };
     }
 
     if (request.params.optionName === "area") {
       return {
-        available: isAreaChart(item) && hasNoCustomVegaSpec(item)
+        available: isAreaChart(item)
       };
     }
 
@@ -80,10 +73,7 @@ module.exports = {
       try {
         const serie = getFirstColumnSerie(item.data);
         return {
-          available:
-            isDateSeries(serie) &&
-            isLineChart(item) &&
-            hasNoCustomVegaSpec(item)
+          available: isDateSeries(serie) && isLineChart(item)
         };
       } catch (e) {
         return {
@@ -94,22 +84,19 @@ module.exports = {
 
     if (request.params.optionName === "dotplot") {
       return {
-        available: isDotplot(item) && hasNoCustomVegaSpec(item)
+        available: isDotplot(item)
       };
     }
 
     if (request.params.optionName === "arrow") {
       return {
-        available: isArrowChart(item) && hasNoCustomVegaSpec(item)
+        available: isArrowChart(item)
       };
     }
 
     if (request.params.optionName === "arrow.colorScheme") {
       return {
-        available:
-          isArrowChart(item) &&
-          hasNoCustomVegaSpec(item) &&
-          configuredDivergingColorSchemes
+        available: isArrowChart(item) && configuredDivergingColorSchemes
       };
     }
 
@@ -129,7 +116,7 @@ module.exports = {
 
       try {
         const serie = getFirstColumnSerie(item.data);
-        isAvailable = isDateSeries(serie) && hasNoCustomVegaSpec(item);
+        isAvailable = isDateSeries(serie);
       } catch (e) {
         isAvailable = false;
       }
@@ -139,21 +126,9 @@ module.exports = {
       };
     }
 
-    if (
-      request.params.optionName === "chartType" ||
-      request.params.optionName === "hideAxisLabel"
-    ) {
-      return {
-        available: hasNoCustomVegaSpec(item)
-      };
-    }
-
     if (request.params.optionName === "highlightDataSeries") {
       return {
-        available:
-          hasNoCustomVegaSpec(item) &&
-          !isArrowChart(item) &&
-          item.data[0].length > 2
+        available: !isArrowChart(item) && item.data[0].length > 2
       };
     }
 
@@ -163,7 +138,6 @@ module.exports = {
         available:
           (!Array.isArray(item.options.colorOverwritesRows) ||
             item.options.colorOverwritesRows.length === 0) &&
-          hasNoCustomVegaSpec(item) &&
           !isArrowChart(item)
       };
     }
@@ -179,7 +153,6 @@ module.exports = {
           (!Array.isArray(item.options.colorOverwritesSeries) ||
             item.options.colorOverwritesSeries.length === 0) &&
           item.data[0].length < 4 &&
-          hasNoCustomVegaSpec(item) &&
           !isArrowChart(item) &&
           !isLineChart(item) &&
           !isAreaChart(item)
@@ -191,10 +164,7 @@ module.exports = {
     if (request.params.optionName === "highlightDataRows") {
       return {
         available:
-          hasNoCustomVegaSpec(item) &&
-          !isArrowChart(item) &&
-          !isLineChart(item) &&
-          !isAreaChart(item)
+          !isArrowChart(item) && !isLineChart(item) && !isAreaChart(item)
       };
     }
 
@@ -202,25 +172,20 @@ module.exports = {
       let available = false;
       if (
         (isLineChart(item) || isBarChart(item)) &&
-        hasNoCustomVegaSpec(item) &&
         item.data[0].length === 2 // only if there is just one data series
       ) {
         available = true;
       }
 
-      if (
-        isBarChart(item) &&
-        !isStackedBarChart(item) &&
-        hasNoCustomVegaSpec(item)
-      ) {
+      if (isBarChart(item) && !isStackedBarChart(item)) {
         available = true;
       }
 
-      if (isDotplot(item) && hasNoCustomVegaSpec(item)) {
+      if (isDotplot(item)) {
         available = true;
       }
 
-      if (isArrowChart(item) && hasNoCustomVegaSpec(item)) {
+      if (isArrowChart(item)) {
         available = true;
       }
 
