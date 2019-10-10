@@ -124,15 +124,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   }
 
   let spec;
-  if (item.vegaSpec) {
-    spec = item.vegaSpec;
-
-    spec.width = width;
-
-    // set the data from the item
-    // all data transforms are part of the spec
-    spec.data[0].values = clone(item.data);
-  } else if (item.options.chartType) {
+  if (item.options.chartType) {
     try {
       spec = await getSpec(id, width, chartType, item, toolRuntimeConfig);
     } catch (err) {

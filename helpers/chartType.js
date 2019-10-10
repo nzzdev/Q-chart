@@ -1,9 +1,4 @@
 function getChartTypeForItemAndWidth(item, width) {
-  // any custom vegaSpec overrules the chartType setting
-  if (item.vegaSpec !== undefined && item.vegaSpec !== "") {
-    return null;
-  }
-
   if (item.options.chartType === "Line") {
     return "line";
   }

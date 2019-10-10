@@ -37,8 +37,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/line-categorical.json`),
   require(`${fixtureDataDirectory}/line-dates-days.json`),
   require(`${fixtureDataDirectory}/line-dates-min-max-missing-value.json`),
-  require(`${fixtureDataDirectory}/line-stock-chart.json`),
-  require(`${fixtureDataDirectory}/vegaSpec.json`)
+  require(`${fixtureDataDirectory}/line-stock-chart.json`)
 ];
 
 module.exports = {
