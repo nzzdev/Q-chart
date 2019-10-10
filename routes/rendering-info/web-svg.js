@@ -103,7 +103,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   try {
     spec = await getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
-    throw new Boom(err);
+    throw new Boom.Boom(err);
   }
   return spec;
 }
@@ -188,16 +188,16 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      query: {
+      query: Joi.object({
         width: Joi.number().required(),
         noCache: Joi.boolean(),
         toolRuntimeConfig: Joi.object(),
         id: Joi.string().required()
-      },
-      payload: {
+      }),
+      payload: Joi.object({
         item: Joi.object(),
         toolRuntimeConfig: Joi.object()
-      }
+      })
     }
   },
   handler: async function(request, h) {

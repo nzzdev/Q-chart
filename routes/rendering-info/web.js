@@ -29,15 +29,15 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
+      payload: Joi.object({
         item: Joi.object(),
-        toolRuntimeConfig: Joi.object().keys({
-          colorSchemes: Joi.object().keys({
+        toolRuntimeConfig: Joi.object({
+          colorSchemes: Joi.object({
             categorical_normal: Joi.array().required(),
             categorical_light: Joi.array().required()
           })
         })
-      }
+      })
     }
   },
   handler: async function(request, h) {
