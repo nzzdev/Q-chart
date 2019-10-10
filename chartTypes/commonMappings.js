@@ -14,9 +14,11 @@ function getLineDateSeriesHandlingMappings() {
       mapToSpec: function(itemData, spec, mappingData) {
         const item = mappingData.item;
         if (
-          mappingData.dateFormat &&
-          item.options.lineChartOptions &&
-          item.options.lineChartOptions.isStockChart !== true
+          (mappingData.dateFormat &&
+            (item.options.chartType === "Line" &&
+              item.options.lineChartOptions &&
+              item.options.lineChartOptions.isStockChart !== true)) ||
+          item.options.chartType === "Area"
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series

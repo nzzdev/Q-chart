@@ -631,6 +631,10 @@
               "Q:options": {
                 "enum_titles": ["normal", "stream"]
               }
+            },
+            "maxValue": {
+              "title": "Maximaler Wert auf Y-Achse",
+              "type": "number"
             }
           }
         },
