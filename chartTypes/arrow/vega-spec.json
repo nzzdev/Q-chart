@@ -211,7 +211,8 @@
       "grid": true,
       "ticks": true,
       "tickCount": 6,
-      "labelSeparation": 4
+      "labelSeparation": 4,
+      "labelOverlap": "parity"
     },
     {
       "orient": "left",
