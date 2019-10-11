@@ -4,6 +4,8 @@ const clone = require("clone");
 const moment = require("moment-timezone");
 const timezone = process.env.TIMEZONE || "Europe/Zurich";
 
+const differenceInSeconds = require("date-fns/differenceInSeconds");
+
 function dateFromIsoWeek(year, week, day) {
   var d = new Date(Date.UTC(year, 0, 3));
   d.setUTCDate(3 - d.getUTCDay() + (week - 1) * 7 + parseInt(day, 10));
@@ -43,7 +45,6 @@ const dateFormats = {
   "YYYY-Q": {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
-    interval: "quarter",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[1], (parsed[2] - 1) * 3, 1);
@@ -52,7 +53,6 @@ const dateFormats = {
   "Q-YYYY": {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
-    interval: "quarter",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[2], (parsed[1] - 1) * 3, 1);
@@ -61,7 +61,6 @@ const dateFormats = {
   "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[1], parsed[2] - 1, 1);
@@ -70,7 +69,6 @@ const dateFormats = {
   "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
-    interval: "month",
     d3format: "%B %Y",
     getDate: parsed => {
       return new Date(parsed[2], parsed[1] - 1, 1);
@@ -79,7 +77,6 @@ const dateFormats = {
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    interval: "week",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
@@ -88,7 +85,6 @@ const dateFormats = {
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
@@ -97,7 +93,6 @@ const dateFormats = {
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[4], parsed[1] - 1, parsed[3]);
@@ -106,7 +101,6 @@ const dateFormats = {
   "DD/MM/YYYY": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[4], parsed[3] - 1, parsed[1]);
@@ -115,7 +109,6 @@ const dateFormats = {
   "YYYY-MM-DD": {
     match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    interval: "day",
     d3format: "%d.%m.%Y",
     getDate: parsed => {
       return new Date(parsed[1], parsed[3] - 1, parsed[4]);
@@ -124,7 +117,6 @@ const dateFormats = {
   "MM/DD/YYYY HH:MM": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -145,7 +137,6 @@ const dateFormats = {
   "DD.MM.YYYY HH:MM": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -166,7 +157,6 @@ const dateFormats = {
   "YYYY-MM-DD HH:MM": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    interval: "minute",
     d3format: "%d.%m.%Y %H:%M",
     getDate: parsed => {
       return moment
@@ -187,7 +177,6 @@ const dateFormats = {
   "MM/DD/YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -208,7 +197,6 @@ const dateFormats = {
   "DD.MM.YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -229,7 +217,6 @@ const dateFormats = {
   "YYYY-MM-DD HH:MM:SS": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    interval: "second",
     d3format: "%d.%m.%Y %H:%M:S",
     getDate: parsed => {
       return moment
@@ -328,6 +315,39 @@ function getDataWithDateParsed(data) {
   });
 }
 
+function getIntervalForData(data) {
+  const parsedDatesData = getDataWithDateParsed(data);
+  const dates = getFirstColumnSerie(parsedDatesData);
+  const sortedDates = dates.sort((a, b) => {
+    return a < b ? -1 : a > b ? 1 : 0;
+  });
+  const firstDate = sortedDates.shift();
+  const lastDate = sortedDates.pop();
+  const diffSeconds = differenceInSeconds(lastDate, firstDate);
+
+  // 2 years
+  if (diffSeconds > 2 * 365 * 24 * 60 * 60) {
+    return "year";
+  }
+  // 3 months
+  if (diffSeconds > 3 * 30 * 24 * 60 * 60) {
+    return "month";
+  }
+  // 3 days
+  if (diffSeconds > 3 * 24 * 60 * 60) {
+    return "day";
+  }
+  // 3 hours
+  if (diffSeconds > 3 * 60 * 60) {
+    return "hour";
+  }
+  // 3 minutes
+  if (diffSeconds > 3 * 60) {
+    return "minute";
+  }
+  return "second";
+}
+
 // intervals are used to set the tickCount and format the date on the X axis
 // the user chooses a specific interval via an option
 const intervals = {
@@ -376,6 +396,7 @@ module.exports = {
   getDateFormatForSerie,
   getDateFormatForValue,
   getDataWithDateParsed,
+  getIntervalForData,
   getDateFormatForData,
   intervals
 };

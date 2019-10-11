@@ -84,13 +84,7 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
     const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
     const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
 
-    let intervalConfig;
-    if (interval === "auto") {
-      intervalConfig =
-        dateSeries.intervals[dateSeries.dateFormats[dateFormat].interval];
-    } else {
-      intervalConfig = dateSeries.intervals[interval];
-    }
+    const intervalConfig = dateSeries.intervals[interval];
 
     d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
 

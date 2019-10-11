@@ -77,6 +77,13 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
       mappingData.item.data = dateSeries.getDataWithDateParsed(
         mappingData.item.data
       );
+      // handle auto interval here
+      // by calculating the interval from the data and setting this to the actual data we are rendering
+      if (mappingData.item.options.dateSeriesOptions.interval === "auto") {
+        mappingData.item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          mappingData.item.data
+        );
+      }
     }
   }
 
