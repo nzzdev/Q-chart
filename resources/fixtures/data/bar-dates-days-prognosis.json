@@ -99,7 +99,7 @@
       "forceBarsOnSmall": true
     },
     "dateSeriesOptions": {
-      "interval": "year",
+      "interval": "quarter",
       "prognosisStart": 20
     },
     "lineChartOptions": {},

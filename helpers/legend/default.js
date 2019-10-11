@@ -84,11 +84,15 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
     const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
     const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
 
-    d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
+    let intervalConfig;
+    if (interval === "auto") {
+      intervalConfig =
+        dateSeries.intervals[dateSeries.dateFormats[dateFormat].interval];
+    } else {
+      intervalConfig = dateSeries.intervals[interval];
+    }
 
-    // get the intervalConfig for the detected date series format
-    const intervalConfig =
-      dateSeries.intervals[dateSeries.dateFormats[dateFormat].interval];
+    d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
 
     let formatDate;
     if (intervalConfig.formatFunction instanceof Function) {
@@ -103,7 +107,7 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
 
     let legendLabel = "Prognose ";
     if (prognosisStart !== dataWithDateParsed.slice(1).length - 1) {
-      // if the prognosis is not the last label
+      // if the prognosis is not the last data point
       legendLabel += "(ab ";
     } else {
       legendLabel += "(";
