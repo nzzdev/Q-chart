@@ -172,7 +172,7 @@ module.exports = function getMapping() {
     },
     {
       path: "item.options.dotplotOptions.connectDots",
-      mapToSpec: function(connectDots, spec) {
+      mapToSpec: function(connectDots, spec, mappingData) {
         if (!connectDots) {
           return;
         }
@@ -192,12 +192,24 @@ module.exports = function getMapping() {
                 field: "yValue"
               },
               strokeMiterLimit: 0,
-              stroke: {
-                value: spec.config.axis.labelColor
-              },
               strokeWidth: {
                 value: 2
-              }
+              },
+              stroke: [
+                {
+                  test: "datum.isHighlighted === true",
+                  value: spec.config.axis.labelColor
+                },
+                {
+                  test: "datum.isHighlighted === false",
+                  value:
+                    spec.config.axis.labelColorLight ||
+                    spec.config.axis.labelColor
+                },
+                {
+                  value: spec.config.axis.labelColor
+                }
+              ]
             }
           }
         };
@@ -230,7 +242,21 @@ module.exports = function getMapping() {
               x: {
                 signal: "scale('xScale', datum.yValue) - 8"
               },
-              fill: { value: spec.config.axis.labelColor },
+              fill: [
+                {
+                  test: "datum.isHighlighted === true",
+                  value: spec.config.axis.labelColor
+                },
+                {
+                  test: "datum.isHighlighted === false",
+                  value:
+                    spec.config.axis.labelColorLight ||
+                    spec.config.axis.labelColor
+                },
+                {
+                  value: spec.config.axis.labelColor
+                }
+              ],
               align: { value: "right" },
               baseline: { value: "middle" },
               fontSize: { value: spec.config.text.fontSize + 2 }
@@ -266,7 +292,21 @@ module.exports = function getMapping() {
               x: {
                 signal: "scale('xScale', datum.yValue) + 8"
               },
-              fill: { value: spec.config.axis.labelColor },
+              fill: [
+                {
+                  test: "datum.isHighlighted === true",
+                  value: spec.config.axis.labelColor
+                },
+                {
+                  test: "datum.isHighlighted === false",
+                  value:
+                    spec.config.axis.labelColorLight ||
+                    spec.config.axis.labelColor
+                },
+                {
+                  value: spec.config.axis.labelColor
+                }
+              ],
               align: { value: "left" },
               baseline: { value: "middle" },
               fontSize: { value: spec.config.text.fontSize + 2 }
@@ -320,7 +360,21 @@ module.exports = function getMapping() {
                 scale: "xScale",
                 signal: "datum.yValue - (datum.diffToPrevious / 2)"
               },
-              fill: { value: spec.config.axis.labelColor },
+              fill: [
+                {
+                  test: "datum.isHighlighted === true",
+                  value: spec.config.axis.labelColor
+                },
+                {
+                  test: "datum.isHighlighted === false",
+                  value:
+                    spec.config.axis.labelColorLight ||
+                    spec.config.axis.labelColor
+                },
+                {
+                  value: spec.config.axis.labelColor
+                }
+              ],
               align: { value: "center" },
               baseline: { value: "bottom" },
               fontSize: { value: spec.config.text.fontSize + 2 }

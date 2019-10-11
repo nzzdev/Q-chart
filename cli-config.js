@@ -29,9 +29,7 @@ async function loadSophieModules(target) {
 
   const moduleString = Object.keys(sophieModules)
     .map(moduleKey => {
-      return `${sophieModules[moduleKey].name}@${
-        sophieModules[moduleKey].version
-      }`;
+      return `${sophieModules[moduleKey].name}@${sophieModules[moduleKey].version}`;
     })
     .join(",");
 
@@ -127,6 +125,7 @@ async function getAxisConfig(target) {
     domainColor: sophieColorVars.general["s-color-gray-3"],
     tickColor: sophieColorVars.general["s-color-gray-3"],
     labelFont: fontFamilyPerTarget[target],
+    labelColorLight: sophieColorVars.general["s-color-gray-5"],
     labelColor: sophieColorVars.general["s-color-gray-7"],
     labelColorDark: sophieColorVars.general["s-color-gray-9"],
     labelFontSize: 11,
