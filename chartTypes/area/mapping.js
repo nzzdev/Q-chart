@@ -66,6 +66,21 @@ module.exports = function getMappings() {
           delete spec.axes[1]; // delete the y axis
         }
       }
+    },
+    {
+      path: "item.options.areaChartOptions.maxValue",
+      mapToSpec: function(maxValue, spec, mappingData) {
+        // check if we need to shorten the number labels
+        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+
+        const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
+        if (dataMaxValue > maxValue) {
+          maxValue = dataMaxValue;
+        }
+
+        objectPath.set(spec, "scales.1.nice", false);
+        objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
+      }
     }
   ]
     .concat(commonMappings.getColumnAreaPrognosisMappings())

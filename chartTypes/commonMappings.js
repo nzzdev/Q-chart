@@ -15,9 +15,11 @@ function getLineDateSeriesHandlingMappings() {
       mapToSpec: function(itemData, spec, mappingData) {
         const item = mappingData.item;
         if (
-          mappingData.dateFormat &&
-          item.options.lineChartOptions &&
-          item.options.lineChartOptions.isStockChart !== true
+          (mappingData.dateFormat &&
+            (item.options.chartType === "Line" &&
+              item.options.lineChartOptions &&
+              item.options.lineChartOptions.isStockChart !== true)) ||
+          item.options.chartType === "Area"
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
@@ -386,7 +388,7 @@ function getColumnAxisPositioningMappings() {
         // we move the X axis to the top
         if (max <= 0) {
           objectPath.set(spec, "axes.0.orient", "top");
-          objectPath.set(spec, "axes.0.labelPadding", -5);
+          objectPath.set(spec, "axes.0.labelPadding", 4);
           // if we still have a title for this axis, move it to the top
           const title = objectPath.get(spec, "axes.0.encode.title");
           if (title) {

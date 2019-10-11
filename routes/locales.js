@@ -8,9 +8,9 @@ module.exports = {
     description: "Returns translations for given language",
     tags: ["api"],
     validate: {
-      params: {
+      params: Joi.object({
         lng: Joi.string().required()
-      }
+      })
     }
   },
   handler: (request, h) => {

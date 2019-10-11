@@ -6,8 +6,8 @@ const vega = require("vega");
 const optionsHelpers = require("../options.js");
 
 async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
-  // if we do not have a type or we have a vegaSpec that defacto overwrites the chartType, we do not show a legend
-  if (!chartType || item.vegaSpec) {
+  // if we do not have a type we do not show a legend
+  if (!chartType) {
     return null;
   }
   const legendModel = {};

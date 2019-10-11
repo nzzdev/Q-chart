@@ -1,13 +1,13 @@
 {
-  "title": "FIXTURE: bar - values on bars",
+  "title": "FIXTURE: Bar - values on bars",
   "acronym": "bue.",
   "data": [
     ["Year", "A"],
     ["2000", "203.45"],
     ["2001", "219"],
-    ["2002", "95"],
+    ["2002", "0.256"],
     ["2003", "20.03443"],
-    ["2004", "-10"],
+    ["2004", "-0.343"],
     ["2005", "-15"],
     ["2006", "-14"]
   ],
@@ -43,6 +43,12 @@
       "colorScheme": 0
     },
     "colorOverwritesSeries": [],
-    "colorOverwritesRows": []
+    "colorOverwritesRows": [
+      {
+        "position": 6,
+        "color": "#000000",
+        "colorLight": "#000000"
+      }
+    ]
   }
 }

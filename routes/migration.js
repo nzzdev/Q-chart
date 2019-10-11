@@ -9,9 +9,9 @@ module.exports = {
   path: "/migration",
   options: {
     validate: {
-      payload: {
+      payload: Joi.object({
         item: Joi.object().required()
-      }
+      })
     }
   },
   handler: async (request, h) => {

@@ -198,9 +198,11 @@
       "scale": "xScale",
       "domain": false,
       "grid": true,
+      "labels": true,
       "ticks": true,
       "tickCount": 6,
-      "labelSeparation": 4
+      "labelSeparation": 4,
+      "labelOverlap": "parity"
     },
     {
       "orient": "left",
@@ -209,7 +211,7 @@
       "grid": true,
       "labels": true,
       "ticks": false,
-      "labelPadding": 2,
+      "labelPadding": 8,
       "encode": {
         "title": {
           "update": {

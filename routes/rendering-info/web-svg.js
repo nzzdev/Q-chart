@@ -103,7 +103,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   try {
     spec = await getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
-    throw new Boom(err);
+    throw new Boom.Boom(err);
   }
   return spec;
 }
@@ -124,15 +124,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   }
 
   let spec;
-  if (item.vegaSpec) {
-    spec = item.vegaSpec;
-
-    spec.width = width;
-
-    // set the data from the item
-    // all data transforms are part of the spec
-    spec.data[0].values = clone(item.data);
-  } else if (item.options.chartType) {
+  if (item.options.chartType) {
     try {
       spec = await getSpec(id, width, chartType, item, toolRuntimeConfig);
     } catch (err) {
@@ -188,6 +180,26 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   return svg;
 }
 
+// extend Joi to support string object string coercion (see https://github.com/hapijs/joi/issues/2037 and https://github.com/hapijs/joi/blob/master/API.md#extensions)
+// this is needed for toolRuntimeConfig in the query string
+const Bourne = require("@hapi/bourne");
+const customJoi = Joi.extend({
+  type: "object",
+  base: Joi.object(),
+  coerce: {
+    from: "string",
+    method(value, helpers) {
+      if (value[0] !== "{" && !/^\s*\{/.test(value)) {
+        return;
+      }
+
+      try {
+        return { value: Bourne.parse(value) };
+      } catch (ignoreErr) {}
+    }
+  }
+});
+
 module.exports = {
   method: "POST",
   path: "/rendering-info/web-svg",
@@ -196,16 +208,16 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      query: {
-        width: Joi.number().required(),
-        noCache: Joi.boolean(),
-        toolRuntimeConfig: Joi.object(),
-        id: Joi.string().required()
-      },
-      payload: {
-        item: Joi.object(),
-        toolRuntimeConfig: Joi.object()
-      }
+      query: customJoi.object({
+        width: customJoi.number().required(),
+        noCache: customJoi.boolean(),
+        toolRuntimeConfig: customJoi.object().optional(),
+        id: customJoi.string().required()
+      }),
+      payload: customJoi.object({
+        item: customJoi.object(),
+        toolRuntimeConfig: customJoi.object()
+      })
     }
   },
   handler: async function(request, h) {

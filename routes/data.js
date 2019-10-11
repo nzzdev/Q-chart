@@ -7,9 +7,9 @@ module.exports = {
   options: {
     cors: true,
     validate: {
-      payload: {
+      payload: Joi.object({
         item: Joi.object().required()
-      }
+      })
     }
   },
   handler: function(request, h) {

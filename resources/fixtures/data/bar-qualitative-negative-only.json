@@ -42,8 +42,8 @@
     "hideAxisLabel": true,
     "annotations": {},
     "barOptions": {
-      "isBarChart": true,
-      "forceBarsOnSmall": false
+      "isBarChart": false,
+      "forceBarsOnSmall": true
     },
     "dateSeriesOptions": {
       "interval": "year",
