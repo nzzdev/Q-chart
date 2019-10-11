@@ -180,6 +180,26 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   return svg;
 }
 
+// extend Joi to support string object string coercion (see https://github.com/hapijs/joi/issues/2037 and https://github.com/hapijs/joi/blob/master/API.md#extensions)
+// this is needed for toolRuntimeConfig in the query string
+const Bourne = require("@hapi/bourne");
+const customJoi = Joi.extend({
+  type: "object",
+  base: Joi.object(),
+  coerce: {
+    from: "string",
+    method(value, helpers) {
+      if (value[0] !== "{" && !/^\s*\{/.test(value)) {
+        return;
+      }
+
+      try {
+        return { value: Bourne.parse(value) };
+      } catch (ignoreErr) {}
+    }
+  }
+});
+
 module.exports = {
   method: "POST",
   path: "/rendering-info/web-svg",
@@ -188,15 +208,15 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      query: Joi.object({
-        width: Joi.number().required(),
-        noCache: Joi.boolean(),
-        toolRuntimeConfig: Joi.object(),
-        id: Joi.string().required()
+      query: customJoi.object({
+        width: customJoi.number().required(),
+        noCache: customJoi.boolean(),
+        toolRuntimeConfig: customJoi.object().optional(),
+        id: customJoi.string().required()
       }),
-      payload: Joi.object({
-        item: Joi.object(),
-        toolRuntimeConfig: Joi.object()
+      payload: customJoi.object({
+        item: customJoi.object(),
+        toolRuntimeConfig: customJoi.object()
       })
     }
   },
