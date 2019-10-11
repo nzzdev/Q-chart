@@ -2,6 +2,7 @@ const querystring = require("querystring");
 const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
+const dateSeries = require("../../helpers/dateSeries.js");
 
 const viewsDir = __dirname + "/../../views/";
 const stylesDir = __dirname + "/../../styles/";
