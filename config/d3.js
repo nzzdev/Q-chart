@@ -3,19 +3,17 @@ module.exports = {
   formatLocale: {
     decimal: ",",
     thousands: " ", // this is a viertelgeviert U+2005
-    grouping: undefined,
+    grouping: [3],
     type: " ",
     // minus: "−" // U+2212 minus sign
     minus: "–" // U+2013
-    // "currency": ["", "\u00a0CHF"],
   },
   formatLocaleNoGrouping: {
     decimal: ",",
     thousands: " ", // this is a viertelgeviert U+2005
-    grouping: [3],
+    grouping: undefined,
     type: " ",
     minus: "–" // U+2013
-    // "currency": ["", "\u00a0CHF"],
   },
   timeFormatLocale: {
     dateTime: "%A, der %e. %B %Y, %X",
