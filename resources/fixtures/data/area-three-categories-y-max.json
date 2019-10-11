@@ -1,0 +1,43 @@
+{
+  "title": "FIXTURE: Area - three categories - Y max",
+  "data": [
+    [
+      "Jahr",
+      "A"
+    ],
+    [
+      "2018",
+      "10"
+    ],
+    [
+      "2019",
+      "25"
+    ],
+    [
+      "2020",
+      "30"
+    ],
+    [
+      "2021",
+      "43"
+    ]
+  ],
+  "allowDownloadData": false,
+  "sources": [],
+  "options": {
+    "chartType": "Area",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [],
+    "annotations": {},
+    "dateSeriesOptions": {
+      "interval": "year"
+    },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [],
+    "areaChartOptions": {
+      "areaInterpolation": "linear",
+      "maxValue": 60
+    }
+  }
+}

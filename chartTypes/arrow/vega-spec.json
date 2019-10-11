@@ -220,7 +220,7 @@
       "grid": true,
       "labels": true,
       "ticks": false,
-      "labelPadding": 2,
+      "labelPadding": 4,
       "encode": {
         "title": {
           "update": {

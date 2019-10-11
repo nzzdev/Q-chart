@@ -29,15 +29,15 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      payload: {
+      payload: Joi.object({
         item: Joi.object(),
-        toolRuntimeConfig: Joi.object().keys({
-          colorSchemes: Joi.object().keys({
+        toolRuntimeConfig: Joi.object({
+          colorSchemes: Joi.object({
             categorical_normal: Joi.array().required(),
             categorical_light: Joi.array().required()
           })
         })
-      }
+      })
     }
   },
   handler: async function(request, h) {
@@ -98,9 +98,7 @@ module.exports = {
     };
 
     if (item.allowDownloadData) {
-      context.linkToCSV = `${
-        toolRuntimeConfig.toolBaseUrl
-      }/data?appendItemToPayload=${request.query._id}`;
+      context.linkToCSV = `${toolRuntimeConfig.toolBaseUrl}/data?appendItemToPayload=${request.query._id}`;
     }
 
     const renderingInfo = {};
@@ -111,9 +109,7 @@ module.exports = {
     if (typeof exactPixelWidth === "number") {
       const svgResponse = await request.server.inject({
         method: "POST",
-        url: `/rendering-info/web-svg?width=${exactPixelWidth}&id=${
-          context.id
-        }`,
+        url: `/rendering-info/web-svg?width=${exactPixelWidth}&id=${context.id}`,
         payload: request.payload
       });
       context.svg = svgResponse.result.markup;
@@ -126,21 +122,14 @@ module.exports = {
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
 
-      let toolRuntimeConfigForWebSVG = {};
-
-      // we only want to send the vega spec if we need it
-      // if we will render a vegaSpec, we will not apply any config
-      // so no need to send it along here
-      if (!item.vegaSpec) {
-        toolRuntimeConfigForWebSVG = {
-          axis: toolRuntimeConfig.axis,
-          text: toolRuntimeConfig.text,
-          colorSchemes: toolRuntimeConfig.colorSchemes,
-          displayOptions: toolRuntimeConfig.displayOptions || {}
-        };
-        // remove the grays as they are only needed for the legend
-        delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
-      }
+      const toolRuntimeConfigForWebSVG = {
+        axis: toolRuntimeConfig.axis,
+        text: toolRuntimeConfig.text,
+        colorSchemes: toolRuntimeConfig.colorSchemes,
+        displayOptions: toolRuntimeConfig.displayOptions || {}
+      };
+      // remove the grays as they are only needed for the legend
+      delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
 
       let requestMethod;
       let requestBodyString;

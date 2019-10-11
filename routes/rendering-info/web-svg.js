@@ -103,7 +103,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   try {
     spec = await getMappedSpec(id, chartType, templateSpec, mappingData);
   } catch (err) {
-    throw new Boom(err);
+    throw new Boom.Boom(err);
   }
   return spec;
 }
@@ -124,15 +124,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   }
 
   let spec;
-  if (item.vegaSpec) {
-    spec = item.vegaSpec;
-
-    spec.width = width;
-
-    // set the data from the item
-    // all data transforms are part of the spec
-    spec.data[0].values = clone(item.data);
-  } else if (item.options.chartType) {
+  if (item.options.chartType) {
     try {
       spec = await getSpec(id, width, chartType, item, toolRuntimeConfig);
     } catch (err) {
@@ -196,16 +188,16 @@ module.exports = {
       options: {
         allowUnknown: true
       },
-      query: {
+      query: Joi.object({
         width: Joi.number().required(),
         noCache: Joi.boolean(),
         toolRuntimeConfig: Joi.object(),
         id: Joi.string().required()
-      },
-      payload: {
+      }),
+      payload: Joi.object({
         item: Joi.object(),
         toolRuntimeConfig: Joi.object()
-      }
+      })
     }
   },
   handler: async function(request, h) {
