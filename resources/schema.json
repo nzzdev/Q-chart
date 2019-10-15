@@ -532,6 +532,31 @@
                   }
                 }
               }
+            },
+            "labels": {
+              "title": "Anzahl Beschriftungen",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "enum": ["few", "many"],
+              "default": "few",
+              "Q:options": {
+                "enum_titles": ["wenige", "viele"],
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "option-availability/dateSeriesOptions.labels",
+                      "fields": ["options.chartType"]
+                    }
+                  }
+                ]
+              }
             }
           }
         },

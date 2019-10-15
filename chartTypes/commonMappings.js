@@ -1,11 +1,13 @@
 const objectPath = require("object-path");
 const clone = require("clone");
 const intervals = require("../helpers/dateSeries.js").intervals;
+const dateSeries = require("../helpers/dateSeries.js");
 
 const d3 = {
   timeFormat: require("d3-time-format").timeFormat
 };
 
+const textMeasure = require("../helpers/textMeasure.js");
 const dataHelpers = require("../helpers/data.js");
 
 function getLineDateSeriesHandlingMappings() {
@@ -29,20 +31,76 @@ function getLineDateSeriesHandlingMappings() {
     {
       path: "item.options.dateSeriesOptions.interval",
       mapToSpec: function(interval, spec, mappingData) {
-        let tickCountInterval = interval;
-        if (interval === "quarter") {
-          tickCountInterval = "month";
-        }
-
         // only use this option if we have a valid dateFormat
         // if so, the scale type is set to time by now so we can check this
         if (spec.scales[0].type === "time") {
           objectPath.set(spec, "axes.0.format", intervals[interval].d3format);
+        }
+      }
+    },
+    {
+      path: "item.options.dateSeriesOptions.labels",
+      mapToSpec: function(labels, spec, mappingData) {
+        const interval = mappingData.item.options.dateSeriesOptions.interval;
+        if (!interval) {
+          return;
+        }
+        // few means we only draw first an last values of the domain
+        if (labels === "few") {
+          const { first, last } = dateSeries.getFirstAndLastDateFromData(
+            mappingData.item.data
+          );
+
+          const intervalConfig = dateSeries.intervals[interval];
+          const firstValue = intervalConfig.getFirstStepDateAfterDate(first);
+          const lastValue = intervalConfig.getLastStepDateBeforeDate(last);
+
+          // set the values explicitly to the first and last value
+          objectPath.set(spec, "axes.0.values", [
+            firstValue.valueOf(), // we need to set timestamps here because the values array doesn't like objects (Date)
+            lastValue.valueOf() // they will be sent through d3-time-format in the end, which recognises the timestamps and does the correct thing.
+          ]);
+
+          // setting labelBound to false is just for security, the following positioning logic should make sure the label never spans outside the axis
+          // in any case if the logic has a flaw, we set the labelBound to false to not hide the label in these cases
+          objectPath.set(spec, "axes.0.labelBound", false);
+
+          objectPath.set(spec, "axes.0.encode.labels", {
+            update: {
+              align: [
+                {
+                  // value - minValue < maxValue - value (is the value on the left side of the axis)
+                  // &&
+                  // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
+                  test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
+                  value: "left"
+                },
+                {
+                  // value - minValue > maxValue - value (is the value on the right side of the axis)
+                  // &&
+                  // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
+                  test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
+                  value: "right"
+                },
+                {
+                  value: "center"
+                }
+              ]
+            }
+          });
+        } else if (labels === "many" || !labels) {
+          // also run undefined labels option through this to not change the previous behaviour
+          // do nothing, this case is already handled with the interval option
           objectPath.set(
             spec,
             "axes.0.tickCount",
             intervals[interval].vegaInterval
-            // tickCountInterval
+          );
+
+          objectPath.set(
+            spec,
+            "scales.0.nice",
+            intervals[interval].vegaInterval
           );
         }
       }

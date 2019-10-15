@@ -1,7 +1,6 @@
 const Joi = require("@hapi/joi");
 const Boom = require("@hapi/boom");
 const vega = require("vega");
-const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
 const dataHelpers = require("../../helpers/data.js");
@@ -10,6 +9,7 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
 const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
+const textMeasure = require("../../helpers/textMeasure.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
@@ -42,6 +42,12 @@ vega.expressionFunction("contrast", function(color1, color2) {
 
   return contrast;
 });
+
+function registerExpressionFunctions(toolRuntimeConfig) {
+  vega.expressionFunction("measureAxisLabelWidth", function(text) {
+    return textMeasure.getAxisLabelTextWidth(text, toolRuntimeConfig);
+  });
+}
 
 function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config to the template vega spec to allow changes in the config through mappings
@@ -242,6 +248,8 @@ module.exports = {
     if (migrationResponse.statusCode === 200) {
       item = migrationResponse.result.item;
     }
+
+    registerExpressionFunctions(toolRuntimeConfig);
 
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
 

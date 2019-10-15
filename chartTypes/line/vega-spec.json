@@ -9,7 +9,6 @@
       "name": "xScale",
       "type": "point",
       "range": "width",
-      "nice": false,
       "domain": {
         "data": "table",
         "field": "xValue"

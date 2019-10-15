@@ -12,6 +12,17 @@ function getLabelTextWidth(text, toolRuntimeConfig) {
   return context.measureText(text).width;
 }
 
+function getAxisLabelTextWidth(text, toolRuntimeConfig) {
+  context.font =
+    toolRuntimeConfig.axis.labelFontWeight +
+    " " +
+    toolRuntimeConfig.axis.labelFontSize +
+    " " +
+    toolRuntimeConfig.axis.labelFont;
+  return context.measureText(text).width;
+}
+
 module.exports = {
-  getLabelTextWidth
+  getLabelTextWidth,
+  getAxisLabelTextWidth
 };
