@@ -34,7 +34,9 @@ function getLineDateSeriesHandlingMappings() {
         // only use this option if we have a valid dateFormat
         // if so, the scale type is set to time by now so we can check this
         if (spec.scales[0].type === "time") {
-          objectPath.set(spec, "axes.0.format", intervals[interval].d3format);
+          objectPath.set(spec, "axes.0.encode.labels.update.text", {
+            signal: `formatDateForInterval(datum.value, '${interval}')`
+          });
         }
       }
     },
@@ -65,29 +67,25 @@ function getLineDateSeriesHandlingMappings() {
           // in any case if the logic has a flaw, we set the labelBound to false to not hide the label in these cases
           objectPath.set(spec, "axes.0.labelBound", false);
 
-          objectPath.set(spec, "axes.0.encode.labels", {
-            update: {
-              align: [
-                {
-                  // value - minValue < maxValue - value (is the value on the left side of the axis)
-                  // &&
-                  // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
-                  test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
-                  value: "left"
-                },
-                {
-                  // value - minValue > maxValue - value (is the value on the right side of the axis)
-                  // &&
-                  // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
-                  test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
-                  value: "right"
-                },
-                {
-                  value: "center"
-                }
-              ]
+          objectPath.set(spec, "axes.0.encode.labels.update.align", [
+            {
+              // value - minValue < maxValue - value (is the value on the left side of the axis)
+              // &&
+              // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
+              test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
+              value: "left"
+            },
+            {
+              // value - minValue > maxValue - value (is the value on the right side of the axis)
+              // &&
+              // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
+              test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
+              value: "right"
+            },
+            {
+              value: "center"
             }
-          });
+          ]);
         } else if (labels === "many" || !labels) {
           // also run undefined labels option through this to not change the previous behaviour
           // do nothing, this case is already handled with the interval option
@@ -111,25 +109,12 @@ function getLineDateSeriesHandlingMappings() {
 function getColumnDateSeriesHandlingMappings() {
   return [
     {
-      path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, mappingData) {
-        const item = mappingData.item;
-
+      path: "item.options.dateSeriesOptions.interval",
+      mapToSpec: function(interval, spec, mappingData) {
         if (mappingData.dateFormat) {
-          const d3format =
-            intervals[item.options.dateSeriesOptions.interval].d3format;
-
-          // format the labels for the X axis according to the interval d3format
-          spec.axes[0].encode = Object.assign({}, spec.axes[0].encode, {
-            labels: {
-              update: {
-                text: {
-                  signal: `timeFormat(datum.value, '${d3format}')`
-                }
-              }
-            }
+          objectPath.set(spec, "axes.0.encode.labels.update.text", {
+            signal: `formatDateForInterval(datum.value, '${interval}')`
           });
-
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
         }
       }
@@ -140,29 +125,12 @@ function getColumnDateSeriesHandlingMappings() {
 function getBarDateSeriesHandlingMappings() {
   return [
     {
-      path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, mappingData) {
-        const item = mappingData.item;
-        let interval;
-        if (item.options.dateSeriesOptions.interval === "auto") {
-          interval = mappingData.dateFormat.interval;
-        } else {
-          interval = item.options.dateSeriesOptions.interval;
-        }
+      path: "item.options.dateSeriesOptions.interval",
+      mapToSpec: function(interval, spec, mappingData) {
         if (mappingData.dateFormat) {
-          const d3format = intervals[interval].d3format;
-
-          // format the labels for the X axis according to the interval d3format
-          spec.axes[1].encode = Object.assign({}, spec.axes[1].encode, {
-            labels: {
-              update: {
-                text: {
-                  signal: `timeFormat(datum.value, '${d3format}')`
-                }
-              }
-            }
+          objectPath.set(spec, "axes.1.encode.labels.update.text", {
+            signal: `formatDateForInterval(datum.value, '${interval}')`
           });
-
           objectPath.set(spec, "axes.1.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
         }
       }

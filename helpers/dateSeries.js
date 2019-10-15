@@ -8,6 +8,10 @@ const differenceInSeconds = require("date-fns/differenceInSeconds");
 const isBefore = require("date-fns/isBefore");
 const isAfter = require("date-fns/isAfter");
 
+const d3 = {
+  timeFormat: require("d3-time-format").timeFormat
+};
+
 function dateFromIsoWeek(year, week, day) {
   var d = new Date(Date.UTC(year, 0, 3));
   d.setUTCDate(3 - d.getUTCDay() + (week - 1) * 7 + parseInt(day, 10));
@@ -358,6 +362,19 @@ function getIntervalForData(data) {
   return "second";
 }
 
+function formatDateForInterval(date, interval) {
+  const intervalConfig = intervals[interval];
+  if (intervalConfig.formatFunction instanceof Function) {
+    return intervalConfig.formatFunction(date);
+  } else if (intervalConfig.d3format) {
+    const formatDate = d3.timeFormat(intervalConfig.d3format);
+    return formatDate(date);
+  }
+  throw new Error(
+    "formatDateForInterval failed, no formatFunction nor d3format found for interval"
+  );
+}
+
 // intervals are used to set the tickCount and format the date on the X axis
 // the user chooses a specific interval via an option
 const intervals = {
@@ -387,6 +404,11 @@ const intervals = {
     // the formatFunction is only used for the legend for now
     // there is no easy way to teach the time formatter in vega about quarters
     formatFunction: date => {
+      // there are cases where we do not get a date object here, but maybe a timestamp
+      // in these cases we try to create a new date object from the value first
+      if (!(date instanceof Date)) {
+        date = new Date(date);
+      }
       return (
         "Q" + Math.floor(date.getMonth() / 3 + 1) + " " + date.getFullYear()
       );
@@ -598,5 +620,6 @@ module.exports = {
   getFirstAndLastDateFromData,
   getIntervalForData,
   getDateFormatForData,
+  formatDateForInterval,
   intervals
 };

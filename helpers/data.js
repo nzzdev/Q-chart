@@ -1,10 +1,6 @@
 const clone = require("clone");
 const array2d = require("array2d");
-const intervals = require("./dateSeries.js").intervals;
-
-const d3 = {
-  timeFormat: require("d3-time-format").timeFormat
-};
+const dateSeries = require("./dateSeries.js");
 
 function getDataWithStringsCastedToFloats(data) {
   return data.map((row, i) => {
@@ -53,13 +49,11 @@ function getLongestDataLabel(mappingData, transposed = false) {
       if (!mappingData.dateFormat) {
         return label;
       }
-      // we have a date format, so we need to format the labels
-      // for this we get the date format from the interval option
-      const d3format =
-        intervals[item.options.dateSeriesOptions.interval].d3format;
 
-      const formatDate = d3.timeFormat(d3format);
-      return formatDate(label);
+      return dateSeries.formatDateForInterval(
+        label,
+        item.options.dateSeriesOptions.interval
+      );
     })
     .reduce((prev, current) => {
       if (prev.length > current.length) {

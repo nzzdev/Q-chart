@@ -9,9 +9,11 @@ const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
 const dateSeries = require("../../helpers/dateSeries.js");
 const d3config = require("../../config/d3.js");
 const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
-const textMeasure = require("../../helpers/textMeasure.js");
 
 const vegaConfig = require("../../config/vega-default.json");
+
+const registerExpressionFunctions = require("../../helpers/vegaExpressionFunctions")
+  .registerExpressionFunctions;
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
@@ -22,31 +24,6 @@ vega.formatLocale(d3config.formatLocale);
 function luminance_x(x) {
   x /= 255;
   return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
-}
-
-// register vega expression functions to measure contrast
-vega.expressionFunction("contrast", function(color1, color2) {
-  const c1 = vega.expressionFunction("rgb")(color1);
-  const c2 = vega.expressionFunction("rgb")(color2);
-  // this is according to https://en.wikipedia.org/wiki/Rec._709
-  const l1 =
-    luminance_x(c1.r) * 0.2126 +
-    luminance_x(c1.g) * 0.7152 +
-    luminance_x(c1.b) * 0.0722;
-  const l2 =
-    luminance_x(c2.r) * 0.2126 +
-    luminance_x(c2.g) * 0.7152 +
-    luminance_x(c2.b) * 0.0722;
-  const contrast =
-    l1 > l2 ? (l1 + 0.05) / (l2 + 0.05) : (l2 + 0.05) / (l1 + 0.05);
-
-  return contrast;
-});
-
-function registerExpressionFunctions(toolRuntimeConfig) {
-  vega.expressionFunction("measureAxisLabelWidth", function(text) {
-    return textMeasure.getAxisLabelTextWidth(text, toolRuntimeConfig);
-  });
 }
 
 function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
