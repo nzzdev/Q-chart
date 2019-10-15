@@ -66,9 +66,11 @@ module.exports = {
     // handle auto interval here
     // by calculating the interval from the data and setting this to the actual data we are rendering
     if (item.options.dateSeriesOptions.interval === "auto") {
-      item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
-        item.data
-      );
+      if (dateSeries.isDateSeriesData(item.data)) {
+        item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          item.data
+        );
+      }
     }
 
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
