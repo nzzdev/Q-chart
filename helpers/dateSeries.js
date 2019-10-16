@@ -8,9 +8,10 @@ const differenceInSeconds = require("date-fns/differenceInSeconds");
 const isBefore = require("date-fns/isBefore");
 const isAfter = require("date-fns/isAfter");
 
-const d3 = {
-  timeFormat: require("d3-time-format").timeFormat
-};
+const d3 = require("d3-time-format");
+
+const d3Config = require("../config/d3.js");
+d3.timeFormatDefaultLocale(d3Config.timeFormatLocale);
 
 function dateFromIsoWeek(year, week, day) {
   var d = new Date(Date.UTC(year, 0, 3));
