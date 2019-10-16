@@ -94,12 +94,6 @@ function getLineDateSeriesHandlingMappings() {
             "axes.0.tickCount",
             intervals[interval].vegaInterval
           );
-
-          objectPath.set(
-            spec,
-            "scales.0.nice",
-            intervals[interval].vegaInterval
-          );
         }
       }
     }

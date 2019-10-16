@@ -499,10 +499,11 @@
               "title": "Angezeigtes Intervall",
               "type": "string",
               "default": "auto",
-              "enum": ["auto", "year", "quarter", "month", "day", "hour", "minute", "second"],
+              "enum": ["auto", "decade", "year", "quarter", "month", "day", "hour", "minute", "second"],
               "Q:options": {
                 "enum_titles": [
                   "automatisch",
+                  "Dekaden",
                   "Jahre",
                   "Quartale",
                   "Monate",

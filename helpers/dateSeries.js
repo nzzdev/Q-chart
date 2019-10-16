@@ -322,6 +322,10 @@ function getIntervalForData(data) {
   const { first, last } = getFirstAndLastDateFromData(data);
   const diffSeconds = differenceInSeconds(last, first);
 
+  // 30 years
+  if (diffSeconds > 30 * 365 * 24 * 60 * 60) {
+    return "decade";
+  }
   // 2 years
   if (diffSeconds > 2 * 365 * 24 * 60 * 60) {
     return "year";
@@ -361,6 +365,28 @@ function formatDateForInterval(date, interval) {
 // intervals are used to set the tickCount and format the date on the X axis
 // the user chooses a specific interval via an option
 const intervals = {
+  decade: {
+    d3format: "%Y",
+    vegaInterval: { interval: "year", step: 10 },
+    getFirstStepDateAfterDate: function(date) {
+      const year = date.getFullYear();
+      const firstOfJanuarySameYear = new Date(year, 0, 1);
+      if (isBefore(firstOfJanuarySameYear, date)) {
+        return new Date(year + 1, 0, 1);
+      } else {
+        return firstOfJanuarySameYear;
+      }
+    },
+    getLastStepDateBeforeDate: function(date) {
+      const year = date.getFullYear();
+      const firstOfJanuarySameYear = new Date(year, 0, 1);
+      if (isAfter(firstOfJanuarySameYear, date)) {
+        return new Date(year - 1, 0, 1);
+      } else {
+        return firstOfJanuarySameYear;
+      }
+    }
+  },
   year: {
     d3format: "%Y",
     vegaInterval: { interval: "year", step: 1 },
