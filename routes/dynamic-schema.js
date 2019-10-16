@@ -105,11 +105,11 @@ module.exports = {
         return {
           enum: ["auto"].concat(dateFormat.validIntervals),
           "Q:options": {
-            enum_titles: ["automatisch"].concat[
+            enum_titles: ["automatisch"].concat(
               Object.keys(dateSeries.intervals)
                 .filter(key => dateFormat.validIntervals.includes(key))
                 .map(interval => dateSeries.intervals[interval].label)
-            ]
+            )
           }
         };
       } catch {
