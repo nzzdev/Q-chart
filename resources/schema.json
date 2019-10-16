@@ -499,19 +499,18 @@
               "title": "Angezeigtes Intervall",
               "type": "string",
               "default": "auto",
-              "enum": ["auto", "decade", "year", "quarter", "month", "day", "hour", "minute", "second"],
+              "enum": ["auto"],
               "Q:options": {
                 "enum_titles": [
-                  "automatisch",
-                  "Dekaden",
-                  "Jahre",
-                  "Quartale",
-                  "Monate",
-                  "Tage",
-                  "Stunden",
-                  "Minuten",
-                  "Sekunden"
-                ]
+                  "automatisch"
+                ],
+                "dynamicSchema": {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "dynamic-schema/dateSeriesOptions.interval",
+                    "fields": ["data"]
+                  }
+                }
               }
             },
             "prognosisStart": {
