@@ -67,25 +67,27 @@ function getLineDateSeriesHandlingMappings() {
           // in any case if the logic has a flaw, we set the labelBound to false to not hide the label in these cases
           objectPath.set(spec, "axes.0.labelBound", false);
 
-          objectPath.set(spec, "axes.0.encode.labels.update.align", [
-            {
-              // value - minValue < maxValue - value (is the value on the left side of the axis)
-              // &&
-              // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
-              test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
-              value: "left"
-            },
-            {
-              // value - minValue > maxValue - value (is the value on the right side of the axis)
-              // &&
-              // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
-              test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(timeFormat(datum.value, '${intervalConfig.d3format}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
-              value: "right"
-            },
-            {
-              value: "center"
-            }
-          ]);
+          if (!objectPath.get(spec, "axes.0.encode.labels.update.align")) {
+            objectPath.set(spec, "axes.0.encode.labels.update.align", [
+              {
+                // value - minValue < maxValue - value (is the value on the left side of the axis)
+                // &&
+                // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
+                test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(formatDateForInterval(datum.value, '${interval}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
+                value: "left"
+              },
+              {
+                // value - minValue > maxValue - value (is the value on the right side of the axis)
+                // &&
+                // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
+                test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(formatDateForInterval(datum.value, '${interval}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
+                value: "right"
+              },
+              {
+                value: "center"
+              }
+            ]);
+          }
         } else if (labels === "many" || !labels) {
           // also run undefined labels option through this to not change the previous behaviour
           // do nothing, this case is already handled with the interval option

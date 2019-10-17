@@ -1,6 +1,7 @@
 const clone = require("clone");
 const objectPath = require("object-path");
 const intervals = require("../../helpers/dateSeries.js").intervals;
+const dateSeries = require("../../helpers/dateSeries.js");
 const dataHelpers = require("../../helpers/data.js");
 
 const commonMappings = require("../commonMappings.js");
@@ -250,54 +251,42 @@ module.exports = function getMappings() {
           return;
         }
 
+        // keep the defined interval
+        const interval = mappingData.item.options.dateSeriesOptions.interval;
+
+        // unset, we do not want any date series handling in this case
+        mappingData.item.options.dateSeriesOptions = undefined;
+
         // if the option for (intraday) stock is set
         // we do not use a time scale as this would look weird
         // because there is no data during the night when stock exchanges are closed
-        // therefor we need to do some manual date wrangling to have the labels in the correct format
+        objectPath.set(spec, "scales.0.type", "point");
 
-        const d3format =
-          intervals[item.options.dateSeriesOptions.interval].d3format;
-
-        // format the labels for the X axis according to the interval d3format
-        spec.axes[0].encode = Object.assign({}, spec.axes[0].encode, {
-          labels: {
-            update: {
-              text: {
-                signal: `timeFormat(timeParse(datum.value, "%Y-%m-%dT%H:%M:%S.%L%Z"), '${d3format}')`
-              }
-            }
-          }
-        });
-
-        const dates = item.data
-          .slice(0)
-          .slice(1) // return header row
-          .map(row => {
-            return row[0];
-          });
-
-        // just show first and last date for now
-        // todo: this should be more intelligent in calculating the ticks
-        objectPath.set(
-          spec,
-          "axes.0.values",
-          d3.array.extent(dates).map(date => date.toISOString())
-        );
-
+        // set the values to timestamps instead of date objects
         objectPath.set(
           spec,
           "data.0.values",
-          spec.data[0].values.map(value => {
-            value.xValue = value.xValue.toISOString();
-            return value;
+          objectPath.get(spec, "data.0.values").map(row => {
+            row.xValue = row.xValue.valueOf();
+            return row;
           })
         );
 
-        objectPath.set(spec, "data.0.parse", {
-          format: "date:%Y-%m-%dT%H:%M:%S.%L%Z"
-        });
+        objectPath.set(spec, "axes.0.labelFlush", true);
 
-        objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
+        const { first, last } = dateSeries.getFirstAndLastDateFromData(
+          mappingData.item.data
+        );
+
+        objectPath.set(spec, "axes.0.values", [
+          first.valueOf(),
+          last.valueOf()
+        ]);
+
+        // the axis tick values should be formatted according to the selected interval
+        objectPath.set(spec, "axes.0.encode.labels.update.text", {
+          signal: `formatDateForInterval(datum.value, '${interval}')`
+        });
       }
     }
   ]
