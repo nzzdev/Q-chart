@@ -219,7 +219,7 @@ Only available if a date series is detected in the first column of the data arra
 
 ##### interval
 
-One of `["auto", "year", "quarter", "month", "day", "hour"]`. This is used for the tick interval and the label format of the dates on the X axis. `auto` will pick the interval based on the detected date format.
+One of `["auto", "year", "quarter", "month", "day", "hour", "minute", "second"]`. This is used for the tick interval and the label format of the dates on the X axis. `auto` will pick the interval based on the detected date format.
 
 ##### prognosisStart
 
