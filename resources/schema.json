@@ -498,16 +498,19 @@
             "interval": {
               "title": "Angezeigtes Intervall",
               "type": "string",
-              "default": "year",
-              "enum": ["year", "quarter", "month", "day", "hour"],
+              "default": "auto",
+              "enum": ["auto","decade","year","month","week","day","hour","minute","second"],
               "Q:options": {
                 "enum_titles": [
-                  "Jahre",
-                  "Quartale",
-                  "Monate",
-                  "Tage",
-                  "Stunden"
-                ]
+                  "automatisch"
+                ],
+                "dynamicSchema": {
+                  "type": "ToolEndpoint",
+                  "config": {
+                    "endpoint": "dynamic-schema/dateSeriesOptions.interval",
+                    "fields": ["data"]
+                  }
+                }
               }
             },
             "prognosisStart": {
@@ -528,6 +531,31 @@
                     "fields": ["data"]
                   }
                 }
+              }
+            },
+            "labels": {
+              "title": "Anzahl Beschriftungen",
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "enum": ["few", "many"],
+              "default": "few",
+              "Q:options": {
+                "enum_titles": ["wenige", "viele"],
+                "availabilityChecks": [
+                  {
+                    "type": "ToolEndpoint",
+                    "config": {
+                      "endpoint": "option-availability/dateSeriesOptions.labels",
+                      "fields": ["options.chartType"]
+                    }
+                  }
+                ]
               }
             }
           }

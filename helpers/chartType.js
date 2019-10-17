@@ -16,6 +16,10 @@ function getChartTypeForItemAndWidth(item, width) {
   }
 
   if (item.options.chartType === "Bar") {
+    if (!item.options.barOptions) {
+      // the default is columns if no special options are defined
+      return "column";
+    }
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {
@@ -31,6 +35,10 @@ function getChartTypeForItemAndWidth(item, width) {
   }
 
   if (item.options.chartType === "StackedBar") {
+    if (!item.options.barOptions) {
+      // the default is columns if no special options are defined
+      return "column-stacked";
+    }
     if (item.options.barOptions.isBarChart === false) {
       if (item.options.barOptions.forceBarsOnSmall) {
         if (width < 500) {

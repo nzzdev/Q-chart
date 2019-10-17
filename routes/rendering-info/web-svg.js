@@ -1,7 +1,6 @@
 const Joi = require("@hapi/joi");
 const Boom = require("@hapi/boom");
 const vega = require("vega");
-const clone = require("clone");
 const deepmerge = require("deepmerge");
 const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
 const dataHelpers = require("../../helpers/data.js");
@@ -13,6 +12,9 @@ const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
+const registerExpressionFunctions = require("../../helpers/vegaExpressionFunctions")
+  .registerExpressionFunctions;
+
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
 // thats the default and might get overwritten by a prerender function of a chart type
@@ -23,25 +25,6 @@ function luminance_x(x) {
   x /= 255;
   return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
-
-// register vega expression functions to measure contrast
-vega.expressionFunction("contrast", function(color1, color2) {
-  const c1 = vega.expressionFunction("rgb")(color1);
-  const c2 = vega.expressionFunction("rgb")(color2);
-  // this is according to https://en.wikipedia.org/wiki/Rec._709
-  const l1 =
-    luminance_x(c1.r) * 0.2126 +
-    luminance_x(c1.g) * 0.7152 +
-    luminance_x(c1.b) * 0.0722;
-  const l2 =
-    luminance_x(c2.r) * 0.2126 +
-    luminance_x(c2.g) * 0.7152 +
-    luminance_x(c2.b) * 0.0722;
-  const contrast =
-    l1 > l2 ? (l1 + 0.05) / (l2 + 0.05) : (l2 + 0.05) / (l1 + 0.05);
-
-  return contrast;
-});
 
 function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
   // add the config to the template vega spec to allow changes in the config through mappings
@@ -77,6 +60,13 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
       mappingData.item.data = dateSeries.getDataWithDateParsed(
         mappingData.item.data
       );
+      // handle auto interval here
+      // by calculating the interval from the data and setting this to the actual data we are rendering
+      if (mappingData.item.options.dateSeriesOptions.interval === "auto") {
+        mappingData.item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          mappingData.item.data
+        );
+      }
     }
   }
 
@@ -235,6 +225,8 @@ module.exports = {
     if (migrationResponse.statusCode === 200) {
       item = migrationResponse.result.item;
     }
+
+    registerExpressionFunctions(toolRuntimeConfig);
 
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
 

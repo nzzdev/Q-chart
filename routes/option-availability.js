@@ -126,6 +126,13 @@ module.exports = {
       };
     }
 
+    if (request.params.optionName === "dateSeriesOptions.labels") {
+      const chartType = getChartTypeForItemAndWidth(item, 400); // just hardcode a small width here because it doesn't matter in this case
+      return {
+        available: chartType === "line" || chartType === "area"
+      };
+    }
+
     if (request.params.optionName === "highlightDataSeries") {
       return {
         available: !isArrowChart(item) && item.data[0].length > 2

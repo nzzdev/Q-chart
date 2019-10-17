@@ -9,7 +9,6 @@
       "name": "xScale",
       "type": "point",
       "range": "width",
-      "nice": false,
       "domain": {
         "data": "table",
         "field": "xValue"
@@ -54,7 +53,7 @@
       "orient": "bottom",
       "scale": "xScale",
       "domain": false,
-      "grid": true,
+      "grid": false,
       "labels": true,
       "labelFlush": true,
       "labelBound": true,
@@ -85,6 +84,7 @@
       "scale": "yScale",
       "domain": false,
       "grid": true,
+      "ticks": false,
       "labels": true,
       "tickCount": 4,
       "labelPadding": 2

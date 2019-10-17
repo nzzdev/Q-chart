@@ -2,6 +2,7 @@ const querystring = require("querystring");
 const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
+const dateSeries = require("../../helpers/dateSeries.js");
 
 const viewsDir = __dirname + "/../../views/";
 const stylesDir = __dirname + "/../../styles/";
@@ -61,6 +62,16 @@ module.exports = {
 
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
+
+    // handle auto interval here
+    // by calculating the interval from the data and setting this to the actual data we are rendering
+    if (item.options.dateSeriesOptions.interval === "auto") {
+      if (dateSeries.isDateSeriesData(item.data)) {
+        item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          item.data
+        );
+      }
+    }
 
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
     const divisor = dataHelpers.getDivisor(item.data);
