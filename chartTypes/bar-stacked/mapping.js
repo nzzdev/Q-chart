@@ -1,5 +1,5 @@
 const objectPath = require("object-path");
-const array2d = require("array2d");
+const Decimal = require("decimal.js");
 const clone = require("clone");
 const dataHelpers = require("../../helpers/data.js");
 
@@ -147,16 +147,17 @@ module.exports = function getMapping() {
       path: "item.data",
       mapToSpec: function(itemData, spec) {
         // check if all rows sum up to 100
+        // use decimal.js to avoid floating point precision errors
         const stackedSums = itemData
           .slice(1)
           .map(row => {
             return row.slice(1).reduce((sum, cell) => {
-              return sum + cell;
-            }, 0);
+              return sum.plus(new Decimal(cell));
+            }, new Decimal(0));
           })
           .reduce((uniqueSums, sum) => {
-            if (!uniqueSums.includes(sum)) {
-              uniqueSums.push(sum);
+            if (!uniqueSums.includes(sum.toNumber())) {
+              uniqueSums.push(sum.toNumber());
             }
             return uniqueSums;
           }, []);
@@ -167,7 +168,7 @@ module.exports = function getMapping() {
         }
 
         // set the ticks to 0/25/50/75/100
-        objectPath.set(spec, "axes.0.tickCount", undefined);
+        objectPath.set(spec, "axes.0.tickCount", 5);
         objectPath.set(spec, "axes.0.values", [0, 25, 50, 75, 100]);
       }
     },
