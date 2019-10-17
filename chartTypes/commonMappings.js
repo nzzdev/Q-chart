@@ -89,11 +89,21 @@ function getLineDateSeriesHandlingMappings() {
         } else if (labels === "many" || !labels) {
           // also run undefined labels option through this to not change the previous behaviour
           // do nothing, this case is already handled with the interval option
-          objectPath.set(
-            spec,
-            "axes.0.tickCount",
-            intervals[interval].vegaInterval
-          );
+          if (intervals[interval].ticks instanceof Function) {
+            objectPath.set(
+              spec,
+              "axes.0.values",
+              intervals[interval]
+                .ticks(mappingData.item.data)
+                .map(d => d.valueOf())
+            );
+          } else {
+            objectPath.set(
+              spec,
+              "axes.0.tickCount",
+              intervals[interval].vegaInterval
+            );
+          }
         }
       }
     }

@@ -7,16 +7,23 @@ const timezone = process.env.TIMEZONE || "Europe/Zurich";
 const differenceInSeconds = require("date-fns/differenceInSeconds");
 const isBefore = require("date-fns/isBefore");
 const isAfter = require("date-fns/isAfter");
+const startOfISOWeek = require("date-fns/startOfISOWeek");
+const getISOWeek = require("date-fns/getISOWeek");
+const setISOWeek = require("date-fns/setISOWeek");
+const setISODay = require("date-fns/setISODay");
 
-const d3 = require("d3-time-format");
-
+const d3TimeFormat = require("d3-time-format");
 const d3Config = require("../config/d3.js");
-d3.timeFormatDefaultLocale(d3Config.timeFormatLocale);
+d3TimeFormat.timeFormatDefaultLocale(d3Config.timeFormatLocale);
+
+const d3Scale = require("d3-scale");
+const d3Time = require("d3-time");
 
 function dateFromIsoWeek(year, week, day) {
-  var d = new Date(Date.UTC(year, 0, 3));
-  d.setUTCDate(3 - d.getUTCDay() + (week - 1) * 7 + parseInt(day, 10));
-  return d;
+  let date = new Date(year, 0, 0);
+  // this returns a date in the given week, preserving the weekday
+  date = setISOWeek(setISODay(date, day), parseInt(week, 10));
+  return date;
 }
 
 // thanks datawrapper.de for the format regexes
@@ -81,7 +88,7 @@ const dateFormats = {
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: ["decade", "year", "quarter", "month", "week"],
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
     }
@@ -89,7 +96,7 @@ const dateFormats = {
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: ["decade", "year", "quarter", "month", "week"],
     getDate: parsed => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
     }
@@ -97,7 +104,7 @@ const dateFormats = {
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "day"],
+    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
     getDate: parsed => {
       return new Date(parsed[4], parsed[1] - 1, parsed[3]);
     }
@@ -105,7 +112,7 @@ const dateFormats = {
   "DD/MM/YYYY": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "day"],
+    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
     getDate: parsed => {
       return new Date(parsed[4], parsed[3] - 1, parsed[1]);
     }
@@ -113,7 +120,7 @@ const dateFormats = {
   "YYYY-MM-DD": {
     match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    validIntervals: ["decade", "year", "quarter", "month", "day"],
+    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
     getDate: parsed => {
       return new Date(parsed[1], parsed[3] - 1, parsed[4]);
     }
@@ -126,6 +133,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute"
@@ -154,6 +162,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute"
@@ -182,6 +191,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute"
@@ -210,6 +220,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute",
@@ -239,6 +250,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute",
@@ -268,6 +280,7 @@ const dateFormats = {
       "year",
       "quarter",
       "month",
+      "week",
       "day",
       "hour",
       "minute",
@@ -420,7 +433,7 @@ function formatDateForInterval(date, interval) {
   if (intervalConfig.formatFunction instanceof Function) {
     return intervalConfig.formatFunction(date);
   } else if (intervalConfig.d3format) {
-    const formatDate = d3.timeFormat(intervalConfig.d3format);
+    const formatDate = d3TimeFormat.timeFormat(intervalConfig.d3format);
     return formatDate(date);
   }
   throw new Error(
@@ -490,7 +503,6 @@ const intervals = {
         "Q" + Math.floor(date.getMonth() / 3 + 1) + " " + date.getFullYear()
       );
     },
-    d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 3 },
     label: "Quartale",
     getFirstStepDateAfterDate: function(date) {
@@ -540,6 +552,43 @@ const intervals = {
         return new Date(year, month - 1, 1);
       } else {
         return firstOfTheSameMonth;
+      }
+    }
+  },
+  week: {
+    formatFunction: date => {
+      const d = new Date(date);
+      return `W${getISOWeek(date)}`;
+    },
+    ticks: data => {
+      // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
+      // instead we implement a ticks function here returning every monday in the scale
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeMonday.every(1));
+      return ticks;
+    },
+    label: "Wochen",
+    getFirstStepDateAfterDate: function(date) {
+      const startOfThisWeek = startOfISOWeek(date);
+      if (isBefore(startOfThisWeek, date)) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        return startOfISOWeek(new Date(year, month, day + 7)); // this is not correct yet probably
+      } else {
+        return startOfThisWeek;
+      }
+    },
+    getLastStepDateBeforeDate: function(date) {
+      const startOfThisWeek = startOfISOWeek(date);
+      if (isAfter(startOfThisWeek, date)) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        return startOfISOWeek(new Date(year, month, day - 7)); // this is not correct yet probably
+      } else {
+        return startOfThisWeek;
       }
     }
   },
