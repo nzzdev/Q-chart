@@ -212,8 +212,7 @@
       "grid": true,
       "labels": true,
       "tickCount": 4,
-      "labelPadding": 2,
-      "format": "~r"
+      "labelPadding": 2
     }
   ],
   "autosize": {
