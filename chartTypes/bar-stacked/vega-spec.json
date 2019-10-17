@@ -243,8 +243,7 @@
       "labels": true,
       "ticks": true,
       "tickCount": 4,
-      "labelSeparation": 4,
-      "format": "~r"
+      "labelSeparation": 4
     },
     {
       "orient": "left",
