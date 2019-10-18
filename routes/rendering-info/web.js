@@ -15,6 +15,10 @@ const styleHashMap = require(`${stylesDir}hashMap.json`);
 
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;
+
+const getToolRuntimeConfigOptimizedForClientRequest = require("../../helpers/toolRuntimeConfig.js")
+  .getToolRuntimeConfigOptimizedForClientRequest;
+
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
@@ -131,14 +135,15 @@ module.exports = {
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
 
-      const toolRuntimeConfigForWebSVG = {
-        axis: toolRuntimeConfig.axis,
-        text: toolRuntimeConfig.text,
-        colorSchemes: toolRuntimeConfig.colorSchemes,
-        displayOptions: toolRuntimeConfig.displayOptions || {}
-      };
-      // remove the grays as they are only needed for the legend
-      delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
+      const toolRuntimeConfigForWebSVG = getToolRuntimeConfigOptimizedForClientRequest(
+        {
+          axis: toolRuntimeConfig.axis,
+          text: toolRuntimeConfig.text,
+          colorSchemes: toolRuntimeConfig.colorSchemes,
+          displayOptions: toolRuntimeConfig.displayOptions || {}
+        },
+        item
+      );
 
       let requestMethod;
       let requestBodyString;
