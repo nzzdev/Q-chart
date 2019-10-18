@@ -130,6 +130,25 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
   let svg;
 
   try {
+    if (process.env.DEBUG) {
+      const debugHelpers = require("../../helpers/debug.js");
+      const fs = require("fs");
+      fs.writeFile(
+        `${__dirname}/../../vega-spec-debug.json`,
+        JSON.stringify(
+          debugHelpers.getSpecTransformForUpstreamCompat(spec),
+          null,
+          2
+        ),
+        {},
+        err => {
+          if (err) {
+            console.error(err);
+          }
+        }
+      );
+    }
+
     const dataflow = vega.parse(spec);
 
     try {
