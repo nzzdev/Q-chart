@@ -205,10 +205,13 @@ function getBarPrognosisMappings() {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
-        // add the signal with prognosisStart value
+        // add the signal
         objectPath.push(spec, "signals", {
-          name: "prognosisStart",
-          value: prognosisStart
+          name: "prognosisStartDate",
+          value: dateSeries.getPrognosisStartDate(
+            mappingData.originalItemData,
+            prognosisStart
+          )
         });
 
         // add the data for prognosis
@@ -218,7 +221,8 @@ function getBarPrognosisMappings() {
           transform: [
             {
               type: "filter",
-              expr: "datum.xIndex >= prognosisStart"
+              expr:
+                "timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
             }
           ]
         });
