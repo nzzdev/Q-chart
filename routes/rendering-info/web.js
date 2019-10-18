@@ -103,9 +103,7 @@ module.exports = {
         chartType,
         request.server
       ),
-      id: `q_chart_${request.query._id}_${Math.floor(
-        Math.random() * 100000
-      )}`.replace(/-/g, "")
+      id: `q_chart_${toolRuntimeConfig.requestId}`
     };
 
     if (item.allowDownloadData) {
