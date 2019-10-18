@@ -362,35 +362,42 @@ function getDateFormatForData(data) {
   return dateFormats[getDateFormatForSerie(getFirstColumnSerie(data))];
 }
 
-function getDataWithDateParsed(data) {
+function getPrognosisStartDate(data, prognosisStartIndex) {
   const format = getDateFormatForData(data);
-  return data.map((row, i) => {
-    if (i === 0) {
-      // the first row is just the header
-      return row;
-    }
-    return row.map((cell, ii) => {
-      if (ii !== 0) {
-        // only the first cell of every row should be parsed
+  const cell = getFirstColumnSerie(data)[prognosisStartIndex];
+  return format.getDate(cell.match(format.parse));
+}
+
+function getDataWithDateParsedAndSortedByDate(data) {
+  const format = getDateFormatForData(data);
+  return data
+    .map((row, i) => {
+      if (i === 0) {
+        // the first row is just the header
+        return row;
+      }
+      return row.map((cell, ii) => {
+        if (ii !== 0) {
+          // only the first cell of every row should be parsed
+          return cell;
+        }
+        if (cell.match) {
+          // check if cell is actually a string that has .match function
+          return format.getDate(cell.match(format.parse));
+        }
         return cell;
-      }
-      if (cell.match) {
-        // check if cell is actually a string that has .match function
-        return format.getDate(cell.match(format.parse));
-      }
-      return cell;
+      });
+    })
+    .sort((a, b) => {
+      return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
     });
-  });
 }
 
 function getFirstAndLastDateFromData(data) {
-  const parsedDatesData = getDataWithDateParsed(data);
+  const parsedDatesData = getDataWithDateParsedAndSortedByDate(data);
   const dates = getFirstColumnSerie(parsedDatesData);
-  const sortedDates = dates.sort((a, b) => {
-    return a < b ? -1 : a > b ? 1 : 0;
-  });
-  const firstDate = sortedDates.shift();
-  const lastDate = sortedDates.pop();
+  const firstDate = dates.shift();
+  const lastDate = dates.pop();
   return {
     first: firstDate,
     last: lastDate
@@ -748,10 +755,11 @@ module.exports = {
   getFirstColumnSerie,
   getDateFormatForSerie,
   getDateFormatForValue,
-  getDataWithDateParsed,
+  getDataWithDateParsedAndSortedByDate,
   getFirstAndLastDateFromData,
   getIntervalForData,
   getDateFormatForData,
   formatDateForInterval,
+  getPrognosisStartDate,
   intervals
 };

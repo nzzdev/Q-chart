@@ -78,8 +78,14 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
   if (legendModel.hasPrognosis) {
     const { prognosisStart, interval } = item.options.dateSeriesOptions;
 
-    const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
-    const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
+    const dataWithDateParsed = dateSeries.getDataWithDateParsedAndSortedByDate(
+      item.data
+    );
+    // const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
+    const prognosisStartDate = dateSeries.getPrognosisStartDate(
+      item.data,
+      prognosisStart
+    );
 
     const intervalConfig = dateSeries.intervals[interval];
 

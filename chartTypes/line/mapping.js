@@ -220,24 +220,29 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec) {
+      mapToSpec: function(prognosisStart, spec, mappingData) {
         if (prognosisStart === null) {
           return;
         }
         // add the signal
         objectPath.push(spec, "signals", {
-          name: "prognosisStart",
-          value: prognosisStart
+          name: "prognosisStartDate",
+          value: dateSeries.getPrognosisStartDate(
+            mappingData.originalItemData,
+            prognosisStart
+          )
         });
 
         // split the marks at the prognosisStart index
         const lineMark = clone(spec.marks[0].marks[0]);
         lineMark.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex <= prognosisStart"
+          signal:
+            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
         };
         const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
         lineMarkPrognosis.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xIndex >= prognosisStart"
+          signal:
+            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];

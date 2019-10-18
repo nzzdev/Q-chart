@@ -57,7 +57,9 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
       mappingData.dateFormat = dateSeries.getDateFormatForData(
         mappingData.item.data
       );
-      mappingData.item.data = dateSeries.getDataWithDateParsed(
+      // keep the original data, we need it later on to handle prognosisStart (which is an index and not a date) correctly
+      mappingData.originalItemData = mappingData.item.data;
+      mappingData.item.data = dateSeries.getDataWithDateParsedAndSortedByDate(
         mappingData.item.data
       );
       // handle auto interval here
