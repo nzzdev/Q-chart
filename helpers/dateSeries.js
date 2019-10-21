@@ -11,6 +11,7 @@ const startOfISOWeek = require("date-fns/startOfISOWeek");
 const getISOWeek = require("date-fns/getISOWeek");
 const setISOWeek = require("date-fns/setISOWeek");
 const setISODay = require("date-fns/setISODay");
+const getISOWeekYear = require("date-fns/getISOWeekYear");
 
 const d3TimeFormat = require("d3-time-format");
 const d3Config = require("../config/d3.js");
@@ -20,10 +21,10 @@ const d3Scale = require("d3-scale");
 const d3Time = require("d3-time");
 
 function dateFromIsoWeek(year, week, day) {
-  let date = new Date(year, 0, 0);
-  // this returns a date in the given week, preserving the weekday
-  date = setISOWeek(setISODay(date, day), parseInt(week, 10));
-  return date;
+  let d = new Date(year, 5, 30); // somewhere in the middle of the year
+  d = setISODay(d, parseInt(day, 10));
+  d = setISOWeek(d, parseInt(week, 10));
+  return d;
 }
 
 // thanks datawrapper.de for the format regexes
@@ -564,8 +565,19 @@ const intervals = {
   },
   week: {
     formatFunction: date => {
+      // instead of the data series, we need the actual tick values here to make this work
       const d = new Date(date);
-      return `W${getISOWeek(date)}`;
+
+      function includeYear() {
+        // todo: we should find a way to get the actual ticks displayed to include the year only when it is actually different
+        // from the label before. for now, we include the year for all labels because that is the least wrong
+        return true;
+      }
+      if (includeYear()) {
+        return `${getISOWeekYear(d)} W${getISOWeek(date)}`;
+      } else {
+        return `W${getISOWeek(date)}`;
+      }
     },
     ticks: data => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
