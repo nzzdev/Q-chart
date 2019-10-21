@@ -45,10 +45,6 @@ module.exports = function getMappings() {
                 });
               })
               .flat()
-              .sort((a, b) => {
-                // sort by cValue to draw the first data series last and in front
-                return a.cValue > b.cValue ? -1 : a.cValue < b.cValue ? 1 : 0;
-              })
           }
         ];
       }

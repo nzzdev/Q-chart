@@ -357,17 +357,6 @@ function getHighlightSeriesMapping() {
             value.isHighlighted = false;
           }
         });
-
-        // put the highlighted elements to the end, they should be drawn last in the svg
-        spec.data[0].values = spec.data[0].values.sort((a, b) => {
-          if (a.isHighlighted && !b.isHighlighted) {
-            return 1;
-          }
-          if (!a.isHighlighted && b.isHighlighted) {
-            return -1;
-          }
-          return 0;
-        });
       }
     }
   ];
