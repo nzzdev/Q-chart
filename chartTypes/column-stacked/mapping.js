@@ -40,6 +40,12 @@ module.exports = function getMapping() {
           signal => signal.name === "numberOfDataSeries"
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
+
+        // in case we have more than 50 columns, we disable the rounding
+        // otherwise the positioning of the columns is wrong because the band scale rounds the values
+        if (itemData.length - 1 > 50) {
+          objectPath.set(spec, "scales.0.round", false);
+        }
       }
     },
     {

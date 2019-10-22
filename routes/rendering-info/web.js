@@ -2,6 +2,7 @@ const querystring = require("querystring");
 const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
+const dateSeries = require("../../helpers/dateSeries.js");
 
 const viewsDir = __dirname + "/../../views/";
 const stylesDir = __dirname + "/../../styles/";
@@ -14,6 +15,10 @@ const styleHashMap = require(`${stylesDir}hashMap.json`);
 
 const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
   .getExactPixelWidth;
+
+const getToolRuntimeConfigOptimizedForClientRequest = require("../../helpers/toolRuntimeConfig.js")
+  .getToolRuntimeConfigOptimizedForClientRequest;
+
 const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
   .getChartTypeForItemAndWidth;
 const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
@@ -62,6 +67,16 @@ module.exports = {
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
 
+    // handle auto interval here
+    // by calculating the interval from the data and setting this to the actual data we are rendering
+    if (item.options.dateSeriesOptions.interval === "auto") {
+      if (dateSeries.isDateSeriesData(item.data)) {
+        item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          item.data
+        );
+      }
+    }
+
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
     const divisor = dataHelpers.getDivisor(item.data);
     if (divisor > 1) {
@@ -92,9 +107,7 @@ module.exports = {
         chartType,
         request.server
       ),
-      id: `q_chart_${request.query._id}_${Math.floor(
-        Math.random() * 100000
-      )}`.replace(/-/g, "")
+      id: `q_chart_${toolRuntimeConfig.requestId}`
     };
 
     if (item.allowDownloadData) {
@@ -122,14 +135,15 @@ module.exports = {
       const functionName = `loadSVG${context.id}`;
       const dataObject = `${context.id}Data`;
 
-      const toolRuntimeConfigForWebSVG = {
-        axis: toolRuntimeConfig.axis,
-        text: toolRuntimeConfig.text,
-        colorSchemes: toolRuntimeConfig.colorSchemes,
-        displayOptions: toolRuntimeConfig.displayOptions || {}
-      };
-      // remove the grays as they are only needed for the legend
-      delete toolRuntimeConfigForWebSVG.colorSchemes.grays;
+      const toolRuntimeConfigForWebSVG = getToolRuntimeConfigOptimizedForClientRequest(
+        {
+          axis: toolRuntimeConfig.axis,
+          text: toolRuntimeConfig.text,
+          colorSchemes: toolRuntimeConfig.colorSchemes,
+          displayOptions: toolRuntimeConfig.displayOptions || {}
+        },
+        item
+      );
 
       let requestMethod;
       let requestBodyString;

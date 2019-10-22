@@ -9,3 +9,4 @@ resources/fonts/*.otf
 resources/fonts/*.ttf
 dev.js
 .uuid
+vega-spec-debug.json

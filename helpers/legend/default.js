@@ -78,20 +78,33 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
   if (legendModel.hasPrognosis) {
     const { prognosisStart, interval } = item.options.dateSeriesOptions;
 
-    const dateFormat = dateSeries.getDateFormatForValue(
-      clone(item.data).slice(1)[prognosisStart][0]
+    const dataWithDateParsed = dateSeries.getDataWithDateParsedAndSortedByDate(
+      item.data
     );
-    const dataWithDateParsed = dateSeries.getDataWithDateParsed(item.data);
-    const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
+    // const prognosisStartDate = dataWithDateParsed.slice(1)[prognosisStart][0];
+    const prognosisStartDate = dateSeries.getPrognosisStartDate(
+      item.data,
+      prognosisStart
+    );
+
+    const intervalConfig = dateSeries.intervals[interval];
 
     d3timeFormat.timeFormatDefaultLocale(d3config.timeFormatLocale);
-    const formatDate = d3timeFormat.timeFormat(
-      dateSeries.dateFormats[dateFormat].d3format
-    );
+
+    let formatDate;
+    if (intervalConfig.formatFunction instanceof Function) {
+      formatDate = intervalConfig.formatFunction;
+    } else if (intervalConfig.d3format) {
+      formatDate = d3timeFormat.timeFormat(intervalConfig.d3format);
+    } else {
+      console.error(
+        "no formatFunction or d3format defined for the date format of the prognosisStart value"
+      );
+    }
 
     let legendLabel = "Prognose ";
     if (prognosisStart !== dataWithDateParsed.slice(1).length - 1) {
-      // if the prognosis is not the last label
+      // if the prognosis is not the last data point
       legendLabel += "(ab ";
     } else {
       legendLabel += "(";

@@ -61,6 +61,7 @@
       "connectDots": true
     },
     "highlightDataSeries": [],
+    "highlightDataRows": [2],
     "colorOverwritesSeries": []
   }
 }

@@ -1,6 +1,8 @@
 const Boom = require("@hapi/boom");
 const Joi = require("@hapi/joi");
 
+const dateSeries = require("../helpers/dateSeries.js");
+
 module.exports = {
   method: "POST",
   path: "/dynamic-schema/{optionName}",
@@ -89,6 +91,24 @@ module.exports = {
               item.data
                 .slice(1)
                 .map((row, index) => `${index + 1} - (${row[0]})`)
+            )
+          }
+        };
+      } catch {
+        return {};
+      }
+    }
+
+    if (request.params.optionName === "dateSeriesOptions.interval") {
+      try {
+        const dateFormat = dateSeries.getDateFormatForData(item.data);
+        return {
+          enum: ["auto"].concat(dateFormat.validIntervals),
+          "Q:options": {
+            enum_titles: ["automatisch"].concat(
+              Object.keys(dateSeries.intervals)
+                .filter(key => dateFormat.validIntervals.includes(key))
+                .map(interval => dateSeries.intervals[interval].label)
             )
           }
         };
