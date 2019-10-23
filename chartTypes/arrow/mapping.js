@@ -125,7 +125,10 @@ module.exports = function getMapping() {
     {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
-        if (hideAxisLabel === true) {
+        if (
+          hideAxisLabel === true ||
+          objectPath.get(spec, "axes.1.title").length < 1
+        ) {
           // unset the x axis label
           objectPath.set(spec, "axes.1.title", undefined);
           objectPath.set(spec, "height", spec.height - 30); // decrease the height because we do not need space for the axis title
