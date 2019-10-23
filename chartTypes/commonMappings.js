@@ -121,6 +121,7 @@ function getColumnDateSeriesHandlingMappings() {
           objectPath.set(spec, "axes.0.encode.labels.update.text", {
             signal: `formatDateForInterval(datum.value, '${interval}')`
           });
+          objectPath.set(spec, "axes.0.labelBound", true);
           objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
         }
       }
@@ -137,6 +138,7 @@ function getBarDateSeriesHandlingMappings() {
           objectPath.set(spec, "axes.1.encode.labels.update.text", {
             signal: `formatDateForInterval(datum.value, '${interval}')`
           });
+          objectPath.set(spec, "axes.1.labelBound", true);
           objectPath.set(spec, "axes.1.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
         }
       }
