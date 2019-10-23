@@ -9,7 +9,7 @@ const commonMappings = require("../commonMappings.js");
 
 const getLongestDataLabel = require("../../helpers/data.js")
   .getLongestDataLabel;
-const textMetrics = require("vega").textMetrics;
+const textMeasure = require("../../helpers/textMeasure.js");
 
 function shouldHaveLabelsOnTopOfBar(mappingData) {
   const item = mappingData.item;
@@ -21,10 +21,10 @@ function shouldHaveLabelsOnTopOfBar(mappingData) {
   }
 
   const longestLabel = getLongestDataLabel(mappingData, true);
-  const textItem = {
-    text: longestLabel
-  };
-  const longestLabelWidth = textMetrics.width(textItem);
+  const longestLabelWidth = textMeasure.getLabelTextWidth(
+    longestLabel,
+    mappingData.toolRuntimeConfig
+  );
 
   if (mappingData.width / 3 < longestLabelWidth) {
     return true;
