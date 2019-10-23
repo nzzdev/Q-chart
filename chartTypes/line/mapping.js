@@ -237,12 +237,12 @@ module.exports = function getMappings() {
         const lineMark = clone(spec.marks[0].marks[0]);
         lineMark.encode.enter.defined = {
           signal:
-            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
+            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
         };
         const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
         lineMarkPrognosis.encode.enter.defined = {
           signal:
-            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
+            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];
