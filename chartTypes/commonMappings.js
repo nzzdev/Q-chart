@@ -299,12 +299,16 @@ function getHeightMappings() {
         }
         let height = spec.width * aspectRatio;
 
-        // minimum height is 240px
+        // minimum height is 240px, chart grid never gets portrait mode but a square or a wide format
         if (height < Math.min(240, spec.width)) {
           height = Math.min(240, spec.width);
         }
-        // increase the height if hideAxisLabel option is unchecked
-        if (mappingData.item.options.hideAxisLabel === false) {
+        // increase the height if hideAxisLabel option is unchecked and there actually is a title
+        if (
+          mappingData.item.options.hideAxisLabel === false &&
+          typeof mappingData.item.data[0][0] === "string" &&
+          mappingData.item.data[0][0].length > 0 // check the data instead of the spec here because we don't know if this is the x or y axis
+        ) {
           height = height + 20;
         }
         objectPath.set(spec, "height", height);
