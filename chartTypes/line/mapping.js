@@ -161,7 +161,11 @@ module.exports = function getMappings() {
     {
       path: "item.options.hideAxisLabel",
       mapToSpec: function(hideAxisLabel, spec) {
-        if (hideAxisLabel === true) {
+        if (
+          hideAxisLabel === true ||
+          (typeof objectPath.get(spec, "axes.0.title") !== "string" ||
+            objectPath.get(spec, "axes.0.title").length < 1)
+        ) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
           objectPath.set(spec, "height", spec.height - 20); // decrease the height because we do not need space for the axis title
@@ -237,12 +241,12 @@ module.exports = function getMappings() {
         const lineMark = clone(spec.marks[0].marks[0]);
         lineMark.encode.enter.defined = {
           signal:
-            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
+            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
         };
         const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
         lineMarkPrognosis.encode.enter.defined = {
           signal:
-            "datum.xValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
+            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];

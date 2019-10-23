@@ -189,11 +189,6 @@
       "padding": 0.4,
       "zero": true,
       "grid": true,
-      "gridColor": "#e9e9ee",
-      "labelAngle": 0,
-      "labelBound": false,
-      "labelFlush": false,
-      "labelFlushOffset": false,
       "ticks": true
     }
   }
