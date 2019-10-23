@@ -43,6 +43,9 @@ function getLineDateSeriesHandlingMappings() {
     {
       path: "item.options.dateSeriesOptions.labels",
       mapToSpec: function(labels, spec, mappingData) {
+        if (!mappingData.dateFormat) {
+          return;
+        }
         const interval = mappingData.item.options.dateSeriesOptions.interval;
         if (!interval) {
           return;
