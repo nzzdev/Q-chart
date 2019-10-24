@@ -63,7 +63,8 @@
       },
       "domain": {
         "data": "table",
-        "field": "cValue"
+        "field": "cValue",
+        "sort": true
       }
     },
     {
@@ -74,7 +75,8 @@
       },
       "domain": {
         "data": "table",
-        "field": "cValue"
+        "field": "cValue",
+        "sort": true
       }
     }
   ],
