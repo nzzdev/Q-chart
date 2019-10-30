@@ -173,8 +173,7 @@ function getColumnAreaPrognosisMappings() {
           transform: [
             {
               type: "filter",
-              expr:
-                "timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
+              expr: "datum.xValue >= prognosisStartDate"
             }
           ]
         });
@@ -226,8 +225,7 @@ function getBarPrognosisMappings() {
           transform: [
             {
               type: "filter",
-              expr:
-                "timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
+              expr: "datum.xValue >= prognosisStartDate"
             }
           ]
         });
