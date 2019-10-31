@@ -1,6 +1,6 @@
 # Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-chart.svg)](https://greenkeeper.io/)
 
-**maintainer**: [rkaravia](https://github.com/rkaravia)
+**maintainer**: [romankaravia](https://github.com/romankaravia)
 
 Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q](https://q.tools)
 
