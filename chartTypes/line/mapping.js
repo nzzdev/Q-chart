@@ -240,13 +240,11 @@ module.exports = function getMappings() {
         // split the marks at the prognosisStart index
         const lineMark = clone(spec.marks[0].marks[0]);
         lineMark.encode.enter.defined = {
-          signal:
-            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') <= timeFormat(prognosisStartDate, '%Q')"
+          signal: "datum.yValue !== null && datum.xValue <= prognosisStartDate"
         };
         const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
         lineMarkPrognosis.encode.enter.defined = {
-          signal:
-            "datum.yValue !== null && timeFormat(datum.xValue, '%Q') >= timeFormat(prognosisStartDate, '%Q')"
+          signal: "datum.yValue !== null && datum.xValue >= prognosisStartDate"
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];
