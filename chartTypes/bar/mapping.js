@@ -57,8 +57,16 @@ module.exports = function getMapping() {
         if (numberOfBars === 1) {
           barWidthSignal.value = 48;
         } else if (numberOfBars > 10) {
-          barWidthSignal.value = 16;
-          groupPaddingSignal.value = 8;
+          if (
+            item.options.annotations.valuesOnBars ||
+            shouldHaveLabelsOnTopOfBar(mappingData)
+          ) {
+            barWidthSignal.value = 16;
+            groupPaddingSignal.value = 8;
+          } else {
+            barWidthSignal.value = 14;
+            groupPaddingSignal.value = 6;
+          }
         } else {
           barWidthSignal.value = 24;
           groupPaddingSignal.value = 16;
