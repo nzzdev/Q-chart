@@ -58,7 +58,8 @@ module.exports = function getMapping() {
           barWidthSignal.value = 48;
         } else if (numberOfBars > 10) {
           if (
-            item.options.annotations.valuesOnBars ||
+            (item.options.annotations &&
+              item.options.annotations.valuesOnBars) ||
             shouldHaveLabelsOnTopOfBar(mappingData)
           ) {
             barWidthSignal.value = 16;
