@@ -92,6 +92,16 @@
       "type": "boolean",
       "default": false
     },
+    "events": {
+      "title": "Annotationen",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "$ref": "#/definitions/event-point" },
+          { "$ref": "#/definitions/event-range" }
+        ]
+      }
+    },
     "sources": {
       "title": "Quelle(n)",
       "type": "array",
@@ -499,10 +509,30 @@
               "title": "Angezeigtes Intervall",
               "type": "string",
               "default": "auto",
-              "enum": ["auto","decade","year","quarter","month","week","day","hour","minute","second"],
+              "enum": [
+                "auto",
+                "decade",
+                "year",
+                "quarter",
+                "month",
+                "week",
+                "day",
+                "hour",
+                "minute",
+                "second"
+              ],
               "Q:options": {
                 "enum_titles": [
-                  "automatisch", "Dekaden", "Jahre", "Quartale", "Monate", "Wochen", "Tage", "Stunden", "Minuten", "Sekunden"
+                  "automatisch",
+                  "Dekaden",
+                  "Jahre",
+                  "Quartale",
+                  "Monate",
+                  "Wochen",
+                  "Tage",
+                  "Stunden",
+                  "Minuten",
+                  "Sekunden"
                 ],
                 "dynamicSchema": {
                   "type": "ToolEndpoint",
@@ -759,10 +789,7 @@
                 "type": "ToolEndpoint",
                 "config": {
                   "endpoint": "option-availability/colorOverwritesSeries",
-                  "fields": [
-                    "options.chartType",
-                    "options.colorOverwritesRows"
-                  ]
+                  "fields": ["options.chartType", "options.colorOverwritesRows"]
                 }
               }
             ],
@@ -883,5 +910,87 @@
       }
     }
   },
-  "required": ["title", "data"]
+  "required": ["title", "data"],
+  "definitions": {
+    "event-point": {
+      "type": "object",
+      "title": "Event",
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "point",
+          "enum": ["point"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "date": {
+          "title": "Zeitpunkt",
+          "type": "number",
+          "default": 0,
+          "Q:options": {
+            "dynamicEnum": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-enum/eventDate",
+                "fields": ["data"]
+              }
+            }
+          }
+        },
+        "label": {
+          "title": "Annotation",
+          "type": "string"
+        }
+      },
+      "required": ["label"]
+    },
+    "event-range": {
+      "type": "object",
+      "title": "Zeitspanne",
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "range",
+          "enum": ["range"],
+          "Q:options": {
+            "hideInEditor": true
+          }
+        },
+        "dateFrom": {
+          "title": "Von",
+          "type": "number",
+          "default": 0,
+          "Q:options": {
+            "dynamicEnum": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-enum/eventDate",
+                "fields": ["data"]
+              }
+            }
+          }
+        },
+        "dateTo": {
+          "title": "Bis",
+          "type": "number",
+          "default": 0,
+          "Q:options": {
+            "dynamicEnum": {
+              "type": "ToolEndpoint",
+              "config": {
+                "endpoint": "dynamic-enum/eventDate",
+                "fields": ["data"]
+              }
+            }
+          }
+        },
+        "label": {
+          "title": "Annotation",
+          "type": "string"
+        }
+      },
+      "required": ["label"]
+    }
+  }
 }

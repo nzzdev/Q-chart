@@ -16,7 +16,7 @@ module.exports = function getMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, mappingData) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
@@ -47,6 +47,26 @@ module.exports = function getMappings() {
               .flat()
           }
         ];
+      }
+    },
+    {
+      path: "item.events",
+      mapToSpec: function(events, spec, mappingData) {
+        const item = mappingData.item;
+        const pointEventValues = [];
+
+        const pointEvents = events.filter(({ type }) => type === "point");
+        pointEvents.forEach(({ date }, xIndex) => {
+          if (item.data[date + 1]) {
+            const xValue = item.data[date + 1][0];
+            pointEventValues.push({ xValue, xIndex });
+          }
+        });
+
+        spec.data.push({
+          name: "annotations-events",
+          values: pointEventValues
+        });
       }
     },
     {
