@@ -43,6 +43,24 @@ module.exports = {
   },
   handler: function(request, h) {
     const item = request.payload.item;
+
+    if (request.params.optionName === "events") {
+      let available;
+      if (
+        isBarChart(item) ||
+        isStackedBarChart(item) ||
+        isLineChart(item) ||
+        isAreaChart(item)
+      ) {
+        const serie = getFirstColumnSerie(item.data);
+        available = isDateSeries(serie);
+      } else {
+        available = false;
+      }
+
+      return { available };
+    }
+
     if (request.params.optionName === "bar") {
       return {
         available: isBarChart(item) || isStackedBarChart(item)

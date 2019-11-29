@@ -100,6 +100,17 @@
           { "$ref": "#/definitions/event-point" },
           { "$ref": "#/definitions/event-range" }
         ]
+      },
+      "Q:options": {
+        "availabilityChecks": [
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "option-availability/events",
+              "fields": ["data", "options.chartType"]
+            }
+          }
+        ]
       }
     },
     "sources": {
