@@ -10,6 +10,7 @@ module.exports = [
   require("./fixtures/data.js"),
   require("./notification/hideAxisLabel.js"),
   require("./notification/unsupportedDateFormat"),
+  require("./notification/unsupportedDateFormatEvents"),
   require("./notification/shouldBeBarChart.js"),
   require("./notification/shouldBeLineChart.js"),
   require("./notification/shouldBeBars.js"),

@@ -110,6 +110,19 @@
               "fields": ["data", "options.chartType"]
             }
           }
+        ],
+        "notificationChecks": [
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/unsupportedDateFormatEvents",
+              "fields": ["events"]
+            },
+            "priority": {
+              "type": "medium",
+              "value": 1
+            }
+          }
         ]
       }
     },
@@ -937,17 +950,7 @@
         },
         "date": {
           "title": "Zeitpunkt",
-          "type": "number",
-          "default": 0,
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "ToolEndpoint",
-              "config": {
-                "endpoint": "dynamic-enum/eventDate",
-                "fields": ["data"]
-              }
-            }
-          }
+          "type": "string"
         },
         "label": {
           "title": "Annotation",
@@ -970,31 +973,11 @@
         },
         "dateFrom": {
           "title": "Von",
-          "type": "number",
-          "default": 0,
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "ToolEndpoint",
-              "config": {
-                "endpoint": "dynamic-enum/eventDate",
-                "fields": ["data"]
-              }
-            }
-          }
+          "type": "string"
         },
         "dateTo": {
           "title": "Bis",
-          "type": "number",
-          "default": 0,
-          "Q:options": {
-            "dynamicEnum": {
-              "type": "ToolEndpoint",
-              "config": {
-                "endpoint": "dynamic-enum/eventDate",
-                "fields": ["data"]
-              }
-            }
-          }
+          "type": "string"
         },
         "label": {
           "title": "Annotation",

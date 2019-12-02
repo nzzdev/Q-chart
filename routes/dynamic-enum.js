@@ -40,7 +40,7 @@ function getHighlightSeriesEnumTitles(item) {
   return item.data[0].slice(1);
 }
 
-function getDataRowsEnum(item) {
+function getHighlightRowsEnum(item) {
   if (item.data.length < 1) {
     return [];
   }
@@ -48,7 +48,7 @@ function getDataRowsEnum(item) {
   return [...item.data.slice(1).keys()];
 }
 
-function getDataRowsEnumTitles(item) {
+function getHighlightRowsEnumTitles(item) {
   if (item.data.length < 1) {
     return [];
   }
@@ -82,14 +82,6 @@ module.exports = {
   },
   handler: function(request, h) {
     const item = request.payload.item;
-
-    if (request.params.optionName === "eventDate") {
-      return {
-        enum: getDataRowsEnum(item),
-        enum_titles: getDataRowsEnumTitles(item)
-      };
-    }
-
     if (request.params.optionName === "chartType") {
       return getChartTypeEnumWithTitles(item);
     }
@@ -103,8 +95,8 @@ module.exports = {
 
     if (request.params.optionName === "highlightDataRows") {
       return {
-        enum: getDataRowsEnum(item),
-        enum_titles: getDataRowsEnumTitles(item)
+        enum: getHighlightRowsEnum(item),
+        enum_titles: getHighlightRowsEnumTitles(item)
       };
     }
 
