@@ -1,0 +1,40 @@
+{
+  "title": "FIXTURE: line - highlight one",
+  "subtitle": "Highlighted line should be always displayed on top, here it is 'Value B'",
+  "data": [
+    ["Date", "Value A", "Value B", "Value C"],
+    ["10.01.2018", "104.5506", "103.5506", "105.9014"],
+    ["11.01.2018", "104.2484", "103.2484", "105.7281"],
+    ["12.01.2018", "104.3403", "103.3403", "105.8209"],
+    ["15.01.2018", "104.3149", "103.3149", "105.8688"],
+    ["16.01.2018", "104.5181", "103.5181", "106.0096"],
+    ["17.01.2018", "104.6027", "103.6027", "106.0699"],
+    ["18.01.2018", "104.5611", "103.5611", "90"],
+    ["19.01.2018", "104.5764", "104.5764", "104.5764"],
+    ["22.01.2018", "104.7323", "104.7323", "104.7323"],
+    ["23.01.2018", "104.7856", "104.7856", "104.7856"],
+    ["24.01.2018", "104.7483", "105.7483", "106.5696"],
+    ["25.01.2018", "104.5938", "105.5938", "106.5816"],
+    ["26.01.2018", "104.4722", "105.4722", "106.3806"]
+  ],
+  "sources": [],
+  "options": {
+    "chartType": "Line",
+    "hideAxisLabel": false,
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "day"
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "minValue": 90,
+      "maxValue": 110
+    },
+    "highlightDataSeries": [1],
+    "colorOverwritesSeries": []
+  }
+}
