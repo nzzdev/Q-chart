@@ -18,9 +18,9 @@ function getLineDateSeriesHandlingMappings() {
         const item = mappingData.item;
         if (
           (mappingData.dateFormat &&
-            (item.options.chartType === "Line" &&
+            item.options.chartType === "Line" &&
               item.options.lineChartOptions &&
-              item.options.lineChartOptions.isStockChart !== true)) ||
+              item.options.lineChartOptions.isStockChart !== true) ||
           item.options.chartType === "Area"
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
