@@ -11,7 +11,9 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, mappingData) {
+        const item = mappingData.item;
+
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
@@ -20,8 +22,15 @@ module.exports = function getMapping() {
         const dotGroupHeightSignal = spec.signals.find(signal => {
           return signal.name === "dotGroupHeight";
         });
+        const groupPaddingSignal = spec.signals.find(signal => {
+          return signal.name === "groupPadding";
+        });
+
         if (numberOfGroups > 10) {
           dotGroupHeightSignal.value = 16;
+          if (!item.options.annotations.diff) {
+            groupPaddingSignal.value = 8;
+          }
         } else {
           dotGroupHeightSignal.value = 24;
         }

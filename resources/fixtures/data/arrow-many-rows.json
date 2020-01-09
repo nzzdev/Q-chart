@@ -1,0 +1,39 @@
+{
+  "title": "FIXTURE: Arrow - many rows",
+  "subtitle": "some subtitle here",
+  "data": [
+    ["Cat", "from", "to"],
+    ["A", "1000", "-1000"],
+    ["B", "200", "200"],
+    ["C", "-400", "200"],
+    ["D", "400", "-200"],
+    ["E", "-400", "-600"],
+    ["F", "-150", "-200"],
+    ["G", "-500", "500"],
+    ["H", "500", "200"],
+    ["I", "-200", "200"],
+    ["J", "150", "200"],
+    ["K", "-400", "-200"],
+    ["L", "-1000", "-999"],
+    ["M", "-400", "200"],
+    ["N", "-400", "200"],
+    ["O", "-400", "200"]
+  ],
+  "options": {
+    "chartType": "Arrow",
+    "hideAxisLabel": false,
+    "arrowOptions": {
+      "minValue": -1500,
+      "maxValue": 1500,
+      "colorScheme": 0
+    },
+    "annotations": {
+      "first": true,
+      "last": true
+    },
+    "dateSeriesOptions": {},
+    "lineChartOptions": {},
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
+  }
+}

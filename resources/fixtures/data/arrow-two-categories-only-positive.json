@@ -2,26 +2,10 @@
   "title": "FIXTURE: Arrow - 2 categories - only positive",
   "subtitle": "some subtitle here",
   "data": [
-    [
-      "Cat",
-      "from",
-      "to"
-    ],
-    [
-      "A",
-      "1000",
-      "2000"
-    ],
-    [
-      "B",
-      "200",
-      "400"
-    ],
-    [
-      "C",
-      "400",
-      "900"
-    ]
+    ["Cat", "from", "to"],
+    ["A", "1000", "2000"],
+    ["B", "200", "400"],
+    ["C", "400", "900"]
   ],
   "options": {
     "chartType": "Arrow",
@@ -29,6 +13,9 @@
     "dotplotOptions": {},
     "annotations": {
       "diff": true
+    },
+    "arrowOptions": {
+      "colorScheme": 0
     },
     "dateSeriesOptions": {},
     "lineChartOptions": {},

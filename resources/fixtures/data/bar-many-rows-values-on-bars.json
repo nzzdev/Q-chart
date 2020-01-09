@@ -1,0 +1,59 @@
+{
+  "title": "FIXTURE: Bar - over 10 bars, values on bars",
+  "acronym": "bue.",
+  "data": [
+    ["Year", "A"],
+    ["2000", "203.45"],
+    ["2001", "219"],
+    ["2002", "0.256"],
+    ["2003", "20.03443"],
+    ["2004", "-0.343"],
+    ["2005", "-15"],
+    ["2007", "-14"],
+    ["2008", "-14"],
+    ["2009", "-14"],
+    ["2010", "-14"],
+    ["2011", "-14"],
+    ["2012", "-14"]
+  ],
+  "allowDownloadData": false,
+  "sources": [],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [0],
+    "annotations": {
+      "valuesOnBars": true
+    },
+    "barOptions": {
+      "isBarChart": true,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "areaChartOptions": {
+      "areaInterpolation": "linear",
+      "stackType": "zero"
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [
+      {
+        "position": 6,
+        "color": "#000000",
+        "colorLight": "#000000"
+      }
+    ]
+  }
+}
