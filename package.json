@@ -29,7 +29,7 @@
     "date-fns": "^2.5.0",
     "decimal.js": "^10.2.0",
     "deepmerge": "^4.1.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^16.0.1",
     "moment-timezone": "^0.5.26",
     "node-fetch": "^2.6.0",
     "nunjucks": "^3.2.0",
