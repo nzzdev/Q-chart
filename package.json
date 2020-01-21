@@ -38,7 +38,7 @@
     "vega": "^5.7.3"
   },
   "devDependencies": {
-    "@hapi/code": "^6.0.0",
+    "@hapi/code": "^7.0.0",
     "@hapi/lab": "^20.4.0",
     "autoprefixer": "^9.6.5",
     "cssnano": "^4.1.10",
