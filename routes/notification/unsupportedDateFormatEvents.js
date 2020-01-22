@@ -30,8 +30,8 @@ module.exports = {
           if (!helpers.getDateFormatForValue(eventDate)) {
             return {
               message: {
-                title: "notifications.unsupportedDateFormat.title",
-                body: "notifications.unsupportedDateFormat.body"
+                title: "notifications.unsupportedDateFormatEvents.title",
+                body: "notifications.unsupportedDateFormatEvents.body"
               }
             };
           }

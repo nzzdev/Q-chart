@@ -957,7 +957,7 @@
           "type": "string"
         }
       },
-      "required": ["label"]
+      "required": ["date", "label"]
     },
     "event-range": {
       "type": "object",
@@ -984,7 +984,7 @@
           "type": "string"
         }
       },
-      "required": ["label"]
+      "required": ["dateFrom", "dateTo", "label"]
     }
   }
 }

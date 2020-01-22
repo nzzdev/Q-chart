@@ -17,8 +17,12 @@
       "body": "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
     },
     "unsupportedDateFormat": {
-      "title": "Unsupported Datumsformat",
+      "title": "Unsupported date format",
       "body": "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."
+    },
+    "unsupportedDateFormatEvents": {
+      "title": "Unsupported date format",
+      "body": "This date format is not supported. Please check the handbook for a list of supported formats."
     }
   },
   "Diagramm": "Diagram",

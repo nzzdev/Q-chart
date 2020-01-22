@@ -3,6 +3,7 @@ const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
 const dateSeries = require("../../helpers/dateSeries.js");
+const eventHelpers = require("../../helpers/events.js");
 
 const viewsDir = __dirname + "/../../views/";
 const stylesDir = __dirname + "/../../styles/";
@@ -67,6 +68,12 @@ module.exports = {
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
 
+    // Convert event dates to date objects and sort them
+    const events = eventHelpers.parseEvents(item.events);
+
+    // Add event dates to item.data
+    eventHelpers.extendWithEventDates(item.data, item.events);
+
     // handle auto interval here
     // by calculating the interval from the data and setting this to the actual data we are rendering
     if (item.options.dateSeriesOptions.interval === "auto") {
@@ -100,10 +107,8 @@ module.exports = {
 
     const context = {
       item: item,
+      events: events,
       displayOptions: toolRuntimeConfig.displayOptions || {},
-      eventsOptions: {
-        color: toolRuntimeConfig.colorSchemes.grays[8]
-      },
       legend: await legend[legendType].getLegendModel(
         item,
         toolRuntimeConfig,

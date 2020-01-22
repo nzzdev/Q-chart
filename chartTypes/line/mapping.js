@@ -16,7 +16,7 @@ module.exports = function getMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec, mappingData) {
+      mapToSpec: function(itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
@@ -51,22 +51,29 @@ module.exports = function getMappings() {
     },
     {
       path: "item.events",
-      mapToSpec: function(events, spec, mappingData) {
-        const item = mappingData.item;
+      mapToSpec: function(events, spec) {
         const pointEventValues = [];
+        const rangeEventValues = [];
 
-        const pointEvents = events.filter(({ type }) => type === "point");
-        pointEvents.forEach(({ date }, xIndex) => {
-          if (item.data[date + 1]) {
-            const xValue = item.data[date + 1][0];
-            pointEventValues.push({ xValue, xIndex });
+        events.forEach((event, xIndex) => {
+          if (event.type === "point") {
+            pointEventValues.push({ xValue: event.date, xIndex });
+          } else if (event.type === "range") {
+            const { dateFrom, dateTo } = event;
+            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
           }
         });
 
-        spec.data.push({
-          name: "annotations-events",
-          values: pointEventValues
-        });
+        spec.data.push(
+          {
+            name: "events-point",
+            values: pointEventValues
+          },
+          {
+            name: "events-range",
+            values: rangeEventValues
+          }
+        );
       }
     },
     {
@@ -183,8 +190,8 @@ module.exports = function getMappings() {
       mapToSpec: function(hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
-          (typeof objectPath.get(spec, "axes.0.title") !== "string" ||
-            objectPath.get(spec, "axes.0.title").length < 1)
+          typeof objectPath.get(spec, "axes.0.title") !== "string" ||
+          objectPath.get(spec, "axes.0.title").length < 1
         ) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);

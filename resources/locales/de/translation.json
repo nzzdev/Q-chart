@@ -19,6 +19,10 @@
     "unsupportedDateFormat": {
       "title": "Ungültiges Datumsformat",
       "body": "Spalte A enthält wahrscheinlich ein nicht unterstütztes Datumsformat. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
+    },
+    "unsupportedDateFormatEvents": {
+      "title": "Ungültiges Datumsformat",
+      "body": "Dieses Datumsformat wird nicht unterstützt. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
     }
   }
 }
