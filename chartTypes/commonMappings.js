@@ -2,13 +2,8 @@ const objectPath = require("object-path");
 const clone = require("clone");
 const intervals = require("../helpers/dateSeries.js").intervals;
 const dateSeries = require("../helpers/dateSeries.js");
-
-const d3 = {
-  timeFormat: require("d3-time-format").timeFormat
-};
-
-const textMeasure = require("../helpers/textMeasure.js");
 const dataHelpers = require("../helpers/data.js");
+const eventHelpers = require("../helpers/events.js");
 
 function getLineDateSeriesHandlingMappings() {
   return [
@@ -19,8 +14,8 @@ function getLineDateSeriesHandlingMappings() {
         if (
           (mappingData.dateFormat &&
             item.options.chartType === "Line" &&
-              item.options.lineChartOptions &&
-              item.options.lineChartOptions.isStockChart !== true) ||
+            item.options.lineChartOptions &&
+            item.options.lineChartOptions.isStockChart !== true) ||
           item.options.chartType === "Area"
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
@@ -453,6 +448,74 @@ function getBarAxisPositioningMappings() {
   ];
 }
 
+function getColumnEventsMapping() {
+  return [
+    {
+      path: "item.events",
+      mapToSpec: function(events, spec) {
+        const pointEventValues = [];
+        const rangeEventValues = [];
+
+        events.forEach((event, xIndex) => {
+          if (event.type === "point") {
+            pointEventValues.push({ xValue: event.date, xIndex });
+          } else if (event.type === "range") {
+            const { dateFrom, dateTo } = event;
+            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
+          }
+        });
+
+        spec.data.push(
+          {
+            name: "events-point",
+            values: pointEventValues
+          },
+          {
+            name: "events-range",
+            values: rangeEventValues
+          }
+        );
+
+        spec.marks.push(...eventHelpers.verticalMarks);
+      }
+    }
+  ];
+}
+
+function getBarEventsMapping() {
+  return [
+    {
+      path: "item.events",
+      mapToSpec: function(events, spec) {
+        const pointEventValues = [];
+        const rangeEventValues = [];
+
+        events.forEach((event, xIndex) => {
+          if (event.type === "point") {
+            pointEventValues.push({ xValue: event.date, xIndex });
+          } else if (event.type === "range") {
+            const { dateFrom, dateTo } = event;
+            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
+          }
+        });
+
+        spec.data.push(
+          {
+            name: "events-point",
+            values: pointEventValues
+          },
+          {
+            name: "events-range",
+            values: rangeEventValues
+          }
+        );
+
+        spec.marks.push(...eventHelpers.horizontalMarks);
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings,
@@ -466,5 +529,7 @@ module.exports = {
   getHighlightSeriesMapping,
   getColorOverwritesRowsMappings,
   getColumnAxisPositioningMappings,
-  getBarAxisPositioningMappings
+  getBarAxisPositioningMappings,
+  getColumnEventsMapping,
+  getBarEventsMapping
 };

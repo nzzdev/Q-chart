@@ -40,8 +40,8 @@ module.exports = function getMappings() {
       mapToSpec: function(hideAxisLabel, spec, mappingData) {
         if (
           hideAxisLabel === true ||
-          (typeof objectPath.get(spec, "axes.0.title") !== "string" ||
-            objectPath.get(spec, "axes.0.title").length < 1)
+          typeof objectPath.get(spec, "axes.0.title") !== "string" ||
+          objectPath.get(spec, "axes.0.title").length < 1
         ) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
@@ -90,5 +90,6 @@ module.exports = function getMappings() {
     .concat(commonMappings.getColumnAreaPrognosisMappings())
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())
-    .concat(commonMappings.getHighlightSeriesMapping());
+    .concat(commonMappings.getHighlightSeriesMapping())
+    .concat(commonMappings.getColumnEventsMapping());
 };

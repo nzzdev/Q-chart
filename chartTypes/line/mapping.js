@@ -50,33 +50,6 @@ module.exports = function getMappings() {
       }
     },
     {
-      path: "item.events",
-      mapToSpec: function(events, spec) {
-        const pointEventValues = [];
-        const rangeEventValues = [];
-
-        events.forEach((event, xIndex) => {
-          if (event.type === "point") {
-            pointEventValues.push({ xValue: event.date, xIndex });
-          } else if (event.type === "range") {
-            const { dateFrom, dateTo } = event;
-            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
-          }
-        });
-
-        spec.data.push(
-          {
-            name: "events-point",
-            values: pointEventValues
-          },
-          {
-            name: "events-range",
-            values: rangeEventValues
-          }
-        );
-      }
-    },
-    {
       path: "item.options.annotations",
       mapToSpec: function(annotationOptions, spec, mappingData) {
         const item = mappingData.item;
@@ -326,5 +299,6 @@ module.exports = function getMappings() {
   ]
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())
-    .concat(commonMappings.getHighlightSeriesMapping());
+    .concat(commonMappings.getHighlightSeriesMapping())
+    .concat(commonMappings.getColumnEventsMapping());
 };

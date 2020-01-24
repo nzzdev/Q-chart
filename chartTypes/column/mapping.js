@@ -58,8 +58,8 @@ module.exports = function getMapping() {
       mapToSpec: function(hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
-          (typeof objectPath.get(spec, "axes.0.title") !== "string" ||
-            objectPath.get(spec, "axes.0.title").length < 1)
+          typeof objectPath.get(spec, "axes.0.title") !== "string" ||
+          objectPath.get(spec, "axes.0.title").length < 1
         ) {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
@@ -92,6 +92,7 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColumnLabelColorMappings())
     .concat(commonMappings.getHeightMappings())
     .concat(commonMappings.getColumnAxisPositioningMappings())
+    .concat(commonMappings.getColumnEventsMapping())
     .concat([
       {
         path: "item.options.annotations.valuesOnBars",

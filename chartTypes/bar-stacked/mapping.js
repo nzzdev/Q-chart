@@ -221,5 +221,6 @@ module.exports = function getMapping() {
     .concat(commonMappings.getBarDateSeriesHandlingMappings())
     .concat(commonMappings.getBarPrognosisMappings())
     .concat(commonMappings.getBarLabelColorMappings())
-    .concat(commonMappings.getBarAxisPositioningMappings());
+    .concat(commonMappings.getBarAxisPositioningMappings())
+    .concat(commonMappings.getBarEventsMapping());
 };
