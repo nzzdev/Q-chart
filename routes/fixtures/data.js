@@ -44,6 +44,8 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/line-categorical-strings.json`),
   require(`${fixtureDataDirectory}/line-categorical.json`),
   require(`${fixtureDataDirectory}/line-dates-days.json`),
+  require(`${fixtureDataDirectory}/line-dates-events-point.json`),
+  require(`${fixtureDataDirectory}/line-dates-events-range.json`),
   require(`${fixtureDataDirectory}/line-dates-min-max-missing-value.json`),
   require(`${fixtureDataDirectory}/line-highlight-one.json`),
   require(`${fixtureDataDirectory}/line-highlight-two.json`),

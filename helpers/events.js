@@ -32,13 +32,20 @@ function sortByDate(events) {
 }
 
 function parseEvents(originalEvents) {
+  if (!originalEvents) {
+    originalEvents = [];
+  }
   const events = cloneEvents(originalEvents);
   convertDateObjects(events);
   sortByDate(events);
   return events;
 }
 
-function extendWithEventDates(data, events) {
+function extendWithEventDates(originalData, events) {
+  if (!events) {
+    events = [];
+  }
+  const data = [...originalData];
   const dateRange = dateSeries.getFirstAndLastDateFromData(data);
   events.forEach(event => {
     dateFieldsForEvent(event).forEach(dateField => {
@@ -51,6 +58,7 @@ function extendWithEventDates(data, events) {
       }
     });
   });
+  return data;
 }
 
 module.exports = {

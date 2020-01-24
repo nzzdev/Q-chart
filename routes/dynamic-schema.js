@@ -15,18 +15,6 @@ module.exports = {
   handler: function(request, h) {
     const item = request.payload.item;
 
-    if (request.params.optionName === "eventDate") {
-      try {
-        return {
-          maxItems: item.data.length - 2 // the number of data rows - 1
-        };
-      } catch {
-        return {
-          maxItems: undefined
-        };
-      }
-    }
-
     if (request.params.optionName === "highlighDataSeries") {
       try {
         return {

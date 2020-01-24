@@ -1,0 +1,38 @@
+{
+  "title": "FIXTURE: line - dates - events - point",
+  "data": [
+    ["Day", "A"],
+    ["01.01.2018", "499"],
+    ["02.01.2018", "-250"],
+    ["03.01.2018", "465"],
+    ["04.01.2018", "430"],
+    ["05.01.2018", "540"],
+    ["06.01.2018", "560"],
+    ["07.01.2018", "555"]
+  ],
+  "events": [
+    {
+      "type": "point",
+      "date": "03.01.2018",
+      "label": "Event 1 (which has a long name that will stretch across more than one line on mobile)"
+    },
+    {
+      "type": "point",
+      "date": "09.01.2018",
+      "label": "Event 2 (which lies beyond the date range of the data)"
+    }
+  ],
+  "options": {
+    "maxValue": "",
+    "chartType": "Line",
+    "barOptions": {},
+    "lineChartOptions": {
+      "lineInterpolation": "linear"
+    },
+    "dateSeriesOptions": {
+      "interval": "day",
+      "prognosisStart": null
+    },
+    "highlightDataSeries": []
+  }
+}

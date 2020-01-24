@@ -96,10 +96,10 @@ lab.experiment("stylesheets endpoint", () => {
 });
 
 lab.experiment("fixture data endpoint", () => {
-  it("returns 45 fixture data items for /fixtures/data", async () => {
+  it("returns all fixture data items for /fixtures/data", async () => {
     const response = await server.inject("/fixtures/data");
     expect(response.statusCode).to.be.equal(200);
-    expect(response.result.length).to.be.equal(45);
+    expect(response.result.length).to.be.equal(47);
   });
 });
 

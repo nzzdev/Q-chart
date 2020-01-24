@@ -71,15 +71,14 @@ module.exports = {
     // Convert event dates to date objects and sort them
     const events = eventHelpers.parseEvents(item.events);
 
-    // Add event dates to item.data
-    eventHelpers.extendWithEventDates(item.data, item.events);
-
     // handle auto interval here
     // by calculating the interval from the data and setting this to the actual data we are rendering
     if (item.options.dateSeriesOptions.interval === "auto") {
       if (dateSeries.isDateSeriesData(item.data)) {
+        // Add event dates to item.data
+        const data = eventHelpers.extendWithEventDates(item.data, events);
         item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
-          item.data
+          data
         );
       }
     }

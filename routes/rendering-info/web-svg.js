@@ -63,7 +63,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
       item.events = eventHelpers.parseEvents(item.events);
 
       // Add event dates to item.data
-      eventHelpers.extendWithEventDates(item.data, item.events);
+      item.data = eventHelpers.extendWithEventDates(item.data, item.events);
 
       // handle auto interval here
       // by calculating the interval from the data and setting this to the actual data we are rendering
@@ -72,6 +72,9 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
           item.data
         );
       }
+    } else {
+      // Make sure that events array exists
+      item.events = [];
     }
   }
 
