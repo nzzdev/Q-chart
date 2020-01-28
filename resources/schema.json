@@ -102,6 +102,10 @@
         ]
       },
       "Q:options": {
+        "compact": true,
+        "expandable": {
+          "itemLabelProperty": "label"
+        },
         "availabilityChecks": [
           {
             "type": "ToolEndpoint",
