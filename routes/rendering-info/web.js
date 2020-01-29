@@ -69,7 +69,7 @@ module.exports = {
     item.data = getDataWithStringsCastedToFloats(item.data);
 
     // Convert event dates to date objects and sort them
-    const events = eventHelpers.parseEvents(item.events);
+    const events = eventHelpers.parseEvents(item);
 
     // handle auto interval here
     // by calculating the interval from the data and setting this to the actual data we are rendering

@@ -1,4 +1,18 @@
+const chartType = require("./chartType.js");
 const dateSeries = require("./dateSeries.js");
+
+function availableForItem(item) {
+  if (
+    chartType.isBarChart(item) ||
+    chartType.isStackedBarChart(item) ||
+    chartType.isLineChart(item) ||
+    chartType.isAreaChart(item)
+  ) {
+    const serie = dateSeries.getFirstColumnSerie(item.data);
+    return dateSeries.isDateSeries(serie);
+  }
+  return false;
+}
 
 function dateFieldsForEvent(event) {
   if (event.type === "point") {
@@ -31,11 +45,11 @@ function sortByDate(events) {
   events.sort((a, b) => (a.date || a.dateFrom) - (b.date || b.dateFrom));
 }
 
-function parseEvents(originalEvents) {
-  if (!originalEvents) {
-    originalEvents = [];
+function parseEvents(item) {
+  if (!item.events || !availableForItem(item)) {
+    return [];
   }
-  const events = cloneEvents(originalEvents);
+  const events = cloneEvents(item.events);
   convertDateObjects(events);
   sortByDate(events);
   return events;
@@ -393,6 +407,7 @@ const horizontalMarks = [
 ];
 
 module.exports = {
+  availableForItem,
   extendWithEventDates,
   parseEvents,
   verticalMarks,

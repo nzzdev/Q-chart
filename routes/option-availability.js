@@ -1,36 +1,24 @@
 const Boom = require("@hapi/boom");
 const Joi = require("@hapi/joi");
-const isDateSeries = require("../helpers/dateSeries.js").isDateSeries;
-const getFirstColumnSerie = require("../helpers/dateSeries.js")
-  .getFirstColumnSerie;
-const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
-  .getChartTypeForItemAndWidth;
+
+const {
+  isDateSeries,
+  getFirstColumnSerie
+} = require("../helpers/dateSeries.js");
+
+const {
+  isBarChart,
+  isStackedBarChart,
+  isLineChart,
+  isAreaChart,
+  isDotplot,
+  isArrowChart,
+  getChartTypeForItemAndWidth
+} = require("../helpers/chartType.js");
 
 const configuredDivergingColorSchemes = require("../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
-function isBarChart(item) {
-  return item.options.chartType === "Bar";
-}
-
-function isStackedBarChart(item) {
-  return item.options.chartType === "StackedBar";
-}
-
-function isLineChart(item) {
-  return item.options.chartType === "Line";
-}
-
-function isAreaChart(item) {
-  return item.options.chartType === "Area";
-}
-
-function isDotplot(item) {
-  return item.options.chartType === "Dotplot";
-}
-
-function isArrowChart(item) {
-  return item.options.chartType === "Arrow";
-}
+const eventsAvailableForItem = require("../helpers/events.js").availableForItem;
 
 module.exports = {
   method: "POST",
@@ -45,20 +33,9 @@ module.exports = {
     const item = request.payload.item;
 
     if (request.params.optionName === "events") {
-      let available;
-      if (
-        isBarChart(item) ||
-        isStackedBarChart(item) ||
-        isLineChart(item) ||
-        isAreaChart(item)
-      ) {
-        const serie = getFirstColumnSerie(item.data);
-        available = isDateSeries(serie);
-      } else {
-        available = false;
-      }
-
-      return { available };
+      return {
+        available: eventsAvailableForItem(item)
+      };
     }
 
     if (request.params.optionName === "bar") {

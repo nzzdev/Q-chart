@@ -1,3 +1,27 @@
+function isBarChart(item) {
+  return item.options.chartType === "Bar";
+}
+
+function isStackedBarChart(item) {
+  return item.options.chartType === "StackedBar";
+}
+
+function isLineChart(item) {
+  return item.options.chartType === "Line";
+}
+
+function isAreaChart(item) {
+  return item.options.chartType === "Area";
+}
+
+function isDotplot(item) {
+  return item.options.chartType === "Dotplot";
+}
+
+function isArrowChart(item) {
+  return item.options.chartType === "Arrow";
+}
+
 function getChartTypeForItemAndWidth(item, width) {
   if (item.options.chartType === "Line") {
     return "line";
@@ -55,5 +79,11 @@ function getChartTypeForItemAndWidth(item, width) {
 }
 
 module.exports = {
-  getChartTypeForItemAndWidth: getChartTypeForItemAndWidth
+  isBarChart,
+  isStackedBarChart,
+  isLineChart,
+  isAreaChart,
+  isDotplot,
+  isArrowChart,
+  getChartTypeForItemAndWidth
 };

@@ -54,15 +54,16 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     // if we have a date series, we change the date values to date objects
     // and set the detected dateFormat to the mappingData to be used within the mapping functions
     if (dateSeries.isDateSeriesData(item.data)) {
+      // Convert event dates to date objects and sort them
+      item.events = eventHelpers.parseEvents(item);
+
       mappingData.dateFormat = dateSeries.getDateFormatForData(item.data);
+
       // keep the original data, we need it later on to handle prognosisStart (which is an index and not a date) correctly
       mappingData.originalItemData = item.data;
+
+      // Parse dates and add event dates
       item.data = dateSeries.getDataWithDateParsedAndSortedByDate(item.data);
-
-      // Convert event dates to date objects and sort them
-      item.events = eventHelpers.parseEvents(item.events);
-
-      // Add event dates to item.data
       item.data = eventHelpers.extendWithEventDates(item.data, item.events);
 
       // handle auto interval here
