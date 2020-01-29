@@ -1,5 +1,9 @@
 {
   "notifications": {
+    "dateNotInData": {
+      "title": "Datum nicht in den Daten",
+      "body": "Bei Säulendiagrammen können nur Zeitpunkte annotiert werden, die auch in den Daten vorkommen."
+    },
     "hideAxisLabel": {
       "title": "Achsenbeschriftung nötig?",
       "body": "Wenn die Achsenbeschriftung selbsterklärend ist, lassen wir sie besser weg. Wähle dafür «Achsenbeschriftung ausblenden» an."

@@ -55,22 +55,29 @@ function parseEvents(item) {
   return events;
 }
 
+function getAllDates(events) {
+  const allDates = [];
+  events.forEach(event => {
+    dateFieldsForEvent(event).forEach(dateField => {
+      allDates.push(event[dateField]);
+    });
+  });
+  return allDates;
+}
+
 function extendWithEventDates(originalData, events) {
   if (!events) {
     events = [];
   }
   const data = [...originalData];
   const dateRange = dateSeries.getFirstAndLastDateFromData(data);
-  events.forEach(event => {
-    dateFieldsForEvent(event).forEach(dateField => {
-      const date = event[dateField];
-      if (date < dateRange.first || date > dateRange.last) {
-        // Put event date in first column, add second column with "null" data to ensure that the row is taken into account
-        // for the x axis scale (important if event date is before the first or after the last date of the chart data)
-        const eventDateRow = [date, null];
-        data.push(eventDateRow);
-      }
-    });
+  getAllDates(events).forEach(date => {
+    if (date < dateRange.first || date > dateRange.last) {
+      // Put event date in first column, add second column with "null" data to ensure that the row is taken into account
+      // for the x axis scale (important if event date is before the first or after the last date of the chart data)
+      const eventDateRow = [date, null];
+      data.push(eventDateRow);
+    }
   });
   return data;
 }
@@ -409,6 +416,7 @@ const horizontalMarks = [
 module.exports = {
   availableForItem,
   extendWithEventDates,
+  getAllDates,
   parseEvents,
   verticalMarks,
   horizontalMarks

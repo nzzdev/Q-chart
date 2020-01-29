@@ -126,6 +126,17 @@
               "type": "medium",
               "value": 1
             }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/dateNotInData",
+              "fields": ["options.chartType", "data", "events"]
+            },
+            "priority": {
+              "type": "medium",
+              "value": 1
+            }
           }
         ]
       }

@@ -1,5 +1,9 @@
 {
   "notifications": {
+    "dateNotInData": {
+      "title": "Date is not in data",
+      "body": "For bar charts, only points in time that also appear in the data can be annotated."
+    },
     "hideAxisLabel": {
       "title": "Is the axis label necessary?",
       "body": "If the axis label is self-explanatory, we better leave it out. Select «hide axis label»."
@@ -85,5 +89,11 @@
   "Farben": "Colors",
   "Farbe normal": "Normal color",
   "Farbe hell": "Bright color",
-  "Position": "Position"
+  "Position": "Position",
+  "Event": "Event",
+  "Zeitpunkt": "Point in time",
+  "Annotation": "Annotation",
+  "Zeitspanne": "Time span",
+  "Von": "From",
+  "Bis": "To"
 }
