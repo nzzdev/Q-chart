@@ -40,6 +40,10 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
   }
 
+  if (toolRuntimeConfig.hasOwnProperty("events")) {
+    config.events = toolRuntimeConfig.events;
+  }
+
   return config;
 }
 

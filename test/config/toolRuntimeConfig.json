@@ -64,5 +64,12 @@
       "#edece1"
     ],
     "diverging_one": ["#e66e4a", "#b6b6be", "#6c43c0"]
+  },
+  "events": {
+    "backgroundColor": "#fff",
+    "foregroundColor": "#6e6e7e",
+    "fontSize": 11,
+    "fontWeight": 700,
+    "radius": 8
   }
 }

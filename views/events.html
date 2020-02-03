@@ -2,18 +2,19 @@
   class="s-font-note"
   style="margin: 15px -4px; display: flex; flex-wrap: wrap;"
 >
-  {%- for event in events %}
+  {%- for event in events.data %}
   <div style="margin: 0 4px;">
-    <svg width="18" height="18" style="vertical-align: sub;">
-      <g transform="translate(9, 9)">
+    {% set radius = events.config.radius %}
+    <svg width="{{ 2 * radius + 2 }}" height="{{ 2 * radius + 2 }}" style="vertical-align: sub;">
+      <g transform="translate({{ radius + 1 }}, {{ radius + 1 }})">
         <path
-          d="M8,0A8,8,0,1,1,-8,0A8,8,0,1,1,8,0"
+          d="M{{ radius }},0A{{ radius }},{{ radius }},0,1,1,-{{ radius }},0A{{ radius }},{{ radius }},0,1,1,{{ radius }},0"
           style="fill: none; stroke: currentColor; stroke-width: 1;"
         ></path>
         <text
           y="4"
           text-anchor="middle"
-          style="font-size: 11px; font-weight: bold; fill: currentColor;"
+          style="font-size: {{ events.config.fontSize }}px; font-weight: {{ events.config.fontWeight }}; fill: currentColor;"
         >
           {{ loop.index }}
         </text>

@@ -454,7 +454,7 @@ function getColumnEventsMapping() {
       path: "item.events",
       mapToSpec: function(events, spec) {
         spec.data.push(...eventHelpers.vegaSpecData(events));
-        spec.marks.push(...eventHelpers.verticalMarks);
+        spec.marks.push(...eventHelpers.verticalMarks(spec.config.events));
       }
     }
   ];
@@ -466,7 +466,7 @@ function getBarEventsMapping() {
       path: "item.events",
       mapToSpec: function(events, spec) {
         spec.data.push(...eventHelpers.vegaSpecData(events));
-        spec.marks.push(...eventHelpers.horizontalMarks);
+        spec.marks.push(...eventHelpers.horizontalMarks(spec.config.events));
       }
     }
   ];

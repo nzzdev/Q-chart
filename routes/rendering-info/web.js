@@ -106,7 +106,10 @@ module.exports = {
 
     const context = {
       item: item,
-      events: events,
+      events: {
+        data: events,
+        config: toolRuntimeConfig.events
+      },
       displayOptions: toolRuntimeConfig.displayOptions || {},
       legend: await legend[legendType].getLegendModel(
         item,
@@ -147,6 +150,7 @@ module.exports = {
           axis: toolRuntimeConfig.axis,
           text: toolRuntimeConfig.text,
           colorSchemes: toolRuntimeConfig.colorSchemes,
+          events: toolRuntimeConfig.events,
           displayOptions: toolRuntimeConfig.displayOptions || {}
         },
         item
