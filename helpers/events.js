@@ -82,6 +82,32 @@ function extendWithEventDates(originalData, events) {
   return data;
 }
 
+function vegaSpecData(events) {
+  const pointEventValues = [];
+  const rangeEventValues = [];
+
+  events.forEach((event, index) => {
+    if (event.type === "point") {
+      const { date } = event;
+      pointEventValues.push({ index, date });
+    } else if (event.type === "range") {
+      const { dateFrom, dateTo } = event;
+      rangeEventValues.push({ index, dateFrom, dateTo });
+    }
+  });
+
+  return [
+    {
+      name: "events-point",
+      values: pointEventValues
+    },
+    {
+      name: "events-range",
+      values: rangeEventValues
+    }
+  ];
+}
+
 const verticalMarks = [
   {
     name: "events-range-from-to",
@@ -190,7 +216,7 @@ const verticalMarks = [
     from: { data: "events-point" },
     encode: {
       enter: {
-        x: { signal: "floor(scale('xScale', datum.xValue)) + 0.5" },
+        x: { signal: "floor(scale('xScale', datum.date)) + 0.5" },
         y: { value: -10 },
         y2: { field: { group: "height", level: 1 } },
         stroke: { value: "#fff" },
@@ -237,7 +263,7 @@ const verticalMarks = [
         baseline: { value: "middle" },
         fill: { value: "#6e6e7e" },
         fontWeight: { value: "bold" },
-        text: { signal: "datum.datum.xIndex + 1" }
+        text: { signal: "datum.datum.index + 1" }
       }
     }
   }
@@ -358,8 +384,7 @@ const horizontalMarks = [
     encode: {
       enter: {
         y: {
-          signal:
-            "floor(scale('yScale', datum.xValue)) + 0.5 - groupPadding / 2"
+          signal: "floor(scale('yScale', datum.date)) + 0.5 - groupPadding / 2"
         },
         x: { value: 0 },
         x2: { field: { group: "width", level: 1 }, offset: 10 },
@@ -407,7 +432,7 @@ const horizontalMarks = [
         baseline: { value: "middle" },
         fill: { value: "#6e6e7e" },
         fontWeight: { value: "bold" },
-        text: { signal: "datum.datum.xIndex + 1" }
+        text: { signal: "datum.datum.index + 1" }
       }
     }
   }
@@ -418,6 +443,7 @@ module.exports = {
   extendWithEventDates,
   getAllDates,
   parseEvents,
+  vegaSpecData,
   verticalMarks,
   horizontalMarks
 };

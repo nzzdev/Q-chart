@@ -453,29 +453,7 @@ function getColumnEventsMapping() {
     {
       path: "item.events",
       mapToSpec: function(events, spec) {
-        const pointEventValues = [];
-        const rangeEventValues = [];
-
-        events.forEach((event, xIndex) => {
-          if (event.type === "point") {
-            pointEventValues.push({ xValue: event.date, xIndex });
-          } else if (event.type === "range") {
-            const { dateFrom, dateTo } = event;
-            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
-          }
-        });
-
-        spec.data.push(
-          {
-            name: "events-point",
-            values: pointEventValues
-          },
-          {
-            name: "events-range",
-            values: rangeEventValues
-          }
-        );
-
+        spec.data.push(...eventHelpers.vegaSpecData(events));
         spec.marks.push(...eventHelpers.verticalMarks);
       }
     }
@@ -487,29 +465,7 @@ function getBarEventsMapping() {
     {
       path: "item.events",
       mapToSpec: function(events, spec) {
-        const pointEventValues = [];
-        const rangeEventValues = [];
-
-        events.forEach((event, xIndex) => {
-          if (event.type === "point") {
-            pointEventValues.push({ xValue: event.date, xIndex });
-          } else if (event.type === "range") {
-            const { dateFrom, dateTo } = event;
-            rangeEventValues.push({ index: xIndex, dateFrom, dateTo });
-          }
-        });
-
-        spec.data.push(
-          {
-            name: "events-point",
-            values: pointEventValues
-          },
-          {
-            name: "events-range",
-            values: rangeEventValues
-          }
-        );
-
+        spec.data.push(...eventHelpers.vegaSpecData(events));
         spec.marks.push(...eventHelpers.horizontalMarks);
       }
     }
