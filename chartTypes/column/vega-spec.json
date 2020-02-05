@@ -13,6 +13,22 @@
     {
       "name": "numberOfDataSeries",
       "value": 0
+    },
+    {
+      "name": "columnWidth",
+      "update": "bandwidth('xScale') / numberOfDataSeries"
+    },
+    {
+      "name": "binnedColumnWidth",
+      "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
+    },
+    {
+      "name": "groupWidth",
+      "update": "binnedColumnWidth * numberOfDataSeries"
+    },
+    {
+      "name": "groupMargin",
+      "update": "(bandwidth('xScale') - groupWidth) / 2"
     }
   ],
   "data": [
@@ -92,20 +108,8 @@
       },
       "signals": [
         {
-          "name": "columnWidth",
-          "update": "bandwidth('xScale') / numberOfDataSeries"
-        },
-        {
-          "name": "binnedColumnWidth",
-          "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
-        },
-        {
           "name": "width",
-          "update": "binnedColumnWidth * numberOfDataSeries"
-        },
-        {
-          "name": "groupMargin",
-          "update": "(bandwidth('xScale') - width) / 2"
+          "update": "groupWidth"
         }
       ],
       "scales": [

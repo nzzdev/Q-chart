@@ -92,7 +92,6 @@ module.exports = function getMapping() {
     .concat(commonMappings.getColumnLabelColorMappings())
     .concat(commonMappings.getHeightMappings())
     .concat(commonMappings.getColumnAxisPositioningMappings())
-    .concat(commonMappings.getColumnEventsMapping())
     .concat([
       {
         path: "item.options.annotations.valuesOnBars",
@@ -229,5 +228,6 @@ module.exports = function getMapping() {
           objectPath.set(spec, "axes.1.zindex", 1);
         }
       }
-    ]);
+    ])
+    .concat(commonMappings.getColumnEventsMapping());
 };

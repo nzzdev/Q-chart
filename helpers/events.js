@@ -108,7 +108,21 @@ function vegaSpecData(events) {
   ];
 }
 
-function verticalMarks(config) {
+function verticalMarks(item, config) {
+  let yBottom, xFrom, xTo;
+  if (chartType.isBarChart(item) || chartType.isStackedBarChart(item)) {
+    // Vertical event annotation lines go to the x axis
+    yBottom = { scale: "yScale", value: 0 };
+    xFrom = "floor(scale('xScale', datum.dateFrom) + groupMargin) + 0.5";
+    xTo =
+      "floor(scale('xScale', datum.dateTo) + bandwidth('xScale') - groupMargin) - 0.5";
+  } else {
+    // Vertical event annotation lines go to the bottom of the chart
+    // (further than the x axis if there are negative values in the data)
+    yBottom = { field: { group: "height", level: 1 } };
+    xFrom = "floor(scale('xScale', datum.dateFrom)) + 0.5";
+    xTo = "floor(scale('xScale', datum.dateTo) + bandwidth('xScale')) + 0.5";
+  }
   const diameter = 2 * config.radius;
   return [
     {
@@ -117,8 +131,12 @@ function verticalMarks(config) {
       from: { data: "events-range" },
       encode: {
         enter: {
-          x: { signal: "floor(scale('xScale', datum.dateFrom)) + 0.5" },
-          x2: { signal: "floor(scale('xScale', datum.dateTo)) + 0.5" },
+          x: {
+            signal: xFrom
+          },
+          x2: {
+            signal: xTo
+          },
           y: { value: -(diameter + 1.5) },
           stroke: { value: config.foregroundColor },
           strokeWidth: { value: 1 }
@@ -133,7 +151,7 @@ function verticalMarks(config) {
         enter: {
           x: { field: "x" },
           y: { value: -(diameter + 1) },
-          y2: { field: { group: "height", level: 1 } },
+          y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
           strokeWidth: { value: 3 }
@@ -162,7 +180,7 @@ function verticalMarks(config) {
         enter: {
           x: { field: "x2" },
           y: { value: -(diameter + 1) },
-          y2: { field: { group: "height", level: 1 } },
+          y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
           strokeWidth: { value: 3 }
@@ -219,9 +237,12 @@ function verticalMarks(config) {
       from: { data: "events-point" },
       encode: {
         enter: {
-          x: { signal: "floor(scale('xScale', datum.date)) + 0.5" },
+          x: {
+            signal:
+              "floor(scale('xScale', datum.date) + bandwidth('xScale') / 2) + 0.5"
+          },
           y: { value: -(config.radius + 2) },
-          y2: { field: { group: "height", level: 1 } },
+          y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
           strokeWidth: { value: 3 }
@@ -284,12 +305,11 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: {
-            signal:
-              "floor(scale('yScale', datum.dateFrom)) + 0.5 - groupPadding / 2"
+            signal: "floor(scale('yScale', datum.dateFrom)) + 0.5"
           },
           y2: {
             signal:
-              "floor(scale('yScale', datum.dateTo)) + 0.5 - groupPadding / 2"
+              "floor(scale('yScale', datum.dateTo) + bandwidth('yScale')) - 0.5"
           },
           x: { field: { group: "width", level: 1 }, offset: diameter + 1.5 },
           stroke: { value: config.foregroundColor },
@@ -304,7 +324,7 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: { field: "y" },
-          x: { value: 0 },
+          x: { scale: "xScale", value: 0 },
           x2: { field: { group: "width", level: 1 }, offset: diameter + 1 },
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
@@ -318,7 +338,7 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: { field: "y" },
-          x: { value: 0 },
+          x: { scale: "xScale", value: 0 },
           x2: { field: "x2", offset: 1 },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
@@ -333,7 +353,7 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: { field: "y2" },
-          x: { value: 0 },
+          x: { scale: "xScale", value: 0 },
           x2: { field: "x" },
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
@@ -347,7 +367,7 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: { field: "y" },
-          x: { value: 0 },
+          x: { scale: "xScale", value: 0 },
           x2: { field: "x2", offset: 1 },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
@@ -393,9 +413,9 @@ function horizontalMarks(config) {
         enter: {
           y: {
             signal:
-              "floor(scale('yScale', datum.date)) + 0.5 - groupPadding / 2"
+              "floor(scale('yScale', datum.date) + bandwidth('yScale') / 2) + 0.5"
           },
-          x: { value: 0 },
+          x: { scale: "xScale", value: 0 },
           x2: {
             field: { group: "width", level: 1 },
             offset: config.radius + 2

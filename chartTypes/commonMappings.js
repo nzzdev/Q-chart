@@ -1,5 +1,6 @@
 const objectPath = require("object-path");
 const clone = require("clone");
+const chartType = require("../helpers/chartType.js");
 const intervals = require("../helpers/dateSeries.js").intervals;
 const dateSeries = require("../helpers/dateSeries.js");
 const dataHelpers = require("../helpers/data.js");
@@ -452,9 +453,19 @@ function getColumnEventsMapping() {
   return [
     {
       path: "item.events",
-      mapToSpec: function(events, spec) {
+      mapToSpec: function(events, spec, mappingData) {
+        const { item } = mappingData;
+        const config = spec.config.events;
+
         spec.data.push(...eventHelpers.vegaSpecData(events));
-        spec.marks.push(...eventHelpers.verticalMarks(spec.config.events));
+        const verticalMarks = eventHelpers.verticalMarks(item, config);
+        if (chartType.isBarChart(item) || chartType.isStackedBarChart(item)) {
+          // Event annotations go behind bars
+          spec.marks.unshift(...verticalMarks);
+        } else {
+          // Event annotations go in front of areas/lines
+          spec.marks.push(...verticalMarks);
+        }
       }
     }
   ];
@@ -464,9 +475,13 @@ function getBarEventsMapping() {
   return [
     {
       path: "item.events",
-      mapToSpec: function(events, spec) {
+      mapToSpec: function(events, spec, mappingData) {
+        const config = spec.config.events;
+
         spec.data.push(...eventHelpers.vegaSpecData(events));
-        spec.marks.push(...eventHelpers.horizontalMarks(spec.config.events));
+        const horizontalMarks = eventHelpers.horizontalMarks(config);
+        // Event annotations go behind bars
+        spec.marks.unshift(...horizontalMarks);
       }
     }
   ];
