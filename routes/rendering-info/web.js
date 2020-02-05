@@ -68,18 +68,19 @@ module.exports = {
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
 
-    // Convert event dates to date objects, sort, and filter them
-    const events = eventHelpers.filterEventsForChartType(
-      eventHelpers.parseEvents(item),
-      item
-    );
+    // Convert event dates to date objects and sort them
+    let events = eventHelpers.parseEvents(item);
 
-    // handle auto interval here
-    // by calculating the interval from the data and setting this to the actual data we are rendering
-    if (item.options.dateSeriesOptions.interval === "auto") {
-      if (dateSeries.isDateSeriesData(item.data)) {
-        // Add event dates to item.data
-        const data = eventHelpers.extendWithEventDates(item.data, events);
+    if (dateSeries.isDateSeriesData(item.data)) {
+      // Filter out event that cannot be shown on bar charts
+      events = eventHelpers.filterEventsForChartType(events, item);
+
+      // Add event dates to item.data
+      const data = eventHelpers.extendWithEventDates(item.data, events);
+
+      // handle auto interval here
+      // by calculating the interval from the data and setting this to the actual data we are rendering
+      if (item.options.dateSeriesOptions.interval === "auto") {
         item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
           data
         );
