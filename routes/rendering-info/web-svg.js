@@ -58,8 +58,11 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     // if we have a date series, we change the date values to date objects
     // and set the detected dateFormat to the mappingData to be used within the mapping functions
     if (dateSeries.isDateSeriesData(item.data)) {
-      // Convert event dates to date objects and sort them
-      item.events = eventHelpers.parseEvents(item);
+      // Convert event dates to date objects, sort, and filter them
+      item.events = eventHelpers.filterEventsForChartType(
+        eventHelpers.parseEvents(item),
+        item
+      );
 
       mappingData.dateFormat = dateSeries.getDateFormatForData(item.data);
 

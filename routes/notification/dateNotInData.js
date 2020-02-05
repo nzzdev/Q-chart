@@ -21,25 +21,19 @@ module.exports = {
       const { item } = request.payload;
 
       if (isBarChart(item) || isStackedBarChart(item)) {
-        const parsedDatesData = dateSeries.getDataWithDateParsedAndSortedByDate(
+        const events = eventHelpers.parseEvents(item);
+        const eventsWithDateInData = eventHelpers.filterEventsWithDateInData(
+          events,
           item.data
         );
-        const dates = dateSeries.getFirstColumnSerie(parsedDatesData);
-        const times = new Set(dates.map(date => date.getTime()));
 
-        const events = eventHelpers.parseEvents(item);
-        const eventDates = eventHelpers.getAllDates(events);
-
-        for (let eventDate of eventDates) {
-          const eventTime = eventDate.getTime();
-          if (!times.has(eventTime)) {
-            return {
-              message: {
-                title: "notifications.dateNotInData.title",
-                body: "notifications.dateNotInData.body"
-              }
-            };
-          }
+        if (eventsWithDateInData.length !== events.length) {
+          return {
+            message: {
+              title: "notifications.dateNotInData.title",
+              body: "notifications.dateNotInData.body"
+            }
+          };
         }
       }
 

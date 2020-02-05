@@ -68,8 +68,11 @@ module.exports = {
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
 
-    // Convert event dates to date objects and sort them
-    const events = eventHelpers.parseEvents(item);
+    // Convert event dates to date objects, sort, and filter them
+    const events = eventHelpers.filterEventsForChartType(
+      eventHelpers.parseEvents(item),
+      item
+    );
 
     // handle auto interval here
     // by calculating the interval from the data and setting this to the actual data we are rendering

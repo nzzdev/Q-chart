@@ -65,6 +65,26 @@ function getAllDates(events) {
   return allDates;
 }
 
+function filterEventsWithDateInData(events, data) {
+  const parsedDatesData = dateSeries.getDataWithDateParsedAndSortedByDate(data);
+  const dates = dateSeries.getFirstColumnSerie(parsedDatesData);
+  const times = new Set(dates.map(date => date.getTime()));
+
+  return events.filter(event => {
+    return dateFieldsForEvent(event).every(dateField => {
+      const eventTime = event[dateField].getTime();
+      return times.has(eventTime);
+    });
+  });
+}
+
+function filterEventsForChartType(events, item) {
+  if (chartType.isBarChart(item) || chartType.isStackedBarChart(item)) {
+    return filterEventsWithDateInData(events, item.data);
+  }
+  return events;
+}
+
 function extendWithEventDates(originalData, events) {
   if (!events) {
     events = [];
@@ -475,7 +495,8 @@ function horizontalMarks(config) {
 module.exports = {
   availableForItem,
   extendWithEventDates,
-  getAllDates,
+  filterEventsWithDateInData,
+  filterEventsForChartType,
   parseEvents,
   vegaSpecData,
   verticalMarks,
