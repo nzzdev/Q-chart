@@ -1,5 +1,9 @@
 {
   "notifications": {
+    "dateNotInData": {
+      "title": "Datum nicht in den Daten",
+      "body": "Bei Säulendiagrammen können nur Zeitpunkte annotiert werden, die auch in den Daten vorkommen."
+    },
     "hideAxisLabel": {
       "title": "Achsenbeschriftung nötig?",
       "body": "Wenn die Achsenbeschriftung selbsterklärend ist, lassen wir sie besser weg. Wähle dafür «Achsenbeschriftung ausblenden» an."
@@ -19,6 +23,10 @@
     "unsupportedDateFormat": {
       "title": "Ungültiges Datumsformat",
       "body": "Spalte A enthält wahrscheinlich ein nicht unterstütztes Datumsformat. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
+    },
+    "unsupportedDateFormatEvents": {
+      "title": "Ungültiges Datumsformat",
+      "body": "Dieses Datumsformat wird nicht unterstützt. Bitte konsultiere das Handbuch für eine Übersicht der unterstützten Formate."
     }
   }
 }

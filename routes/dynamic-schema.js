@@ -14,6 +14,7 @@ module.exports = {
   },
   handler: function(request, h) {
     const item = request.payload.item;
+
     if (request.params.optionName === "highlighDataSeries") {
       try {
         return {

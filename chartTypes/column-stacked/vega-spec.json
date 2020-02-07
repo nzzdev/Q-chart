@@ -21,6 +21,10 @@
     {
       "name": "binnedColumnWidth",
       "update": "columnWidth > (36 + minGroupMargin + columnMargin) ? 36 : columnWidth > (28 + minGroupMargin + columnMargin) ? 24 : columnWidth > (16 + minGroupMargin + columnMargin) ? 16 : 8"
+    },
+    {
+      "name": "groupMargin",
+      "update": "(columnWidth - binnedColumnWidth) / 2"
     }
   ],
   "data": [
@@ -50,6 +54,7 @@
         "field": "xValue"
       },
       "padding": 0,
+      "paddingOuter": 0.2,
       "round": true
     },
     {

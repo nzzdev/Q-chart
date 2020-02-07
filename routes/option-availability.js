@@ -1,38 +1,24 @@
 const Boom = require("@hapi/boom");
 const Joi = require("@hapi/joi");
-const isDateSeries = require("../helpers/dateSeries.js").isDateSeries;
-const getFirstColumnSerie = require("../helpers/dateSeries.js")
-  .getFirstColumnSerie;
-const getChartTypeForItemAndWidth = require("../helpers/chartType.js")
-  .getChartTypeForItemAndWidth;
+
+const {
+  isDateSeries,
+  getFirstColumnSerie
+} = require("../helpers/dateSeries.js");
+
+const {
+  isBarChart,
+  isStackedBarChart,
+  isLineChart,
+  isAreaChart,
+  isDotplot,
+  isArrowChart,
+  getChartTypeForItemAndWidth
+} = require("../helpers/chartType.js");
 
 const configuredDivergingColorSchemes = require("../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
-function isBarChart(item) {
-  return (
-    item.options.chartType === "Bar" || item.options.chartType === "StackedBar"
-  );
-}
-
-function isStackedBarChart(item) {
-  return item.options.chartType === "StackedBar";
-}
-
-function isLineChart(item) {
-  return item.options.chartType === "Line";
-}
-
-function isAreaChart(item) {
-  return item.options.chartType === "Area";
-}
-
-function isDotplot(item) {
-  return item.options.chartType === "Dotplot";
-}
-
-function isArrowChart(item) {
-  return item.options.chartType === "Arrow";
-}
+const eventsAvailableForItem = require("../helpers/events.js").availableForItem;
 
 module.exports = {
   method: "POST",
@@ -45,15 +31,24 @@ module.exports = {
   },
   handler: function(request, h) {
     const item = request.payload.item;
+
+    if (request.params.optionName === "events") {
+      return {
+        available: eventsAvailableForItem(item)
+      };
+    }
+
     if (request.params.optionName === "bar") {
       return {
-        available: isBarChart(item)
+        available: isBarChart(item) || isStackedBarChart(item)
       };
     }
 
     if (request.params.optionName === "forceBarsOnSmall") {
       return {
-        available: isBarChart(item) && !item.options.barOptions.isBarChart
+        available:
+          (isBarChart(item) || isStackedBarChart(item)) &&
+          !item.options.barOptions.isBarChart
       };
     }
 
@@ -178,13 +173,13 @@ module.exports = {
     if (request.params.optionName === "annotations") {
       let available = false;
       if (
-        (isLineChart(item) || isBarChart(item)) &&
+        (isLineChart(item) || isBarChart(item) || isStackedBarChart(item)) &&
         item.data[0].length === 2 // only if there is just one data series
       ) {
         available = true;
       }
 
-      if (isBarChart(item) && !isStackedBarChart(item)) {
+      if (isBarChart(item)) {
         available = true;
       }
 
@@ -234,7 +229,7 @@ module.exports = {
     if (request.params.optionName === "annotations.valuesOnBars") {
       try {
         return {
-          available: isBarChart(item) && !isStackedBarChart(item)
+          available: isBarChart(item)
         };
       } catch (e) {
         return {
@@ -247,7 +242,8 @@ module.exports = {
       return {
         available:
           isLineChart(item) ||
-          (isBarChart(item) && !item.options.barOptions.isBarChart)
+          ((isBarChart(item) || isStackedBarChart(item)) &&
+            !item.options.barOptions.isBarChart)
       };
     }
 

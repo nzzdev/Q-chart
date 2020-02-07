@@ -2,11 +2,11 @@ const Joi = require("@hapi/joi");
 const Boom = require("@hapi/boom");
 const vega = require("vega");
 const deepmerge = require("deepmerge");
-const getMappedSpec = require("../../helpers/itemVegaMapping.js").getMappedSpec;
+const { getMappedSpec } = require("../../helpers/itemVegaMapping.js");
 const dataHelpers = require("../../helpers/data.js");
-const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
-  .getChartTypeForItemAndWidth;
+const { getChartTypeForItemAndWidth } = require("../../helpers/chartType.js");
 const dateSeries = require("../../helpers/dateSeries.js");
+const eventHelpers = require("../../helpers/events.js");
 const d3config = require("../../config/d3.js");
 const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
@@ -40,6 +40,10 @@ function getSpecConfig(item, baseConfig, toolRuntimeConfig) {
     config.text = deepmerge(config.text || {}, toolRuntimeConfig.text);
   }
 
+  if (toolRuntimeConfig.hasOwnProperty("events")) {
+    config.events = toolRuntimeConfig.events;
+  }
+
   return config;
 }
 
@@ -54,35 +58,43 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
     // if we have a date series, we change the date values to date objects
     // and set the detected dateFormat to the mappingData to be used within the mapping functions
     if (dateSeries.isDateSeriesData(item.data)) {
-      mappingData.dateFormat = dateSeries.getDateFormatForData(
-        mappingData.item.data
+      // Convert event dates to date objects, sort, and filter them
+      item.events = eventHelpers.filterEventsForChartType(
+        eventHelpers.parseEvents(item),
+        item
       );
+
+      mappingData.dateFormat = dateSeries.getDateFormatForData(item.data);
+
       // keep the original data, we need it later on to handle prognosisStart (which is an index and not a date) correctly
-      mappingData.originalItemData = mappingData.item.data;
-      mappingData.item.data = dateSeries.getDataWithDateParsedAndSortedByDate(
-        mappingData.item.data
-      );
+      mappingData.originalItemData = item.data;
+
+      // Parse dates and add event dates
+      item.data = dateSeries.getDataWithDateParsedAndSortedByDate(item.data);
+      item.data = eventHelpers.extendWithEventDates(item.data, item.events);
+
       // handle auto interval here
       // by calculating the interval from the data and setting this to the actual data we are rendering
-      if (mappingData.item.options.dateSeriesOptions.interval === "auto") {
-        mappingData.item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
-          mappingData.item.data
+      if (item.options.dateSeriesOptions.interval === "auto") {
+        item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
+          item.data
         );
       }
+    } else {
+      // Make sure that events array exists
+      item.events = [];
     }
   }
 
   // if we do not have a dateseries, we transform all null/undefined values in the first column to empty strings to not display null in the chart
   if (!mappingData.dateFormat) {
-    mappingData.item.data = dataHelpers.getWithOnlyStringsInFirstColumn(
-      mappingData.item.data
-    );
+    item.data = dataHelpers.getWithOnlyStringsInFirstColumn(item.data);
   }
 
   const templateSpec = require(`../../chartTypes/${chartType}/vega-spec.json`);
 
   templateSpec.config = getSpecConfig(
-    mappingData.item,
+    item,
     templateSpec.config,
     mappingData.toolRuntimeConfig
   );

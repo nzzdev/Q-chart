@@ -6,13 +6,37 @@ function reverseLineOrder(svg, spec, item, toolRuntimeConfig) {
   const svgDom = new JSDOM(svg);
   const document = svgDom.window.document;
   const dataSeriesGroup = document.querySelector(".data-series");
+
+  const lineGroups = Array.from(dataSeriesGroup.children);
+
+  // divide lineGroups array into highlighted and other line groups
+  let highlightedLineGroups = [];
+  let otherLineGroups = [];
+
+  if (
+    item.options.highlightDataSeries &&
+    item.options.highlightDataSeries.length > 0
+  ) {
+    lineGroups.forEach((lineGroup, index) => {
+      if (item.options.highlightDataSeries.includes(index)) {
+        highlightedLineGroups.push(lineGroup);
+      } else {
+        otherLineGroups.push(lineGroup);
+      }
+    });
+  }
+
   // this reverses the order of the line groups
   // putting the first on last and thus to the front
-  const lineGroups = Array.from(dataSeriesGroup.children).reverse();
+  const otherLineGroupReversed = otherLineGroups.reverse();
+  const highlightedLineGroupsReversed = highlightedLineGroups.reverse();
 
-  // todo: we should put the highlighted lines here to the end of the array
+  for (const dataSerieElement of otherLineGroupReversed) {
+    dataSeriesGroup.appendChild(dataSerieElement);
+  }
 
-  for (const dataSerieElement of lineGroups) {
+  // add highlighted line groups to the end and thus to the front
+  for (const dataSerieElement of highlightedLineGroupsReversed) {
     dataSeriesGroup.appendChild(dataSerieElement);
   }
   return document.body.innerHTML;
