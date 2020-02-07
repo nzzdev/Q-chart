@@ -153,10 +153,24 @@ async function getTextConfig(target) {
   };
 }
 
+async function getEventsConfig(target) {
+  const sophieVars = await loadSophieModules(target);
+  const sophieColorVars = sophieVars[sophieModulesPerTarget[target].color.name];
+
+  return {
+    backgroundColor: "#fff",
+    foregroundColor: sophieColorVars.general["s-color-gray-7"],
+    fontSize: 11,
+    fontWeight: 700,
+    radius: 8
+  };
+}
+
 async function getConfig() {
   const nzz_ch_colorSchemes = await getColorSchemes("nzz_ch");
   const nzz_ch_axisConfig = await getAxisConfig("nzz_ch");
   const nzz_ch_textConfig = await getTextConfig("nzz_ch");
+  const nzz_ch_eventsConfig = await getEventsConfig("nzz_ch");
 
   return {
     nzz_ch: {
@@ -181,7 +195,8 @@ async function getConfig() {
       toolRuntimeConfig: {
         axis: nzz_ch_axisConfig,
         text: nzz_ch_textConfig,
-        colorSchemes: nzz_ch_colorSchemes
+        colorSchemes: nzz_ch_colorSchemes,
+        events: nzz_ch_eventsConfig
       }
     }
   };

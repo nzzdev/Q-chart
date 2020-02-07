@@ -1,14 +1,10 @@
 const objectPath = require("object-path");
 const clone = require("clone");
+const chartType = require("../helpers/chartType.js");
 const intervals = require("../helpers/dateSeries.js").intervals;
 const dateSeries = require("../helpers/dateSeries.js");
-
-const d3 = {
-  timeFormat: require("d3-time-format").timeFormat
-};
-
-const textMeasure = require("../helpers/textMeasure.js");
 const dataHelpers = require("../helpers/data.js");
+const eventHelpers = require("../helpers/events.js");
 
 function getLineDateSeriesHandlingMappings() {
   return [
@@ -19,8 +15,8 @@ function getLineDateSeriesHandlingMappings() {
         if (
           (mappingData.dateFormat &&
             item.options.chartType === "Line" &&
-              item.options.lineChartOptions &&
-              item.options.lineChartOptions.isStockChart !== true) ||
+            item.options.lineChartOptions &&
+            item.options.lineChartOptions.isStockChart !== true) ||
           item.options.chartType === "Area"
         ) {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
@@ -453,6 +449,44 @@ function getBarAxisPositioningMappings() {
   ];
 }
 
+function getColumnEventsMapping() {
+  return [
+    {
+      path: "item.events",
+      mapToSpec: function(events, spec, mappingData) {
+        const { item } = mappingData;
+        const config = spec.config.events;
+
+        spec.data.push(...eventHelpers.vegaSpecData(events));
+        const verticalMarks = eventHelpers.verticalMarks(item, config);
+        if (chartType.isBarChart(item) || chartType.isStackedBarChart(item)) {
+          // Event annotations go behind bars
+          spec.marks.unshift(...verticalMarks);
+        } else {
+          // Event annotations go in front of areas/lines
+          spec.marks.push(...verticalMarks);
+        }
+      }
+    }
+  ];
+}
+
+function getBarEventsMapping() {
+  return [
+    {
+      path: "item.events",
+      mapToSpec: function(events, spec, mappingData) {
+        const config = spec.config.events;
+
+        spec.data.push(...eventHelpers.vegaSpecData(events));
+        const horizontalMarks = eventHelpers.horizontalMarks(config);
+        // Event annotations go behind bars
+        spec.marks.unshift(...horizontalMarks);
+      }
+    }
+  ];
+}
+
 module.exports = {
   getLineDateSeriesHandlingMappings,
   getColumnDateSeriesHandlingMappings,
@@ -466,5 +500,7 @@ module.exports = {
   getHighlightSeriesMapping,
   getColorOverwritesRowsMappings,
   getColumnAxisPositioningMappings,
-  getBarAxisPositioningMappings
+  getBarAxisPositioningMappings,
+  getColumnEventsMapping,
+  getBarEventsMapping
 };

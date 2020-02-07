@@ -1,5 +1,9 @@
 {
   "notifications": {
+    "dateNotInData": {
+      "title": "La date n'est pas dans les données",
+      "body": "Pour les graphiques de type colonnes, seulement les dates qui apparaissent également dans les données peuvent être annotés."
+    },
     "hideAxisLabel": {
       "title": "L'étiquette de l'axe est-elle nécessaire?",
       "body": "Si l'étiquette de l'axe est explicite, il vaut mieux ne pas y penser. Sélectionnez «Masquer l'étiquette de l'axe»."
@@ -19,6 +23,10 @@
     "unsupportedDateFormat": {
       "title": "Format de date invalide",
       "body": "La colonne A contient probablement un format de date non pris en charge. Veuillez consulter le manuel pour une liste des formats supportés."
+    },
+    "unsupportedDateFormatEvents": {
+      "title": "Format de date invalide",
+      "body": "Ce format de date n'est pas supporté. Veuillez consulter le manuel pour une liste des formats supportés."
     }
   },
   "Diagramm": "Graphique",
@@ -81,5 +89,11 @@
   "Farben": "Couleurs",
   "Farbe normal": "Couleur normale",
   "Farbe hell": "Couleur brillante",
-  "Position": "Position"
+  "Position": "Position",
+  "Event": "Événement ",
+  "Zeitpunkt": "Date",
+  "Annotation": "Annotation",
+  "Zeitspanne": "Période de temps",
+  "Von": "De",
+  "Bis": "À"
 }

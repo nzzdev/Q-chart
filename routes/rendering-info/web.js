@@ -3,6 +3,7 @@ const Joi = require("@hapi/joi");
 
 const dataHelpers = require("../../helpers/data.js");
 const dateSeries = require("../../helpers/dateSeries.js");
+const eventHelpers = require("../../helpers/events.js");
 
 const viewsDir = __dirname + "/../../views/";
 const stylesDir = __dirname + "/../../styles/";
@@ -67,12 +68,21 @@ module.exports = {
     // first and foremost: cast all the floats in strings to actual floats
     item.data = getDataWithStringsCastedToFloats(item.data);
 
-    // handle auto interval here
-    // by calculating the interval from the data and setting this to the actual data we are rendering
-    if (item.options.dateSeriesOptions.interval === "auto") {
-      if (dateSeries.isDateSeriesData(item.data)) {
+    // Convert event dates to date objects and sort them
+    let events = eventHelpers.parseEvents(item);
+
+    if (dateSeries.isDateSeriesData(item.data)) {
+      // Filter out event that cannot be shown on bar charts
+      events = eventHelpers.filterEventsForChartType(events, item);
+
+      // Add event dates to item.data
+      const data = eventHelpers.extendWithEventDates(item.data, events);
+
+      // handle auto interval here
+      // by calculating the interval from the data and setting this to the actual data we are rendering
+      if (item.options.dateSeriesOptions.interval === "auto") {
         item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
-          item.data
+          data
         );
       }
     }
@@ -100,6 +110,10 @@ module.exports = {
 
     const context = {
       item: item,
+      events: {
+        data: events,
+        config: toolRuntimeConfig.events
+      },
       displayOptions: toolRuntimeConfig.displayOptions || {},
       legend: await legend[legendType].getLegendModel(
         item,
@@ -140,6 +154,7 @@ module.exports = {
           axis: toolRuntimeConfig.axis,
           text: toolRuntimeConfig.text,
           colorSchemes: toolRuntimeConfig.colorSchemes,
+          events: toolRuntimeConfig.events,
           displayOptions: toolRuntimeConfig.displayOptions || {}
         },
         item
