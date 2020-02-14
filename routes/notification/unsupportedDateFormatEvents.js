@@ -27,7 +27,7 @@ module.exports = {
           eventDates.push(event.dateFrom, event.dateTo);
         }
         for (let eventDate of eventDates) {
-          if (!helpers.getDateFormatForValue(eventDate)) {
+          if (eventDate && !helpers.getDateFormatForValue(eventDate)) {
             return {
               message: {
                 title: "notifications.unsupportedDateFormatEvents.title",

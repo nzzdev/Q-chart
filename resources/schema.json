@@ -965,11 +965,13 @@
         },
         "date": {
           "title": "Zeitpunkt",
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "label": {
           "title": "Annotation",
-          "type": "string"
+          "type": "string",
+          "default": ""
         }
       },
       "required": ["date", "label"]
@@ -988,15 +990,18 @@
         },
         "dateFrom": {
           "title": "Von",
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "dateTo": {
           "title": "Bis",
-          "type": "string"
+          "type": "string",
+          "default": ""
         },
         "label": {
           "title": "Annotation",
-          "type": "string"
+          "type": "string",
+          "default": ""
         }
       },
       "required": ["dateFrom", "dateTo", "label"]
