@@ -371,27 +371,27 @@ function getPrognosisStartDate(data, prognosisStartIndex) {
 
 function getDataWithDateParsedAndSortedByDate(data) {
   const format = getDateFormatForData(data);
-  return data
-    .map((row, i) => {
-      if (i === 0) {
-        // the first row is just the header
-        return row;
-      }
-      return row.map((cell, ii) => {
-        if (ii !== 0) {
-          // only the first cell of every row should be parsed
+  return [
+    data[0],
+    ...data
+      .slice(1) // exclude the header row from date parsing and sorting
+      .map((row) => {
+        return row.map((cell, cellIndex) => {
+          if (cellIndex !== 0) {
+            // only the first cell of every row should be parsed
+            return cell;
+          }
+          if (cell.match) {
+            // check if cell is actually a string that has .match function
+            return format.getDate(cell.match(format.parse));
+          }
           return cell;
-        }
-        if (cell.match) {
-          // check if cell is actually a string that has .match function
-          return format.getDate(cell.match(format.parse));
-        }
-        return cell;
-      });
-    })
-    .sort((a, b) => {
-      return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
-    });
+        });
+      })
+      .sort((a, b) => {
+        return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
+      }),
+  ];
 }
 
 function getFirstAndLastDateFromData(data) {
