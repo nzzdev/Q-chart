@@ -1,5 +1,5 @@
 {
-  "title": "FIXTURE: StackedBar - null values ",
+  "title": "FIXTURE: StackedBar - null values",
   "data": [
     ["Jahr", "Grüne/GLP", "SP", "LdU", "CVP/CSP", "FDP", "SVP"],
     ["2011", "1", "2", "0", "0", "2", null],
