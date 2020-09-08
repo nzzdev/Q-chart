@@ -170,23 +170,7 @@ const highlightZeroGridLineIfPositiveAndNegative = {
         .querySelector(".role-axis-grid")
         .querySelectorAll("line");
 
-      const yAxisTicklines = axisElements
-        .item(axisIndex)
-        .querySelector(".role-axis-tick")
-        .querySelectorAll("line");
-
       yAxisGridlines.item(zeroTickIndex).setAttribute(
-        "style",
-        yAxisGridlines
-          .item(zeroTickIndex)
-          .getAttribute("style")
-          .replace(
-            `stroke: ${toolRuntimeConfig.axis.tickColor}`,
-            `stroke: ${toolRuntimeConfig.axis.labelColor}`
-          )
-      );
-
-      yAxisTicklines.item(zeroTickIndex).setAttribute(
         "style",
         yAxisGridlines
           .item(zeroTickIndex)
