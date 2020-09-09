@@ -157,7 +157,11 @@ module.exports = function getMapping() {
           .slice(1)
           .map((row) => {
             return row.slice(1).reduce((sum, cell) => {
-              return sum.plus(new Decimal(cell));
+              try {
+                return sum.plus(new Decimal(cell));
+              } catch (error) {
+                return sum.plus(new Decimal(0));
+              }
             }, new Decimal(0));
           })
           .reduce((uniqueSums, sum) => {
