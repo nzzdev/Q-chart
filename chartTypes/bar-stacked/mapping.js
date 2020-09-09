@@ -36,17 +36,17 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec, mappingData) {
+      mapToSpec: function (itemData, spec, mappingData) {
         const item = mappingData.item;
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
         // set the barWidth depending on the number of bars we will get
         const numberOfBars = itemData.length - 1;
-        const barWidthSignal = spec.signals.find(signal => {
+        const barWidthSignal = spec.signals.find((signal) => {
           return signal.name === "barWidth";
         });
-        const groupPaddingSignal = spec.signals.find(signal => {
+        const groupPaddingSignal = spec.signals.find((signal) => {
           return signal.name === "groupPadding";
         });
 
@@ -82,14 +82,14 @@ module.exports = function getMapping() {
                 xValue: x,
                 xIndex: rowIndex,
                 yValue: value,
-                cValue: index
+                cValue: index,
               };
             });
           })
           .flat();
 
         const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
+          (signal) => signal.name === "numberOfDataSeries"
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
 
@@ -103,7 +103,7 @@ module.exports = function getMapping() {
           spec.axes[1].encode.title.update.align.value = "left";
 
           const labelHeightSignal = spec.signals.find(
-            signal => signal.name === "labelHeight"
+            (signal) => signal.name === "labelHeight"
           );
           labelHeightSignal.value = 16;
 
@@ -122,19 +122,19 @@ module.exports = function getMapping() {
             type: "text",
             name: "bar-top-label",
             from: {
-              data: "xValues"
+              data: "xValues",
             },
             encode: {
               update: {
                 text: labelText,
                 y: {
-                  signal: "-labelHeight/2"
+                  signal: "-labelHeight/2",
                 },
                 baseline: {
-                  value: "middle"
-                }
-              }
-            }
+                  value: "middle",
+                },
+              },
+            },
           };
 
           // if all the values are negative, we right align the label
@@ -146,16 +146,16 @@ module.exports = function getMapping() {
 
           spec.marks[0].marks[0].marks.push(labelMark);
         }
-      }
+      },
     },
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function (itemData, spec) {
         // check if all rows sum up to 100
         // use decimal.js to avoid floating point precision errors
         const stackedSums = itemData
           .slice(1)
-          .map(row => {
+          .map((row) => {
             return row.slice(1).reduce((sum, cell) => {
               return sum.plus(new Decimal(cell));
             }, new Decimal(0));
@@ -175,11 +175,11 @@ module.exports = function getMapping() {
         // set the ticks to 0/25/50/75/100
         objectPath.set(spec, "axes.0.tickCount", 5);
         objectPath.set(spec, "axes.0.values", [0, 25, 50, 75, 100]);
-      }
+      },
     },
     {
       path: "item.options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec) {
+      mapToSpec: function (hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
           objectPath.get(spec, "axes.1.title").length < 1
@@ -188,11 +188,11 @@ module.exports = function getMapping() {
           objectPath.set(spec, "axes.1.title", undefined);
           objectPath.set(spec, "height", spec.height - 30); // decrease the height because we do not need space for the axis title
         }
-      }
+      },
     },
     {
       path: "item.options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, mappingData) {
+      mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
@@ -203,17 +203,17 @@ module.exports = function getMapping() {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
-      }
+      },
     },
     {
       path: "item.data",
-      mapToSpec: function(data, spec, mappingData) {
+      mapToSpec: function (data, spec, mappingData) {
         // if we will only display one single bar, we should not show the Y axis label
         if (data.length === 2) {
           objectPath.set(spec, "axes.1.labels", false);
         }
-      }
-    }
+      },
+    },
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
     .concat(commonMappings.getHighlightRowsMapping())
