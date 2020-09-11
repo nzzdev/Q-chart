@@ -28,6 +28,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-stacked-days-prognosis.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative-only.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
+  require(`${fixtureDataDirectory}/bar-stacked-null-values.json`),
   require(`${fixtureDataDirectory}/bar-values-on-bars.json`),
   require(`${fixtureDataDirectory}/bar-many-rows.json`),
   require(`${fixtureDataDirectory}/bar-many-rows-values-on-bars.json`),
@@ -49,7 +50,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/line-dates-min-max-missing-value.json`),
   require(`${fixtureDataDirectory}/line-highlight-one.json`),
   require(`${fixtureDataDirectory}/line-highlight-two.json`),
-  require(`${fixtureDataDirectory}/line-stock-chart.json`)
+  require(`${fixtureDataDirectory}/line-stock-chart.json`),
 ];
 
 module.exports = {
@@ -57,9 +58,9 @@ module.exports = {
   method: "GET",
   options: {
     tags: ["api"],
-    cors: true
+    cors: true,
   },
   handler: (request, h) => {
     return fixtureData;
-  }
+  },
 };
