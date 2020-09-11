@@ -34,97 +34,97 @@ const dateFormats = {
     match: /^ *(?:1[0-9]|2[0-9])\d{2} *$/,
     parse: /^ *(\d{4}) *$/,
     validIntervals: ["decade", "year"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[1], 0, 1);
-    }
+    },
   },
   "YYYY-H": {
     match: /^ *[12]\d{3}[ \-\/]?[hH][12] *$/,
     parse: /^ *(\d{4})[ \-\/]?[hH]([12]) *$/,
     validIntervals: ["decade", "year"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[1], (parsed[2] - 1) * 6, 1);
-    }
+    },
   },
   "H-YYYY": {
     match: /^ *[hH][12][ \-\/][12]\d{3} *$/,
     parse: /^ *[hH]([12])[ \-\/](\d{4}) *$/,
     validIntervals: ["decade", "year"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[2], (parsed[1] - 1) * 6, 1);
-    }
+    },
   },
   "YYYY-Q": {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
     validIntervals: ["decade", "year", "quarter"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[1], (parsed[2] - 1) * 3, 1);
-    }
+    },
   },
   "Q-YYYY": {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
     validIntervals: ["decade", "year", "quarter"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[2], (parsed[1] - 1) * 3, 1);
-    }
+    },
   },
   "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     validIntervals: ["decade", "year", "quarter", "month"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[1], parsed[2] - 1, 1);
-    }
+    },
   },
   "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
     validIntervals: ["decade", "year", "quarter", "month"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[2], parsed[1] - 1, 1);
-    }
+    },
   },
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     validIntervals: ["decade", "year", "quarter", "month", "week"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
-    }
+    },
   },
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
     validIntervals: ["decade", "year", "quarter", "month", "week"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
-    }
+    },
   },
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
     validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[4], parsed[1] - 1, parsed[3]);
-    }
+    },
   },
   "DD/MM/YYYY": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
     validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[4], parsed[3] - 1, parsed[1]);
-    }
+    },
   },
   "YYYY-MM-DD": {
     match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return new Date(parsed[1], parsed[3] - 1, parsed[4]);
-    }
+    },
   },
   "MM/DD/YYYY HH:MM": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
@@ -137,9 +137,9 @@ const dateFormats = {
       "week",
       "day",
       "hour",
-      "minute"
+      "minute",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -153,7 +153,7 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
+    },
   },
   "DD.MM.YYYY HH:MM": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
@@ -166,9 +166,9 @@ const dateFormats = {
       "week",
       "day",
       "hour",
-      "minute"
+      "minute",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -182,7 +182,7 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
+    },
   },
   "YYYY-MM-DD HH:MM": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
@@ -195,9 +195,9 @@ const dateFormats = {
       "week",
       "day",
       "hour",
-      "minute"
+      "minute",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -211,7 +211,7 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
+    },
   },
   "MM/DD/YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
@@ -225,9 +225,9 @@ const dateFormats = {
       "day",
       "hour",
       "minute",
-      "second"
+      "second",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -241,7 +241,7 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
+    },
   },
   "DD.MM.YYYY HH:MM:SS": {
     match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
@@ -255,9 +255,9 @@ const dateFormats = {
       "day",
       "hour",
       "minute",
-      "second"
+      "second",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -271,7 +271,7 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
+    },
   },
   "YYYY-MM-DD HH:MM:SS": {
     match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
@@ -285,9 +285,9 @@ const dateFormats = {
       "day",
       "hour",
       "minute",
-      "second"
+      "second",
     ],
-    getDate: parsed => {
+    getDate: (parsed) => {
       return moment
         .tz(
           new Date(
@@ -301,8 +301,8 @@ const dateFormats = {
           timezone
         )
         .toDate();
-    }
-  }
+    },
+  },
 };
 
 function getDateFormatForValue(value) {
@@ -371,27 +371,27 @@ function getPrognosisStartDate(data, prognosisStartIndex) {
 
 function getDataWithDateParsedAndSortedByDate(data) {
   const format = getDateFormatForData(data);
-  return data
-    .map((row, i) => {
-      if (i === 0) {
-        // the first row is just the header
-        return row;
-      }
-      return row.map((cell, ii) => {
-        if (ii !== 0) {
-          // only the first cell of every row should be parsed
+  return [
+    data[0],
+    ...data
+      .slice(1) // exclude the header row from date parsing and sorting
+      .map((row) => {
+        return row.map((cell, cellIndex) => {
+          if (cellIndex !== 0) {
+            // only the first cell of every row should be parsed
+            return cell;
+          }
+          if (cell.match) {
+            // check if cell is actually a string that has .match function
+            return format.getDate(cell.match(format.parse));
+          }
           return cell;
-        }
-        if (cell.match) {
-          // check if cell is actually a string that has .match function
-          return format.getDate(cell.match(format.parse));
-        }
-        return cell;
-      });
-    })
-    .sort((a, b) => {
-      return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
-    });
+        });
+      })
+      .sort((a, b) => {
+        return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
+      }),
+  ];
 }
 
 function getFirstAndLastDateFromData(data) {
@@ -401,7 +401,7 @@ function getFirstAndLastDateFromData(data) {
   const lastDate = dates.pop();
   return {
     first: firstDate,
-    last: lastDate
+    last: lastDate,
   };
 }
 
@@ -456,7 +456,7 @@ const intervals = {
     d3format: "%Y",
     vegaInterval: { interval: "year", step: 10 },
     label: "Dekaden",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
       if (isBefore(firstOfJanuarySameYear, date)) {
@@ -465,7 +465,7 @@ const intervals = {
         return firstOfJanuarySameYear;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
       if (isAfter(firstOfJanuarySameYear, date)) {
@@ -473,13 +473,13 @@ const intervals = {
       } else {
         return firstOfJanuarySameYear;
       }
-    }
+    },
   },
   year: {
     d3format: "%Y",
     vegaInterval: { interval: "year", step: 1 },
     label: "Jahre",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
       if (isBefore(firstOfJanuarySameYear, date)) {
@@ -488,7 +488,7 @@ const intervals = {
         return firstOfJanuarySameYear;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
       if (isAfter(firstOfJanuarySameYear, date)) {
@@ -496,12 +496,12 @@ const intervals = {
       } else {
         return firstOfJanuarySameYear;
       }
-    }
+    },
   },
   quarter: {
     // the formatFunction is only used for the legend for now
     // there is no easy way to teach the time formatter in vega about quarters
-    formatFunction: date => {
+    formatFunction: (date) => {
       // there are cases where we do not get a date object here, but maybe a timestamp
       // in these cases we try to create a new date object from the value first
       if (!(date instanceof Date)) {
@@ -513,7 +513,7 @@ const intervals = {
     },
     vegaInterval: { interval: "month", step: 3 },
     label: "Quartale",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
@@ -525,7 +525,7 @@ const intervals = {
         return firstOfTheSameQuarter;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
@@ -536,13 +536,13 @@ const intervals = {
       } else {
         return firstOfTheSameQuarter;
       }
-    }
+    },
   },
   month: {
     d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 1 },
     label: "Monate",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const firstOfTheSameMonth = new Date(year, month, 1);
@@ -552,7 +552,7 @@ const intervals = {
         return firstOfTheSameMonth;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const firstOfTheSameMonth = new Date(year, month, 1);
@@ -561,10 +561,10 @@ const intervals = {
       } else {
         return firstOfTheSameMonth;
       }
-    }
+    },
   },
   week: {
-    formatFunction: date => {
+    formatFunction: (date) => {
       // instead of the data series, we need the actual tick values here to make this work
       const d = new Date(date);
 
@@ -579,7 +579,7 @@ const intervals = {
         return `W${getISOWeek(date)}`;
       }
     },
-    ticks: data => {
+    ticks: (data) => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
       // instead we implement a ticks function here returning every monday in the scale
       const { first, last } = getFirstAndLastDateFromData(data);
@@ -588,7 +588,7 @@ const intervals = {
       return ticks;
     },
     label: "Wochen",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const startOfThisWeek = startOfISOWeek(date);
       if (isBefore(startOfThisWeek, date)) {
         const year = date.getFullYear();
@@ -599,7 +599,7 @@ const intervals = {
         return startOfThisWeek;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const startOfThisWeek = startOfISOWeek(date);
       if (isAfter(startOfThisWeek, date)) {
         const year = date.getFullYear();
@@ -609,13 +609,13 @@ const intervals = {
       } else {
         return startOfThisWeek;
       }
-    }
+    },
   },
   day: {
     d3format: "%d.%m.%Y",
     vegaInterval: { interval: "day", step: 1 },
     label: "Tage",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -626,7 +626,7 @@ const intervals = {
         return beginningOfTheSameDate;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -636,13 +636,13 @@ const intervals = {
       } else {
         return beginningOfTheSameDate;
       }
-    }
+    },
   },
   hour: {
     d3format: "%d.%m. %H Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Stunden",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -654,7 +654,7 @@ const intervals = {
         return beginningOfTheSameHour;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -665,13 +665,13 @@ const intervals = {
       } else {
         return beginningOfTheSameHour;
       }
-    }
+    },
   },
   minute: {
     d3format: "%d.%m. %H:%M Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Minuten",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -691,7 +691,7 @@ const intervals = {
         return beginningOfTheSameMinute;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -710,13 +710,13 @@ const intervals = {
       } else {
         return beginningOfTheSameMinute;
       }
-    }
+    },
   },
   second: {
     d3format: "%d.%m. %H:%M:%S Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Sekunden",
-    getFirstStepDateAfterDate: function(date) {
+    getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -737,7 +737,7 @@ const intervals = {
         return beginningOfTheSameSecond;
       }
     },
-    getLastStepDateBeforeDate: function(date) {
+    getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -756,8 +756,8 @@ const intervals = {
       } else {
         return beginningOfTheSameSecond;
       }
-    }
-  }
+    },
+  },
 };
 
 module.exports = {
@@ -773,5 +773,5 @@ module.exports = {
   getDateFormatForData,
   formatDateForInterval,
   getPrognosisStartDate,
-  intervals
+  intervals,
 };
