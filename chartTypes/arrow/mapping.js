@@ -17,17 +17,17 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec, mappingData) {
+      mapToSpec: function (itemData, spec, mappingData) {
         const item = mappingData.item;
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
         // set the arrowGroupHeight depending on the number of bars we will get
         const numberOfGroups = itemData.length - 1;
-        const arrowGroupHeightSignal = spec.signals.find(signal => {
+        const arrowGroupHeightSignal = spec.signals.find((signal) => {
           return signal.name === "arrowGroupHeight";
         });
-        const groupPaddingSignal = spec.signals.find(signal => {
+        const groupPaddingSignal = spec.signals.find((signal) => {
           return signal.name === "groupPadding";
         });
         if (numberOfGroups > 10) {
@@ -60,12 +60,12 @@ module.exports = function getMapping() {
                   xValue: x,
                   xIndex: rowIndex,
                   yValue: shortenedValue,
-                  cValue: index
+                  cValue: index,
                 };
 
                 return data;
               })
-              .filter(data => {
+              .filter((data) => {
                 return (
                   !isNaN(data.yValue) &&
                   data.yValue !== null &&
@@ -127,11 +127,11 @@ module.exports = function getMapping() {
               });
           })
           .flat();
-      }
+      },
     },
     {
       path: "item.options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec) {
+      mapToSpec: function (hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
           objectPath.get(spec, "axes.1.title").length < 1
@@ -140,11 +140,11 @@ module.exports = function getMapping() {
           objectPath.set(spec, "axes.1.title", undefined);
           objectPath.set(spec, "height", spec.height - 30); // decrease the height because we do not need space for the axis title
         }
-      }
+      },
     },
     {
       path: "item.options.arrowOptions.minValue",
-      mapToSpec: function(minValue, spec, mappingData) {
+      mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
@@ -155,11 +155,11 @@ module.exports = function getMapping() {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMin", minValue / divisor);
-      }
+      },
     },
     {
       path: "item.options.arrowOptions.maxValue",
-      mapToSpec: function(maxValue, spec, mappingData) {
+      mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
@@ -170,11 +170,11 @@ module.exports = function getMapping() {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
-      }
+      },
     },
     {
       path: "item.options.arrowOptions.colorScheme",
-      mapToSpec: function(colorScheme, spec) {
+      mapToSpec: function (colorScheme, spec) {
         if (
           configuredDivergingColorSchemes &&
           configuredDivergingColorSchemes[colorScheme]
@@ -185,18 +185,18 @@ module.exports = function getMapping() {
             configuredDivergingColorSchemes[colorScheme].scheme_name
           );
         }
-      }
+      },
     },
     {
       path: "item.options.annotations.first",
-      mapToSpec: function(showFirstAnimation, spec) {
+      mapToSpec: function (showFirstAnimation, spec) {
         if (!showFirstAnimation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
           name: "firstAnnotationSeries",
           source: "series",
-          transform: [{ type: "filter", expr: "datum.cValue === 0" }]
+          transform: [{ type: "filter", expr: "datum.cValue === 0" }],
         });
         const diffTextMarksSpec = {
           type: "text",
@@ -205,44 +205,44 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${d3config.specifier}")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`,
               },
               y: {
-                signal: "arrowGroupHeight / 2"
+                signal: "arrowGroupHeight / 2",
               },
               x: [
                 {
                   test: "datum.isMin === true",
-                  signal: "scale('xScale', datum.yValue) - 8"
+                  signal: "scale('xScale', datum.yValue) - 8",
                 },
-                { signal: "scale('xScale', datum.yValue) + 8" }
+                { signal: "scale('xScale', datum.yValue) + 8" },
               ],
               fill: { value: spec.config.axis.labelColor },
               align: [
                 {
                   test: "datum.isMin === true",
-                  value: "right"
+                  value: "right",
                 },
-                { value: "left" }
+                { value: "left" },
               ],
               baseline: { value: "middle" },
-              fontSize: { value: spec.config.text.fontSize + 2 }
-            }
-          }
+              fontSize: { value: spec.config.text.fontSize + 2 },
+            },
+          },
         };
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
-      }
+      },
     },
     {
       path: "item.options.annotations.last",
-      mapToSpec: function(showLastAnnotation, spec) {
+      mapToSpec: function (showLastAnnotation, spec) {
         if (!showLastAnnotation) {
           return;
         }
         spec.marks[0].marks[0].data.push({
           name: "lastAnnotationSeries",
           source: "series",
-          transform: [{ type: "filter", expr: "datum.cValue === 1" }]
+          transform: [{ type: "filter", expr: "datum.cValue === 1" }],
         });
         const diffTextMarksSpec = {
           type: "text",
@@ -251,37 +251,37 @@ module.exports = function getMapping() {
           encode: {
             enter: {
               text: {
-                signal: `format(datum.yValue, "${d3config.specifier}")`
+                signal: `format(datum.yValue, "${d3config.specifier}")`,
               },
               y: {
-                signal: "arrowGroupHeight / 2"
+                signal: "arrowGroupHeight / 2",
               },
               x: [
                 {
                   test: "datum.isMin === true",
-                  signal: "scale('xScale', datum.yValue) - 8"
+                  signal: "scale('xScale', datum.yValue) - 8",
                 },
-                { signal: "scale('xScale', datum.yValue) + 8" }
+                { signal: "scale('xScale', datum.yValue) + 8" },
               ],
               fill: { value: spec.config.axis.labelColor },
               align: [
                 {
                   test: "datum.isMin === true",
-                  value: "right"
+                  value: "right",
                 },
-                { value: "left" }
+                { value: "left" },
               ],
               baseline: { value: "middle" },
-              fontSize: { value: spec.config.text.fontSize + 2 }
-            }
-          }
+              fontSize: { value: spec.config.text.fontSize + 2 },
+            },
+          },
         };
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
-      }
+      },
     },
     {
       path: "item.options.annotations.diff",
-      mapToSpec: function(showDiffAnnotation, spec) {
+      mapToSpec: function (showDiffAnnotation, spec) {
         if (!showDiffAnnotation) {
           return;
         }
@@ -296,9 +296,9 @@ module.exports = function getMapping() {
               groupby: ["yValue"],
               fields: ["yValue", "diffToNext"],
               as: ["yValue", "diffToNext"],
-              ops: ["min", "min"]
-            }
-          ]
+              ops: ["min", "min"],
+            },
+          ],
         });
         const diffTextMarksSpec = {
           type: "text",
@@ -309,28 +309,28 @@ module.exports = function getMapping() {
               text: [
                 {
                   test: "datum.diffToNext == 0",
-                  value: ""
+                  value: "",
                 },
                 {
-                  signal: `format(datum.diffToNext, "+${d3config.specifier}")`
-                }
+                  signal: `format(datum.diffToNext, "+${d3config.specifier}")`,
+                },
               ],
               y: {
-                signal: "arrowGroupHeight / 2 - 4"
+                signal: "arrowGroupHeight / 2 - 4",
               },
               x: {
                 scale: "xScale",
-                signal: "datum.yValue + (datum.diffToNext / 2)"
+                signal: "datum.yValue + (datum.diffToNext / 2)",
               },
               fill: { value: spec.config.axis.labelColor },
               align: { value: "center" },
               baseline: { value: "bottom" },
-              fontSize: { value: spec.config.text.fontSize + 2 }
-            }
-          }
+              fontSize: { value: spec.config.text.fontSize + 2 },
+            },
+          },
         };
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
-      }
-    }
+      },
+    },
   ].concat(commonMappings.getBarLabelColorMappings());
 };
