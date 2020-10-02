@@ -24,19 +24,28 @@ function dateFieldsForEvent(event) {
 }
 
 function cloneEvents(originalEvents) {
-  return originalEvents.map(originalEvent => {
+  return originalEvents.map((originalEvent) => {
     return { ...originalEvent };
   });
 }
 
 function convertDateObjects(events) {
-  events.forEach(event => {
-    dateFieldsForEvent(event).forEach(dateField => {
+  events.forEach((event) => {
+    dateFieldsForEvent(event).forEach((dateField) => {
       const format =
         dateSeries.dateFormats[
           dateSeries.getDateFormatForValue(event[dateField])
         ];
       event[dateField] = format.getDate(event[dateField].match(format.parse));
+    });
+  });
+}
+
+function convertDateObjectsToTimestamps(events) {
+  // Convert date objects to timestamps for intraday-charts which do not use a real time axis
+  events.forEach((event) => {
+    dateFieldsForEvent(event).forEach((dateField) => {
+      event[dateField] = event[dateField].valueOf();
     });
   });
 }
@@ -57,8 +66,8 @@ function parseEvents(item) {
 
 function getAllDates(events) {
   const allDates = [];
-  events.forEach(event => {
-    dateFieldsForEvent(event).forEach(dateField => {
+  events.forEach((event) => {
+    dateFieldsForEvent(event).forEach((dateField) => {
       allDates.push(event[dateField]);
     });
   });
@@ -68,10 +77,10 @@ function getAllDates(events) {
 function filterEventsWithDateInData(events, data) {
   const parsedDatesData = dateSeries.getDataWithDateParsedAndSortedByDate(data);
   const dates = dateSeries.getFirstColumnSerie(parsedDatesData);
-  const times = new Set(dates.map(date => date.getTime()));
+  const times = new Set(dates.map((date) => date.getTime()));
 
-  return events.filter(event => {
-    return dateFieldsForEvent(event).every(dateField => {
+  return events.filter((event) => {
+    return dateFieldsForEvent(event).every((dateField) => {
       const eventTime = event[dateField].getTime();
       return times.has(eventTime);
     });
@@ -91,7 +100,7 @@ function extendWithEventDates(originalData, events) {
   }
   const data = [...originalData];
   const dateRange = dateSeries.getFirstAndLastDateFromData(data);
-  getAllDates(events).forEach(date => {
+  getAllDates(events).forEach((date) => {
     if (date < dateRange.first || date > dateRange.last) {
       // Put event date in first column, add second column with "null" data to ensure that the row is taken into account
       // for the x axis scale (important if event date is before the first or after the last date of the chart data)
@@ -119,12 +128,12 @@ function vegaSpecData(events) {
   return [
     {
       name: "events-point",
-      values: pointEventValues
+      values: pointEventValues,
     },
     {
       name: "events-range",
-      values: rangeEventValues
-    }
+      values: rangeEventValues,
+    },
   ];
 }
 
@@ -152,16 +161,16 @@ function verticalMarks(item, config) {
       encode: {
         enter: {
           x: {
-            signal: xFrom
+            signal: xFrom,
           },
           x2: {
-            signal: xTo
+            signal: xTo,
           },
           y: { value: -(diameter + 1.5) },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       name: "events-range-from",
@@ -174,9 +183,9 @@ function verticalMarks(item, config) {
           y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -188,9 +197,9 @@ function verticalMarks(item, config) {
           y2: { field: "y2" },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       name: "events-range-to",
@@ -203,9 +212,9 @@ function verticalMarks(item, config) {
           y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -217,9 +226,9 @@ function verticalMarks(item, config) {
           y2: { field: "y2" },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "symbol",
@@ -231,9 +240,9 @@ function verticalMarks(item, config) {
           size: { value: diameter * diameter },
           fill: { value: config.backgroundColor },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "text",
@@ -247,9 +256,9 @@ function verticalMarks(item, config) {
           fill: { value: config.foregroundColor },
           fontSize: { value: config.fontSize },
           fontWeight: { value: config.fontWeight },
-          text: { signal: "datum.datum.index + 1" }
-        }
-      }
+          text: { signal: "datum.datum.index + 1" },
+        },
+      },
     },
     {
       name: "events-point-line",
@@ -259,15 +268,15 @@ function verticalMarks(item, config) {
         enter: {
           x: {
             signal:
-              "floor(scale('xScale', datum.date) + bandwidth('xScale') / 2) + 0.5"
+              "floor(scale('xScale', datum.date) + bandwidth('xScale') / 2) + 0.5",
           },
           y: { value: -(config.radius + 2) },
           y2: yBottom,
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -279,9 +288,9 @@ function verticalMarks(item, config) {
           y2: { field: "y2" },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "symbol",
@@ -292,9 +301,9 @@ function verticalMarks(item, config) {
           y: { value: -(diameter + 2) },
           size: { value: diameter * diameter },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "text",
@@ -308,10 +317,10 @@ function verticalMarks(item, config) {
           fill: { value: config.foregroundColor },
           fontSize: { value: config.fontSize },
           fontWeight: { value: config.fontWeight },
-          text: { signal: "datum.datum.index + 1" }
-        }
-      }
-    }
+          text: { signal: "datum.datum.index + 1" },
+        },
+      },
+    },
   ];
 }
 
@@ -325,17 +334,17 @@ function horizontalMarks(config) {
       encode: {
         enter: {
           y: {
-            signal: "floor(scale('yScale', datum.dateFrom)) + 0.5"
+            signal: "floor(scale('yScale', datum.dateFrom)) + 0.5",
           },
           y2: {
             signal:
-              "floor(scale('yScale', datum.dateTo) + bandwidth('yScale')) - 0.5"
+              "floor(scale('yScale', datum.dateTo) + bandwidth('yScale')) - 0.5",
           },
           x: { field: { group: "width", level: 1 }, offset: diameter + 1.5 },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       name: "events-range-from",
@@ -348,9 +357,9 @@ function horizontalMarks(config) {
           x2: { field: { group: "width", level: 1 }, offset: diameter + 1 },
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -362,9 +371,9 @@ function horizontalMarks(config) {
           x2: { field: "x2", offset: 1 },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       name: "events-range-to",
@@ -377,9 +386,9 @@ function horizontalMarks(config) {
           x2: { field: "x" },
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -391,9 +400,9 @@ function horizontalMarks(config) {
           x2: { field: "x2", offset: 1 },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "symbol",
@@ -405,9 +414,9 @@ function horizontalMarks(config) {
           size: { value: diameter * diameter },
           fill: { value: config.backgroundColor },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "text",
@@ -421,9 +430,9 @@ function horizontalMarks(config) {
           fill: { value: config.foregroundColor },
           fontSize: { value: config.fontSize },
           fontWeight: { value: config.fontWeight },
-          text: { signal: "datum.datum.index + 1" }
-        }
-      }
+          text: { signal: "datum.datum.index + 1" },
+        },
+      },
     },
     {
       name: "events-point-line",
@@ -433,18 +442,18 @@ function horizontalMarks(config) {
         enter: {
           y: {
             signal:
-              "floor(scale('yScale', datum.date) + bandwidth('yScale') / 2) + 0.5"
+              "floor(scale('yScale', datum.date) + bandwidth('yScale') / 2) + 0.5",
           },
           x: { scale: "xScale", value: 0 },
           x2: {
             field: { group: "width", level: 1 },
-            offset: config.radius + 2
+            offset: config.radius + 2,
           },
           stroke: { value: config.backgroundColor },
           strokeOpacity: { value: 0.5 },
-          strokeWidth: { value: 3 }
-        }
-      }
+          strokeWidth: { value: 3 },
+        },
+      },
     },
     {
       type: "rule",
@@ -456,9 +465,9 @@ function horizontalMarks(config) {
           x2: { field: "x2" },
           stroke: { value: config.foregroundColor },
           strokeDash: { value: [1, 1] },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "symbol",
@@ -469,9 +478,9 @@ function horizontalMarks(config) {
           x: { field: "x2", offset: config.radius },
           size: { value: diameter * diameter },
           stroke: { value: config.foregroundColor },
-          strokeWidth: { value: 1 }
-        }
-      }
+          strokeWidth: { value: 1 },
+        },
+      },
     },
     {
       type: "text",
@@ -485,20 +494,21 @@ function horizontalMarks(config) {
           fill: { value: config.foregroundColor },
           fontSize: { value: config.fontSize },
           fontWeight: { value: config.fontWeight },
-          text: { signal: "datum.datum.index + 1" }
-        }
-      }
-    }
+          text: { signal: "datum.datum.index + 1" },
+        },
+      },
+    },
   ];
 }
 
 module.exports = {
   availableForItem,
+  convertDateObjectsToTimestamps,
   extendWithEventDates,
   filterEventsWithDateInData,
   filterEventsForChartType,
   parseEvents,
   vegaSpecData,
   verticalMarks,
-  horizontalMarks
+  horizontalMarks,
 };

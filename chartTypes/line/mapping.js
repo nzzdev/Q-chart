@@ -3,20 +3,21 @@ const objectPath = require("object-path");
 const intervals = require("../../helpers/dateSeries.js").intervals;
 const dateSeries = require("../../helpers/dateSeries.js");
 const dataHelpers = require("../../helpers/data.js");
+const { convertDateObjectsToTimestamps } = require("../../helpers/events.js");
 
 const commonMappings = require("../commonMappings.js");
 
 const annotation = require("./annotation.js");
 
 const d3 = {
-  array: require("d3-array")
+  array: require("d3-array"),
 };
 
 module.exports = function getMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function (itemData, spec) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
@@ -40,18 +41,18 @@ module.exports = function getMappings() {
                     xValue: x,
                     xIndex: rowIndex,
                     yValue: value,
-                    cValue: index
+                    cValue: index,
                   };
                 });
               })
-              .flat()
-          }
+              .flat(),
+          },
         ];
-      }
+      },
     },
     {
       path: "item.options.annotations",
-      mapToSpec: function(annotationOptions, spec, mappingData) {
+      mapToSpec: function (annotationOptions, spec, mappingData) {
         const item = mappingData.item;
         // this option is only available if we have exactly one data series
         if (item.data[0].length !== 2) {
@@ -81,7 +82,7 @@ module.exports = function getMappings() {
               firstValue.yValue > secondValue.yValue &&
               !item.options.lineChartOptions.reverseYScale
                 ? "top"
-                : "bottom"
+                : "bottom",
           },
           {
             optionName: "last",
@@ -92,7 +93,7 @@ module.exports = function getMappings() {
               lastValue.yValue > secondLastValue.yValue &&
               !item.options.lineChartOptions.reverseYScale
                 ? "top"
-                : "bottom"
+                : "bottom",
           },
           {
             optionName: "max",
@@ -106,7 +107,7 @@ module.exports = function getMappings() {
                 : "center",
             verticalAlign: !item.options.lineChartOptions.reverseYScale
               ? "top"
-              : "bottom"
+              : "bottom",
           },
           {
             optionName: "min",
@@ -120,16 +121,16 @@ module.exports = function getMappings() {
                 : "center",
             verticalAlign: !item.options.lineChartOptions.reverseYScale
               ? "bottom"
-              : "top"
-          }
+              : "top",
+          },
         ]
-          .filter(annotation => {
+          .filter((annotation) => {
             return annotationOptions[annotation.optionName] === true;
           })
           .reduce((annotations, testAnnotation) => {
             // make the annotations unique by xValue
             if (
-              !annotations.find(annotation => {
+              !annotations.find((annotation) => {
                 return (
                   testAnnotation.value.xValue.toString() ===
                   annotation.value.xValue.toString()
@@ -144,7 +145,7 @@ module.exports = function getMappings() {
         for (const valueToAnnotate of valuesToAnnotate) {
           objectPath.push(spec, "data", {
             name: valueToAnnotate.dataName,
-            values: [valueToAnnotate.value]
+            values: [valueToAnnotate.value],
           });
 
           const symbol = annotation.getSymbol(valueToAnnotate.dataName);
@@ -156,11 +157,11 @@ module.exports = function getMappings() {
           objectPath.push(spec, "marks", symbol);
           objectPath.push(spec, "marks", label);
         }
-      }
+      },
     },
     {
       path: "item.options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec) {
+      mapToSpec: function (hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
           typeof objectPath.get(spec, "axes.0.title") !== "string" ||
@@ -170,11 +171,11 @@ module.exports = function getMappings() {
           objectPath.set(spec, "axes.0.title", undefined);
           objectPath.set(spec, "height", spec.height - 20); // decrease the height because we do not need space for the axis title
         }
-      }
+      },
     },
     {
       path: "item.options.lineChartOptions.minValue",
-      mapToSpec: function(minValue, spec, mappingData) {
+      mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
@@ -185,11 +186,11 @@ module.exports = function getMappings() {
 
         objectPath.set(spec, "scales.1.nice", false);
         objectPath.set(spec, "scales.1.domainMin", minValue / divisor);
-      }
+      },
     },
     {
       path: "item.options.lineChartOptions.maxValue",
-      mapToSpec: function(maxValue, spec, mappingData) {
+      mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
         const divisor = dataHelpers.getDivisor(mappingData.item.data);
 
@@ -200,19 +201,19 @@ module.exports = function getMappings() {
 
         objectPath.set(spec, "scales.1.nice", false);
         objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
-      }
+      },
     },
     {
       path: "item.options.lineChartOptions.reverseYScale",
-      mapToSpec: function(reverseYScale, spec) {
+      mapToSpec: function (reverseYScale, spec) {
         if (reverseYScale === true) {
           objectPath.set(spec, "scales.1.reverse", true);
         }
-      }
+      },
     },
     {
       path: "item.options.lineChartOptions.lineInterpolation",
-      mapToSpec: function(interpolation, spec) {
+      mapToSpec: function (interpolation, spec) {
         if (interpolation) {
           objectPath.set(
             spec,
@@ -220,11 +221,11 @@ module.exports = function getMappings() {
             interpolation
           );
         }
-      }
+      },
     },
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, mappingData) {
+      mapToSpec: function (prognosisStart, spec, mappingData) {
         if (prognosisStart === null) {
           return;
         }
@@ -234,25 +235,25 @@ module.exports = function getMappings() {
           value: dateSeries.getPrognosisStartDate(
             mappingData.originalItemData,
             prognosisStart
-          )
+          ),
         });
 
         // split the marks at the prognosisStart index
         const lineMark = clone(spec.marks[0].marks[0]);
         lineMark.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xValue <= prognosisStartDate"
+          signal: "datum.yValue !== null && datum.xValue <= prognosisStartDate",
         };
         const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
         lineMarkPrognosis.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xValue >= prognosisStartDate"
+          signal: "datum.yValue !== null && datum.xValue >= prognosisStartDate",
         };
         lineMarkPrognosis.style = "prognosisLine";
         spec.marks[0].marks = [lineMark, lineMarkPrognosis];
-      }
+      },
     },
     {
       path: "item.options.lineChartOptions.isStockChart",
-      mapToSpec: function(isStockChart, spec, mappingData) {
+      mapToSpec: function (isStockChart, spec, mappingData) {
         const item = mappingData.item;
         if (!isStockChart) {
           return;
@@ -273,11 +274,13 @@ module.exports = function getMappings() {
         objectPath.set(
           spec,
           "data.0.values",
-          objectPath.get(spec, "data.0.values").map(row => {
+          objectPath.get(spec, "data.0.values").map((row) => {
             row.xValue = row.xValue.valueOf();
             return row;
           })
         );
+        // Also use timestamps for events
+        convertDateObjectsToTimestamps(item.events);
 
         objectPath.set(spec, "axes.0.labelFlush", true);
 
@@ -287,15 +290,15 @@ module.exports = function getMappings() {
 
         objectPath.set(spec, "axes.0.values", [
           first.valueOf(),
-          last.valueOf()
+          last.valueOf(),
         ]);
 
         // the axis tick values should be formatted according to the selected interval
         objectPath.set(spec, "axes.0.encode.labels.update.text", {
-          signal: `formatDateForInterval(datum.value, '${interval}')`
+          signal: `formatDateForInterval(datum.value, '${interval}')`,
         });
-      }
-    }
+      },
+    },
   ]
     .concat(commonMappings.getLineDateSeriesHandlingMappings())
     .concat(commonMappings.getHeightMappings())

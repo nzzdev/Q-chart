@@ -2259,6 +2259,19 @@
       "1935.5"
     ]
   ],
+  "events": [
+    {
+      "type": "point",
+      "date": "03/08/2018 09:00",
+      "label": "Start of second day"
+    },
+    {
+      "type": "range",
+      "dateFrom": "03/14/2018 09:05",
+      "dateTo": "03/14/2018 13:00",
+      "label": "Last day"
+    }
+  ],
   "sources": [
     {
       "link": {
