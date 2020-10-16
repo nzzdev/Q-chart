@@ -20,6 +20,10 @@
       "title": "Many columns",
       "body": "If labels are overlapping, you should select the option «Bars for mobile» or «Bars instead of columns»."
     },
+    "supportedDateFormat": {
+      "title": "Supported date format",
+      "body": "Column A contains data in a valid date format. The date series options can be used."
+    },
     "unsupportedDateFormat": {
       "title": "Unsupported date format",
       "body": "Column A probably contains an unsupported date format. Please check the handbook for a list of supported formats."

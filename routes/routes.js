@@ -10,6 +10,7 @@ module.exports = [
   require("./fixtures/data.js"),
   require("./notification/dateNotInData.js"),
   require("./notification/hideAxisLabel.js"),
+  require("./notification/supportedDateFormat"),
   require("./notification/unsupportedDateFormat"),
   require("./notification/unsupportedDateFormatEvents"),
   require("./notification/shouldBeBarChart.js"),
@@ -17,5 +18,5 @@ module.exports = [
   require("./notification/shouldBeBars.js"),
   require("./locales.js"),
   require("./data.js"),
-  require("./migration.js")
+  require("./migration.js"),
 ].concat(require("./schema.js"));
