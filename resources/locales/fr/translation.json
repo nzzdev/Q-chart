@@ -20,6 +20,10 @@
       "title": "Beaucoup de colonnes",
       "body": "Si les étiquettes se chevauchent, vous devez sélectionner l'option «Bars for mobile» ou «Bars au lieu des colonnes»."
     },
+    "supportedDateFormat": {
+      "title": "Format de date valide",
+      "body": "La colonne A contient des données dans un format de date valide. Les options de série de dates peuvent être utilisées."
+    },
     "unsupportedDateFormat": {
       "title": "Format de date invalide",
       "body": "La colonne A contient probablement un format de date non pris en charge. Veuillez consulter le manuel pour une liste des formats supportés."
