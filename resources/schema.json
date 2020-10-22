@@ -69,6 +69,20 @@
               "type": "medium",
               "value": 3
             }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/supportedDateFormat",
+              "fields": ["data"],
+              "options": {
+                "limit": 8
+              }
+            },
+            "priority": {
+              "type": "low",
+              "value": 3
+            }
           }
         ]
       },
