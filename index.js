@@ -20,7 +20,7 @@ async function loadFonts(fonts) {
       fontFileBuffer
     );
     registerFont(`${__dirname}/resources/fonts/${font.filename}`, {
-      family: font.name
+      family: font.name,
     });
   }
 }
@@ -45,8 +45,8 @@ const Hapi = require("@hapi/hapi");
 const server = Hapi.server({
   port: process.env.PORT || 3000,
   routes: {
-    cors: true
-  }
+    cors: true,
+  },
 });
 
 const routes = require("./routes/routes.js");
@@ -55,10 +55,6 @@ async function init() {
   if (process.env.FONTS) {
     await loadFonts(JSON.parse(process.env.FONTS));
   }
-
-  // fiddle with canvas font: https://medium.com/@adamhooper/fonts-in-node-canvas-bbf0b6b0cabf
-  process.env.FONTCONFIG_PATH = `${__dirname}/resources/fonts`;
-  process.env.PANGOCAIRO_BACKEND = "fontconfig";
 
   testCanvasFontMeasure();
 
