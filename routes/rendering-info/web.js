@@ -88,8 +88,9 @@ module.exports = {
     }
 
     // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
+    const hasManualDivisor = item.options.largeNumbers && item.options.largeNumbers.divideBy !== 0;
     const divisor = dataHelpers.getDivisor(item.data);
-    if (divisor > 1) {
+    if (!hasManualDivisor && divisor > 1) {
       if (item.subtitle && item.subtitle !== "") {
         item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
       } else {
