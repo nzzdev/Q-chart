@@ -125,7 +125,14 @@ function getMinValue(data) {
   return Math.min.apply(null, flatData);
 }
 
-function getDivisor(data) {
+function hasManualDivisor(largeNumbers) {
+  return largeNumbers && largeNumbers.divideBy !== 0;
+}
+
+function getDivisor(data, largeNumbers) {
+  if (hasManualDivisor(largeNumbers)) {
+    return largeNumbers.divideBy;
+  }
   try {
     const minValue = getMinValue(data);
     const maxValue = getMaxValue(data);
@@ -147,6 +154,7 @@ module.exports = {
   getFlatData: getFlatData,
   getMaxValue: getMaxValue,
   getMinValue: getMinValue,
+  hasManualDivisor: hasManualDivisor,
   getDivisor: getDivisor,
   getWithOnlyStringsInFirstColumn: getWithOnlyStringsInFirstColumn
 };

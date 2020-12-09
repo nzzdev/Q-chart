@@ -17,12 +17,12 @@ module.exports = function getMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function (itemData, spec) {
+      mapToSpec: function (itemData, spec, mappingData) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData);
+        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
 
         spec.data = [
           {
@@ -177,7 +177,7 @@ module.exports = function getMappings() {
       path: "item.options.lineChartOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
 
         const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
@@ -192,7 +192,7 @@ module.exports = function getMappings() {
       path: "item.options.lineChartOptions.maxValue",
       mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
