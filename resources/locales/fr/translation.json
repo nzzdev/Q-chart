@@ -99,5 +99,12 @@
   "Annotation": "Annotation",
   "Zeitspanne": "Période de temps",
   "Von": "De",
-  "Bis": "À"
+  "Bis": "À",
+  "Optionen für grosse Werte": "Options pour les grands nombres",
+  "Grosse Werte teilen": "Diviser les grands nombres",
+  "automatisch": "automatiquement",
+  "nicht teilen": "ne pas diviser",
+  "durch 1000": "par 1000",
+  "durch 1 Million": "par 1 million",
+  "durch 1 Milliarde": "par 1 milliard"
 }

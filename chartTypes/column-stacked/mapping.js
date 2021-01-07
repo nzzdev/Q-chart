@@ -9,12 +9,12 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function(itemData, spec, mappingData) {
         // set the x axis title
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData);
+        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
 
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
@@ -94,7 +94,7 @@ module.exports = function getMapping() {
       path: "item.options.barOptions.maxValue",
       mapToSpec: function(maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {

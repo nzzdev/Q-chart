@@ -99,5 +99,12 @@
   "Annotation": "Annotation",
   "Zeitspanne": "Time span",
   "Von": "From",
-  "Bis": "To"
+  "Bis": "To",
+  "Optionen für grosse Werte": "Options for large numbers",
+  "Grosse Werte teilen": "Divide large numbers",
+  "automatisch": "automatically",
+  "nicht teilen": "do not divide",
+  "durch 1000": "by 1000",
+  "durch 1 Million": "by 1 million",
+  "durch 1 Milliarde": "by 1 billion"
 }

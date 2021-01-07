@@ -8,7 +8,7 @@ const d3 = {
 function setFormatLocaleForNumberGrouping(item, toolRuntimeConfig, spec, vega) {
   // if we have one value >= 10000 in the Y Axis, we will group thousands
   try {
-    const divisor = dataHelpers.getDivisor(item.data);
+    const divisor = dataHelpers.getDivisor(item.data, item.options.largeNumbers);
 
     const minDataValue =
       spec.scales[1].maxValue ||

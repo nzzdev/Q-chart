@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "3.3.1",
+  "version": "3.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,30 +11,30 @@
   "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "MIT",
   "dependencies": {
-    "@hapi/boom": "^9.1.0",
+    "@hapi/boom": "^9.1.1",
     "@hapi/bourne": "^2.0.0",
     "@hapi/hapi": "^19.2.0",
-    "@hapi/hoek": "^9.1.0",
-    "@hapi/inert": "^6.0.2",
+    "@hapi/hoek": "^9.1.1",
+    "@hapi/inert": "^6.0.3",
     "@hapi/joi": "^17.1.1",
-    "ajv": "^6.12.5",
+    "ajv": "^6.12.6",
     "array2d": "0.0.5",
     "canvas": "^2.6.1",
     "clone": "^2.1.2",
-    "d3-array": "^2.7.1",
+    "d3-array": "^2.9.1",
     "d3-format": "^1.4.5",
-    "d3-scale": "^3.2.2",
+    "d3-scale": "^3.2.3",
     "d3-time": "^1.1.0",
     "d3-time-format": "^2.3.0",
     "date-fns": "^2.16.1",
-    "decimal.js": "^10.2.0",
+    "decimal.js": "^10.2.1",
     "deepmerge": "^4.2.2",
     "jsdom": "^16.4.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.32",
     "node-fetch": "^2.6.1",
     "nunjucks": "^3.2.2",
-    "object-path": "^0.11.4",
-    "slugify": "^1.4.5",
+    "object-path": "^0.11.5",
+    "slugify": "^1.4.6",
     "vega": "5.9.1"
   },
   "devDependencies": {
@@ -43,8 +43,8 @@
     "autoprefixer": "^9.8.6",
     "cssnano": "^4.1.10",
     "glob": "^7.1.6",
-    "postcss": "^7.0.32",
+    "postcss": "^7.0.35",
     "postcss-import": "^12.0.1",
-    "sass": "^1.26.10"
+    "sass": "^1.32.2"
   }
 }

@@ -1,0 +1,49 @@
+{
+  "title": "FIXTURE: Bar - large numbers - divide by 1",
+  "acronym": "nth.",
+  "data": [
+    ["Kategorie", "Wert"],
+    ["Eins", "310090"],
+    ["Zwei", "999900"],
+    ["Drei", "300000"]
+  ],
+  "allowDownloadData": false,
+  "events": [],
+  "sources": [],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [],
+    "annotations": {
+      "valuesOnBars": true
+    },
+    "barOptions": {
+      "isBarChart": true,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "auto",
+      "labels": "few",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "areaChartOptions": {
+      "areaInterpolation": "linear",
+      "stackType": "zero"
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [],
+    "largeNumbers": {
+      "divideBy": 1
+    }
+  }
+}

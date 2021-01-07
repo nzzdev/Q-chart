@@ -1,6 +1,6 @@
 # Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-chart.svg)](https://greenkeeper.io/)
 
-**maintainer**: [romankaravia](https://github.com/romankaravia)
+**maintainer**: [Manuel Roth](https://github.com/manuelroth)
 
 Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q](https://q.tools)
 
@@ -296,6 +296,17 @@ This is only available if no `colorOverwritesRows` is given.
 This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. It changes the colors of the rows at the specified positions to the color given in this option.
 The option is an array of objects with `color`, `colorLight` and `position` values. The `color` is used if no highlighting is in place. The `colorLight` is used if any other data series than the one at `position` is highlighted.
 This is only available if no `colorOverwritesSeries` is given.
+
+#### largeNumbers
+
+Options for how to handle large numbers, available for all chart types.
+
+##### divideBy
+
+One of `[0, 1, 1e3, 1e6, 1e9]`.
+
+- If `0` (default), the divisor is chosen automatically depending on the maximum value in the data, and (if applicable) `in Tausend`, `in Millionen`, `in Milliarden` is appended to the subtitle.
+- If not `0`, values are divided by the provided divisor, and the subtitle is not modified.
 
 ## LICENSE
 
