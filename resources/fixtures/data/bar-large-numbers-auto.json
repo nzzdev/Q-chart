@@ -1,0 +1,49 @@
+{
+  "title": "FIXTURE: Bar - large numbers - automatic",
+  "acronym": "rkz.",
+  "data": [
+    ["Company", "Value"],
+    ["A Corp", "5000"],
+    ["B Inc", "18000"],
+    ["C & Sisters", "15000"]
+  ],
+  "allowDownloadData": false,
+  "events": [],
+  "sources": [],
+  "options": {
+    "chartType": "Bar",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [],
+    "annotations": {
+      "valuesOnBars": false
+    },
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "auto",
+      "labels": "few",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "areaChartOptions": {
+      "areaInterpolation": "linear",
+      "stackType": "zero"
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [],
+    "largeNumbers": {
+      "divideBy": 0
+    }
+  }
+}

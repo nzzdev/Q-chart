@@ -297,6 +297,17 @@ This is only available for chartType `Bar`, `StackedBar`, `Line` and `Dotplot`. 
 The option is an array of objects with `color`, `colorLight` and `position` values. The `color` is used if no highlighting is in place. The `colorLight` is used if any other data series than the one at `position` is highlighted.
 This is only available if no `colorOverwritesSeries` is given.
 
+#### largeNumbers
+
+Options for how to handle large numbers, available for all chart types.
+
+##### divideBy
+
+One of `[0, 1, 1e3, 1e6, 1e9]`.
+
+- If `0` (default), the divisor is chosen automatically depending on the maximum value in the data, and (if applicable) `in Tausend`, `in Millionen`, `in Milliarden` is appended to the subtitle.
+- If not `0`, values are divided by the provided divisor, and the subtitle is not modified.
+
 ## LICENSE
 
 Copyright (c) 2019 Neue Zürcher Zeitung.

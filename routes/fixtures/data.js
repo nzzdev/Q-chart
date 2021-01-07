@@ -17,6 +17,8 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-dates-null-values.json`),
   require(`${fixtureDataDirectory}/bar-dates-quarter.json`),
   require(`${fixtureDataDirectory}/bar-dates-years.json`),
+  require(`${fixtureDataDirectory}/bar-large-numbers-auto.json`),
+  require(`${fixtureDataDirectory}/bar-large-numbers-divide-by-1.json`),
   require(`${fixtureDataDirectory}/bar-maxValue.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative-only.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative.json`),

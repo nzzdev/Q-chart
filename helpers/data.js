@@ -28,7 +28,7 @@ function getDataWithStringsCastedToFloats(data) {
 }
 
 function getWithOnlyStringsInFirstColumn(data) {
-  return data.map(row => {
+  return data.map((row) => {
     if (row[0] === null || row[0] === undefined) {
       row[0] = "";
     }
@@ -45,7 +45,7 @@ function getLongestDataLabel(mappingData, transposed = false) {
   const titleRow = data[0];
   titleRow.shift();
   return titleRow
-    .map(label => {
+    .map((label) => {
       if (!mappingData.dateFormat) {
         return label;
       }
@@ -93,7 +93,7 @@ function getDivisorForValue(value) {
     divisor = Math.pow(10, 9);
   } else if (value >= Math.pow(10, 6)) {
     divisor = Math.pow(10, 6);
-  } else if (value >= Math.pow(10, 4)) {
+  } else if (value >= Math.pow(10, 5)) {
     divisor = Math.pow(10, 3);
   }
   return divisor;
@@ -112,20 +112,27 @@ function getFlatData(data) {
 }
 
 function getMaxValue(data) {
-  const flatData = getFlatData(data).filter(value => {
+  const flatData = getFlatData(data).filter((value) => {
     return value !== null && value !== undefined;
   });
   return Math.max.apply(null, flatData);
 }
 
 function getMinValue(data) {
-  const flatData = getFlatData(data).filter(value => {
+  const flatData = getFlatData(data).filter((value) => {
     return value !== null && value !== undefined;
   });
   return Math.min.apply(null, flatData);
 }
 
-function getDivisor(data) {
+function hasManualDivisor(largeNumbers) {
+  return largeNumbers && largeNumbers.divideBy !== 0;
+}
+
+function getDivisor(data, largeNumbers) {
+  if (hasManualDivisor(largeNumbers)) {
+    return largeNumbers.divideBy;
+  }
   try {
     const minValue = getMinValue(data);
     const maxValue = getMaxValue(data);
@@ -147,6 +154,7 @@ module.exports = {
   getFlatData: getFlatData,
   getMaxValue: getMaxValue,
   getMinValue: getMinValue,
+  hasManualDivisor: hasManualDivisor,
   getDivisor: getDivisor,
-  getWithOnlyStringsInFirstColumn: getWithOnlyStringsInFirstColumn
+  getWithOnlyStringsInFirstColumn: getWithOnlyStringsInFirstColumn,
 };

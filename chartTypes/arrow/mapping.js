@@ -40,7 +40,7 @@ module.exports = function getMapping() {
         }
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData);
+        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
 
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
@@ -146,7 +146,7 @@ module.exports = function getMapping() {
       path: "item.options.arrowOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
 
         const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
@@ -161,7 +161,7 @@ module.exports = function getMapping() {
       path: "item.options.arrowOptions.maxValue",
       mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data);
+        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {

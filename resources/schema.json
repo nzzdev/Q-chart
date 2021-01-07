@@ -959,6 +959,34 @@
               }
             }
           }
+        },
+        "largeNumbers": {
+          "title": "Optionen für grosse Werte",
+          "type": "object",
+          "properties": {
+            "divideBy": {
+              "title": "Grosse Werte teilen",
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "enum": [0, 1, 1e3, 1e6, 1e9],
+              "default": "automatic",
+              "Q:options": {
+                "enum_titles": [
+                  "automatisch",
+                  "nicht teilen",
+                  "durch 1000",
+                  "durch 1 Million",
+                  "durch 1 Milliarde"
+                ]
+              }
+            }
+          }
         }
       }
     }
