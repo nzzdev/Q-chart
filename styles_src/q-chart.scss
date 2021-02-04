@@ -1,6 +1,20 @@
 .q-chart {
   opacity: 1 !important;
+
   svg {
     overflow: visible;
   }
+}
+
+.q-chart-events {
+  margin: 0 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.q-chart-events__label {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
 }
