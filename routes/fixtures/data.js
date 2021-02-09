@@ -5,6 +5,7 @@ const fixtureDataDirectory = "../../resources/fixtures/data";
 const fixtureData = [
   require(`${fixtureDataDirectory}/area-three-categories-prognosis.json`),
   require(`${fixtureDataDirectory}/area-three-categories-y-max.json`),
+  require(`${fixtureDataDirectory}/area-y-legend-thousand-separator.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-only-negative.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-only-positive.json`),
   require(`${fixtureDataDirectory}/arrow-two-categories-same-value.json`),

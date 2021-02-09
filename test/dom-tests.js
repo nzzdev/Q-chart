@@ -35,10 +35,15 @@ after(async () => {
   server = null;
 });
 
-function element(markup, selector) {
+function elementAll(markup, selector) {
   return new Promise((resolve, reject) => {
+    const elemArr = [];
     const dom = new JSDOM(markup);
-    resolve(dom.window.document.querySelector(selector));
+
+    dom.window.document.querySelectorAll(selector)
+      .forEach(element => elemArr.push(element));
+
+    resolve(elemArr);
   });
 }
 
@@ -83,4 +88,29 @@ lab.experiment("Q chart dom tests", () => {
       }
     );
   });
+
+
+    it("number format of area y legend has correct thousend separator", async () => {
+      const response = await server.inject({
+        url: "/rendering-info/web",
+        method: "POST",
+        payload: {
+          item: require("../resources/fixtures/data/area-y-legend-thousand-separator"),
+          toolRuntimeConfig: toolRuntimeConfig,
+        },
+      });
+      return elementAll(
+        response.result.markup,
+        ".role-axis-label"
+      ).then((el) => {
+        const children = el[1].children;
+        const value0 = children[0].textContent;
+        const value20000 = children[1].textContent;
+        const value100000 = children[5].textContent;
+
+        expect(value0).to.not.include(" "); // has not quarter space U+2005
+        expect(value20000).to.include(" "); // has quarter space U+2005
+        expect(value100000).to.include(" "); // has quarter space U+2005
+      });
+    });
 });
