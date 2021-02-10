@@ -1,0 +1,80 @@
+{
+  "title": "FIXTURE: Area - y legend thousand separator",
+  "data": [
+    [
+      "Jahr",
+      "A"
+    ],
+    [
+      "2012",
+      "1"
+    ],
+    [
+      "2013",
+      "20"
+    ],
+    [
+      "2014",
+      "300"
+    ],
+    [
+      "2015",
+      "2000"
+    ],
+    [
+      "2016",
+      "7501"
+    ],
+    [
+      "2017",
+      "10000"
+    ],
+    [
+      "2018",
+      "49999"
+    ],
+    [
+      "2019",
+      "50001"
+    ],
+    [
+      "2020",
+      "75111"
+    ],
+    [
+      "2021",
+      "99999"
+    ]
+  ],
+  "allowDownloadData": false,
+  "sources": [],
+  "options": {
+    "chartType": "Area",
+    "hideAxisLabel": true,
+    "highlightDataSeries": [],
+    "highlightDataRows": [],
+    "annotations": {},
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "auto",
+      "prognosisStart": 1
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {},
+    "arrowOptions": {
+      "colorScheme": 0
+    },
+    "colorOverwritesSeries": [],
+    "colorOverwritesRows": [],
+    "areaChartOptions": {
+      "areaInterpolation": "linear"
+    }
+  }
+}

@@ -3,7 +3,7 @@
   style="margin: 15px -4px; display: flex; flex-wrap: wrap;"
 >
   {%- for event in events.data %}
-  <div style="margin: 0 4px;">
+  <div class="q-chart q-chart-events">
     {% set radius = events.config.radius %}
     <svg width="{{ 2 * radius + 2 }}" height="{{ 2 * radius + 2 }}" style="vertical-align: sub;">
       <g transform="translate({{ radius + 1 }}, {{ radius + 1 }})">
@@ -20,7 +20,7 @@
         </text>
       </g>
     </svg>
-    <span>{{ event.label }}</span>
+    <span class="q-chart q-chart-events__label">{{ event.label }}</span>
   </div style="margin: 0 4px;">
   {%- endfor %}
 </div>
