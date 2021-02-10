@@ -975,7 +975,7 @@
                 }
               ],
               "enum": [0, 1, 1e3, 1e6, 1e9],
-              "default": "automatic",
+              "default": 0,
               "Q:options": {
                 "enum_titles": [
                   "automatisch",
