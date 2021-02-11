@@ -7,14 +7,14 @@
 }
 
 .q-chart-events {
-  margin: 0 4px;
+  margin-top: 4px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
 
-.q-chart-events__label {
-  display: flex;
-  align-items: center;
-  margin-left: 4px;
+.q-chart-events__icon {
+  height: 18px;
+  width: 18px;
+  margin-right: 4px
 }
