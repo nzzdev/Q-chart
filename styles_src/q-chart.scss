@@ -10,7 +10,6 @@
   margin-top: 4px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
 }
 
 .q-chart-events__icon {
@@ -20,5 +19,6 @@
 }
 
 .q-chart-events__label {
-  align-self: center;
+  display: flex;
+  align-items: center;
 }

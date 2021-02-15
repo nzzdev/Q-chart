@@ -3,15 +3,18 @@
   style="margin: 15px -4px; display: flex; flex-wrap: wrap;"
 >
   {%- for event in events.data %}
-  <div class="q-chart q-chart-events" style="margin-right: 4px; margin-left: 4px">
+  <div class="q-chart-events" style="margin-right: 4px; margin-left: 4px;"
+  >
     {% set radius = events.config.radius %}
     <div class="q-chart-events__icon">
-      <svg width="{{ 2 * radius + 2 }}" height="{{ 2 * radius + 2 }}" style="vertical-align: sub;">
+      <svg width="{{ 2 * radius + 2 }}" height="{{ 2 * radius + 2 }}">
         <g transform="translate({{ radius + 1 }}, {{ radius + 1 }})">
-          <path
-            d="M{{ radius }},0A{{ radius }},{{ radius }},0,1,1,-{{ radius }},0A{{ radius }},{{ radius }},0,1,1,{{ radius }},0"
-            style="fill: none; stroke: currentColor; stroke-width: 1;"
-          ></path>
+          <circle
+            r="{{ radius }}"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+          />
           <text
             y="4"
             text-anchor="middle"
@@ -23,6 +26,6 @@
       </svg>
     </div>
     <div class="q-chart-events__label">{{ event.label }}</div>
-  </div style="margin: 0 4px;">
+  </div>
   {%- endfor %}
 </div>
