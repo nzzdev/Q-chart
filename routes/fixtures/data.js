@@ -32,6 +32,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative-only.json`),
   require(`${fixtureDataDirectory}/bar-stacked-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/bar-stacked-null-values.json`),
+  require(`${fixtureDataDirectory}/bar-stacked-mixed-values-on-bars.json`),
   require(`${fixtureDataDirectory}/bar-values-on-bars.json`),
   require(`${fixtureDataDirectory}/bar-many-rows.json`),
   require(`${fixtureDataDirectory}/bar-many-rows-values-on-bars.json`),
