@@ -70,7 +70,10 @@ module.exports = function getMapping() {
         }
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          itemData,
+          mappingData.item.options.largeNumbers
+        );
 
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
@@ -90,7 +93,7 @@ module.exports = function getMapping() {
                 labelWidth: textMeasure.getLabelTextWidth(
                   format(value),
                   mappingData.toolRuntimeConfig
-                )
+                ),
               };
             });
           })
@@ -189,10 +192,9 @@ module.exports = function getMapping() {
         objectPath.set(spec, "axes.0.values", [0, 25, 50, 75, 100]);
       },
     },
-
     {
       path: "item.options.annotations.valuesOnBars",
-      mapToSpec: function(valuesOnBars, spec, mappingData) {
+      mapToSpec: function (valuesOnBars, spec, mappingData) {
         if (!valuesOnBars) {
           return;
         }
@@ -202,124 +204,97 @@ module.exports = function getMapping() {
           zeroValue: "datum.datum.yValue == 0",
           positiveValue: "datum.datum.yValue > 0",
           negativeValue: "datum.datum.yValue < 0",
-          labelTooBig: `datum.width < datum.datum.labelWidth + ${valuePadding * 2}`,
-          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > contrast('white', datum.fill)`
+          labelTooBig: `datum.width < datum.datum.labelWidth + ${
+            valuePadding * 2
+          }`,
+          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > contrast('white', datum.fill)`,
         };
 
         const valueLabelMark = {
           type: "text",
           from: {
-            data: "bar"
+            data: "bar",
           },
           encode: {
             enter: {
               y: {
-                field: "y"
+                field: "y",
               },
               dy: {
-                signal: "barWidth / 2"
+                signal: "barWidth / 2",
               },
               baseline: {
-                value: "middle"
+                value: "middle",
               },
               opacity: [
                 {
                   test: tests.zeroValue,
-                  value: 0
+                  value: 0,
                 },
                 {
                   test: tests.labelTooBig,
-                  value: 0
-                }
+                  value: 0,
+                },
               ],
               x: [
                 {
                   test: tests.positiveValue,
-                  field: "x"
+                  field: "x",
                 },
                 {
                   test: tests.negativeValue,
-                  field: "x2"
+                  field: "x2",
                 },
                 {
-                  field: "x"
-                }
+                  field: "x",
+                },
               ],
               align: [
                 {
                   test: tests.positiveValue,
-                  value: "left"
+                  value: "left",
                 },
                 {
                   test: tests.negativeValue,
-                  value: "right"
+                  value: "right",
                 },
                 {
-                  value: "left"
-                }
+                  value: "left",
+                },
               ],
               dx: [
                 {
                   test: tests.positiveValue,
-                  value: valuePadding
+                  value: valuePadding,
                 },
                 {
                   test: tests.negativeValue,
-                  value: -valuePadding
+                  value: -valuePadding,
                 },
                 {
-                  value: valuePadding
-                }
+                  value: valuePadding,
+                },
               ],
               fill: [
                 {
                   test: tests.contrastFineForDark,
-                  value: mappingData.toolRuntimeConfig.text.fill
+                  value: mappingData.toolRuntimeConfig.text.fill,
                 },
                 {
-                  value: "white"
-                }
+                  value: "white",
+                },
               ],
               text: {
-                signal: `format(datum.datum.yValue, "${d3config.specifier}")`
-              }
-            }
-          }
+                signal: `format(datum.datum.yValue, "${d3config.specifier}")`,
+              },
+            },
+          },
         };
 
         // add the value label marks
         spec.marks[0].marks[0].marks.push(valueLabelMark);
-
-        /*
-        objectPath.set(spec, "axes.0.grid", false);
-        objectPath.set(spec, "axes.0.ticks", false);
-        objectPath.set(spec, "axes.0.domain", false);
-        objectPath.set(spec, "axes.0.labels", false);
-
-        // the grid and the ticks of the y axis should get hidden
-        // the labels follow any settings handled before
-        objectPath.set(spec, "axes.1.grid", false);
-        objectPath.set(spec, "axes.1.ticks", false);
-
-        // keep the 0 tick line only
-        // hide the domain
-        // do not show labels
-        objectPath.set(spec, "axes.0.grid", true);
-        objectPath.set(
-          spec,
-          "axes.0.gridColor",
-          mappingData.toolRuntimeConfig.axis.labelColor
-        );
-
-        objectPath.set(spec, "axes.0.values", [0]);
-
-        // make sure the axis is drawn on top, so it's in front of positive and negative bars
-        objectPath.set(spec, "axes.0.zindex", 1);*/
-      
-      }
-      
+      },
     },
-
     {
       path: "item.options.hideAxisLabel",
       mapToSpec: function (hideAxisLabel, spec) {
@@ -337,7 +312,10 @@ module.exports = function getMapping() {
       path: "item.options.barOptions.maxValue",
       mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
