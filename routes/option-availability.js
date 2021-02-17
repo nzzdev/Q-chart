@@ -183,6 +183,10 @@ module.exports = {
         available = true;
       }
 
+      if (isStackedBarChart(item)) {
+        available = true;
+      }
+
       if (isDotplot(item)) {
         available = true;
       }
@@ -229,7 +233,7 @@ module.exports = {
     if (request.params.optionName === "annotations.valuesOnBars") {
       try {
         return {
-          available: isBarChart(item)
+          available: isBarChart(item) || isStackedBarChart(item)
         };
       } catch (e) {
         return {
