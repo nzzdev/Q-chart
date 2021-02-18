@@ -15,5 +15,5 @@
     "labelLimit": false,
     "tickRound": true
   },
-  "padding": { "left": 4 }
+  "padding": { "left": 4, "right": 4 }
 }
