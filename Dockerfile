@@ -10,7 +10,6 @@ RUN apt-get update && apt-get -y install build-essential libcairo2-dev libpango1
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm install --production
-RUN npm install canvas --build-from-source
 
 # Copy everthing else in work directory
 COPY . /app
