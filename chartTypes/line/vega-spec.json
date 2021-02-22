@@ -59,7 +59,7 @@
       "grid": false,
       "labels": true,
       "labelFlush": true,
-      "labelBound": true,
+      "labelBound": false,
       "labelFlushOffset": 0,
       "labelOverlap": "parity",
       "labelSeparation": 4,
