@@ -22,3 +22,46 @@
   display: flex;
   align-items: center;
 }
+
+// TODO: move to sophie-q module
+.s-q-item__legend {
+  &-annotations {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    // print
+    /*
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 15px -4px
+    */
+  }
+
+  &-annotation {
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    // print
+    /*
+    margin-right: 4px;
+    margin-left: 4px;
+    */
+
+    &__icon {
+      margin-right: 3px;
+      height: 1.4em;
+      width: 1.4em;
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      // print
+      /*
+      position: relative;
+      top: 0.1em;
+      */
+    }
+  }
+}
