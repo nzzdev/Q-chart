@@ -776,6 +776,16 @@
             "maxValue": {
               "title": "Maximaler Wert",
               "type": "number"
+            },
+            "smoothing":{
+              "title": "Überlappende Werte gruppieren",
+              "type": "boolean",
+              "default": false
+            },
+            "maxGroupSize":{
+              "title": "Maximale Gruppengrösse bei Überlappung",
+              "type": "number",
+              "default": 4
             }
           }
         },

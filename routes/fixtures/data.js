@@ -40,6 +40,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/dotplot-floating-point.json`),
   require(`${fixtureDataDirectory}/dotplot-two-categories-same-value-min-max.json`),
   require(`${fixtureDataDirectory}/dotplot-years.json`),
+  require(`${fixtureDataDirectory}/dotplot-years-threshold.json`),
   require(`${fixtureDataDirectory}/dotplot-many-rows-diff-on-top.json`),
   require(`${fixtureDataDirectory}/dotplot-many-rows.json`),
   require(`${fixtureDataDirectory}/line-annotation-min-max.json`),
