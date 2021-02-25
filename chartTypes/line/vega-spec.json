@@ -120,9 +120,54 @@
                 "scale": "yScale",
                 "field": "yValue"
               },
-              "strokeWidth": {
-                "value": 2
+              "strokeWidth": [
+                {
+                  "test": "datum.isHighlighted === true",
+                  "value": 5
+                }
+              ],
+              "defined": {
+                "signal": "datum.yValue !== null"
               },
+              "strokeJoin": {
+                "value": "round"
+              },
+              "stroke": [
+                {
+                  "test": "datum.isHighlighted === true",
+                  "value": "white"
+                }
+              ],
+              "interpolate": {
+                "value": "linear"
+              }
+            }
+          }
+        },
+        {
+          "type": "line",
+          "from": {
+            "data": "series"
+          },
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "xScale",
+                "field": "xValue"
+              },
+              "y": {
+                "scale": "yScale",
+                "field": "yValue"
+              },
+              "strokeWidth": [
+                {
+                  "test": "datum.isHighlighted === true",
+                  "value": 3
+                },
+                {
+                  "value": 2
+                }
+              ],
               "defined": {
                 "signal": "datum.yValue !== null"
               },
