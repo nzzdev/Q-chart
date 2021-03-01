@@ -277,6 +277,13 @@
       "ticks": false,
       "labelPadding": 5,
       "encode": {
+        "labels": {
+          "update": {
+            "dy": {
+              "offset": 0.5
+            }
+          }
+        },
         "title": {
           "update": {
             "align": {

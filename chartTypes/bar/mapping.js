@@ -190,7 +190,7 @@ module.exports = function getMapping() {
                 field: "y"
               },
               dy: {
-                signal: "barWidth / 2"
+                signal: "(barWidth / 2) + 0.5", // +0.5 Fix font is not exact in the middle of bar
               },
               baseline: {
                 value: "middle"
