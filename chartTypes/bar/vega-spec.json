@@ -266,6 +266,7 @@
       "grid": true,
       "ticks": true,
       "tickCount": 4,
+      "translate": 0,
       "labelSeparation": 4
     },
     {
@@ -309,10 +310,5 @@
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
-  },
-  "config": {
-    "axis": {
-      "tickOffset": -1
-    }
   }
 }
