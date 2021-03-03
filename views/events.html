@@ -1,11 +1,11 @@
 <div
-  class="s-font-note s-q-item__legend-annotations"
+  class="s-q-item__annotation-legend s-font-note"
 >
   {%- for event in events.data %}
-  <div class="s-q-item__legend-annotation">
+  <div class="s-q-item__annotation-item">
     {% set radius = events.config.radius %}
     {% set xy = "50%" %}
-    <div class="s-q-item__legend-annotation__icon">
+    <div class="s-q-item__annotation-item__icon">
       <svg width="1.4em" height="1.4em">
         <g class="s-font-note-s">
           <circle
@@ -29,7 +29,7 @@
         </g>
       </svg>
     </div>
-    <div class="s-q-item__legend-annotation__label">{{ event.label }}</div>
+    <div class="s-q-item__annotation-item__label">{{ event.label }}</div>
   </div>
   {%- endfor %}
 </div>
