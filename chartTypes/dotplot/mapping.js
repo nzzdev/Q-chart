@@ -133,15 +133,15 @@ module.exports = function getMapping() {
             let currentThresholdGroup = 1; // current group index
             let diffFromFirstElement = 0; // accumulate difference from the first group element
             // pixel size of the dot including stroke ( should be 14 but it seems to overlap with that)
-            const dotPixelSize = 15;
+            const overlapTolerance = 10;
             // go through the row in reverse, since diffToPrevious is used, it is simpler
             // it also effects the visualisation later, arrange earliest-top and latest-bottom
             for (let i = dataRow.length - 1; i > -1; i--) {
               if (
                 (dataRow[i].diffToPrevious !== null &&
-                  dataRow[i].diffToPrevious * unitInPixel < dotPixelSize) ||
+                  dataRow[i].diffToPrevious * unitInPixel < overlapTolerance) ||
                 (dataRow[i + 1] &&
-                  dataRow[i + 1].diffToPrevious * unitInPixel < dotPixelSize)
+                  dataRow[i + 1].diffToPrevious * unitInPixel < overlapTolerance)
               ) {
                 // passed the threshold check
                 thresholdGroups[currentThresholdGroup].size++; // increment group size
@@ -154,10 +154,8 @@ module.exports = function getMapping() {
               // limit group based on size and distance difference
               // start new group if needed
               if (
-                dataRow[i].diffToPrevious * unitInPixel > dotPixelSize ||
-                thresholdGroups[currentThresholdGroup].size >
-                  (item.options.dotplotOptions.maxGroupSize - 1 || 3) ||
-                diffFromFirstElement * unitInPixel > dotPixelSize * 1.5
+                dataRow[i].diffToPrevious * unitInPixel > overlapTolerance ||
+                diffFromFirstElement * unitInPixel > overlapTolerance * 1.5
               ) {
                 thresholdGroups.push({ ...emptyThresholdGroup });
                 currentThresholdGroup++;
@@ -193,11 +191,9 @@ module.exports = function getMapping() {
 
             return dataRow
               .map((data) => {
-                // smooth values
-                if (mappingData.item.options.dotplotOptions.smoothing) {
-                  data.yValue =
-                    thresholdSmoothValues[data.thresholdGroup] || data.yValue;
-                }
+                // smooth/aggregate values
+                data.yValue =
+                  thresholdSmoothValues[data.thresholdGroup] || data.yValue;
                 // set the correction factor for all data
                 data.posCorrectionFactor =
                   thresholdCorrectionValues[data.thresholdGroup] || 0;
@@ -478,13 +474,7 @@ module.exports = function getMapping() {
         };
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       },
-    },
-    // {
-    //   path: "item.options.dotPlotOptions.smoothing",
-    //   mapToSpec: function( smoothing, spec, mappingData ){
-    //     objectPath.set(spec, "smoothing", smoothing )
-    //   }
-    //}
+    }
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
     .concat(commonMappings.getHighlightRowsMapping())
