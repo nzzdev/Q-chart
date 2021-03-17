@@ -141,7 +141,8 @@ module.exports = function getMapping() {
                 (dataRow[i].diffToPrevious !== null &&
                   dataRow[i].diffToPrevious * unitInPixel < overlapTolerance) ||
                 (dataRow[i + 1] &&
-                  dataRow[i + 1].diffToPrevious * unitInPixel < overlapTolerance)
+                  dataRow[i + 1].diffToPrevious * unitInPixel <
+                    overlapTolerance)
               ) {
                 // passed the threshold check
                 thresholdGroups[currentThresholdGroup].size++; // increment group size
@@ -166,20 +167,22 @@ module.exports = function getMapping() {
             // if we have grouped values, we add some correction factor here to calculate
             // the circles position (stacked if similar value)
             // calculate the first correction factor
-            // this gives us a currentCorrectionFactor like this
+            // this gives us a currentCorrectionFactor similar to the below table
             // groupsize    factors
             // 1            0
             // 2            -0.5 0.5
             // 3            -1 0 1
             // 4            -1.5 -0.5 0.5 1.5
             // 5            -2 -1 0 1 2
+            // these values would be exactly dot size correction
+            // since we want to clamp them more together, we use 0.4 instead of 0.5
             const thresholdCorrectionValues = [];
             // we also calculate the smooth value (avarage)
             const thresholdSmoothValues = [];
 
             thresholdGroups.map((group) => {
               if (group.size > 0) {
-                thresholdCorrectionValues.push((group.size - 1) * -0.5);
+                thresholdCorrectionValues.push((group.size - 1) * -0.4);
                 thresholdSmoothValues.push(
                   Math.round(group.totalValue / group.size)
                 );
@@ -199,7 +202,7 @@ module.exports = function getMapping() {
                   thresholdCorrectionValues[data.thresholdGroup] || 0;
                 // add one to the correction values
                 // so the next in group will be offset
-                thresholdCorrectionValues[data.thresholdGroup]++;
+                thresholdCorrectionValues[data.thresholdGroup] += 0.8;
 
                 return data;
               })
@@ -474,7 +477,7 @@ module.exports = function getMapping() {
         };
         spec.marks[0].marks[0].marks.push(diffTextMarksSpec);
       },
-    }
+    },
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
     .concat(commonMappings.getHighlightRowsMapping())
