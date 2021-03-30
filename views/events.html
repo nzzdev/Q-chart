@@ -1,31 +1,35 @@
 <div
-  class="s-font-note"
-  style="margin: 15px -4px; display: flex; flex-wrap: wrap;"
+  class="s-q-item__annotation-legend s-font-note"
 >
   {%- for event in events.data %}
-  <div class="q-chart-events" style="margin-right: 4px; margin-left: 4px;"
-  >
+  <div class="s-q-item__annotation-legend__item">
     {% set radius = events.config.radius %}
-    <div class="q-chart-events__icon">
-      <svg width="{{ 2 * radius + 2 }}" height="{{ 2 * radius + 2 }}">
-        <g transform="translate({{ radius + 1 }}, {{ radius + 1 }})">
+    {% set xy = "50%" %}
+    <div class="s-q-item__annotation-legend__item__icon">
+      <svg width="1.4em" height="1.4em">
+        <g class="s-font-note-s">
           <circle
             r="{{ radius }}"
+            cx="{{xy}}"
+            cy="{{xy}}"
             fill="none"
             stroke="currentColor"
             stroke-width="1"
           />
           <text
-            y="4"
+            y="0.35em"
+            dx="{{xy}}"
+            dy="{{xy}}"
+            fill="currentColor"
+            font-weight=700
             text-anchor="middle"
-            style="font-size: {{ events.config.fontSize }}px; font-weight: {{ events.config.fontWeight }}; fill: currentColor;"
           >
             {{ loop.index }}
           </text>
         </g>
       </svg>
     </div>
-    <div class="q-chart-events__label">{{ event.label }}</div>
+    <div class="s-q-item__annotation-legend__item__label">{{ event.label }}</div>
   </div>
   {%- endfor %}
 </div>
