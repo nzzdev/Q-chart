@@ -243,6 +243,7 @@
       "labels": true,
       "ticks": true,
       "tickCount": 4,
+      "translate": 0,
       "labelSeparation": 4
     },
     {
@@ -254,6 +255,13 @@
       "ticks": false,
       "labelPadding": 5,
       "encode": {
+        "labels": {
+          "update": {
+            "dy": {
+              "offset": 0.5
+            }
+          }
+        },
         "title": {
           "update": {
             "align": {
@@ -279,10 +287,5 @@
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
-  },
-  "config": {
-    "axis": {
-      "tickOffset": -1
-    }
   }
 }
