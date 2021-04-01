@@ -221,7 +221,7 @@ module.exports = function getMapping() {
                 field: "y",
               },
               dy: {
-                signal: "barWidth / 2",
+                signal: "(barWidth / 2) + 1", // Adds offset of 1px in order to vertically center the label within the bar
               },
               baseline: {
                 value: "middle",

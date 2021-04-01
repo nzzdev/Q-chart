@@ -1,6 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const dataHelpers = require("../helpers/data.js");
+const { modifyColorStoke } = require("../helpers/elementModify.js");
 const d3config = require("../config/d3.js");
 
 const hideRepeatingTickLabels = {
@@ -163,22 +164,24 @@ const highlightZeroGridLineIfPositiveAndNegative = {
     }
 
     // if we have found the index of the zero tick
-    // we are going to change the stroke color of the corresponding grid line
+    // we are going to change the stroke color of the corresponding grid line and tick
     if (zeroTickIndex !== undefined) {
-      const yAxisGridlines = axisElements
-        .item(axisIndex)
-        .querySelector(".role-axis-grid")
-        .querySelectorAll("line");
+      modifyColorStoke(
+        axisElements.item(axisIndex),
+        zeroTickIndex,
+        ".role-axis-grid",
+        "line",
+        toolRuntimeConfig.axis.tickColor,
+        toolRuntimeConfig.axis.labelColor
+      );
 
-      yAxisGridlines.item(zeroTickIndex).setAttribute(
-        "style",
-        yAxisGridlines
-          .item(zeroTickIndex)
-          .getAttribute("style")
-          .replace(
-            `stroke: ${toolRuntimeConfig.axis.tickColor}`,
-            `stroke: ${toolRuntimeConfig.axis.labelColor}`
-          )
+      modifyColorStoke(
+        axisElements.item(axisIndex),
+        zeroTickIndex,
+        ".role-axis-tick",
+        "line",
+        toolRuntimeConfig.axis.tickColor,
+        toolRuntimeConfig.axis.labelColor
       );
     }
 
