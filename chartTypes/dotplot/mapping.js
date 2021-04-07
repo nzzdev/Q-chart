@@ -177,26 +177,17 @@ module.exports = function getMapping() {
             // these values would be exactly dot size correction
             // since we want to clamp them more together, we use 0.4 instead of 0.5
             const thresholdCorrectionValues = [];
-            // we also calculate the smooth value (avarage)
-            const thresholdSmoothValues = [];
 
             thresholdGroups.map((group) => {
               if (group.size > 0) {
                 thresholdCorrectionValues.push((group.size - 1) * -0.4);
-                thresholdSmoothValues.push(
-                  Math.round(group.totalValue / group.size)
-                );
               } else {
                 thresholdCorrectionValues.push(0);
-                thresholdSmoothValues.push(0);
               }
             });
 
             return dataRow
               .map((data) => {
-                // smooth/aggregate values
-                data.yValue =
-                  thresholdSmoothValues[data.thresholdGroup] || data.yValue;
                 // set the correction factor for all data
                 data.posCorrectionFactor =
                   thresholdCorrectionValues[data.thresholdGroup] || 0;
