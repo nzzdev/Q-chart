@@ -1,0 +1,94 @@
+{
+  "title": "FIXTURE: Dotplot - overlap threshold",
+  "data": [
+    [
+      "Jahr",
+      "15–19",
+      "20–24",
+      "25–29",
+      "30–34",
+      "35–39",
+      "40–44"
+    ],
+    [
+      "2006",
+      "0",
+      "30",
+      "0",
+      "30.5",
+      "0",
+      "29.6"
+    ],
+    [
+      "2007",
+      "21",
+      "22",
+      "33",
+      "34",
+      "77",
+      "78"
+    ],
+    [
+      "2008",
+      "1",
+      "10",
+      "20",
+      "30",
+      "40",
+      "50"
+    ],
+    [
+      "2009",
+      "1",
+      "2",
+      "3",
+      "4",
+      "7",
+      "8"
+    ],
+    [
+      "2010",
+      "41",
+      "42",
+      "45",
+      "46",
+      "49",
+      "50"
+    ],
+    [
+      "2011",
+      "97",
+      "98",
+      "99",
+      "100",
+      "101",
+      "102"
+    ]
+  ],
+  "sources": [],
+  "options": {
+    "chartType": "Dotplot",
+    "hideAxisLabel": false,
+    "annotations": {
+      "max": true
+    },
+    "barOptions": {
+      "isBarChart": false,
+      "forceBarsOnSmall": false
+    },
+    "dateSeriesOptions": {
+      "interval": "year",
+      "prognosisStart": null
+    },
+    "lineChartOptions": {
+      "reverseYScale": false,
+      "lineInterpolation": "linear",
+      "isStockChart": false
+    },
+    "dotplotOptions": {
+      "smoothing": false
+    },
+    "highlightDataSeries": [],
+    "colorOverwritesSeries": []
+  }
+}
