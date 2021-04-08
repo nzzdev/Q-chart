@@ -6,6 +6,7 @@ const dataHelpers = require("../../helpers/data.js");
 const d3config = require("../../config/d3.js");
 
 const commonMappings = require("../commonMappings.js");
+const { group } = require("d3-array");
 
 module.exports = function getMapping() {
   return [
@@ -36,39 +37,36 @@ module.exports = function getMapping() {
         }
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          itemData,
+          item.options.largeNumbers
+        );
+
+        // estimate X domain
+        const maxDataValue = Math.max(dataHelpers.getMaxValue(item.data));
+        const minDataValue = Math.min(dataHelpers.getMinValue(item.data));
+        const maxValueRounder =
+          maxDataValue < 50
+            ? maxDataValue
+            : Math.ceil((maxDataValue + 1) / 10) * 10;
+        const minValueRounder =
+          minDataValue > -50
+            ? minDataValue
+            : Math.ceil((Math.abs(maxDataValue) + 1) / 10) * -10;
+
+        // estimate how many pixel is one data unit
+        const unitInPixel =
+          spec.width /
+          ((spec.scales[0].domainMax || Math.max(0, maxValueRounder)) -
+            (spec.scales[0].domainMin || Math.min(0, minValueRounder)));
 
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
           .map((row, rowIndex) => {
             const x = row.shift(); // take the x axis value out of the row
 
-            // count the single occurences of the values in this row to see if we have duplicates
-            const valueOccurences = row.reduce((all, current) => {
-              return Object.assign(all, {
-                [current]: {
-                  occurences:
-                    ((all[current] && all[current].occurences) || 0) + 1,
-                },
-              });
-            }, {});
-
-            // if we have duplicate values, we add some correction factor here to calculate
-            // the circles position (stacked if same value)
-            // calculate the first correction factor
-            // this gives us a currentCorrectionFactor like this
-            // occurences   factors
-            // 1            0
-            // 2            -0.5 0.5
-            // 3            -1 0 1
-            // 4            -1.5 -0.5 0.5 1.5
-            // 5            -2 -1 0 1 2
-            for (let value in valueOccurences) {
-              valueOccurences[value].currentCorrectionFactor =
-                (valueOccurences[value].occurences - 1) * -0.5;
-            }
-
-            return row
+            // the row to return
+            const dataRow = row
               .map((value, index) => {
                 // generate one array entry for every data category on the same x value
 
@@ -82,13 +80,7 @@ module.exports = function getMapping() {
                   xIndex: rowIndex,
                   yValue: shortenedValue,
                   cValue: index,
-                  posCorrectionFactor:
-                    valueOccurences[value].currentCorrectionFactor,
                 };
-
-                // increase the currentCorrectionFactor for this value by 1
-                valueOccurences[value].currentCorrectionFactor =
-                  valueOccurences[value].currentCorrectionFactor + 1;
 
                 return data;
               })
@@ -128,6 +120,81 @@ module.exports = function getMapping() {
                 } else {
                   data.diffToPrevious = null;
                 }
+
+                return data;
+              });
+
+            // group close values that would overlap
+            // we need to do this after diffToPrevious is calculated
+            // prepared group to spread later { number of elements, total value for smoothing }
+            const emptyThresholdGroup = { size: 0, totalValue: 0 };
+            // groups as array [ leading zero element, first group ]
+            const thresholdGroups = [0, { ...emptyThresholdGroup }];
+            let currentThresholdGroup = 1; // current group index
+            let diffFromFirstElement = 0; // accumulate difference from the first group element
+            // pixel size of the dot including stroke ( should be 14 but it seems to overlap with that)
+            const overlapTolerance = 10;
+            // go through the row in reverse, since diffToPrevious is used, it is simpler
+            // it also effects the visualisation later, arrange earliest-top and latest-bottom
+            for (let i = dataRow.length - 1; i > -1; i--) {
+              if (
+                (dataRow[i].diffToPrevious !== null &&
+                  dataRow[i].diffToPrevious * unitInPixel < overlapTolerance) ||
+                (dataRow[i + 1] &&
+                  dataRow[i + 1].diffToPrevious * unitInPixel <
+                    overlapTolerance)
+              ) {
+                // passed the threshold check
+                thresholdGroups[currentThresholdGroup].size++; // increment group size
+                thresholdGroups[currentThresholdGroup].totalValue +=
+                  dataRow[i].yValue; // add total group value
+                dataRow[i].thresholdGroup = currentThresholdGroup; // set data attribute for visualisation
+                diffFromFirstElement += dataRow[i].diffToPrevious; // add difference
+              }
+
+              // limit group based on size and distance difference
+              // start new group if needed
+              if (
+                dataRow[i].diffToPrevious * unitInPixel > overlapTolerance ||
+                diffFromFirstElement * unitInPixel > overlapTolerance * 1.5
+              ) {
+                thresholdGroups.push({ ...emptyThresholdGroup });
+                currentThresholdGroup++;
+                diffFromFirstElement = 0;
+              }
+            }
+
+            // if we have grouped values, we add some correction factor here to calculate
+            // the circles position (stacked if similar value)
+            // calculate the first correction factor
+            // this gives us a currentCorrectionFactor similar to the below table
+            // groupsize    factors
+            // 1            0
+            // 2            -0.5 0.5
+            // 3            -1 0 1
+            // 4            -1.5 -0.5 0.5 1.5
+            // 5            -2 -1 0 1 2
+            // these values would be exactly dot size correction
+            // since we want to clamp them more together, we use 0.4 instead of 0.5
+            const thresholdCorrectionValues = [];
+
+            thresholdGroups.map((group) => {
+              if (group.size > 0) {
+                thresholdCorrectionValues.push((group.size - 1) * -0.4);
+              } else {
+                thresholdCorrectionValues.push(0);
+              }
+            });
+
+            return dataRow
+              .map((data) => {
+                // set the correction factor for all data
+                data.posCorrectionFactor =
+                  thresholdCorrectionValues[data.thresholdGroup] || 0;
+                // add one to the correction values
+                // so the next in group will be offset
+                thresholdCorrectionValues[data.thresholdGroup] += 0.8;
+
                 return data;
               })
               .sort((a, b) => {
@@ -156,7 +223,10 @@ module.exports = function getMapping() {
       path: "item.options.dotplotOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
@@ -171,7 +241,10 @@ module.exports = function getMapping() {
       path: "item.options.dotplotOptions.maxValue",
       mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
