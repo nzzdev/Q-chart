@@ -56,7 +56,7 @@ module.exports = function getMapping() {
 
         if (numberOfBars === 1) {
           barWidthSignal.value = 48;
-        } else if (numberOfBars > 10) {
+        } else if (numberOfBars > 5) {
           if (
             (item.options.annotations &&
               item.options.annotations.valuesOnBars) ||
