@@ -331,7 +331,7 @@ function getDateFormatForSerie(serie) {
   const sortedFormats = Object.keys(detectedTypeFormatsCount).sort((a, b) => {
     return detectedTypeFormatsCount[b] - detectedTypeFormatsCount[a];
   });
-
+  
   // return the format with most detections
   return sortedFormats[0];
 }
@@ -612,7 +612,7 @@ const intervals = {
     },
   },
   day: {
-    d3format: "%d.%m.%Y",
+    d3format: "%-d.\u2009%-m.\u2009%-Y",
     vegaInterval: { interval: "day", step: 1 },
     label: "Tage",
     getFirstStepDateAfterDate: function (date) {
