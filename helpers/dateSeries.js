@@ -612,7 +612,7 @@ const intervals = {
     },
   },
   day: {
-    d3format: "%d.%m.%Y",
+    d3format: "%-d.\u2009%-m.\u2009%-Y",
     vegaInterval: { interval: "day", step: 1 },
     label: "Tage",
     getFirstStepDateAfterDate: function (date) {
@@ -639,7 +639,7 @@ const intervals = {
     },
   },
   hour: {
-    d3format: "%d.%m. %H Uhr",
+    d3format: "%-d.\u2009%-m. %H Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Stunden",
     getFirstStepDateAfterDate: function (date) {
@@ -668,7 +668,7 @@ const intervals = {
     },
   },
   minute: {
-    d3format: "%d.%m. %H:%M Uhr",
+    d3format: "%-d.\u2009%-m. %H:%M Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Minuten",
     getFirstStepDateAfterDate: function (date) {
@@ -713,7 +713,7 @@ const intervals = {
     },
   },
   second: {
-    d3format: "%d.%m. %H:%M:%S Uhr",
+    d3format: "%-d.\u2009%-m. %H:%M:%S Uhr",
     vegaInterval: { interval: "hour", step: 1 },
     label: "Sekunden",
     getFirstStepDateAfterDate: function (date) {
