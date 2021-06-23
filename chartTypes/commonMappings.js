@@ -120,9 +120,15 @@ function getColumnDateSeriesHandlingMappings() {
           objectPath.set(spec, "axes.0.encode.labels.update.text", {
             signal: `formatDateForInterval(datum.value, '${interval}')`
           });
-          objectPath.set(spec, "axes.0.labelBound", true);
-          objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
-        }
+
+          // disable bound check and flush to zero 
+          // to show first and last labels that would otherwise will be out of bound
+          objectPath.set(spec, "axes.0.labelBound", false);
+          objectPath.set(spec, "axes.0.labelFlush", 0);
+          // originally use parity label overlap strategy if we have a date series
+          // but greedy solves the label problem on mobile
+          objectPath.set(spec, "axes.0.labelOverlap", "greedy"); 
+           }
       }
     }
   ];
