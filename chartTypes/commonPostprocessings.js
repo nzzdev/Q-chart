@@ -5,7 +5,7 @@ const { modifyColorStoke } = require("../helpers/elementModify.js");
 const d3config = require("../config/d3.js");
 
 const hideRepeatingTickLabels = {
-  process: function(svg, spec, item, toolRuntimeConfig) {
+  process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
 
@@ -13,7 +13,7 @@ const hideRepeatingTickLabels = {
     for (const labelGroup of labelGroups) {
       const visibleTextNodes = Array.prototype.slice
         .call(labelGroup.querySelectorAll("text"))
-        .filter(textNode => {
+        .filter((textNode) => {
           return textNode.getAttribute("style").includes("opacity: 1");
         });
       // loop over all the visible textNodes, if the text is the same as the one before, hide it
@@ -27,11 +27,11 @@ const hideRepeatingTickLabels = {
       }
     }
     return document.body.innerHTML;
-  }
+  },
 };
 
 const hideRepeatingBarTopLabels = {
-  process: function(svg, spec, item, toolRuntimeConfig) {
+  process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
 
@@ -46,11 +46,11 @@ const hideRepeatingBarTopLabels = {
       }
     }
     return document.body.innerHTML;
-  }
+  },
 };
 
 const hideTicksWithoutLabels = {
-  process: function(svg, spec, item, toolRuntimeConfig) {
+  process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
 
@@ -78,20 +78,22 @@ const hideTicksWithoutLabels = {
     }
 
     for (let hiddenLabelIndex of hiddenLabelsIndexes) {
-      tickNodes.item(hiddenLabelIndex).setAttribute(
-        "style",
-        tickNodes
-          .item(hiddenLabelIndex)
-          .getAttribute("style")
-          .replace(`opacity: 1`, `opacity: 0`)
-      );
+      tickNodes
+        .item(hiddenLabelIndex)
+        .setAttribute(
+          "style",
+          tickNodes
+            .item(hiddenLabelIndex)
+            .getAttribute("style")
+            .replace(`opacity: 1`, `opacity: 0`)
+        );
     }
     return document.body.innerHTML;
-  }
+  },
 };
 
 const addPrognosisPattern = {
-  process: function(svg, spec, item, toolRuntimeConfig, id) {
+  process: function (svg, spec, item, toolRuntimeConfig, id) {
     if (
       !item.options.dateSeriesOptions ||
       !Number.isInteger(item.options.dateSeriesOptions.prognosisStart)
@@ -112,11 +114,11 @@ const addPrognosisPattern = {
     document.querySelector("svg").appendChild(patternElement);
 
     return document.body.innerHTML;
-  }
+  },
 };
 
 const highlightZeroGridLineIfPositiveAndNegative = {
-  process: function(svg, spec, item, toolRuntimeConfig, id) {
+  process: function (svg, spec, item, toolRuntimeConfig, id) {
     // return early if there are only positive values
     if (
       dataHelpers.getMinValue(item.data) >= 0 &&
@@ -139,7 +141,7 @@ const highlightZeroGridLineIfPositiveAndNegative = {
     // we determine this by the domain value property for the y axes
     let axisIndex;
     if (
-      spec.scales.find(scale => scale.name === "yScale").domain.field ===
+      spec.scales.find((scale) => scale.name === "yScale").domain.field ===
       "yValue"
     ) {
       axisIndex = 1;
@@ -186,11 +188,11 @@ const highlightZeroGridLineIfPositiveAndNegative = {
     }
 
     return document.body.innerHTML;
-  }
+  },
 };
 
 const addOutlineToAnnotationLabels = {
-  process: function(svg, spec, item, toolRuntimeConfig) {
+  process: function (svg, spec, item, toolRuntimeConfig) {
     // this duplicates the text nodes to have a white outline around the text
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
@@ -214,7 +216,35 @@ const addOutlineToAnnotationLabels = {
       textNode.parentNode.appendChild(textNode);
     }
     return document.body.innerHTML;
-  }
+  },
+};
+
+const showOnlyFirstAndLastLabel = {
+  process: function (svg, spec, item, toolRuntimeConfig) {
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    // this function only need to run if we are on mobile
+    if (spec.width > 400) return document.body.innerHTML;
+    console.log(item);
+    const allLabelGroups = document.querySelectorAll(".role-axis-label");
+    // only target x labels
+    const xLabels = allLabelGroups.length > 0 ? allLabelGroups[0] : [];
+    const visibleTextNodes = Array.prototype.slice
+      .call(xLabels.querySelectorAll("text"))
+      .filter((textNode) => {
+        return textNode.getAttribute("style").includes("opacity: 1");
+      });
+    // 4 label should still be visible
+    if (visibleTextNodes.length > 4) {
+      // we set opacity to zero for all inbetween nodes, leaving the first and last visible
+      for (let i = 1; i < visibleTextNodes.length - 1; i++) {
+        visibleTextNodes[i].style.opacity = "0";
+      }
+    }
+
+    return document.body.innerHTML;
+  },
 };
 
 module.exports = {
@@ -222,6 +252,8 @@ module.exports = {
   hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
   hideTicksWithoutLabels: hideTicksWithoutLabels,
   addPrognosisPattern: addPrognosisPattern,
-  highlightZeroGridLineIfPositiveAndNegative: highlightZeroGridLineIfPositiveAndNegative,
-  addOutlineToAnnotationLabels: addOutlineToAnnotationLabels
+  highlightZeroGridLineIfPositiveAndNegative:
+    highlightZeroGridLineIfPositiveAndNegative,
+  addOutlineToAnnotationLabels: addOutlineToAnnotationLabels,
+  showOnlyFirstAndLastLabel: showOnlyFirstAndLastLabel,
 };
