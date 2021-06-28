@@ -10,7 +10,7 @@ function getLineDateSeriesHandlingMappings() {
   return [
     {
       path: "item.data", // various settings that are not tied to an option
-      mapToSpec: function(itemData, spec, mappingData) {
+      mapToSpec: function (itemData, spec, mappingData) {
         const item = mappingData.item;
         if (
           (mappingData.dateFormat &&
@@ -22,23 +22,23 @@ function getLineDateSeriesHandlingMappings() {
           objectPath.set(spec, "scales.0.type", "time"); // time scale type: https://vega.github.io/vega/docs/scales/#time
           objectPath.set(spec, "axes.0.ticks", true); // show ticks if we have a date series
         }
-      }
+      },
     },
     {
       path: "item.options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, mappingData) {
+      mapToSpec: function (interval, spec, mappingData) {
         // only use this option if we have a valid dateFormat
         // if so, the scale type is set to time by now so we can check this
         if (spec.scales[0].type === "time") {
           objectPath.set(spec, "axes.0.encode.labels.update.text", {
-            signal: `formatDateForInterval(datum.value, '${interval}')`
+            signal: `formatDateForInterval(datum.value, '${interval}')`,
           });
         }
-      }
+      },
     },
     {
       path: "item.options.dateSeriesOptions.labels",
-      mapToSpec: function(labels, spec, mappingData) {
+      mapToSpec: function (labels, spec, mappingData) {
         if (!mappingData.dateFormat) {
           return;
         }
@@ -59,7 +59,7 @@ function getLineDateSeriesHandlingMappings() {
           // set the values explicitly to the first and last value
           objectPath.set(spec, "axes.0.values", [
             firstValue.valueOf(), // we need to set timestamps here because the values array doesn't like objects (Date)
-            lastValue.valueOf() // they will be sent through d3-time-format in the end, which recognises the timestamps and does the correct thing.
+            lastValue.valueOf(), // they will be sent through d3-time-format in the end, which recognises the timestamps and does the correct thing.
           ]);
 
           // setting labelBound to false is just for security, the following positioning logic should make sure the label never spans outside the axis
@@ -73,18 +73,18 @@ function getLineDateSeriesHandlingMappings() {
                 // &&
                 // valueLabelWidth / 2 > posOfTickValue - leftSideOfAxis (would the label span outside the axis on the left side)
                 test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') < utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(formatDateForInterval(datum.value, '${interval}')) / 2 > (scale('xScale', datum.value) - scale('xScale', extent(domain('xScale'))[0]))`,
-                value: "left"
+                value: "left",
               },
               {
                 // value - minValue > maxValue - value (is the value on the right side of the axis)
                 // &&
                 // valueLabelWidth / 2 > rightSideOfAxis - posOfTickValue (would the label span outside the axis on the right side)
                 test: `(datum.value - utcFormat(extent(domain('xScale'))[0], '%Q') > utcFormat(extent(domain('xScale'))[1], '%Q') - datum.value) && measureAxisLabelWidth(formatDateForInterval(datum.value, '${interval}')) / 2 > (scale('xScale', extent(domain('xScale'))[1]) - scale('xScale', datum.value))`,
-                value: "right"
+                value: "right",
               },
               {
-                value: "center"
-              }
+                value: "center",
+              },
             ]);
           }
         } else if (labels === "many" || !labels) {
@@ -96,7 +96,7 @@ function getLineDateSeriesHandlingMappings() {
               "axes.0.values",
               intervals[interval]
                 .ticks(mappingData.item.data)
-                .map(d => d.valueOf())
+                .map((d) => d.valueOf())
             );
           } else {
             objectPath.set(
@@ -106,8 +106,8 @@ function getLineDateSeriesHandlingMappings() {
             );
           }
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -115,16 +115,24 @@ function getColumnDateSeriesHandlingMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, mappingData) {
+      mapToSpec: function (interval, spec, mappingData) {
         if (mappingData.dateFormat) {
           objectPath.set(spec, "axes.0.encode.labels.update.text", {
-            signal: `formatDateForInterval(datum.value, '${interval}')`
+            signal: `formatDateForInterval(datum.value, '${interval}')`,
           });
+
           objectPath.set(spec, "axes.0.labelBound", true);
-          objectPath.set(spec, "axes.0.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
+          objectPath.set(spec, "axes.0.labelFlush", 0);
+          // if we are width mobile width, we disable overlap control and hide the unnecessary ones in postprocessing
+          // otherwise we use parity
+          if (mappingData.width < 400) {
+            objectPath.set(spec, "axes.0.labelOverlap", false);
+          } else {
+            objectPath.set(spec, "axes.0.labelOverlap", "parity");
+          }
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -132,16 +140,16 @@ function getBarDateSeriesHandlingMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.interval",
-      mapToSpec: function(interval, spec, mappingData) {
+      mapToSpec: function (interval, spec, mappingData) {
         if (mappingData.dateFormat) {
           objectPath.set(spec, "axes.1.encode.labels.update.text", {
-            signal: `formatDateForInterval(datum.value, '${interval}')`
+            signal: `formatDateForInterval(datum.value, '${interval}')`,
           });
           objectPath.set(spec, "axes.1.labelBound", true);
           objectPath.set(spec, "axes.1.labelOverlap", "parity"); // use parity label overlap strategy if we have a date series
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -149,7 +157,7 @@ function getColumnAreaPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, mappingData, id) {
+      mapToSpec: function (prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -159,7 +167,7 @@ function getColumnAreaPrognosisMappings() {
           value: dateSeries.getPrognosisStartDate(
             mappingData.originalItemData,
             prognosisStart
-          )
+          ),
         });
 
         // add the data for prognosis
@@ -169,9 +177,9 @@ function getColumnAreaPrognosisMappings() {
           transform: [
             {
               type: "filter",
-              expr: "datum.xValue >= prognosisStartDate"
-            }
-          ]
+              expr: "datum.xValue >= prognosisStartDate",
+            },
+          ],
         });
 
         const prognosisMarks = clone(spec.marks[0]);
@@ -183,17 +191,17 @@ function getColumnAreaPrognosisMappings() {
         }
         if (prognosisMarks.marks) {
           prognosisMarks.marks[0].encode.enter.fill = {
-            value: `url(#prognosisPattern${id})`
+            value: `url(#prognosisPattern${id})`,
           };
         } else {
           prognosisMarks.encode.enter.fill = {
-            value: `url(#prognosisPattern${id})`
+            value: `url(#prognosisPattern${id})`,
           };
         }
 
         objectPath.push(spec, "marks", prognosisMarks);
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -201,7 +209,7 @@ function getBarPrognosisMappings() {
   return [
     {
       path: "item.options.dateSeriesOptions.prognosisStart",
-      mapToSpec: function(prognosisStart, spec, mappingData, id) {
+      mapToSpec: function (prognosisStart, spec, mappingData, id) {
         if (!Number.isInteger(prognosisStart)) {
           return;
         }
@@ -211,7 +219,7 @@ function getBarPrognosisMappings() {
           value: dateSeries.getPrognosisStartDate(
             mappingData.originalItemData,
             prognosisStart
-          )
+          ),
         });
 
         // add the data for prognosis
@@ -221,9 +229,9 @@ function getBarPrognosisMappings() {
           transform: [
             {
               type: "filter",
-              expr: "datum.xValue >= prognosisStartDate"
-            }
-          ]
+              expr: "datum.xValue >= prognosisStartDate",
+            },
+          ],
         });
 
         const prognosisMarks = clone(spec.marks[0]);
@@ -231,19 +239,19 @@ function getBarPrognosisMappings() {
         prognosisMarks.from.facet.data = "prognosis";
 
         prognosisMarks.marks[0].marks[0].encode.enter.fill = {
-          value: `url(#prognosisPattern${id})`
+          value: `url(#prognosisPattern${id})`,
         };
 
         // take only the first rect mark
         prognosisMarks.marks[0].marks = [
-          prognosisMarks.marks[0].marks.find(mark => mark.type === "rect")
+          prognosisMarks.marks[0].marks.find((mark) => mark.type === "rect"),
         ];
 
         prognosisMarks.marks[0].marks[0].name = "prognosisBar";
 
         spec.marks.push(prognosisMarks);
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -251,7 +259,7 @@ function getColumnLabelColorMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function (itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }
@@ -260,8 +268,8 @@ function getColumnLabelColorMappings() {
           "axes.0.encode.labels.update.fill.value",
           spec.config.axis.labelColorDark
         ); // use the dark color for categorical bar/column labels
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -269,7 +277,7 @@ function getBarLabelColorMappings() {
   return [
     {
       path: "data",
-      mapToSpec: function(itemData, spec) {
+      mapToSpec: function (itemData, spec) {
         if (!spec.config.axis.labelColorDark) {
           return;
         }
@@ -278,8 +286,8 @@ function getBarLabelColorMappings() {
           "axes.1.encode.labels.update.fill.value",
           spec.config.axis.labelColorDark
         ); // use the dark color for categorical bar/column labels
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -287,7 +295,7 @@ function getHeightMappings() {
   return [
     {
       path: "toolRuntimeConfig.displayOptions.size",
-      mapToSpec: function(size, spec, mappingData) {
+      mapToSpec: function (size, spec, mappingData) {
         let aspectRatio;
         if (size === "prominent") {
           aspectRatio = 9 / 16;
@@ -309,8 +317,8 @@ function getHeightMappings() {
           height = height + 20;
         }
         objectPath.set(spec, "height", height);
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -318,22 +326,22 @@ function getHighlightRowsMapping() {
   return [
     {
       path: "item.options.highlightDataRows",
-      mapToSpec: function(highlightDataRows, spec) {
+      mapToSpec: function (highlightDataRows, spec) {
         if (
           !Array.isArray(highlightDataRows) ||
           highlightDataRows.length === 0
         ) {
           return;
         }
-        spec.data[0].values.map(value => {
+        spec.data[0].values.map((value) => {
           if (highlightDataRows.includes(value.xIndex)) {
             value.isHighlighted = true;
           } else {
             value.isHighlighted = false;
           }
         });
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -341,14 +349,14 @@ function getHighlightSeriesMapping() {
   return [
     {
       path: "item.options.highlightDataSeries",
-      mapToSpec: function(highlightDataSeries, spec) {
+      mapToSpec: function (highlightDataSeries, spec) {
         if (
           !Array.isArray(highlightDataSeries) ||
           highlightDataSeries.length === 0
         ) {
           return;
         }
-        spec.data[0].values.map(value => {
+        spec.data[0].values.map((value) => {
           // if isHighlighted is already set to false, we return here
           // highlight rows and highlight columns are in an AND relationship to result in a highlighted column
           if (value.isHighlighted === false) {
@@ -360,8 +368,8 @@ function getHighlightSeriesMapping() {
             value.isHighlighted = false;
           }
         });
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -369,7 +377,7 @@ function getColorOverwritesRowsMappings() {
   return [
     {
       path: "item.options.colorOverwritesRows",
-      mapToSpec: function(colorOverwritesRows, spec, mappingData) {
+      mapToSpec: function (colorOverwritesRows, spec, mappingData) {
         // do not handle colorOverwriteRows if we have more than two dataseries.
         if (mappingData.item.data[0].length > 3) {
           return;
@@ -379,7 +387,7 @@ function getColorOverwritesRowsMappings() {
           if (!colorOverwrite.color || Number.isNaN(colorOverwrite.position)) {
             continue;
           }
-          spec.data[0].values.map(value => {
+          spec.data[0].values.map((value) => {
             if (value.xIndex === colorOverwrite.position - 1) {
               value.color = colorOverwrite.color;
               if (colorOverwrite.colorLight) {
@@ -388,8 +396,8 @@ function getColorOverwritesRowsMappings() {
             }
           });
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -397,7 +405,7 @@ function getColumnAxisPositioningMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(data, spec, mappingData) {
+      mapToSpec: function (data, spec, mappingData) {
         // if we have positive and negative values, we want a 0 baseline to be included
         const max = dataHelpers.getMaxValue(data);
 
@@ -417,8 +425,8 @@ function getColumnAxisPositioningMappings() {
             objectPath.set(spec, "axes.0.encode.title.update.y.value", -30);
           }
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -426,7 +434,7 @@ function getBarAxisPositioningMappings() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(data, spec, mappingData) {
+      mapToSpec: function (data, spec, mappingData) {
         // if we have positive and negative values, we want a 0 baseline to be included
         const max = dataHelpers.getMaxValue(data);
 
@@ -444,8 +452,8 @@ function getBarAxisPositioningMappings() {
             );
           }
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -453,7 +461,7 @@ function getColumnEventsMapping() {
   return [
     {
       path: "item.events",
-      mapToSpec: function(events, spec, mappingData) {
+      mapToSpec: function (events, spec, mappingData) {
         const { item } = mappingData;
         const config = spec.config.events;
 
@@ -466,8 +474,8 @@ function getColumnEventsMapping() {
           // Event annotations go in front of areas/lines
           spec.marks.push(...verticalMarks);
         }
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -475,15 +483,15 @@ function getBarEventsMapping() {
   return [
     {
       path: "item.events",
-      mapToSpec: function(events, spec, mappingData) {
+      mapToSpec: function (events, spec, mappingData) {
         const config = spec.config.events;
 
         spec.data.push(...eventHelpers.vegaSpecData(events));
         const horizontalMarks = eventHelpers.horizontalMarks(config);
         // Event annotations go behind bars
         spec.marks.unshift(...horizontalMarks);
-      }
-    }
+      },
+    },
   ];
 }
 
@@ -502,5 +510,5 @@ module.exports = {
   getColumnAxisPositioningMappings,
   getBarAxisPositioningMappings,
   getColumnEventsMapping,
-  getBarEventsMapping
+  getBarEventsMapping,
 };
