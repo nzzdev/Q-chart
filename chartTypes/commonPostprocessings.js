@@ -226,7 +226,7 @@ const showOnlyFirstAndLastLabel = {
 
     // this function only need to run if we are on mobile
     if (spec.width > 400) return document.body.innerHTML;
-    console.log(item);
+    
     const allLabelGroups = document.querySelectorAll(".role-axis-label");
     // only target x labels
     const xLabels = allLabelGroups.length > 0 ? allLabelGroups[0] : [];
