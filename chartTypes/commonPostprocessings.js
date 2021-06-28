@@ -223,10 +223,11 @@ const showOnlyFirstAndLastLabel = {
   process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
+    const isDate = item.data[1] && item.data[1][0] && item.data[1][0].getMonth !== undefined | false;
 
     // this function only need to run if we are on mobile
-    if (spec.width > 400) return document.body.innerHTML;
-    
+    if (spec.width > 400 || !isDate) return document.body.innerHTML;
+
     const allLabelGroups = document.querySelectorAll(".role-axis-label");
     // only target x labels
     const xLabels = allLabelGroups.length > 0 ? allLabelGroups[0] : [];
