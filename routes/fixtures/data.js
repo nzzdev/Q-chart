@@ -21,6 +21,7 @@ const fixtureData = [
   require(`${fixtureDataDirectory}/bar-large-numbers-auto.json`),
   require(`${fixtureDataDirectory}/bar-large-numbers-divide-by-1.json`),
   require(`${fixtureDataDirectory}/bar-maxValue.json`),
+  require(`${fixtureDataDirectory}/bar-axislabel-overlap.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative-only.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-negative.json`),
   require(`${fixtureDataDirectory}/bar-qualitative-single-serie.json`),
