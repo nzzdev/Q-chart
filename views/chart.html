@@ -1,7 +1,7 @@
 <div class="s-q-item q-chart" style="opacity: 0;" id="{{ id }}">
     {% include "./header.html" %}
     {% if legend and (item.data[0].slice(1).length > 1 or legend.hasPrognosis) %}{% include "./legend.html" %}{% endif %}
-    <div class="q-chart-svg-container">{{ svg | safe }}</div>
+    <div class="q-chart-svg-container s-font-note--tabularnums">{{ svg | safe }}</div>
     {% if events.data.length %}{% include "./events.html" %}{% endif %}
     {% include "./footer.html" %}
 </div>
