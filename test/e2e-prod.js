@@ -19,20 +19,20 @@ toolRuntimeConfig.size = {
   width: [
     {
       value: 500,
-      comparison: "="
-    }
-  ]
+      comparison: "=",
+    },
+  ],
 };
 
 let server;
 
-before(async context => {
+before(async (context) => {
   try {
     server = Hapi.server({
       port: process.env.PORT || 3000,
       routes: {
-        cors: true
-      }
+        cors: true,
+      },
     });
     await server.register(require("@hapi/inert"));
     server.route(routes);
@@ -53,16 +53,14 @@ lab.experiment(
     const items = require("./charts.json");
 
     for (let item of items) {
-      it(`doesnt fail in rendering chart "${item.title}" with id ${
-        item._id
-      } `, async () => {
+      it(`doesnt fail in rendering chart "${item.title}" with id ${item._id} `, async () => {
         const request = {
           method: "POST",
-          url: "/rendering-info/web",
+          url: `/rendering-info/web-svg?width=${width}`,
           payload: {
             item: item,
-            toolRuntimeConfig: toolRuntimeConfig
-          }
+            toolRuntimeConfig: toolRuntimeConfig,
+          },
         };
         const response = await server.inject(request);
         const markup = response.result.markup;

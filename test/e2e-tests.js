@@ -121,7 +121,7 @@ lab.experiment("all fixtures render", async () => {
     it(`doesnt fail in rendering fixture ${fixture.title} with width: ${width}`, async () => {
       const request = {
         method: "POST",
-        url: "/rendering-info/web",
+        url: `/rendering-info/web-svg?width=${width}`,
         payload: {
           item: fixture,
           toolRuntimeConfig: toolRuntimeConfig,
