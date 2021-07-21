@@ -10,6 +10,9 @@ const before = lab.before;
 const after = lab.after;
 const it = lab.it;
 
+process.env.DIVERGING_COLOR_SCHEMES =
+  '[\n  {\n    "label": "one",\n    "key": 0,\n    "scheme_name": "diverging_one"\n  },\n  {\n    "label": "two",\n    "key": 1,\n    "scheme_name": "diverging_two"\n  },\n  {\n    "label": "three",\n    "key": 2,\n    "scheme_name": "diverging_three"\n  }\n]';
+
 const routes = require("../routes/routes.js");
 const toolRuntimeConfig = require("./config/toolRuntimeConfig.json");
 
@@ -92,7 +95,7 @@ lab.experiment("Q chart dom tests", () => {
 
   it("number format of area y legend has correct thousend separator", async () => {
     const response = await server.inject({
-      url: `/rendering-info/web-svg?width=${width}`,
+      url: "/rendering-info/web-svg?id=test&width=350",
       method: "POST",
       payload: {
         item: require("../resources/fixtures/data/area-y-legend-thousand-separator"),
