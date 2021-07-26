@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf scripts && mkdir scripts && rm -rf styles && mkdir styles && node tasks/build.js",
-    "test": "lab -a @hapi/code -t 80 -P tests --verbose --leaks",
-    "test-prod-charts": "lab -a @hapi/code -P e2e-prod --verbose --leaks"
+    "test": "lab -a @hapi/code -t 80 -P tests --verbose --leaks"
   },
   "author": "Beni Buess <beni.buess@nzz.ch>",
   "license": "MIT",
