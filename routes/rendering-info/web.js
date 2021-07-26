@@ -1,5 +1,5 @@
 const querystring = require("querystring");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const dataHelpers = require("../../helpers/data.js");
 const dateSeries = require("../../helpers/dateSeries.js");

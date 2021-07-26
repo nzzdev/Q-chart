@@ -105,7 +105,7 @@ lab.experiment("fixture data endpoint", () => {
 });
 
 // all the fixtures render with an svg
-lab.experiment("all fixtures render", async () => {
+lab.experiment("all fixtures render", () => {
   const fixtureFiles = glob.sync(
     `${__dirname}/../resources/fixtures/data/*.json`
   );

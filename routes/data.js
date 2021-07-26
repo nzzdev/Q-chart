@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const slugify = require("slugify");
 
 module.exports = {
@@ -8,11 +8,11 @@ module.exports = {
     cors: true,
     validate: {
       payload: Joi.object({
-        item: Joi.object().required()
-      })
-    }
+        item: Joi.object().required(),
+      }),
+    },
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     let csv = createCSV(request.payload.item.data);
     const response = h.response(csv);
     response.type("text/csv");
@@ -21,7 +21,7 @@ module.exports = {
       `attachment; filename=chart-${slugify(request.payload.item.title)}.csv`
     );
     return response;
-  }
+  },
 };
 
 function createCSV(json) {
