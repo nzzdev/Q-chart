@@ -35,7 +35,7 @@
     "nunjucks": "^3.2.2",
     "object-path": "^0.11.5",
     "slugify": "^1.6.0",
-    "vega": "5.9.1"
+    "vega": "5.20.2"
   },
   "devDependencies": {
     "@hapi/code": "^8.0.3",
