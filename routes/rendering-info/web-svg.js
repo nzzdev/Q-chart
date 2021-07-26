@@ -12,8 +12,8 @@ const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
 const vegaConfig = require("../../config/vega-default.json");
 
-const registerExpressionFunctions = require("../../helpers/vegaExpressionFunctions")
-  .registerExpressionFunctions;
+const registerExpressionFunctions =
+  require("../../helpers/vegaExpressionFunctions").registerExpressionFunctions;
 
 vega.timeFormatLocale(d3config.timeFormatLocale);
 
@@ -51,7 +51,7 @@ async function getSpec(id, width, chartType, item, toolRuntimeConfig) {
   const mappingData = {
     item: item,
     toolRuntimeConfig: toolRuntimeConfig,
-    width: width
+    width: width,
   };
   const chartTypeConfig = require(`../../chartTypes/${chartType}/config.js`);
   if (chartTypeConfig.data.handleDateSeries) {
@@ -153,7 +153,7 @@ async function getSvg(id, request, width, item, toolRuntimeConfig = {}) {
           2
         ),
         {},
-        err => {
+        (err) => {
           if (err) {
             console.error(err);
           }
@@ -219,8 +219,8 @@ const customJoi = Joi.extend({
       try {
         return { value: Bourne.parse(value) };
       } catch (ignoreErr) {}
-    }
-  }
+    },
+  },
 });
 
 module.exports = {
@@ -229,35 +229,24 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
       query: customJoi.object({
         width: customJoi.number().required(),
         noCache: customJoi.boolean(),
         toolRuntimeConfig: customJoi.object().optional(),
-        id: customJoi.string().required()
+        id: customJoi.string().required(),
       }),
       payload: customJoi.object({
         item: customJoi.object(),
-        toolRuntimeConfig: customJoi.object()
-      })
-    }
+        toolRuntimeConfig: customJoi.object(),
+      }),
+    },
   },
-  handler: async function(request, h) {
-    let item = request.payload.item;
+  handler: async function (request, h) {
+    const item = request.payload.item;
     const toolRuntimeConfig =
       request.payload.toolRuntimeConfig || request.query.toolRuntimeConfig;
-
-    // tmp: migrate the data to v2.0.0 schema.
-    // this can be removed once the migration on the db is run
-    const migrationResponse = await request.server.inject({
-      url: "/migration",
-      method: "POST",
-      payload: { item: item }
-    });
-    if (migrationResponse.statusCode === 200) {
-      item = migrationResponse.result.item;
-    }
 
     registerExpressionFunctions(toolRuntimeConfig);
 
@@ -271,7 +260,7 @@ module.exports = {
           request.query.width,
           item,
           toolRuntimeConfig
-        )
+        ),
       };
 
       const response = h.response(webSvg);
@@ -285,5 +274,5 @@ module.exports = {
     } catch (e) {
       throw e;
     }
-  }
+  },
 };
