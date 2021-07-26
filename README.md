@@ -1,4 +1,4 @@
-# Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart) [![Greenkeeper badge](https://badges.greenkeeper.io/nzzdev/Q-chart.svg)](https://greenkeeper.io/)
+# Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart)
 
 **maintainer**: [Manuel Roth](https://github.com/manuelroth)
 

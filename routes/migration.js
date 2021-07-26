@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 // register migration scripts here in order of version,
 // i.e. list the smallest version first
@@ -10,27 +10,27 @@ module.exports = {
   options: {
     validate: {
       payload: Joi.object({
-        item: Joi.object().required()
-      })
-    }
+        item: Joi.object().required(),
+      }),
+    },
   },
   handler: async (request, h) => {
     let item = request.payload.item;
-    const results = migrationScripts.map(script => {
+    const results = migrationScripts.map((script) => {
       const result = script.migrate(item);
       if (result.isChanged) {
         item = result.item;
       }
       return result;
     });
-    const isChanged = results.findIndex(result => {
+    const isChanged = results.findIndex((result) => {
       return result.isChanged;
     });
     if (isChanged >= 0) {
       return {
-        item: item
+        item: item,
       };
     }
     return h.response().code(304);
-  }
+  },
 };

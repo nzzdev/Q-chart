@@ -1,8 +1,8 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const array2d = require("array2d");
 const dateSeries = require("../../helpers/dateSeries.js");
-const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
-  .getChartTypeForItemAndWidth;
+const getChartTypeForItemAndWidth =
+  require("../../helpers/chartType.js").getChartTypeForItemAndWidth;
 
 module.exports = {
   method: "POST",
@@ -10,14 +10,14 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
-      payload: Joi.object().required()
+      payload: Joi.object().required(),
     },
     cors: true,
-    tags: ["api"]
+    tags: ["api"],
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     try {
       const item = request.payload.item;
       const options = request.payload.options;
@@ -32,13 +32,13 @@ module.exports = {
         return {
           message: {
             title: "notifications.shouldBeLineChart.title",
-            body: "notifications.shouldBeLineChart.body"
-          }
+            body: "notifications.shouldBeLineChart.body",
+          },
         };
       }
       return null;
     } catch (err) {
       return null;
     }
-  }
+  },
 };

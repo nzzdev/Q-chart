@@ -1,9 +1,9 @@
 const Boom = require("@hapi/boom");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const {
   isDateSeries,
-  getFirstColumnSerie
+  getFirstColumnSerie,
 } = require("../helpers/dateSeries.js");
 
 const {
@@ -13,10 +13,11 @@ const {
   isAreaChart,
   isDotplot,
   isArrowChart,
-  getChartTypeForItemAndWidth
+  getChartTypeForItemAndWidth,
 } = require("../helpers/chartType.js");
 
-const configuredDivergingColorSchemes = require("../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
+const configuredDivergingColorSchemes =
+  require("../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
 const eventsAvailableForItem = require("../helpers/events.js").availableForItem;
 
@@ -25,22 +26,22 @@ module.exports = {
   path: "/option-availability/{optionName}",
   options: {
     validate: {
-      payload: Joi.object()
+      payload: Joi.object(),
     },
-    cors: true
+    cors: true,
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     const item = request.payload.item;
 
     if (request.params.optionName === "events") {
       return {
-        available: eventsAvailableForItem(item)
+        available: eventsAvailableForItem(item),
       };
     }
 
     if (request.params.optionName === "bar") {
       return {
-        available: isBarChart(item) || isStackedBarChart(item)
+        available: isBarChart(item) || isStackedBarChart(item),
       };
     }
 
@@ -48,19 +49,19 @@ module.exports = {
       return {
         available:
           (isBarChart(item) || isStackedBarChart(item)) &&
-          !item.options.barOptions.isBarChart
+          !item.options.barOptions.isBarChart,
       };
     }
 
     if (request.params.optionName === "line") {
       return {
-        available: isLineChart(item)
+        available: isLineChart(item),
       };
     }
 
     if (request.params.optionName === "area") {
       return {
-        available: isAreaChart(item)
+        available: isAreaChart(item),
       };
     }
 
@@ -68,30 +69,30 @@ module.exports = {
       try {
         const serie = getFirstColumnSerie(item.data);
         return {
-          available: isDateSeries(serie) && isLineChart(item)
+          available: isDateSeries(serie) && isLineChart(item),
         };
       } catch (e) {
         return {
-          available: false
+          available: false,
         };
       }
     }
 
     if (request.params.optionName === "dotplot") {
       return {
-        available: isDotplot(item)
+        available: isDotplot(item),
       };
     }
 
     if (request.params.optionName === "arrow") {
       return {
-        available: isArrowChart(item)
+        available: isArrowChart(item),
       };
     }
 
     if (request.params.optionName === "arrow.colorScheme") {
       return {
-        available: isArrowChart(item) && configuredDivergingColorSchemes
+        available: isArrowChart(item) && configuredDivergingColorSchemes,
       };
     }
 
@@ -103,7 +104,7 @@ module.exports = {
       const chartTypeConfig = require(`../chartTypes/${chartType}/config.js`);
       if (!chartTypeConfig.data.handleDateSeries) {
         return {
-          available: false
+          available: false,
         };
       }
 
@@ -117,20 +118,20 @@ module.exports = {
       }
 
       return {
-        available: isAvailable
+        available: isAvailable,
       };
     }
 
     if (request.params.optionName === "dateSeriesOptions.labels") {
       const chartType = getChartTypeForItemAndWidth(item, 400); // just hardcode a small width here because it doesn't matter in this case
       return {
-        available: chartType === "line" || chartType === "area"
+        available: chartType === "line" || chartType === "area",
       };
     }
 
     if (request.params.optionName === "highlightDataSeries") {
       return {
-        available: !isArrowChart(item) && item.data[0].length > 2
+        available: !isArrowChart(item) && item.data[0].length > 2,
       };
     }
 
@@ -140,7 +141,7 @@ module.exports = {
         available:
           (!Array.isArray(item.options.colorOverwritesRows) ||
             item.options.colorOverwritesRows.length === 0) &&
-          !isArrowChart(item)
+          !isArrowChart(item),
       };
     }
 
@@ -157,7 +158,7 @@ module.exports = {
           item.data[0].length < 4 &&
           !isArrowChart(item) &&
           !isLineChart(item) &&
-          !isAreaChart(item)
+          !isAreaChart(item),
       };
     }
 
@@ -166,7 +167,7 @@ module.exports = {
     if (request.params.optionName === "highlightDataRows") {
       return {
         available:
-          !isArrowChart(item) && !isLineChart(item) && !isAreaChart(item)
+          !isArrowChart(item) && !isLineChart(item) && !isAreaChart(item),
       };
     }
 
@@ -196,48 +197,48 @@ module.exports = {
       }
 
       return {
-        available: available
+        available: available,
       };
     }
 
     if (request.params.optionName === "annotations.first") {
       return {
-        available: isLineChart(item) || isArrowChart(item)
+        available: isLineChart(item) || isArrowChart(item),
       };
     }
 
     if (request.params.optionName === "annotations.last") {
       return {
-        available: isLineChart(item) || isArrowChart(item)
+        available: isLineChart(item) || isArrowChart(item),
       };
     }
 
     if (request.params.optionName === "annotations.max") {
       return {
-        available: isLineChart(item) || isDotplot(item)
+        available: isLineChart(item) || isDotplot(item),
       };
     }
 
     if (request.params.optionName === "annotations.min") {
       return {
-        available: isLineChart(item) || isDotplot(item)
+        available: isLineChart(item) || isDotplot(item),
       };
     }
 
     if (request.params.optionName === "annotations.diff") {
       return {
-        available: isDotplot(item) || isArrowChart(item)
+        available: isDotplot(item) || isArrowChart(item),
       };
     }
 
     if (request.params.optionName === "annotations.valuesOnBars") {
       try {
         return {
-          available: isBarChart(item) || isStackedBarChart(item)
+          available: isBarChart(item) || isStackedBarChart(item),
         };
       } catch (e) {
         return {
-          available: false
+          available: false,
         };
       }
     }
@@ -247,7 +248,7 @@ module.exports = {
         available:
           isLineChart(item) ||
           ((isBarChart(item) || isStackedBarChart(item)) &&
-            !item.options.barOptions.isBarChart)
+            !item.options.barOptions.isBarChart),
       };
     }
 
@@ -257,10 +258,10 @@ module.exports = {
           !isArrowChart(item) &&
           item.data[0].length > 2 &&
           Array.isArray(item.options.colorOverwritesRows) &&
-          item.options.colorOverwritesRows.length > 0
+          item.options.colorOverwritesRows.length > 0,
       };
     }
 
     return Boom.badRequest();
-  }
+  },
 };

@@ -8,6 +8,8 @@ const expect = Code.expect;
 const before = lab.before;
 const after = lab.after;
 const it = lab.it;
+process.env.DIVERGING_COLOR_SCHEMES =
+  '[\n  {\n    "label": "one",\n    "key": 0,\n    "scheme_name": "diverging_one"\n  },\n  {\n    "label": "two",\n    "key": 1,\n    "scheme_name": "diverging_two"\n  },\n  {\n    "label": "three",\n    "key": 2,\n    "scheme_name": "diverging_three"\n  }\n]';
 
 const routes = require("../routes/routes.js");
 
@@ -103,7 +105,7 @@ lab.experiment("fixture data endpoint", () => {
 });
 
 // all the fixtures render with an svg
-lab.experiment("all fixtures render", async () => {
+lab.experiment("all fixtures render", () => {
   const fixtureFiles = glob.sync(
     `${__dirname}/../resources/fixtures/data/*.json`
   );
@@ -121,7 +123,7 @@ lab.experiment("all fixtures render", async () => {
     it(`doesnt fail in rendering fixture ${fixture.title} with width: ${width}`, async () => {
       const request = {
         method: "POST",
-        url: "/rendering-info/web",
+        url: `/rendering-info/web-svg?id=test&width=${width}`,
         payload: {
           item: fixture,
           toolRuntimeConfig: toolRuntimeConfig,
@@ -130,9 +132,7 @@ lab.experiment("all fixtures render", async () => {
       const response = await server.inject(request);
       const markup = response.result.markup;
       const dom = new JSDOM(markup);
-      const svgElement = dom.window.document.querySelector(
-        ".q-chart-svg-container svg"
-      );
+      const svgElement = dom.window.document.querySelector("svg");
       expect(svgElement.innerHTML.length).to.be.greaterThan(200);
     });
   }

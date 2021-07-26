@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const helpers = require("../../helpers/dateSeries.js");
 
 const separators = [".", "/", "-"];
@@ -9,14 +9,14 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
-      payload: Joi.object().required()
+      payload: Joi.object().required(),
     },
     cors: true,
-    tags: ["api"]
+    tags: ["api"],
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     try {
       const item = request.payload.item;
       // if this is a correct date series, we do not have a problem
@@ -37,8 +37,8 @@ module.exports = {
             return {
               message: {
                 title: "notifications.unsupportedDateFormat.title",
-                body: "notifications.unsupportedDateFormat.body"
-              }
+                body: "notifications.unsupportedDateFormat.body",
+              },
             };
           }
         }
@@ -47,5 +47,5 @@ module.exports = {
     } catch (err) {
       return null;
     }
-  }
+  },
 };

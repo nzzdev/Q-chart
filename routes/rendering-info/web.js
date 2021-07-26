@@ -1,5 +1,5 @@
 const querystring = require("querystring");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const dataHelpers = require("../../helpers/data.js");
 const dateSeries = require("../../helpers/dateSeries.js");
@@ -14,16 +14,13 @@ const nunjucksEnv = new nunjucks.Environment();
 
 const styleHashMap = require(`${stylesDir}hashMap.json`);
 
-const getExactPixelWidth = require("../../helpers/toolRuntimeConfig.js")
-  .getExactPixelWidth;
+const getToolRuntimeConfigOptimizedForClientRequest =
+  require("../../helpers/toolRuntimeConfig.js").getToolRuntimeConfigOptimizedForClientRequest;
 
-const getToolRuntimeConfigOptimizedForClientRequest = require("../../helpers/toolRuntimeConfig.js")
-  .getToolRuntimeConfigOptimizedForClientRequest;
-
-const getChartTypeForItemAndWidth = require("../../helpers/chartType.js")
-  .getChartTypeForItemAndWidth;
-const getDataWithStringsCastedToFloats = require("../../helpers/data.js")
-  .getDataWithStringsCastedToFloats;
+const getChartTypeForItemAndWidth =
+  require("../../helpers/chartType.js").getChartTypeForItemAndWidth;
+const getDataWithStringsCastedToFloats =
+  require("../../helpers/data.js").getDataWithStringsCastedToFloats;
 const legend = require("../../helpers/legend/index.js");
 const colorSchemeHelpers = require("../../helpers/colorSchemes.js");
 
@@ -33,33 +30,22 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
       payload: Joi.object({
         item: Joi.object(),
         toolRuntimeConfig: Joi.object({
           colorSchemes: Joi.object({
             categorical_normal: Joi.array().required(),
-            categorical_light: Joi.array().required()
-          })
-        })
-      })
-    }
+            categorical_light: Joi.array().required(),
+          }),
+        }),
+      }),
+    },
   },
-  handler: async function(request, h) {
-    let item = request.payload.item;
+  handler: async function (request, h) {
+    const item = request.payload.item;
     const toolRuntimeConfig = request.payload.toolRuntimeConfig;
-
-    // tmp: migrate the data to v2.0.0 schema.
-    // this can be removed once the migration on the db is run
-    const migrationResponse = await request.server.inject({
-      url: "/migration",
-      method: "POST",
-      payload: { item: item }
-    });
-    if (migrationResponse.statusCode === 200) {
-      item = migrationResponse.result.item;
-    }
 
     // we need to register the color schemes configured by toolRuntimeConfig first
     // they are used for the legend later on therefore they cannot be configured in the web-svg handler only
@@ -81,18 +67,22 @@ module.exports = {
       // handle auto interval here
       // by calculating the interval from the data and setting this to the actual data we are rendering
       if (item.options.dateSeriesOptions.interval === "auto") {
-        item.options.dateSeriesOptions.interval = dateSeries.getIntervalForData(
-          data
-        );
+        item.options.dateSeriesOptions.interval =
+          dateSeries.getIntervalForData(data);
       }
     }
 
     if (!dataHelpers.hasManualDivisor(item.options.largeNumbers)) {
       // check if we need to add a subtitle suffix because we will shorten the numbers for Y Axis
-      const divisor = dataHelpers.getDivisor(item.data, item.options.largeNumbers);
+      const divisor = dataHelpers.getDivisor(
+        item.data,
+        item.options.largeNumbers
+      );
       if (divisor > 1) {
         if (item.subtitle && item.subtitle !== "") {
-          item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(divisor)})`;
+          item.subtitleSuffix = ` (in ${dataHelpers.getDivisorString(
+            divisor
+          )})`;
         } else {
           item.subtitleSuffix = `in ${dataHelpers.getDivisorString(divisor)}`;
         }
@@ -114,7 +104,7 @@ module.exports = {
       item: item,
       events: {
         data: events,
-        config: toolRuntimeConfig.events
+        config: toolRuntimeConfig.events,
       },
       displayOptions: toolRuntimeConfig.displayOptions || {},
       legend: await legend[legendType].getLegendModel(
@@ -123,7 +113,7 @@ module.exports = {
         chartType,
         request.server
       ),
-      id: `q_chart_${toolRuntimeConfig.requestId}`
+      id: `q_chart_${toolRuntimeConfig.requestId}`,
     };
 
     if (item.allowDownloadData) {
@@ -131,63 +121,52 @@ module.exports = {
     }
 
     const renderingInfo = {};
+    // polyfill Promise
+    renderingInfo.polyfills = ["Promise"];
 
-    // if we have the width in toolRuntimeConfig.size
-    // we can send the svg right away
-    const exactPixelWidth = getExactPixelWidth(toolRuntimeConfig);
-    if (typeof exactPixelWidth === "number") {
-      const svgResponse = await request.server.inject({
-        method: "POST",
-        url: `/rendering-info/web-svg?width=${exactPixelWidth}&id=${context.id}`,
-        payload: request.payload
-      });
-      context.svg = svgResponse.result.markup;
-    } else {
-      // polyfill Promise
-      renderingInfo.polyfills = ["Promise"];
+    // return a script in rendering info
+    // requesting the svg in width measured in the client
+    const functionName = `loadSVG${context.id}`;
+    const dataObject = `${context.id}Data`;
 
-      // return a script in rendering info
-      // requesting the svg in width measured in the client
-      const functionName = `loadSVG${context.id}`;
-      const dataObject = `${context.id}Data`;
-
-      const toolRuntimeConfigForWebSVG = getToolRuntimeConfigOptimizedForClientRequest(
+    const toolRuntimeConfigForWebSVG =
+      getToolRuntimeConfigOptimizedForClientRequest(
         {
           axis: toolRuntimeConfig.axis,
           text: toolRuntimeConfig.text,
           colorSchemes: toolRuntimeConfig.colorSchemes,
           events: toolRuntimeConfig.events,
-          displayOptions: toolRuntimeConfig.displayOptions || {}
+          displayOptions: toolRuntimeConfig.displayOptions || {},
         },
         item
       );
 
-      let requestMethod;
-      let requestBodyString;
+    let requestMethod;
+    let requestBodyString;
 
-      const queryParams = {
-        id: context.id
-      };
-      // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
-      if (request.payload.itemStateInDb === true) {
-        requestMethod = "GET";
-        queryParams.toolRuntimeConfig = JSON.stringify(
-          toolRuntimeConfigForWebSVG
-        );
-        // add the item id to appendItemToPayload if it's state is in the db (aka not preview)
-        queryParams.appendItemToPayload = request.query._id;
-      } else {
-        requestMethod = "POST";
-        queryParams.noCache = true; // set this if we do not have item state in DB as it will probably change
-        requestBodyString = JSON.stringify({
-          item: request.payload.item,
-          toolRuntimeConfig: toolRuntimeConfigForWebSVG
-        });
-      }
+    const queryParams = {
+      id: context.id,
+    };
+    // if we have the current item state in DB, we do a GET request, otherwise POST with the item and toolRuntimeConfig in the payload
+    if (request.payload.itemStateInDb === true) {
+      requestMethod = "GET";
+      queryParams.toolRuntimeConfig = JSON.stringify(
+        toolRuntimeConfigForWebSVG
+      );
+      // add the item id to appendItemToPayload if it's state is in the db (aka not preview)
+      queryParams.appendItemToPayload = request.query._id;
+    } else {
+      requestMethod = "POST";
+      queryParams.noCache = true; // set this if we do not have item state in DB as it will probably change
+      requestBodyString = JSON.stringify({
+        item: request.payload.item,
+        toolRuntimeConfig: toolRuntimeConfigForWebSVG,
+      });
+    }
 
-      renderingInfo.scripts = [
-        {
-          content: `
+    renderingInfo.scripts = [
+      {
+        content: `
             if (!window.q_domready) {
               window.q_domready = new Promise(function(resolve) {
                 if (document.readyState && (document.readyState === 'interactive' || document.readyState === 'complete')) {
@@ -216,8 +195,8 @@ module.exports = {
               fetch("${
                 toolRuntimeConfig.toolBaseUrl
               }/rendering-info/web-svg?${querystring.stringify(
-            queryParams
-          )}&width=" + ${dataObject}.width, {
+          queryParams
+        )}&width=" + ${dataObject}.width, {
                 method: "${requestMethod}",
                 ${
                   requestBodyString
@@ -260,21 +239,20 @@ module.exports = {
                 });
               }
             });
-          `
-        }
-      ];
-    }
+          `,
+      },
+    ];
     renderingInfo.stylesheets = [
       {
-        name: styleHashMap["q-chart"]
-      }
+        name: styleHashMap["q-chart"],
+      },
     ];
     renderingInfo.markup = nunjucksEnv.render(viewsDir + "chart.html", context);
 
     renderingInfo.loaderConfig = {
-      polyfills: ["Promise", "fetch"]
+      polyfills: ["Promise", "fetch"],
     };
 
     return renderingInfo;
-  }
+  },
 };
