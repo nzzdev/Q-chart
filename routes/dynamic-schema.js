@@ -1,5 +1,5 @@
 const Boom = require("@hapi/boom");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const dateSeries = require("../helpers/dateSeries.js");
 
@@ -8,21 +8,21 @@ module.exports = {
   path: "/dynamic-schema/{optionName}",
   options: {
     validate: {
-      payload: Joi.object()
+      payload: Joi.object(),
     },
-    cors: true
+    cors: true,
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     const item = request.payload.item;
 
     if (request.params.optionName === "highlighDataSeries") {
       try {
         return {
-          maxItems: item.data[0].length - 2 // the number of data series - 1
+          maxItems: item.data[0].length - 2, // the number of data series - 1
         };
       } catch {
         return {
-          maxItems: undefined
+          maxItems: undefined,
         };
       }
     }
@@ -30,11 +30,11 @@ module.exports = {
     if (request.params.optionName === "highlightDataRows") {
       try {
         return {
-          maxItems: item.data.length - 2 // the number of data rows - 1
+          maxItems: item.data.length - 2, // the number of data rows - 1
         };
       } catch {
         return {
-          maxItems: undefined
+          maxItems: undefined,
         };
       }
     }
@@ -44,8 +44,8 @@ module.exports = {
         return {
           title: `${item.data[0][0]} wählen`,
           "Q:options": {
-            buttonLabel: "Hervorhebung"
-          }
+            buttonLabel: "Hervorhebung",
+          },
         };
       } catch {
         return {};
@@ -55,7 +55,7 @@ module.exports = {
     if (request.params.optionName === "colorOverwritesSeries") {
       try {
         return {
-          maxItems: item.data[0].length - 1 // the number of data series
+          maxItems: item.data[0].length - 1, // the number of data series
         };
       } catch {
         return {};
@@ -73,8 +73,8 @@ module.exports = {
               item.data[0]
                 .slice(1)
                 .map((val, index) => `${index + 1} - (${val})`)
-            )
-          }
+            ),
+          },
         };
       } catch {
         return {};
@@ -92,8 +92,8 @@ module.exports = {
               item.data
                 .slice(1)
                 .map((row, index) => `${index + 1} - (${row[0]})`)
-            )
-          }
+            ),
+          },
         };
       } catch {
         return {};
@@ -108,10 +108,10 @@ module.exports = {
           "Q:options": {
             enum_titles: ["automatisch"].concat(
               Object.keys(dateSeries.intervals)
-                .filter(key => dateFormat.validIntervals.includes(key))
-                .map(interval => dateSeries.intervals[interval].label)
-            )
-          }
+                .filter((key) => dateFormat.validIntervals.includes(key))
+                .map((interval) => dateSeries.intervals[interval].label)
+            ),
+          },
         };
       } catch {
         return {};
@@ -119,5 +119,5 @@ module.exports = {
     }
 
     return Boom.badRequest();
-  }
+  },
 };

@@ -1,5 +1,5 @@
 const querystring = require("querystring");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const dataHelpers = require("../../helpers/data.js");
 const dateSeries = require("../../helpers/dateSeries.js");
@@ -44,19 +44,8 @@ module.exports = {
     },
   },
   handler: async function (request, h) {
-    let item = request.payload.item;
+    const item = request.payload.item;
     const toolRuntimeConfig = request.payload.toolRuntimeConfig;
-
-    // tmp: migrate the data to v2.0.0 schema.
-    // this can be removed once the migration on the db is run
-    const migrationResponse = await request.server.inject({
-      url: "/migration",
-      method: "POST",
-      payload: { item: item },
-    });
-    if (migrationResponse.statusCode === 200) {
-      item = migrationResponse.result.item;
-    }
 
     // we need to register the color schemes configured by toolRuntimeConfig first
     // they are used for the legend later on therefore they cannot be configured in the web-svg handler only

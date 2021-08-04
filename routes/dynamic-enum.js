@@ -1,7 +1,7 @@
 const Boom = require("@hapi/boom");
-const Joi = require("@hapi/joi");
-const getFirstColumnSerie = require("../helpers/dateSeries.js")
-  .getFirstColumnSerie;
+const Joi = require("joi");
+const getFirstColumnSerie =
+  require("../helpers/dateSeries.js").getFirstColumnSerie;
 
 function getChartTypeEnumWithTitles(item) {
   const chartTypes = {
@@ -11,8 +11,8 @@ function getChartTypeEnumWithTitles(item) {
       "Gestapelte Säulen",
       "Linien",
       "Flächen",
-      "Dot Plot"
-    ]
+      "Dot Plot",
+    ],
   };
   try {
     if (item.data[0].length === 3) {
@@ -52,7 +52,7 @@ function getHighlightRowsEnumTitles(item) {
   if (item.data.length < 1) {
     return [];
   }
-  return item.data.map(row => row[0]).slice(1);
+  return item.data.map((row) => row[0]).slice(1);
 }
 
 function getPrognosisStartEnum(item) {
@@ -76,11 +76,11 @@ module.exports = {
   path: "/dynamic-enum/{optionName}",
   options: {
     validate: {
-      payload: Joi.object()
+      payload: Joi.object(),
     },
-    cors: true
+    cors: true,
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     const item = request.payload.item;
     if (request.params.optionName === "chartType") {
       return getChartTypeEnumWithTitles(item);
@@ -89,24 +89,24 @@ module.exports = {
     if (request.params.optionName === "highlightDataSeries") {
       return {
         enum: getHighlightSeriesEnum(item),
-        enum_titles: getHighlightSeriesEnumTitles(item)
+        enum_titles: getHighlightSeriesEnumTitles(item),
       };
     }
 
     if (request.params.optionName === "highlightDataRows") {
       return {
         enum: getHighlightRowsEnum(item),
-        enum_titles: getHighlightRowsEnumTitles(item)
+        enum_titles: getHighlightRowsEnumTitles(item),
       };
     }
 
     if (request.params.optionName === "prognosisStart") {
       return {
         enum: getPrognosisStartEnum(item),
-        enum_titles: getPrognosisStartEnumTitles(item)
+        enum_titles: getPrognosisStartEnumTitles(item),
       };
     }
 
     return Boom.badRequest();
-  }
+  },
 };

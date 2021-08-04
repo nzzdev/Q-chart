@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 const dateSeries = require("../../helpers/dateSeries.js");
 
 module.exports = {
@@ -7,17 +7,17 @@ module.exports = {
   options: {
     validate: {
       options: {
-        allowUnknown: true
+        allowUnknown: true,
       },
-      payload: Joi.object().required()
+      payload: Joi.object().required(),
     },
     cors: true,
     cache: {
-      expiresIn: 1000 * 60 // 60 seconds
+      expiresIn: 1000 * 60, // 60 seconds
     },
-    tags: ["api"]
+    tags: ["api"],
   },
-  handler: function(request, h) {
+  handler: function (request, h) {
     try {
       const item = request.payload.item;
       if (
@@ -27,13 +27,13 @@ module.exports = {
         return {
           message: {
             title: "notifications.hideAxisLabel.title",
-            body: "notifications.hideAxisLabel.body"
-          }
+            body: "notifications.hideAxisLabel.body",
+          },
         };
       }
       return null;
     } catch (err) {
       return null;
     }
-  }
+  },
 };
