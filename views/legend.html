@@ -12,7 +12,11 @@
     {%- endfor %}
     {%- else %}
       <div class="s-legend-item-label__item__icon s-legend-item-label__item__icon--{{ item.iconType }} {% if item.isPrognosis %}s-legend-item-label__item__icon--prognosis{% endif %}"></div>
-      <div class="s-legend-item-label__item__label">{{ item.label }}</div>
+      {%- if item.isHighlighted %}
+        <div class="s-legend-item-label__item__label" style="font-weight: bold;">{{ item.label }}</div>
+      {%- else %}
+        <div class="s-legend-item-label__item__label">{{ item.label }}</div>
+      {%- endif %}
     {%- endif %}
   </div>
   {%- endfor %}

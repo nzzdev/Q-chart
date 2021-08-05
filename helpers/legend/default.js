@@ -57,11 +57,13 @@ async function getLegendModel(item, toolRuntimeConfig, chartType, server) {
           color = toolRuntimeConfig.colorSchemes.grays[8];
         }
       }
-
+      
       return {
         label: label,
         color: color,
-        iconType: legendType
+        iconType: legendType,
+        isHighlighted: optionsHelpers.hasSeriesHighlight(item) &&
+        item.options.highlightDataSeries.includes(index)
       };
     });
     legendModel.legendItems = legendModel.legendItems.concat(dataSeries);
