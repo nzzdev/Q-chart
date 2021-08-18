@@ -83,6 +83,20 @@
               "type": "low",
               "value": 3
             }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/tooManyData",
+              "fields": ["data"],
+              "options": {
+                "limit": 601
+              }
+            },
+            "priority": {
+              "type": "medium",
+              "value": 3
+            }
           }
         ]
       },

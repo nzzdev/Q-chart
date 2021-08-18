@@ -24,6 +24,10 @@
       "title": "Format de date valide",
       "body": "La colonne A contient des données dans un format de date valide. Les options de série de dates peuvent être utilisées."
     },
+    "tooManyData": {
+      "title": "Trop de points de données",
+      "body": "Avec 600 points de données ou plus, il est conseillé de les agréger d'abord avant de les utiliser dans le graphique."
+    },
     "unsupportedDateFormat": {
       "title": "Format de date invalide",
       "body": "La colonne A contient probablement un format de date non pris en charge. Veuillez consulter le manuel pour une liste des formats supportés."
