@@ -24,9 +24,9 @@
       "title": "Supported date format",
       "body": "Column A contains data in a valid date format. The date series options can be used."
     },
-    "tooManyData": {
-      "title": "Too many data points",
-      "body": "With 600 or more data points, it is advisable to aggregate them first before using them in the chart."
+    "tooManyRows": {
+      "title": "Too many rows",
+      "body": "With 600 or more rows, it is advisable to aggregate them first before using them in the chart."
     },
     "unsupportedDateFormat": {
       "title": "Unsupported date format",

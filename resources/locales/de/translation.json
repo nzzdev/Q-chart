@@ -24,9 +24,9 @@
       "title": "Gültiges Datumsformat",
       "body": "Spalte A enthält Daten in einem gültigen Datumsformat. Die Optionen für Datumsreihen können verwendet werden."
     },
-    "tooManyData": {
-      "title": "Zu viele Datenpunkte",
-      "body": "Bei 600 oder mehr Datenpunkten ist es ratsam diese zuerst zu aggregieren, bevor sie im Diagramm verwendet werden."
+    "tooManyRows": {
+      "title": "Zu viele Zeilen",
+      "body": "Bei 600 oder mehr Zeilen ist es ratsam diese zuerst zu aggregieren, bevor sie im Diagramm verwendet werden."
     },
     "unsupportedDateFormat": {
       "title": "Ungültiges Datumsformat",

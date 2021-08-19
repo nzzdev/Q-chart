@@ -3,7 +3,7 @@ const array2d = require("array2d");
 
 module.exports = {
   method: "POST",
-  path: "/notification/tooManyData",
+  path: "/notification/tooManyRows",
   options: {
     validate: {
       options: {
@@ -25,8 +25,8 @@ module.exports = {
       ) {
         return {
           message: {
-            title: "notifications.tooManyData.title",
-            body: "notifications.tooManyData.body",
+            title: "notifications.tooManyRows.title",
+            body: "notifications.tooManyRows.body",
           },
         };
       }
