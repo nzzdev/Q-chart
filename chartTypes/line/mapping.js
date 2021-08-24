@@ -22,7 +22,10 @@ module.exports = function getMappings() {
         objectPath.set(spec, "axes.0.title", itemData[0][0]);
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          itemData,
+          mappingData.item.options.largeNumbers
+        );
 
         spec.data = [
           {
@@ -177,7 +180,10 @@ module.exports = function getMappings() {
       path: "item.options.lineChartOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
         if (dataMinValue < minValue) {
@@ -192,7 +198,10 @@ module.exports = function getMappings() {
       path: "item.options.lineChartOptions.maxValue",
       mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
@@ -239,16 +248,35 @@ module.exports = function getMappings() {
         });
 
         // split the marks at the prognosisStart index
-        const lineMark = clone(spec.marks[0].marks[0]);
+        const beforePrognosisDate =
+          "datum.yValue !== null && datum.xValue <= prognosisStartDate";
+        const lineMarkHighlight = clone(spec.marks[0].marks[0]);
+        const lineMark = clone(spec.marks[0].marks[1]);
+        lineMarkHighlight.encode.enter.defined = {
+          signal: beforePrognosisDate,
+        };
         lineMark.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xValue <= prognosisStartDate",
+          signal: beforePrognosisDate,
         };
-        const lineMarkPrognosis = clone(spec.marks[0].marks[0]);
+
+        const afterPrognosisDate =
+          "datum.yValue !== null && datum.xValue >= prognosisStartDate";
+        const lineMarkPrognosisHighlight = clone(spec.marks[0].marks[0]);
+        const lineMarkPrognosis = clone(spec.marks[0].marks[1]);
+        lineMarkPrognosisHighlight.encode.enter.defined = {
+          signal: afterPrognosisDate,
+        };
         lineMarkPrognosis.encode.enter.defined = {
-          signal: "datum.yValue !== null && datum.xValue >= prognosisStartDate",
+          signal: afterPrognosisDate,
         };
+        lineMarkPrognosisHighlight.style = "prognosisLine";
         lineMarkPrognosis.style = "prognosisLine";
-        spec.marks[0].marks = [lineMark, lineMarkPrognosis];
+        spec.marks[0].marks = [
+          lineMarkHighlight,
+          lineMark,
+          lineMarkPrognosisHighlight,
+          lineMarkPrognosis,
+        ];
       },
     },
     {
