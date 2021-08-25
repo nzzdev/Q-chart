@@ -24,6 +24,20 @@
       "Q:options": {
         "notificationChecks": [
           {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/supportedDateFormat",
+              "fields": ["data"],
+              "options": {
+                "limit": 8
+              }
+            },
+            "priority": {
+              "type": "low",
+              "value": 0
+            }
+          },
+          {
             "type": "EmptyData",
             "config": {
               "fields": ["data"]
@@ -31,29 +45,6 @@
             "priority": {
               "type": "low",
               "value": 1
-            }
-          },
-          {
-            "type": "HasColumnTitles",
-            "config": {
-              "fields": ["data"]
-            },
-            "priority": {
-              "type": "medium",
-              "value": 1
-            }
-          },
-          {
-            "type": "TooManyColumns",
-            "config": {
-              "fields": ["data"],
-              "options": {
-                "limit": 8
-              }
-            },
-            "priority": {
-              "type": "medium",
-              "value": 2
             }
           },
           {
@@ -67,20 +58,43 @@
             },
             "priority": {
               "type": "medium",
-              "value": 3
+              "value": 0
             }
           },
           {
-            "type": "ToolEndpoint",
+            "type": "TooManyColumns",
             "config": {
-              "endpoint": "notification/supportedDateFormat",
               "fields": ["data"],
               "options": {
                 "limit": 8
               }
             },
             "priority": {
-              "type": "low",
+              "type": "medium",
+              "value": 1
+            }
+          },
+          {
+            "type": "HasColumnTitles",
+            "config": {
+              "fields": ["data"]
+            },
+            "priority": {
+              "type": "medium",
+              "value": 2
+            }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
+              "endpoint": "notification/tooManyRows",
+              "fields": ["data"],
+              "options": {
+                "limit": 601
+              }
+            },
+            "priority": {
+              "type": "medium",
               "value": 3
             }
           }
