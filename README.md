@@ -310,6 +310,6 @@ One of `[0, 1, 1e3, 1e6, 1e9]`.
 
 ## LICENSE
 
-Copyright (c) 2019 Neue Zürcher Zeitung.
+Copyright (c) Neue Zürcher Zeitung.
 
 This software is licensed under the [MIT](LICENSE) License.
