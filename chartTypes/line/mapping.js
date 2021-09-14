@@ -229,6 +229,11 @@ module.exports = function getMappings() {
             "marks.0.marks.0.encode.enter.interpolate.value",
             interpolation
           );
+          objectPath.set(
+            spec,
+            "marks.0.marks.1.encode.enter.interpolate.value",
+            interpolation
+          );
         }
       },
     },
