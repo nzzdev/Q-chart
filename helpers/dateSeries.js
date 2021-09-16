@@ -73,7 +73,7 @@ const dateFormats = {
   "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: ["decade", "year", "quarter", "month", "monthWithoutYear"],
     getDate: (parsed) => {
       return new Date(parsed[1], parsed[2] - 1, 1);
     },
@@ -81,7 +81,7 @@ const dateFormats = {
   "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: ["decade", "year", "quarter", "month", "monthWithoutYear"],
     getDate: (parsed) => {
       return new Date(parsed[2], parsed[1] - 1, 1);
     },
@@ -89,7 +89,14 @@ const dateFormats = {
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "month",
+      "monthWithoutYear",
+      "week",
+    ],
     getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
     },
@@ -97,7 +104,14 @@ const dateFormats = {
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "month",
+      "monthWithoutYear",
+      "week",
+    ],
     getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
     },
@@ -105,35 +119,64 @@ const dateFormats = {
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: (parsed) => {
-      return new Date(parsed[4], parsed[1] - 1, parsed[3]);
-    },
-  },
-  "DD/MM/YYYY": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
-    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: (parsed) => {
-      return new Date(parsed[4], parsed[3] - 1, parsed[1]);
-    },
-  },
-  "YYYY-MM-DD": {
-    match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
-    getDate: (parsed) => {
-      return new Date(parsed[1], parsed[3] - 1, parsed[4]);
-    },
-  },
-  "MM/DD/YYYY HH:MM": {
-    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
+      "week",
+      "day",
+    ],
+    getDate: (parsed) => {
+      return new Date(parsed[4], parsed[1] - 1, parsed[3]);
+    },
+  },
+  "DD/MM/YYYY": {
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
+    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "day",
+    ],
+    getDate: (parsed) => {
+      return new Date(parsed[4], parsed[3] - 1, parsed[1]);
+    },
+  },
+  "YYYY-MM-DD": {
+    match:
+      /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
+    parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "day",
+    ],
+    getDate: (parsed) => {
+      return new Date(parsed[1], parsed[3] - 1, parsed[4]);
+    },
+  },
+  "MM/DD/YYYY HH:MM": {
+    match:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -156,13 +199,16 @@ const dateFormats = {
     },
   },
   "DD.MM.YYYY HH:MM": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -185,13 +231,16 @@ const dateFormats = {
     },
   },
   "YYYY-MM-DD HH:MM": {
-    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    match:
+      /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -214,13 +263,16 @@ const dateFormats = {
     },
   },
   "MM/DD/YYYY HH:MM:SS": {
-    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -244,13 +296,16 @@ const dateFormats = {
     },
   },
   "DD.MM.YYYY HH:MM:SS": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -274,13 +329,16 @@ const dateFormats = {
     },
   },
   "YYYY-MM-DD HH:MM:SS": {
-    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
       "month",
+      "monthWithoutYear",
       "week",
       "day",
       "hour",
@@ -541,7 +599,32 @@ const intervals = {
   month: {
     d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 1 },
-    label: "Monate",
+    label: "Monate (Jan. 2021)",
+    getFirstStepDateAfterDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const firstOfTheSameMonth = new Date(year, month, 1);
+      if (isBefore(firstOfTheSameMonth, date)) {
+        return new Date(year, month + 1, 1);
+      } else {
+        return firstOfTheSameMonth;
+      }
+    },
+    getLastStepDateBeforeDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const firstOfTheSameMonth = new Date(year, month, 1);
+      if (isAfter(firstOfTheSameMonth, date)) {
+        return new Date(year, month - 1, 1);
+      } else {
+        return firstOfTheSameMonth;
+      }
+    },
+  },
+  monthWithoutYear: {
+    d3format: "%b",
+    vegaInterval: { interval: "month", step: 1 },
+    label: "Monate (Jan.)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
