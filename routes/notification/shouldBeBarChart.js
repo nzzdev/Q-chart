@@ -10,7 +10,6 @@ module.exports = {
       },
       payload: Joi.object().required(),
     },
-    cors: true,
     tags: ["api"],
   },
   handler: function (request, h) {

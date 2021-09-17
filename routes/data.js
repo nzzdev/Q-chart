@@ -5,7 +5,6 @@ module.exports = {
   method: "POST",
   path: "/data",
   options: {
-    cors: true,
     validate: {
       payload: Joi.object({
         item: Joi.object().required(),
