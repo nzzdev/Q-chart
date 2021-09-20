@@ -581,10 +581,13 @@
                 "decade",
                 "year",
                 "quarter",
+                "quarterWithoutYear",
                 "month",
                 "monthWithoutYear",
                 "week",
+                "weekWithoutYear",
                 "day",
+                "dayWithoutYear",
                 "hour",
                 "minute",
                 "second"
@@ -592,16 +595,19 @@
               "Q:options": {
                 "enum_titles": [
                   "automatisch",
-                  "Dekaden",
-                  "Jahre",
-                  "Quartale",
-                  "Monate (Jan. 2021)",
-                  "Monate (Jan.)",
-                  "Wochen",
-                  "Tage",
-                  "Stunden",
-                  "Minuten",
-                  "Sekunden"
+                  "Dekaden (2010, 2020)",
+                  "Jahre (2021, 2022)",
+                  "Quartale (Q1 2021, Q2 2021)",
+                  "Quartale (Q1, Q2)",
+                  "Monate (Feb. 2021, März. 2021)",
+                  "Monate (Feb., März)",
+                  "Wochen (2021 W1, 2022 W2)",
+                  "Wochen (W1, W2)",
+                  "Tage (1.1.2021, 2.1.2021)",
+                  "Tage (1.1., 2.1.)",
+                  "Stunden (1.1. 12 Uhr)",
+                  "Minuten (1.1. 12:15 Uhr)",
+                  "Sekunden (1.1. 12:15:30 Uhr)"
                 ],
                 "dynamicSchema": {
                   "type": "ToolEndpoint",
