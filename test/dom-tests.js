@@ -106,11 +106,9 @@ lab.experiment("Q chart dom tests", () => {
       const children = el[1].children;
       const value0 = children[0].textContent;
       const value20000 = children[1].textContent;
-      const value100000 = children[5].textContent;
 
       expect(value0).to.not.include(" "); // has not quarter space U+2005
       expect(value20000).to.include(" "); // has quarter space U+2005
-      expect(value100000).to.include(" "); // has quarter space U+2005
     });
   });
 });
