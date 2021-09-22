@@ -573,7 +573,7 @@
           },
           "properties": {
             "interval": {
-              "title": "Angezeigtes Intervall",
+              "title": "Achsenformat",
               "type": "string",
               "default": "auto",
               "enum": [
@@ -599,15 +599,15 @@
                   "Jahre (2021, 2022)",
                   "Quartale (Q1 2021, Q2 2021)",
                   "Quartale (Q1, Q2)",
-                  "Monate (Feb. 2021, März. 2021)",
-                  "Monate (Feb., März)",
+                  "Monate (Febr&#46; 2021, März 2021)",
+                  "Monate (Febr&#46;, März)",
                   "Wochen (2021 W1, 2022 W2)",
                   "Wochen (W1, W2)",
-                  "Tage (1.1.2021, 2.1.2021)",
-                  "Tage (1.1., 2.1.)",
-                  "Stunden (1.1. 12 Uhr)",
-                  "Minuten (1.1. 12:15 Uhr)",
-                  "Sekunden (1.1. 12:15:30 Uhr)"
+                  "Tage (1&#46;1&#46;2021, 2&#46;1&#46;2021)",
+                  "Tage (1&#46;1&#46;, 2&#46;1&#46;)",
+                  "Stunden (1&#46;1&#46; 12 Uhr)",
+                  "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
+                  "Sekunden (1&#46;1&#46; 12&#058;15&#058;30 Uhr)"
                 ],
                 "dynamicSchema": {
                   "type": "ToolEndpoint",

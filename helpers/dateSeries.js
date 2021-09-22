@@ -618,7 +618,6 @@ const intervals = {
     label: "Quartale (Q1 2021, Q2 2021)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -630,7 +629,6 @@ const intervals = {
     },
     getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -656,7 +654,6 @@ const intervals = {
     label: "Quartale (Q1, Q2)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -668,7 +665,6 @@ const intervals = {
     },
     getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -682,7 +678,7 @@ const intervals = {
   month: {
     d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 1 },
-    label: "Monate (Feb. 2021, März. 2021)",
+    label: "Monate (Febr&#46; 2021, März 2021)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -707,7 +703,7 @@ const intervals = {
   monthWithoutYear: {
     d3format: "%b",
     vegaInterval: { interval: "month", step: 1 },
-    label: "Monate (Feb., März)",
+    label: "Monate (Febr&#46;, März)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -733,17 +729,7 @@ const intervals = {
     formatFunction: (date) => {
       // instead of the data series, we need the actual tick values here to make this work
       const d = new Date(date);
-
-      function includeYear() {
-        // todo: we should find a way to get the actual ticks displayed to include the year only when it is actually different
-        // from the label before. for now, we include the year for all labels because that is the least wrong
-        return true;
-      }
-      if (includeYear()) {
-        return `${getISOWeekYear(d)} W${getISOWeek(date)}`;
-      } else {
-        return `W${getISOWeek(date)}`;
-      }
+      return `${getISOWeekYear(d)} W${getISOWeek(date)}`;
     },
     ticks: (data) => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
@@ -816,7 +802,7 @@ const intervals = {
   day: {
     d3format: "%-d.\u2009%-m.\u2009%-Y",
     vegaInterval: { interval: "day", step: 1 },
-    label: "Tage (1.1.2021, 2.1.2021)",
+    label: "Tage (1&#46;1&#46;2021, 2&#46;1&#46;2021)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -843,7 +829,7 @@ const intervals = {
   dayWithoutYear: {
     d3format: "%-d.\u2009%-m.",
     vegaInterval: { interval: "day", step: 1 },
-    label: "Tage (1.1., 2.1.)",
+    label: "Tage (1&#46;1&#46;, 2&#46;1&#46;)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -870,7 +856,7 @@ const intervals = {
   hour: {
     d3format: "%-d.\u2009%-m. %H Uhr",
     vegaInterval: { interval: "hour", step: 1 },
-    label: "Stunden (1.1. 12 Uhr)",
+    label: "Stunden (1&#46;1&#46; 12 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -899,7 +885,7 @@ const intervals = {
   minute: {
     d3format: "%-d.\u2009%-m. %H:%M Uhr",
     vegaInterval: { interval: "hour", step: 1 },
-    label: "Minuten (1.1. 12:15 Uhr)",
+    label: "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -944,7 +930,7 @@ const intervals = {
   second: {
     d3format: "%-d.\u2009%-m. %H:%M:%S Uhr",
     vegaInterval: { interval: "hour", step: 1 },
-    label: "Sekunden (1.1. 12:15:30 Uhr)",
+    label: "Sekunden (1&#46;1&#46; 12&#058;15&#058;30 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
