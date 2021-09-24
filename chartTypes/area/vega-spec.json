@@ -75,8 +75,8 @@
       "grid": false,
       "labels": true,
       "labelFlush": 24,
-      "labelFlushOffset": 0,
-      "labelBound": true,
+      "labelFlushOffset": 4,
+      "labelBound": 4,
       "labelOverlap": "parity",
       "labelSeparation": 4,
       "encode": {

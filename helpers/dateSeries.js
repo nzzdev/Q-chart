@@ -729,7 +729,7 @@ const intervals = {
     formatFunction: (date) => {
       // instead of the data series, we need the actual tick values here to make this work
       const d = new Date(date);
-      return `${getISOWeekYear(d)} W${getISOWeek(date)}`;
+      return `KW${getISOWeek(date)} ${getISOWeekYear(d)}`;
     },
     ticks: (data) => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
@@ -739,7 +739,7 @@ const intervals = {
       const ticks = scale.ticks(d3Time.timeMonday.every(1));
       return ticks;
     },
-    label: "Wochen (2021 W1, 2022 W2)",
+    label: "Wochen (KW1 2021, KW2 2021)",
     getFirstStepDateAfterDate: function (date) {
       const startOfThisWeek = startOfISOWeek(date);
       if (isBefore(startOfThisWeek, date)) {
@@ -765,7 +765,7 @@ const intervals = {
   },
   weekWithoutYear: {
     formatFunction: (date) => {
-      return `W${getISOWeek(date)}`;
+      return `KW${getISOWeek(date)}`;
     },
     ticks: (data) => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
@@ -775,7 +775,7 @@ const intervals = {
       const ticks = scale.ticks(d3Time.timeMonday.every(1));
       return ticks;
     },
-    label: "Wochen (W1, W2)",
+    label: "Wochen (KW1, KW2)",
     getFirstStepDateAfterDate: function (date) {
       const startOfThisWeek = startOfISOWeek(date);
       if (isBefore(startOfThisWeek, date)) {
