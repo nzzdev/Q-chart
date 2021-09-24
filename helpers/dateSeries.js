@@ -854,8 +854,13 @@ const intervals = {
     },
   },
   hour: {
-    d3format: "%-d.\u2009%-m. %H Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
+    d3format: "%-d.\u2009%-m. %-H Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeHour.every(1));
+      return ticks;
+    },
     label: "Stunden (1&#46;1&#46; 12 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
@@ -883,8 +888,13 @@ const intervals = {
     },
   },
   minute: {
-    d3format: "%-d.\u2009%-m. %H:%M Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
+    d3format: "%-d.\u2009%-m. %-H:%M Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeMinute.every(1));
+      return ticks;
+    },
     label: "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
@@ -928,8 +938,13 @@ const intervals = {
     },
   },
   second: {
-    d3format: "%-d.\u2009%-m. %H:%M:%S Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
+    d3format: "%-d.\u2009%-m. %-H:%M:%S Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeSecond.every(1));
+      return ticks;
+    },
     label: "Sekunden (1&#46;1&#46; 12&#058;15&#058;30 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();

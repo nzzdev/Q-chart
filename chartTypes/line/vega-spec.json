@@ -58,9 +58,9 @@
       "domain": false,
       "grid": false,
       "labels": true,
-      "labelFlush": 24,
-      "labelFlushOffset": 4,
-      "labelBound": 4,
+      "labelFlush": 16,
+      "labelFlushOffset": 6,
+      "labelBound": 12,
       "labelOverlap": "parity",
       "labelSeparation": 4,
       "encode": {
