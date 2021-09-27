@@ -213,10 +213,10 @@
           "type": "string",
           "Q:options": {
             "selectType": "radio",
-            "dynamicEnum": {
+            "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-enum/chartType",
+                "endpoint": "dynamic-schema/chartType",
                 "fields": ["data"]
               }
             },
@@ -299,7 +299,7 @@
             "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-schema/highlighDataSeries",
+                "endpoint": "dynamic-schema/highlighDataSeriesMaxItems",
                 "fields": ["data"]
               }
             },
@@ -320,10 +320,10 @@
             "type": "number",
             "default": 0,
             "Q:options": {
-              "dynamicEnum": {
+              "dynamicSchema": {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "dynamic-enum/highlightDataSeries",
+                  "endpoint": "dynamic-schema/highlightDataSeries",
                   "fields": ["data"]
                 }
               },
@@ -338,7 +338,7 @@
             "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-schema/highlightDataRows",
+                "endpoint": "dynamic-schema/highlightDataRowsMaxItems",
                 "fields": ["data"]
               }
             },
@@ -362,14 +362,7 @@
               "dynamicSchema": {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "dynamic-schema/highlighDataRowsItem",
-                  "fields": ["data"]
-                }
-              },
-              "dynamicEnum": {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "dynamic-enum/highlightDataRows",
+                  "endpoint": "dynamic-schema/highlighDataRows",
                   "fields": ["data"]
                 }
               }
@@ -621,10 +614,10 @@
                 }
               ],
               "Q:options": {
-                "dynamicEnum": {
+                "dynamicSchema": {
                   "type": "ToolEndpoint",
                   "config": {
-                    "endpoint": "dynamic-enum/prognosisStart",
+                    "endpoint": "dynamic-schema/dateSeriesOptions.prognosisStart",
                     "fields": ["data"]
                   }
                 }
