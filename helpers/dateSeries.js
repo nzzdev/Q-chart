@@ -57,7 +57,7 @@ const dateFormats = {
   "YYYY-Q": {
     match: /^ *[12]\d{3}[ \-\/]?[qQ][1234] *$/,
     parse: /^ *(\d{4})[ \-\/]?[qQ]([1234]) *$/,
-    validIntervals: ["decade", "year", "quarter"],
+    validIntervals: ["decade", "year", "quarter", "quarterWithoutYear"],
     getDate: (parsed) => {
       return new Date(parsed[1], (parsed[2] - 1) * 3, 1);
     },
@@ -65,7 +65,7 @@ const dateFormats = {
   "Q-YYYY": {
     match: /^ *[qQ]([1234])[ \-\/][12]\d{3} *$/,
     parse: /^ *[qQ]([1234])[ \-\/](\d{4}) *$/,
-    validIntervals: ["decade", "year", "quarter"],
+    validIntervals: ["decade", "year", "quarter", "quarterWithoutYear"],
     getDate: (parsed) => {
       return new Date(parsed[2], (parsed[1] - 1) * 3, 1);
     },
@@ -73,7 +73,14 @@ const dateFormats = {
   "YYYY-M": {
     match: /^ *([12]\d{3}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
     parse: /^ *(\d{4}) ?[ \-\/\.mM](0?[1-9]|1[0-2]) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+    ],
     getDate: (parsed) => {
       return new Date(parsed[1], parsed[2] - 1, 1);
     },
@@ -81,7 +88,14 @@ const dateFormats = {
   "M-YYYY": {
     match: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.][12]\d{3} *$/,
     parse: /^ *(0?[1-9]|1[0-2]) ?[ \-\/\.](\d{4}) *$/,
-    validIntervals: ["decade", "year", "quarter", "month"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+    ],
     getDate: (parsed) => {
       return new Date(parsed[2], parsed[1] - 1, 1);
     },
@@ -89,7 +103,16 @@ const dateFormats = {
   "YYYY-WW": {
     match: /^ *[12]\d{3}[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
     parse: /^ *(\d{4})[ -]?[wW](0?[1-9]|[1-4]\d|5[0-3]) *$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "weekWithoutYear",
+    ],
     getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], 1);
     },
@@ -97,7 +120,16 @@ const dateFormats = {
   "YYYY-WW-d": {
     match: /^ *[12]\d{3}[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?[1-7]) *$/,
     parse: /^ *(\d{4})[ \-]?[wW](0?[1-9]|[1-4]\d|5[0-3])(?:[ \-]?([1-7])) *$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "weekWithoutYear",
+    ],
     getDate: (parsed) => {
       return dateFromIsoWeek(parsed[1], parsed[2], parsed[3]);
     },
@@ -105,37 +137,78 @@ const dateFormats = {
   "MM/DD/YYYY": {
     match: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|1[0-2])([\-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "weekWithoutYear",
+      "day",
+      "dayWithoutYear",
+    ],
     getDate: (parsed) => {
       return new Date(parsed[4], parsed[1] - 1, parsed[3]);
     },
   },
   "DD/MM/YYYY": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3})$/,
     parse: /^ *(0?[1-9]|[1-2]\d|3[01])([\-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4})$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "weekWithoutYear",
+      "day",
+      "dayWithoutYear",
+    ],
     getDate: (parsed) => {
       return new Date(parsed[4], parsed[3] - 1, parsed[1]);
     },
   },
   "YYYY-MM-DD": {
-    match: /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
+    match:
+      /^ *([12]\d{3})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
     parse: /^ *(\d{4})([\-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01])$/,
-    validIntervals: ["decade", "year", "quarter", "month", "week", "day"],
+    validIntervals: [
+      "decade",
+      "year",
+      "quarter",
+      "quarterWithoutYear",
+      "month",
+      "monthWithoutYear",
+      "week",
+      "weekWithoutYear",
+      "day",
+      "dayWithoutYear",
+    ],
     getDate: (parsed) => {
       return new Date(parsed[1], parsed[3] - 1, parsed[4]);
     },
   },
   "MM/DD/YYYY HH:MM": {
-    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    match:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
     ],
@@ -156,15 +229,21 @@ const dateFormats = {
     },
   },
   "DD.MM.YYYY HH:MM": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
     ],
@@ -185,15 +264,21 @@ const dateFormats = {
     },
   },
   "YYYY-MM-DD HH:MM": {
-    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
-    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    match:
+      /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
+    parse:
+      /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d) *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
     ],
@@ -214,15 +299,21 @@ const dateFormats = {
     },
   },
   "MM/DD/YYYY HH:MM:SS": {
-    match: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(0?[1-9]|1[0-2])([-\/] ?)(0?[1-9]|[1-2]\d|3[01])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
       "second",
@@ -244,15 +335,21 @@ const dateFormats = {
     },
   },
   "DD.MM.YYYY HH:MM:SS": {
-    match: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2([12]\d{3}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(0?[1-9]|[1-2]\d|3[01])([-\.\/ ?])(0?[1-9]|1[0-2])\2(\d{4}) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
       "second",
@@ -274,15 +371,21 @@ const dateFormats = {
     },
   },
   "YYYY-MM-DD HH:MM:SS": {
-    match: /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
-    parse: /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    match:
+      /^ *([12]\d{3})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
+    parse:
+      /^ *(\d{4})([-\/\. ?])(0?[1-9]|1[0-2])\2(0?[1-9]|[1-2]\d|3[01]) *[ \-\|] *(0?\d|1\d|2[0-3]):([0-5]\d)(?::([0-5]\d))? *$/,
     validIntervals: [
       "decade",
       "year",
       "quarter",
+      "quarterWithoutYear",
       "month",
+      "monthWithoutYear",
       "week",
+      "weekWithoutYear",
       "day",
+      "dayWithoutYear",
       "hour",
       "minute",
       "second",
@@ -455,7 +558,7 @@ const intervals = {
   decade: {
     d3format: "%Y",
     vegaInterval: { interval: "year", step: 10 },
-    label: "Dekaden",
+    label: "Dekaden (2010, 2020)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
@@ -478,7 +581,7 @@ const intervals = {
   year: {
     d3format: "%Y",
     vegaInterval: { interval: "year", step: 1 },
-    label: "Jahre",
+    label: "Jahre (2021, 2022)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const firstOfJanuarySameYear = new Date(year, 0, 1);
@@ -512,10 +615,9 @@ const intervals = {
       );
     },
     vegaInterval: { interval: "month", step: 3 },
-    label: "Quartale",
+    label: "Quartale (Q1 2021, Q2 2021)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -527,7 +629,42 @@ const intervals = {
     },
     getLastStepDateBeforeDate: function (date) {
       const year = date.getFullYear();
-      const month = date.getMonth();
+      const quarter = Math.floor(date.getMonth() / 3 + 1);
+      const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
+      const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
+      if (isAfter(firstOfTheSameQuarter, date)) {
+        return new Date(year, firstMonthOfQuarter - 3, 1);
+      } else {
+        return firstOfTheSameQuarter;
+      }
+    },
+  },
+  quarterWithoutYear: {
+    // the formatFunction is only used for the legend for now
+    // there is no easy way to teach the time formatter in vega about quarters
+    formatFunction: (date) => {
+      // there are cases where we do not get a date object here, but maybe a timestamp
+      // in these cases we try to create a new date object from the value first
+      if (!(date instanceof Date)) {
+        date = new Date(date);
+      }
+      return "Q" + Math.floor(date.getMonth() / 3 + 1);
+    },
+    vegaInterval: { interval: "month", step: 3 },
+    label: "Quartale (Q1, Q2)",
+    getFirstStepDateAfterDate: function (date) {
+      const year = date.getFullYear();
+      const quarter = Math.floor(date.getMonth() / 3 + 1);
+      const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
+      const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
+      if (isBefore(firstOfTheSameQuarter, date)) {
+        return new Date(year, firstMonthOfQuarter + 3, 1);
+      } else {
+        return firstOfTheSameQuarter;
+      }
+    },
+    getLastStepDateBeforeDate: function (date) {
+      const year = date.getFullYear();
       const quarter = Math.floor(date.getMonth() / 3 + 1);
       const firstMonthOfQuarter = (quarter - 1) * 3 + 1;
       const firstOfTheSameQuarter = new Date(year, firstMonthOfQuarter, 1);
@@ -541,7 +678,32 @@ const intervals = {
   month: {
     d3format: "%b %Y",
     vegaInterval: { interval: "month", step: 1 },
-    label: "Monate",
+    label: "Monate (Febr&#46; 2021, März 2021)",
+    getFirstStepDateAfterDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const firstOfTheSameMonth = new Date(year, month, 1);
+      if (isBefore(firstOfTheSameMonth, date)) {
+        return new Date(year, month + 1, 1);
+      } else {
+        return firstOfTheSameMonth;
+      }
+    },
+    getLastStepDateBeforeDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const firstOfTheSameMonth = new Date(year, month, 1);
+      if (isAfter(firstOfTheSameMonth, date)) {
+        return new Date(year, month - 1, 1);
+      } else {
+        return firstOfTheSameMonth;
+      }
+    },
+  },
+  monthWithoutYear: {
+    d3format: "%b",
+    vegaInterval: { interval: "month", step: 1 },
+    label: "Monate (Febr&#46;, März)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -567,17 +729,7 @@ const intervals = {
     formatFunction: (date) => {
       // instead of the data series, we need the actual tick values here to make this work
       const d = new Date(date);
-
-      function includeYear() {
-        // todo: we should find a way to get the actual ticks displayed to include the year only when it is actually different
-        // from the label before. for now, we include the year for all labels because that is the least wrong
-        return true;
-      }
-      if (includeYear()) {
-        return `${getISOWeekYear(d)} W${getISOWeek(date)}`;
-      } else {
-        return `W${getISOWeek(date)}`;
-      }
+      return `KW${getISOWeek(date)} ${getISOWeekYear(d)}`;
     },
     ticks: (data) => {
       // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
@@ -587,7 +739,43 @@ const intervals = {
       const ticks = scale.ticks(d3Time.timeMonday.every(1));
       return ticks;
     },
-    label: "Wochen",
+    label: "Wochen (KW1 2021, KW2 2021)",
+    getFirstStepDateAfterDate: function (date) {
+      const startOfThisWeek = startOfISOWeek(date);
+      if (isBefore(startOfThisWeek, date)) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        return startOfISOWeek(new Date(year, month, day + 7)); // this is not correct yet probably
+      } else {
+        return startOfThisWeek;
+      }
+    },
+    getLastStepDateBeforeDate: function (date) {
+      const startOfThisWeek = startOfISOWeek(date);
+      if (isAfter(startOfThisWeek, date)) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const day = date.getDate();
+        return startOfISOWeek(new Date(year, month, day - 7)); // this is not correct yet probably
+      } else {
+        return startOfThisWeek;
+      }
+    },
+  },
+  weekWithoutYear: {
+    formatFunction: (date) => {
+      return `KW${getISOWeek(date)}`;
+    },
+    ticks: (data) => {
+      // we can't use 'week' interval, because that is d3-time based, and d3-time thinks the week starts on a sunday
+      // instead we implement a ticks function here returning every monday in the scale
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeMonday.every(1));
+      return ticks;
+    },
+    label: "Wochen (KW1, KW2)",
     getFirstStepDateAfterDate: function (date) {
       const startOfThisWeek = startOfISOWeek(date);
       if (isBefore(startOfThisWeek, date)) {
@@ -614,7 +802,34 @@ const intervals = {
   day: {
     d3format: "%-d.\u2009%-m.\u2009%-Y",
     vegaInterval: { interval: "day", step: 1 },
-    label: "Tage",
+    label: "Tage (1&#46;1&#46;2021, 2&#46;1&#46;2021)",
+    getFirstStepDateAfterDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const beginningOfTheSameDate = new Date(year, month, day, 0, 0, 0);
+      if (isBefore(beginningOfTheSameDate, date)) {
+        return new Date(year, month, day + 1);
+      } else {
+        return beginningOfTheSameDate;
+      }
+    },
+    getLastStepDateBeforeDate: function (date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      const beginningOfTheSameDate = new Date(year, month, day, 0, 0, 0);
+      if (isAfter(beginningOfTheSameDate, date)) {
+        return new Date(year, month, day - 1);
+      } else {
+        return beginningOfTheSameDate;
+      }
+    },
+  },
+  dayWithoutYear: {
+    d3format: "%-d.\u2009%-m.",
+    vegaInterval: { interval: "day", step: 1 },
+    label: "Tage (1&#46;1&#46;, 2&#46;1&#46;)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -639,9 +854,14 @@ const intervals = {
     },
   },
   hour: {
-    d3format: "%-d.\u2009%-m. %H Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
-    label: "Stunden",
+    d3format: "%-d.\u2009%-m. %-H Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeHour.every(1));
+      return ticks;
+    },
+    label: "Stunden (1&#46;1&#46; 12 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -668,9 +888,14 @@ const intervals = {
     },
   },
   minute: {
-    d3format: "%-d.\u2009%-m. %H:%M Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
-    label: "Minuten",
+    d3format: "%-d.\u2009%-m. %-H:%M Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeMinute.every(1));
+      return ticks;
+    },
+    label: "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -713,9 +938,14 @@ const intervals = {
     },
   },
   second: {
-    d3format: "%-d.\u2009%-m. %H:%M:%S Uhr",
-    vegaInterval: { interval: "hour", step: 1 },
-    label: "Sekunden",
+    d3format: "%-d.\u2009%-m. %-H:%M:%S Uhr",
+    ticks: (data) => {
+      const { first, last } = getFirstAndLastDateFromData(data);
+      const scale = d3Scale.scaleTime().domain([first, last]);
+      const ticks = scale.ticks(d3Time.timeSecond.every(1));
+      return ticks;
+    },
+    label: "Sekunden (1&#46;1&#46; 12&#058;15&#058;30 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
@@ -743,6 +973,7 @@ const intervals = {
       const day = date.getDate();
       const hour = date.getHours();
       const minute = date.getMinutes();
+      const second = date.getSeconds();
       const beginningOfTheSameSecond = new Date(
         year,
         month,
