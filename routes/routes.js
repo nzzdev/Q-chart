@@ -4,7 +4,6 @@ module.exports = [
   require("./stylesheet.js"),
   require("./script.js"),
   require("./option-availability.js"),
-  require("./dynamic-enum.js"),
   require("./dynamic-schema.js"),
   require("./health.js"),
   require("./fixtures/data.js"),

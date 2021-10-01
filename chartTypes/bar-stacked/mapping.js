@@ -11,8 +11,8 @@ const intervals = require("../../helpers/dateSeries.js").intervals;
 
 const commonMappings = require("../commonMappings.js");
 
-const getLongestDataLabel = require("../../helpers/data.js")
-  .getLongestDataLabel;
+const getLongestDataLabel =
+  require("../../helpers/data.js").getLongestDataLabel;
 const textMeasure = require("../../helpers/textMeasure.js");
 
 function shouldHaveLabelsOnTopOfBar(mappingData) {
@@ -239,40 +239,40 @@ module.exports = function getMapping() {
               x: [
                 {
                   test: tests.positiveValue,
-                  field: "x",
-                },
-                {
-                  test: tests.negativeValue,
                   field: "x2",
                 },
                 {
+                  test: tests.negativeValue,
                   field: "x",
+                },
+                {
+                  field: "x2",
                 },
               ],
               align: [
                 {
                   test: tests.positiveValue,
-                  value: "left",
-                },
-                {
-                  test: tests.negativeValue,
                   value: "right",
                 },
                 {
+                  test: tests.negativeValue,
                   value: "left",
+                },
+                {
+                  value: "right",
                 },
               ],
               dx: [
                 {
                   test: tests.positiveValue,
-                  value: valuePadding,
-                },
-                {
-                  test: tests.negativeValue,
                   value: -valuePadding,
                 },
                 {
+                  test: tests.negativeValue,
                   value: valuePadding,
+                },
+                {
+                  value: -valuePadding,
                 },
               ],
               fill: [

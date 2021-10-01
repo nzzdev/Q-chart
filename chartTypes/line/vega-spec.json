@@ -19,7 +19,7 @@
       "name": "yScale",
       "type": "linear",
       "range": "height",
-      "nice": 4,
+      "nice": true,
       "zero": true,
       "domain": {
         "data": "table",
@@ -58,9 +58,9 @@
       "domain": false,
       "grid": false,
       "labels": true,
-      "labelFlush": 24,
-      "labelFlushOffset": 0,
-      "labelBound": true,
+      "labelFlush": 16,
+      "labelFlushOffset": 6,
+      "labelBound": 12,
       "labelOverlap": "parity",
       "labelSeparation": 4,
       "encode": {
