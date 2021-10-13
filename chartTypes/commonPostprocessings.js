@@ -67,7 +67,7 @@ const hideTicksWithoutLabels = {
     for (let i = 0; i < textNodes.length; i++) {
       const textNode = textNodes.item(i);
       // if the textNode is visible
-      if (!textNode.getAttribute("opacity") === "1") {
+      if (textNode.getAttribute("opacity") === "0") {
         hiddenLabelsIndexes.push(i);
       }
     }
