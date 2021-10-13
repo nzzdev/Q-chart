@@ -14,7 +14,7 @@ const hideRepeatingTickLabels = {
       const visibleTextNodes = Array.prototype.slice
         .call(labelGroup.querySelectorAll("text"))
         .filter((textNode) => {
-          return textNode.getAttribute("style").includes("opacity: 1");
+          return textNode.getAttribute("opacity") === "1";
         });
       // loop over all the visible textNodes, if the text is the same as the one before, hide it
       // start with the 2nd textNode
@@ -22,7 +22,7 @@ const hideRepeatingTickLabels = {
         if (
           visibleTextNodes[i].innerHTML === visibleTextNodes[i - 1].innerHTML
         ) {
-          visibleTextNodes[i].style.opacity = "0";
+          visibleTextNodes[i].setAttribute("opacity", "0");
         }
       }
     }
@@ -42,7 +42,7 @@ const hideRepeatingBarTopLabels = {
       if (
         barTopLabels.item(i).innerHTML === barTopLabels.item(i - 1).innerHTML
       ) {
-        barTopLabels.item(i).style.opacity = "0";
+        barTopLabels.item(i).setAttribute("opacity", "0");
       }
     }
     return document.body.innerHTML;
@@ -67,7 +67,7 @@ const hideTicksWithoutLabels = {
     for (let i = 0; i < textNodes.length; i++) {
       const textNode = textNodes.item(i);
       // if the textNode is visible
-      if (!textNode.getAttribute("style").includes("opacity: 1")) {
+      if (textNode.getAttribute("opacity") === "0") {
         hiddenLabelsIndexes.push(i);
       }
     }
@@ -78,15 +78,7 @@ const hideTicksWithoutLabels = {
     }
 
     for (let hiddenLabelIndex of hiddenLabelsIndexes) {
-      tickNodes
-        .item(hiddenLabelIndex)
-        .setAttribute(
-          "style",
-          tickNodes
-            .item(hiddenLabelIndex)
-            .getAttribute("style")
-            .replace(`opacity: 1`, `opacity: 0`)
-        );
+      tickNodes.item(hiddenLabelIndex).setAttribute("opacity", "0");
     }
     return document.body.innerHTML;
   },
@@ -173,7 +165,6 @@ const highlightZeroGridLineIfPositiveAndNegative = {
         zeroTickIndex,
         ".role-axis-grid",
         "line",
-        toolRuntimeConfig.axis.tickColor,
         toolRuntimeConfig.axis.labelColor
       );
 
@@ -182,7 +173,6 @@ const highlightZeroGridLineIfPositiveAndNegative = {
         zeroTickIndex,
         ".role-axis-tick",
         "line",
-        toolRuntimeConfig.axis.tickColor,
         toolRuntimeConfig.axis.labelColor
       );
     }
@@ -200,18 +190,9 @@ const addOutlineToAnnotationLabels = {
     const annotationLabels = document.querySelectorAll(".annotation-label");
     for (const label of annotationLabels) {
       const textNode = label.querySelector("text");
-
-      // once this is supported by more browsers or we do not have to support them anymore,
-      // we can use paint-order here. for now we just clone the textNode and use stroke instead of fill on the clone
-      // textNode.setAttribute("paint-order", "stroke");
-
-      const cloneTextNode = textNode.cloneNode(true);
-      cloneTextNode.setAttribute("fill", "currentColor");
-      cloneTextNode.setAttribute("stroke", "currentColor");
-      cloneTextNode.setAttribute("stroke-width", "3px");
-
-      textNode.parentNode.appendChild(cloneTextNode);
-
+      textNode.setAttribute("stroke", "currentColor");
+      textNode.setAttribute("stroke-width", "3px");
+      textNode.setAttribute("paint-order", "stroke");
       // move the textNode to the end
       textNode.parentNode.appendChild(textNode);
     }
@@ -223,7 +204,10 @@ const showOnlyFirstAndLastLabel = {
   process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
     const document = svgDom.window.document;
-    const isDate = item.data[1] && item.data[1][0] && item.data[1][0].getMonth !== undefined | false;
+    const isDate =
+      item.data[1] &&
+      item.data[1][0] &&
+      (item.data[1][0].getMonth !== undefined) | false;
 
     // this function only need to run if we are on mobile
     if (spec.width > 400 || !isDate) return document.body.innerHTML;
@@ -234,13 +218,13 @@ const showOnlyFirstAndLastLabel = {
     const visibleTextNodes = Array.prototype.slice
       .call(xLabels.querySelectorAll("text"))
       .filter((textNode) => {
-        return textNode.getAttribute("style").includes("opacity: 1");
+        return textNode.getAttribute("opacity") === "1";
       });
     // 4 label should still be visible
     if (visibleTextNodes.length > 4) {
       // we set opacity to zero for all inbetween nodes, leaving the first and last visible
       for (let i = 1; i < visibleTextNodes.length - 1; i++) {
-        visibleTextNodes[i].style.opacity = "0";
+        visibleTextNodes[i].setAttribute("opacity", "0");
       }
     }
 
