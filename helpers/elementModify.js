@@ -3,26 +3,16 @@ function modifyColorStoke(
   zeroTickIndex,
   elemClass,
   svgElem,
-  replaceColor,
-  targetColor
+  color
 ) {
-  const axisElement = axisElements
-    .querySelector(elemClass);
+  const axisElement = axisElements.querySelector(elemClass);
 
   if (!axisElement) {
     return;
   }
 
   const element = axisElement.querySelectorAll(svgElem);
-  element
-    .item(zeroTickIndex)
-    .setAttribute(
-      "style",
-      element
-        .item(zeroTickIndex)
-        .getAttribute("style")
-        .replace(`stroke: ${replaceColor}`, `stroke: ${targetColor}`)
-    );
+  element.item(zeroTickIndex).setAttribute("stroke", color);
 }
 
 module.exports = {

@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "3.6.11",
+  "version": "3.7.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,9 +12,9 @@
   "dependencies": {
     "@hapi/boom": "^9.1.4",
     "@hapi/bourne": "^2.0.0",
-    "@hapi/hapi": "^20.1.5",
-    "@hapi/hoek": "^9.2.0",
-    "@hapi/inert": "^6.0.3",
+    "@hapi/hapi": "^20.2.1",
+    "@hapi/hoek": "^9.2.1",
+    "@hapi/inert": "^6.0.4",
     "ajv": "^6.12.6",
     "array2d": "0.0.5",
     "canvas": "^2.8.0",
@@ -24,26 +24,26 @@
     "d3-scale": "^3.2.3",
     "d3-time": "^1.1.0",
     "d3-time-format": "^2.3.0",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.25.0",
     "decimal.js": "^10.3.1",
     "deepmerge": "^4.2.2",
     "joi": "^17.4.2",
     "jsdom": "^16.7.0",
     "moment-timezone": "^0.5.33",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.5",
     "nunjucks": "^3.2.2",
-    "object-path": "^0.11.5",
-    "slugify": "^1.6.0",
-    "vega": "5.9.1"
+    "object-path": "^0.11.8",
+    "slugify": "^1.6.1",
+    "vega": "^5.21.0"
   },
   "devDependencies": {
     "@hapi/code": "^8.0.3",
     "@hapi/lab": "^24.3.2",
-    "autoprefixer": "^10.3.2",
+    "autoprefixer": "^10.3.7",
     "cssnano": "^5.0.8",
-    "glob": "^7.1.7",
-    "postcss": "^8.3.6",
+    "glob": "^7.2.0",
+    "postcss": "^8.3.9",
     "postcss-import": "^14.0.2",
-    "sass": "^1.38.1"
+    "sass": "^1.42.1"
   }
 }

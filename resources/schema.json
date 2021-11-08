@@ -213,10 +213,10 @@
           "type": "string",
           "Q:options": {
             "selectType": "radio",
-            "dynamicEnum": {
+            "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-enum/chartType",
+                "endpoint": "dynamic-schema/chartType",
                 "fields": ["data"]
               }
             },
@@ -299,7 +299,7 @@
             "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-schema/highlighDataSeries",
+                "endpoint": "dynamic-schema/highlighDataSeriesMaxItems",
                 "fields": ["data"]
               }
             },
@@ -320,10 +320,10 @@
             "type": "number",
             "default": 0,
             "Q:options": {
-              "dynamicEnum": {
+              "dynamicSchema": {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "dynamic-enum/highlightDataSeries",
+                  "endpoint": "dynamic-schema/highlightDataSeries",
                   "fields": ["data"]
                 }
               },
@@ -338,7 +338,7 @@
             "dynamicSchema": {
               "type": "ToolEndpoint",
               "config": {
-                "endpoint": "dynamic-schema/highlightDataRows",
+                "endpoint": "dynamic-schema/highlightDataRowsMaxItems",
                 "fields": ["data"]
               }
             },
@@ -362,14 +362,7 @@
               "dynamicSchema": {
                 "type": "ToolEndpoint",
                 "config": {
-                  "endpoint": "dynamic-schema/highlighDataRowsItem",
-                  "fields": ["data"]
-                }
-              },
-              "dynamicEnum": {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "dynamic-enum/highlightDataRows",
+                  "endpoint": "dynamic-schema/highlighDataRows",
                   "fields": ["data"]
                 }
               }
@@ -573,7 +566,7 @@
           },
           "properties": {
             "interval": {
-              "title": "Angezeigtes Intervall",
+              "title": "Achsenformat",
               "type": "string",
               "default": "auto",
               "enum": [
@@ -581,9 +574,13 @@
                 "decade",
                 "year",
                 "quarter",
+                "quarterWithoutYear",
                 "month",
+                "monthWithoutYear",
                 "week",
+                "weekWithoutYear",
                 "day",
+                "dayWithoutYear",
                 "hour",
                 "minute",
                 "second"
@@ -591,15 +588,19 @@
               "Q:options": {
                 "enum_titles": [
                   "automatisch",
-                  "Dekaden",
-                  "Jahre",
-                  "Quartale",
-                  "Monate",
-                  "Wochen",
-                  "Tage",
-                  "Stunden",
-                  "Minuten",
-                  "Sekunden"
+                  "Dekaden (2010, 2020)",
+                  "Jahre (2021, 2022)",
+                  "Quartale (Q1 2021, Q2 2021)",
+                  "Quartale (Q1, Q2)",
+                  "Monate (Febr&#46; 2021, März 2021)",
+                  "Monate (Febr&#46;, März)",
+                  "Wochen (KW1 2021, KW2 2021)",
+                  "Wochen (KW1, KW2)",
+                  "Tage (1&#46;1&#46;2021, 2&#46;1&#46;2021)",
+                  "Tage (1&#46;1&#46;, 2&#46;1&#46;)",
+                  "Stunden (1&#46;1&#46; 12 Uhr)",
+                  "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
+                  "Sekunden (1&#46;1&#46; 12&#058;15&#058;30 Uhr)"
                 ],
                 "dynamicSchema": {
                   "type": "ToolEndpoint",
@@ -621,10 +622,10 @@
                 }
               ],
               "Q:options": {
-                "dynamicEnum": {
+                "dynamicSchema": {
                   "type": "ToolEndpoint",
                   "config": {
-                    "endpoint": "dynamic-enum/prognosisStart",
+                    "endpoint": "dynamic-schema/dateSeriesOptions.prognosisStart",
                     "fields": ["data"]
                   }
                 }
