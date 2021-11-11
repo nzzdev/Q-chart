@@ -24,9 +24,6 @@ before(async () => {
   try {
     server = Hapi.server({
       port: process.env.PORT || 3000,
-      routes: {
-        cors: true,
-      },
     });
     await server.register(require("@hapi/inert"));
     server.route(routes);

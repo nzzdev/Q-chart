@@ -11,7 +11,6 @@ module.exports = {
       },
       payload: Joi.object().required(),
     },
-    cors: true,
     cache: {
       expiresIn: 1000 * 60, // 60 seconds
     },
