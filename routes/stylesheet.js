@@ -4,7 +4,6 @@ module.exports = {
   method: 'GET',
   path: '/stylesheet/{filename}.{hash}.{extension}',
   options: {
-    cors: true,
     files: {
       relativeTo: path.join(__dirname, '/../styles/')
     }
