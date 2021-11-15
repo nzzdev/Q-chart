@@ -142,6 +142,9 @@ module.exports = function getMapping() {
                 y: {
                   signal: "-labelHeight/2"
                 },
+                x: {
+                  signal: 4
+                },
                 baseline: {
                   value: "middle"
                 }
