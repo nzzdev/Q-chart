@@ -1,6 +1,6 @@
 # Q-chart [![Build Status](https://travis-ci.com/nzzdev/Q-chart.svg?branch=dev)](https://travis-ci.com/nzzdev/Q-chart)
 
-**maintainer**: [Manuel Roth](https://github.com/manuelroth)
+**maintainer**: [Franco Gervasi](https://github.com/fgervasi)
 
 Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q](https://q.tools)
 
