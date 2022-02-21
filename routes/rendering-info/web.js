@@ -100,6 +100,10 @@ module.exports = {
       // nevermind and keep the default legendType;
     }
 
+    if (toolRuntimeConfig.removeHighlightDataSeries) {
+      item.options.highlightDataSeries.length = 0;
+    }
+
     const context = {
       item: item,
       events: {
