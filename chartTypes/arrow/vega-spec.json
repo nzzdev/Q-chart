@@ -63,7 +63,8 @@
         "scheme": "redblue",
         "count": 3
       },
-      "domain": [0, 1, 2]
+      "domain": [0, 1, 2],
+      "reverse": false
     }
   ],
   "marks": [
