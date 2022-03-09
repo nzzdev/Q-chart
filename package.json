@@ -1,6 +1,6 @@
 {
   "name": "q-chart",
-  "version": "3.7.5",
+  "version": "3.7.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -40,10 +40,10 @@
     "@hapi/code": "^8.0.3",
     "@hapi/lab": "^24.3.2",
     "autoprefixer": "^10.3.7",
-    "cssnano": "^5.0.8",
+    "cssnano": "^5.1.1",
     "glob": "^7.2.0",
-    "postcss": "^8.3.9",
+    "postcss": "^8.4.8",
     "postcss-import": "^14.0.2",
-    "sass": "^1.42.1"
+    "sass": "^1.49.9"
   }
 }
