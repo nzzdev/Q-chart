@@ -839,6 +839,11 @@
                   }
                 ]
               }
+            },
+            "invertColorScheme": {
+              "title": "Farbschema umkehren",
+              "type": "boolean",
+              "default": false
             }
           }
         },

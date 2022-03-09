@@ -1,15 +1,9 @@
 const objectPath = require("object-path");
-const array2d = require("array2d");
 const clone = require("clone");
 const Decimal = require("decimal.js");
 const dataHelpers = require("../../helpers/data.js");
 const d3config = require("../../config/d3.js");
-
 const commonMappings = require("../commonMappings.js");
-
-const getLongestDataLabel = require("../../helpers/data.js")
-  .getLongestDataLabel;
-const textMetrics = require("vega").textMetrics;
 
 const configuredDivergingColorSchemes = require("../../helpers/colorSchemes.js").getConfiguredDivergingColorSchemes();
 
@@ -185,6 +179,12 @@ module.exports = function getMapping() {
             configuredDivergingColorSchemes[colorScheme].scheme_name
           );
         }
+      },
+    },
+    {
+      path: "item.options.arrowOptions.invertColorScheme",
+      mapToSpec: function (invert, spec) {
+        objectPath.set(spec, "scales.2.reverse", invert);
       },
     },
     {
