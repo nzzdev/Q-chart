@@ -253,6 +253,22 @@
           },
           "default": "Bar"
         },
+        "yScaleType": {
+          "title": "Y scale type",
+          "type": "string",
+          "default": "linear",
+          "enum": ["linear", "log", "pow", "sqrt"],
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              }
+            ]
+          }
+        },
         "hideAxisLabel": {
           "title": "Achsenbeschriftung ausblenden",
           "type": "boolean",
@@ -273,6 +289,7 @@
             ]
           }
         },
+
         "hideLegend": {
           "title": "Legende ausblenden",
           "type": "boolean",

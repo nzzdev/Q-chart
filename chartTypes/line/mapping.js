@@ -163,6 +163,12 @@ module.exports = function getMappings() {
       },
     },
     {
+      path: "item.options.yScaleType",
+      mapToSpec: function (yScaleType, spec) {
+        objectPath.set(spec, "scales.1.type", yScaleType);
+      },
+    },
+    {
       path: "item.options.hideAxisLabel",
       mapToSpec: function (hideAxisLabel, spec) {
         if (
