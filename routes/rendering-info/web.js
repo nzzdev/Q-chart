@@ -47,6 +47,10 @@ module.exports = {
     const item = request.payload.item;
     const toolRuntimeConfig = request.payload.toolRuntimeConfig;
 
+    if (item.options.chartType.toLowerCase() === "line" && toolRuntimeConfig.removeHighlightDataSeries) {
+      item.options.highlightDataSeries.length = 0;
+    }
+
     // we need to register the color schemes configured by toolRuntimeConfig first
     // they are used for the legend later on therefore they cannot be configured in the web-svg handler only
     colorSchemeHelpers.registerColorSchemes(item, toolRuntimeConfig);
@@ -98,10 +102,6 @@ module.exports = {
       }
     } catch (e) {
       // nevermind and keep the default legendType;
-    }
-
-    if (toolRuntimeConfig.removeHighlightDataSeries) {
-      item.options.highlightDataSeries.length = 0;
     }
 
     const context = {
