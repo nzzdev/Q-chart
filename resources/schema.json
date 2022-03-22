@@ -257,7 +257,7 @@
           "title": "Y scale type",
           "type": "string",
           "default": "linear",
-          "enum": ["linear", "log", "pow", "sqrt"],
+          "enum": ["linear", "log"],
           "Q:options": {
             "availabilityChecks": [
               {
@@ -698,6 +698,10 @@
             "maxValue": {
               "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
+            },
+            "yAxisTicks": {
+              "title": "Manuele linien auf Y-aches (durch Komma trennen)",
+              "type": "string"
             },
             "reverseYScale": {
               "title": "Y-Achse invertieren",
