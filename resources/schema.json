@@ -26,6 +26,17 @@
           {
             "type": "ToolEndpoint",
             "config": {
+              "endpoint": "notification/logScaleMinValueRequirements",
+              "fields": ["options.yScaleType", "data"]
+            },
+            "priority": {
+              "type": "high",
+              "value": 0
+            }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
               "endpoint": "notification/supportedDateFormat",
               "fields": ["data"],
               "options": {
@@ -253,6 +264,22 @@
           },
           "default": "Bar"
         },
+        "yScaleType": {
+          "title": "Y scale type",
+          "type": "string",
+          "default": "linear",
+          "enum": ["linear", "log"],
+          "Q:options": {
+            "availabilityChecks": [
+              {
+                "type": "UserHasRole",
+                "config": {
+                  "role": "expert-chart"
+                }
+              }
+            ]
+          }
+        },
         "hideAxisLabel": {
           "title": "Achsenbeschriftung ausblenden",
           "type": "boolean",
@@ -273,6 +300,7 @@
             ]
           }
         },
+
         "hideLegend": {
           "title": "Legende ausblenden",
           "type": "boolean",
@@ -671,6 +699,19 @@
                 }
               }
             ],
+            "notificationChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "notification/checkMinValueYAxisLogScale",
+                  "fields": ["options.yScaleType", "options.lineChartOptions.minValue"]
+                },
+                "priority": {
+                  "type": "high",
+                  "value": 1
+                }
+              }
+            ],
             "expandable": true
           },
           "properties": {
@@ -681,6 +722,10 @@
             "maxValue": {
               "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
+            },
+            "yAxisTicks": {
+              "title": "Manuele linien auf Y-aches (durch Komma trennen)",
+              "type": "string"
             },
             "reverseYScale": {
               "title": "Y-Achse invertieren",

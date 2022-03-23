@@ -35,6 +35,14 @@
     "unsupportedDateFormatEvents": {
       "title": "Unsupported date format",
       "body": "This date format is not supported. Please check the handbook for a list of supported formats."
+    },
+    "logScaleMinValueRequirements": {
+      "title": "Unsupported min value",
+      "body": "When using a log scale all values must be greater than 0"
+    },
+    "checkMinValueYAxisLogScale": {
+      "title": "Invalid min value Y-axis",
+      "body": "When using a log scale the min value on the Y-axis must be greater than 0"
     }
   },
   "Diagramm": "Diagram",
@@ -118,5 +126,6 @@
   "durch 1 Milliarde": "by 1 billion",
   "Pfeile": "Arrows",
   "Farbschema": "Color scheme",
-  "Farbschema umkehren": "Invert color scheme"
+  "Farbschema umkehren": "Invert color scheme",
+  "Manuele linien auf Y-aches (durch Komma trennen)": "Manual ticks Y-axis (separate by commas)"
 }
