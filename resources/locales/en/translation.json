@@ -35,6 +35,10 @@
     "unsupportedDateFormatEvents": {
       "title": "Unsupported date format",
       "body": "This date format is not supported. Please check the handbook for a list of supported formats."
+    },
+    "logScaleMinValueRequirements": {
+      "title": "Unsupported min value",
+      "body": "When using a log scale all values must be greater than 0"
     }
   },
   "Diagramm": "Diagram",

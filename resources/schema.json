@@ -26,6 +26,17 @@
           {
             "type": "ToolEndpoint",
             "config": {
+              "endpoint": "notification/logScaleMinValueRequirements",
+              "fields": ["options.yScaleType", "data"]
+            },
+            "priority": {
+              "type": "high",
+              "value": 0
+            }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
               "endpoint": "notification/supportedDateFormat",
               "fields": ["data"],
               "options": {

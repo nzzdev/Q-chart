@@ -9,6 +9,7 @@ module.exports = [
   require("./fixtures/data.js"),
   require("./notification/dateNotInData.js"),
   require("./notification/hideAxisLabel.js"),
+  require("./notification/logScaleMinValueRequirements.js"),
   require("./notification/supportedDateFormat"),
   require("./notification/unsupportedDateFormat"),
   require("./notification/unsupportedDateFormatEvents"),

@@ -35,6 +35,10 @@
     "unsupportedDateFormatEvents": {
       "title": "Format de date invalide",
       "body": "Ce format de date n'est pas supporté. Veuillez consulter le manuel pour une liste des formats supportés."
+    },
+    "logScaleMinValueRequirements": {
+      "title": "Valeur minimale invalide",
+      "body": "Lors de l'utilisation d'une échelle logarithmique, toutes les valeurs doivent être supérieures à 0"
     }
   },
   "Diagramm": "Graphique",
