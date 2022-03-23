@@ -699,6 +699,19 @@
                 }
               }
             ],
+            "notificationChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "notification/checkMinValueYAxisLogScale",
+                  "fields": ["options.yScaleType", "options.lineChartOptions.minValue"]
+                },
+                "priority": {
+                  "type": "high",
+                  "value": 1
+                }
+              }
+            ],
             "expandable": true
           },
           "properties": {

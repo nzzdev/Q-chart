@@ -39,6 +39,10 @@
     "logScaleMinValueRequirements": {
       "title": "Unsupported min value",
       "body": "When using a log scale all values must be greater than 0"
+    },
+    "checkMinValueYAxisLogScale": {
+      "title": "Invalid min value Y-axis",
+      "body": "When using a log scale the min value on the Y-axis must be greater than 0"
     }
   },
   "Diagramm": "Diagram",

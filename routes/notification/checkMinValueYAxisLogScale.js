@@ -1,9 +1,8 @@
 const Joi = require("joi");
-const dataHelpers = require("../../helpers/data.js");
 
 module.exports = {
   method: "POST",
-  path: "/notification/logScaleMinValueRequirements",
+  path: "/notification/checkMinValueYAxisLogScale",
   options: {
     validate: {
       options: {
@@ -16,21 +15,21 @@ module.exports = {
   handler: function (request, h) {
     try {
       const item = request.payload.item;
-      const minVal = dataHelpers.getMinValue(item.data);
-      const yScaleType = item.options.yScaleType;
+      const yScaleType = item .options.yScaleType;
+      const minVal = item.options.lineChartOptions.minValue;
 
       if (yScaleType === "log" && minVal <= 0) {
         return {
           message: {
-            title: "notifications.logScaleMinValueRequirements.title",
-            body: "notifications.logScaleMinValueRequirements.body",
+            title: "notifications.checkMinValueYAxisLogScale.title",
+            body: "notifications.checkMinValueYAxisLogScale.body",
           },
         };
       }
 
       return null;
     } catch (err) {
-      console.log("Catch:logScaleMinValueRequirements", err);
+      console.log("Catch:checkMinValueYAxisLogScale", err);
       return null;
     }
   },

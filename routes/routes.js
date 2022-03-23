@@ -7,6 +7,7 @@ module.exports = [
   require("./dynamic-schema.js"),
   require("./health.js"),
   require("./fixtures/data.js"),
+  require("./notification/checkMinValueYAxisLogScale.js"),
   require("./notification/dateNotInData.js"),
   require("./notification/hideAxisLabel.js"),
   require("./notification/logScaleMinValueRequirements.js"),

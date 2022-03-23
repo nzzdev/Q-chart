@@ -39,6 +39,10 @@
     "logScaleMinValueRequirements": {
       "title": "Ungültiges min value",
       "body": "Bei Verwendung einer logarithmischen Skala müssen alle Werte größer als 0 sein"
+    },
+    "checkMinValueYAxisLogScale": {
+      "title": "Ungültiges min value Y-Skala",
+      "body": "Bei Verwendung einer logarithmischen Skala muss der Mindestwert auf der Y-Achse größer als 0 sein"
     }
   }
 }
