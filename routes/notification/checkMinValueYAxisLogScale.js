@@ -15,7 +15,7 @@ module.exports = {
   handler: function (request, h) {
     try {
       const item = request.payload.item;
-      const yScaleType = item .options.yScaleType;
+      const yScaleType = item.options.lineChartOptions.yScaleType;
       const minVal = item.options.lineChartOptions.minValue;
 
       if (yScaleType === "log" && minVal <= 0) {

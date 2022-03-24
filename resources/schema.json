@@ -688,7 +688,7 @@
                 "type": "ToolEndpoint",
                 "config": {
                   "endpoint": "notification/checkMinValueYAxisLogScale",
-                  "fields": ["options.yScaleType", "options.lineChartOptions.minValue"]
+                  "fields": ["options.lineChartOptions.yScaleType", "options.lineChartOptions.minValue"]
                 },
                 "priority": {
                   "type": "high",
@@ -722,10 +722,6 @@
             "maxValue": {
               "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
-            },
-            "yAxisTicks": {
-              "title": "Manuele linien auf Y-aches (durch Komma trennen)",
-              "type": "string"
             },
             "reverseYScale": {
               "title": "Y-Achse invertieren",

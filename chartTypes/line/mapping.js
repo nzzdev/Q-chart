@@ -226,6 +226,8 @@ module.exports = function getMappings() {
       },
     },
     {
+      // This is currently turned off in the frontend because for some reason vega still
+      // does some processing over the values and does not show the exact values we define.
       path: "item.options.lineChartOptions.yAxisTicks",
       mapToSpec: function (values, spec, mappingData) {
         if (values.length === 0) {
