@@ -163,19 +163,6 @@ module.exports = function getMappings() {
       },
     },
     {
-      path: "item.options.yScaleType",
-      mapToSpec: function (yScaleType, spec) {
-        objectPath.set(spec, "scales.1.type", yScaleType);
-
-        // Log scales must have a min value that is non-zero.
-        // If no minValue is set for the y-axis we will set it to 1 here,
-        // otherwise the linechart will be misdrawn and the user will be confused.
-        if (spec.scales[1].domainMin === undefined) {
-          objectPath.set(spec, "scales.1.domainMin", 1);
-        }
-      },
-    },
-    {
       path: "item.options.hideAxisLabel",
       mapToSpec: function (hideAxisLabel, spec) {
         if (
@@ -186,6 +173,19 @@ module.exports = function getMappings() {
           // unset the x axis label
           objectPath.set(spec, "axes.0.title", undefined);
           objectPath.set(spec, "height", spec.height - 20); // decrease the height because we do not need space for the axis title
+        }
+      },
+    },
+    {
+      path: "item.options.lineChartOptions.yScaleType",
+      mapToSpec: function (yScaleType, spec) {
+        objectPath.set(spec, "scales.1.type", yScaleType);
+
+        // Log scales must have a min value that is non-zero.
+        // If no minValue is set for the y-axis we will set it to 1 here,
+        // otherwise the linechart will be misdrawn and the user will be confused.
+        if (spec.scales[1].domainMin === undefined) {
+          objectPath.set(spec, "scales.1.domainMin", 1);
         }
       },
     },

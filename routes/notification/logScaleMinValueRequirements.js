@@ -16,10 +16,11 @@ module.exports = {
   handler: function (request, h) {
     try {
       const item = request.payload.item;
+      const chartType = item.options.chartType;
       const minVal = dataHelpers.getMinValue(item.data);
-      const yScaleType = item.options.yScaleType;
+      const yScaleType = item.options.lineChartOptions.yScaleType;
 
-      if (yScaleType === "log" && minVal <= 0) {
+      if (chartType === "Line" && yScaleType === "log" && minVal <= 0) {
         return {
           message: {
             title: "notifications.logScaleMinValueRequirements.title",
