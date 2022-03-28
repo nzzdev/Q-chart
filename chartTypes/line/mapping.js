@@ -177,6 +177,19 @@ module.exports = function getMappings() {
       },
     },
     {
+      path: "item.options.lineChartOptions.yScaleType",
+      mapToSpec: function (yScaleType, spec) {
+        objectPath.set(spec, "scales.1.type", yScaleType);
+
+        // Log scales must have a min value that is non-zero.
+        // If no minValue is set for the y-axis we will set it to 1 here,
+        // otherwise the linechart will be misdrawn and the user will be confused.
+        if (spec.scales[1].domainMin === undefined) {
+          objectPath.set(spec, "scales.1.domainMin", 1);
+        }
+      },
+    },
+    {
       path: "item.options.lineChartOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
         // check if we need to shorten the number labels
@@ -211,6 +224,20 @@ module.exports = function getMappings() {
         objectPath.set(spec, "scales.1.nice", false);
         objectPath.set(spec, "scales.1.domainMax", maxValue / divisor);
       },
+    },
+    {
+      // This is currently turned off in the frontend because for some reason vega still
+      // does some processing over the values and does not show the exact values we define.
+      path: "item.options.lineChartOptions.yAxisTicks",
+      mapToSpec: function (values, spec, mappingData) {
+        if (values.length === 0) {
+          values = undefined;
+        } else {
+          values = values.split(",");
+        }
+
+        objectPath.set(spec, "axes.1.values", values);
+      }
     },
     {
       path: "item.options.lineChartOptions.reverseYScale",

@@ -26,6 +26,17 @@
           {
             "type": "ToolEndpoint",
             "config": {
+              "endpoint": "notification/logScaleMinValueRequirements",
+              "fields": ["options.chartType", "options.lineChartOptions.yScaleType", "data"]
+            },
+            "priority": {
+              "type": "high",
+              "value": 0
+            }
+          },
+          {
+            "type": "ToolEndpoint",
+            "config": {
               "endpoint": "notification/supportedDateFormat",
               "fields": ["data"],
               "options": {
@@ -273,6 +284,7 @@
             ]
           }
         },
+
         "hideLegend": {
           "title": "Legende ausblenden",
           "type": "boolean",
@@ -671,9 +683,38 @@
                 }
               }
             ],
+            "notificationChecks": [
+              {
+                "type": "ToolEndpoint",
+                "config": {
+                  "endpoint": "notification/checkMinValueYAxisLogScale",
+                  "fields": ["options.lineChartOptions.yScaleType", "options.lineChartOptions.minValue"]
+                },
+                "priority": {
+                  "type": "high",
+                  "value": 1
+                }
+              }
+            ],
             "expandable": true
           },
           "properties": {
+            "yScaleType": {
+              "title": "Y scale type",
+              "type": "string",
+              "default": "linear",
+              "enum": ["linear", "log"],
+              "Q:options": {
+                "availabilityChecks": [
+                  {
+                    "type": "UserHasRole",
+                    "config": {
+                      "role": "expert-chart"
+                    }
+                  }
+                ]
+              }
+            },
             "minValue": {
               "title": "Minimaler Wert auf Y-Achse",
               "type": "number"

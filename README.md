@@ -4,6 +4,10 @@
 
 Q chart is a charting tool based on [Vega](https://github.com/vega/vega) for [Q](https://q.tools)
 
+## Important Notices
+
+- Do not update vega above 5.21 unless this oustanding [bug](https://github.com/vega/vega/issues/3451) is fixed and all test pass after updating.
+
 ## Table of contents
 
 - [Installation](#installation)
