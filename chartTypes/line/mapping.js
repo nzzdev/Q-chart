@@ -1,17 +1,31 @@
 const clone = require("clone");
 const objectPath = require("object-path");
-const intervals = require("../../helpers/dateSeries.js").intervals;
 const dateSeries = require("../../helpers/dateSeries.js");
 const dataHelpers = require("../../helpers/data.js");
 const { convertDateObjectsToTimestamps } = require("../../helpers/events.js");
-
 const commonMappings = require("../commonMappings.js");
-
 const annotation = require("./annotation.js");
 
-const d3 = {
-  array: require("d3-array"),
-};
+
+function applyYScaleMinValue(spec, mappingData, minValue = null) {
+  // check if we need to shorten the number labels
+  const divisor = dataHelpers.getDivisor(
+    mappingData.item.data,
+    mappingData.item.options.largeNumbers
+  );
+
+  const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
+
+
+  if (minValue && dataMinValue < minValue) {
+    minValue = dataMinValue;
+  } else {
+    minValue = dataMinValue;
+  }
+
+  objectPath.set(spec, "scales.1.nice", false);
+  objectPath.set(spec, "scales.1.domainMin", minValue / divisor);
+}
 
 module.exports = function getMappings() {
   return [
@@ -178,33 +192,22 @@ module.exports = function getMappings() {
     },
     {
       path: "item.options.lineChartOptions.yScaleType",
-      mapToSpec: function (yScaleType, spec) {
+      mapToSpec: function (yScaleType, spec, mappingData) {
         objectPath.set(spec, "scales.1.type", yScaleType);
 
         // Log scales must have a min value that is non-zero.
         // If no minValue is set for the y-axis we will set it to 1 here,
         // otherwise the linechart will be misdrawn and the user will be confused.
-        if (spec.scales[1].domainMin === undefined) {
-          objectPath.set(spec, "scales.1.domainMin", 1);
+        if (yScaleType === "log" && spec.scales[1].domainMin === undefined) {
+          objectPath.set(spec, "scales.1.zero", false);
+          applyYScaleMinValue(spec, mappingData);
         }
       },
     },
     {
       path: "item.options.lineChartOptions.minValue",
       mapToSpec: function (minValue, spec, mappingData) {
-        // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(
-          mappingData.item.data,
-          mappingData.item.options.largeNumbers
-        );
-
-        const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
-        if (dataMinValue < minValue) {
-          minValue = dataMinValue;
-        }
-
-        objectPath.set(spec, "scales.1.nice", false);
-        objectPath.set(spec, "scales.1.domainMin", minValue / divisor);
+        applyYScaleMinValue(spec, mappingData, minValue);
       },
     },
     {
@@ -236,7 +239,11 @@ module.exports = function getMappings() {
           values = values.split(",");
         }
 
-        objectPath.set(spec, "axes.1.values", values);
+        if (values) {
+          // You must disable tickCount when setting manual values.
+          objectPath.set(spec, "axes.1.tickCount", null);
+          objectPath.set(spec, "axes.1.values", values);
+        }
       }
     },
     {

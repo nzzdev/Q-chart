@@ -120,8 +120,9 @@ function getMaxValue(data) {
 
 function getMinValue(data) {
   const flatData = getFlatData(data).filter((value) => {
-    return value !== null && value !== undefined;
+    return typeof(value) === "number" && !isNaN(value)
   });
+
   return Math.min.apply(null, flatData);
 }
 
