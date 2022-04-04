@@ -700,7 +700,7 @@
           },
           "properties": {
             "yScaleType": {
-              "title": "Y scale type",
+              "title": "Skala Y-Achse",
               "type": "string",
               "default": "linear",
               "enum": ["linear", "log"],
@@ -724,7 +724,7 @@
               "type": "number"
             },
             "yAxisTicks": {
-              "title": "Manuele linien auf Y-aches (durch Komma trennen)",
+              "title": "Beschriftungen auf Y-Achse (Werte mit Kommas getrennt)",
               "type": "string"
             },
             "reverseYScale": {
