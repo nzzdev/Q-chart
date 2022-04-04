@@ -700,7 +700,7 @@
           },
           "properties": {
             "yScaleType": {
-              "title": "Y scale type",
+              "title": "Skala Y-Achse",
               "type": "string",
               "default": "linear",
               "enum": ["linear", "log"],
@@ -722,6 +722,10 @@
             "maxValue": {
               "title": "Maximaler Wert auf Y-Achse",
               "type": "number"
+            },
+            "yAxisTicks": {
+              "title": "Beschriftungen auf Y-Achse (Werte mit Kommas getrennt)",
+              "type": "string"
             },
             "reverseYScale": {
               "title": "Y-Achse invertieren",
