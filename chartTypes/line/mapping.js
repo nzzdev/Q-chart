@@ -16,10 +16,7 @@ function applyYScaleMinValue(spec, mappingData, minValue = null) {
 
   const dataMinValue = dataHelpers.getMinValue(mappingData.item.data);
 
-
   if (minValue && dataMinValue < minValue) {
-    minValue = dataMinValue;
-  } else {
     minValue = dataMinValue;
   }
 
