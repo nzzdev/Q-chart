@@ -17,7 +17,11 @@ module.exports = {
     try {
       const item = request.payload.item;
       const chartType = item.options.chartType;
-      const minVal = dataHelpers.getMinValue(item.data);
+
+      // First and foremost: cast all the floats in strings to actual floats.
+      const data = dataHelpers.getDataWithStringsCastedToFloats(item.data);
+
+      const minVal = dataHelpers.getMinValue(data);
       const yScaleType = item.options.lineChartOptions.yScaleType;
 
       if (chartType === "Line" && yScaleType === "log" && minVal <= 0) {
