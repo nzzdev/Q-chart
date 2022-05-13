@@ -46,6 +46,8 @@ function getLegendModel(item, toolRuntimeConfig, chartType) {
   let firstLabel = item.data[0][1];
   let lastLabel = item.data[0][2];
 
+  const reverseColorScheme = item.options.arrowOptions.invertColorScheme || false;
+
   const colorSchemeName = getColorSchemeName(item);
   let colorInterpolatorFunction;
   if (colorSchemeName) {
@@ -58,9 +60,18 @@ function getLegendModel(item, toolRuntimeConfig, chartType) {
   }
 
   if (hasOnlyPositiveChanges(item)) {
-    arrowColor = colorInterpolatorFunction(1);
+    if (reverseColorScheme) {
+      arrowColor = colorInterpolatorFunction(0);
+    } else {
+      arrowColor = colorInterpolatorFunction(1);
+    }
   } else if (hasOnlyNegativeOrZeroChanges(item)) {
-    arrowColor = colorInterpolatorFunction(0);
+    if (reverseColorScheme) {
+      arrowColor = colorInterpolatorFunction(1);
+    } else {
+      arrowColor = colorInterpolatorFunction(0);
+    }
+
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels
