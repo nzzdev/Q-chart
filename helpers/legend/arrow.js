@@ -65,8 +65,6 @@ function getLegendModel(item, toolRuntimeConfig, chartType) {
     } else {
       arrowColor = colorInterpolatorFunction(1);
     }
-
-    // arrowColor = colorInterpolatorFunction(1);
   } else if (hasOnlyNegativeOrZeroChanges(item)) {
     if (reverseColorScheme) {
       arrowColor = colorInterpolatorFunction(1);
@@ -74,7 +72,6 @@ function getLegendModel(item, toolRuntimeConfig, chartType) {
       arrowColor = colorInterpolatorFunction(0);
     }
 
-    // arrowColor = colorInterpolatorFunction(0);
     // rotate the arrow to point to the left
     arrowTranslate = "rotate(180 14.5 5.5)";
     // and switch the labels
