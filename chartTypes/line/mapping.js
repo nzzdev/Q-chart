@@ -234,26 +234,26 @@ module.exports = function getMappings() {
           values = values.split(",");
         }
 
-        // Get the highest precision from the values.
-        let precision = null;
-        for (let i  = 0; i < values.length; i++) {
-          const value = values[i];
-
-          const splitted = value.split('.');
-
-          if (splitted[1]) {
-            const l = splitted[1].length;
-
-            if (precision === null || l > precision) {
-              precision = splitted[1].length;
-            }
-          }
-        }
-
         if (values) {
           // You must disable tickCount when setting manual values.
           objectPath.set(spec, "axes.1.tickCount", null);
           objectPath.set(spec, "axes.1.values", values);
+
+          // Get the highest precision from the values.
+          let precision = null;
+          for (let i  = 0; i < values.length; i++) {
+            const value = values[i];
+
+            const splitted = value.split('.');
+
+            if (splitted[1]) {
+              const l = splitted[1].length;
+
+              if (precision === null || l > precision) {
+                precision = splitted[1].length;
+              }
+            }
+          }
 
           if (precision) {
             objectPath.set(spec, "axes.1.format", `.${precision}f`);
