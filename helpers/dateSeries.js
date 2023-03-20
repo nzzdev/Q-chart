@@ -888,14 +888,14 @@ const intervals = {
     },
   },
   minute: {
-    d3format: "%-d.\u2009%-m. %-H:%M Uhr",
+    d3format: "%-d.\u2009%-m. %-H.%M Uhr",
     ticks: (data) => {
       const { first, last } = getFirstAndLastDateFromData(data);
       const scale = d3Scale.scaleTime().domain([first, last]);
       const ticks = scale.ticks(d3Time.timeMinute.every(1));
       return ticks;
     },
-    label: "Minuten (1&#46;1&#46; 12&#058;15 Uhr)",
+    label: "Minuten (1&#46;1&#46; 12&#46;15 Uhr)",
     getFirstStepDateAfterDate: function (date) {
       const year = date.getFullYear();
       const month = date.getMonth();
