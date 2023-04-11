@@ -30,6 +30,42 @@ const hideRepeatingTickLabels = {
   },
 };
 
+// Set Monoblock font for all tick labels if number labels only
+const setTabularNumsTickLabels = {
+  process: function (svg, spec, item, toolRuntimeConfig) {
+    const svgDom = new JSDOM(svg);
+    const document = svgDom.window.document;
+
+    const labelGroups = document.querySelectorAll(".role-axis-label");
+
+    if (labelGroups.length === 1) {
+      console.log(xAxisGroup);
+    } else if (labelGroups.length === 2) {
+      const xAxisGroup = labelGroups[0];
+      const yAxisGroup = labelGroups[1];
+      const visibleTextNodes = Array.prototype.slice
+        .call(yAxisGroup.querySelectorAll("text"))
+        .filter((textNode) => textNode.getAttribute("opacity") === "1");
+      const selectAllLocalesAndDashes = new RegExp(
+        `/s|${d3config.formatLocale.decimal}|${d3config.formatLocale.thousands}|${d3config.formatLocale.minus}|-/g`
+      );
+      const allTextNodesAreNumbers = visibleTextNodes.every(
+        (textNode) =>
+          !isNaN(textNode.innerHTML.replace(selectAllLocalesAndDashes, ""))
+      );
+
+      // Only apply monoblock if all labels are numbers
+      if (allTextNodesAreNumbers) {
+        visibleTextNodes.forEach((textNode) => {
+          textNode.setAttribute("font-variant", "tabular-nums");
+        });
+      }
+    }
+
+    return document.body.innerHTML;
+  },
+};
+
 const hideRepeatingBarTopLabels = {
   process: function (svg, spec, item, toolRuntimeConfig) {
     const svgDom = new JSDOM(svg);
@@ -233,6 +269,7 @@ const showOnlyFirstAndLastLabel = {
 };
 
 module.exports = {
+  setTabularNumsTickLabels: setTabularNumsTickLabels,
   hideRepeatingTickLabels: hideRepeatingTickLabels,
   hideRepeatingBarTopLabels: hideRepeatingBarTopLabels,
   hideTicksWithoutLabels: hideTicksWithoutLabels,

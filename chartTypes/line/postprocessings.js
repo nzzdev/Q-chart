@@ -43,11 +43,12 @@ function reverseLineOrder(svg, spec, item, toolRuntimeConfig) {
 }
 
 module.exports = [
+  commonPostprocessings.setTabularNumsTickLabels,
   commonPostprocessings.hideRepeatingTickLabels,
   commonPostprocessings.hideTicksWithoutLabels,
   commonPostprocessings.highlightZeroGridLineIfPositiveAndNegative,
   commonPostprocessings.addOutlineToAnnotationLabels,
   {
-    process: reverseLineOrder
-  }
+    process: reverseLineOrder,
+  },
 ];
