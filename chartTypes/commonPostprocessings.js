@@ -38,9 +38,8 @@ const setTabularNumsTickLabels = {
 
     const labelGroups = document.querySelectorAll(".role-axis-label");
 
-    if (labelGroups.length === 1) {
-      console.log(xAxisGroup);
-    } else if (labelGroups.length === 2) {
+    // Only do this for charts with 2 axes, since you cannot know which axis is the y axis
+    if (labelGroups.length === 2) {
       const xAxisGroup = labelGroups[0];
       const yAxisGroup = labelGroups[1];
       const visibleTextNodes = Array.prototype.slice
