@@ -342,6 +342,7 @@ module.exports = function getMapping() {
       mapToSpec: function (hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
+          !objectPath.get(spec, "axes.1.title") ||
           objectPath.get(spec, "axes.1.title").length < 1
         ) {
           // unset the x axis label
