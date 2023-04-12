@@ -10,8 +10,8 @@ const format = locale.format(d3config.specifier);
 
 const commonMappings = require("../commonMappings.js");
 
-const getLongestDataLabel = require("../../helpers/data.js")
-  .getLongestDataLabel;
+const getLongestDataLabel =
+  require("../../helpers/data.js").getLongestDataLabel;
 
 const textMeasure = require("../../helpers/textMeasure.js");
 
@@ -40,17 +40,17 @@ module.exports = function getMapping() {
   return [
     {
       path: "item.data",
-      mapToSpec: function(itemData, spec, mappingData) {
+      mapToSpec: function (itemData, spec, mappingData) {
         const item = mappingData.item;
         // set the x axis title
         objectPath.set(spec, "axes.1.title", itemData[0][0]);
 
         // set the barWidth depending on the number of bars we will get
         const numberOfBars = (itemData.length - 1) * (itemData[0].length - 1);
-        const barWidthSignal = spec.signals.find(signal => {
+        const barWidthSignal = spec.signals.find((signal) => {
           return signal.name === "barWidth";
         });
-        const groupPaddingSignal = spec.signals.find(signal => {
+        const groupPaddingSignal = spec.signals.find((signal) => {
           return signal.name === "groupPadding";
         });
 
@@ -74,7 +74,10 @@ module.exports = function getMapping() {
         }
 
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(itemData, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          itemData,
+          mappingData.item.options.largeNumbers
+        );
 
         spec.data[0].values = clone(itemData)
           .slice(1) // take the header row out of the array
@@ -94,14 +97,14 @@ module.exports = function getMapping() {
                 labelWidth: textMeasure.getLabelTextWidth(
                   format(value),
                   mappingData.toolRuntimeConfig
-                )
+                ),
               };
             });
           })
           .flat();
 
         const numberOfDataSeriesSignal = spec.signals.find(
-          signal => signal.name === "numberOfDataSeries"
+          (signal) => signal.name === "numberOfDataSeries"
         );
         numberOfDataSeriesSignal.value = itemData[0].length - 1; // the first column is not a data column, so we subtract it
 
@@ -115,7 +118,7 @@ module.exports = function getMapping() {
           spec.axes[1].encode.title.update.align.value = "left";
 
           const labelHeightSignal = spec.signals.find(
-            signal => signal.name === "labelHeight"
+            (signal) => signal.name === "labelHeight"
           );
           labelHeightSignal.value = 16;
 
@@ -134,22 +137,22 @@ module.exports = function getMapping() {
             type: "text",
             name: "bar-top-label",
             from: {
-              data: "xValues"
+              data: "xValues",
             },
             encode: {
               update: {
                 text: labelText,
                 y: {
-                  signal: "-labelHeight/2"
+                  signal: "-labelHeight/2",
                 },
                 x: {
-                  signal: 4
+                  signal: 4,
                 },
                 baseline: {
-                  value: "middle"
-                }
-              }
-            }
+                  value: "middle",
+                },
+              },
+            },
           };
 
           // if all the values are negative, we right align the label
@@ -161,146 +164,148 @@ module.exports = function getMapping() {
 
           spec.marks[0].marks[0].marks.push(labelMark);
         }
-      }
+      },
     },
     {
       path: "item.options.annotations.valuesOnBars",
-      mapToSpec: function(valuesOnBars, spec, mappingData) {
+      mapToSpec: function (valuesOnBars, spec, mappingData) {
         if (!valuesOnBars) {
           return;
         }
 
         const valuePadding = 4;
         const tests = {
-          positiveInBar: `datum.datum.yValue >= 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
-            2}`,
+          positiveInBar: `datum.datum.yValue >= 0 && datum.width > datum.datum.labelWidth + ${
+            valuePadding * 2
+          }`,
           positiveRightOfBar: `datum.datum.yValue >= 0 && (width - datum.x2) > datum.datum.labelWidth + ${valuePadding}`,
           positiveElse: "datum.datum.yValue >= 0",
-          negativeInBar: `datum.datum.yValue < 0 && datum.width > datum.datum.labelWidth + ${valuePadding *
-            2}`,
+          negativeInBar: `datum.datum.yValue < 0 && datum.width > datum.datum.labelWidth + ${
+            valuePadding * 2
+          }`,
           negativeLeftOfBar: `datum.datum.yValue < 0 && (datum.x) > datum.datum.labelWidth + ${valuePadding}`,
-          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > contrast('white', datum.fill)`
+          contrastFineForDark: `contrast('${mappingData.toolRuntimeConfig.text.fill}', datum.fill) > contrast('white', datum.fill)`,
         };
 
         const valueLabelMark = {
           type: "text",
           from: {
-            data: "bar"
+            data: "bar",
           },
           encode: {
             enter: {
               y: {
-                field: "y"
+                field: "y",
               },
               dy: {
                 signal: "(barWidth / 2) + 0.5", // Adds offset of 0.5px in order to vertically center the label within the bar
               },
               baseline: {
-                value: "middle"
+                value: "middle",
               },
               x: [
                 {
                   test: tests.positiveInBar,
-                  field: "x2"
+                  field: "x2",
                 },
                 {
                   test: tests.positiveRightOfBar,
-                  field: "x2"
+                  field: "x2",
                 },
                 {
                   test: tests.positiveElse,
-                  field: "x"
+                  field: "x",
                 },
                 {
                   test: tests.negativeInBar,
-                  field: "x"
+                  field: "x",
                 },
                 {
                   test: tests.negativeLeftOfBar,
-                  field: "x"
+                  field: "x",
                 },
                 {
-                  field: "x2"
-                }
+                  field: "x2",
+                },
               ],
               align: [
                 {
                   test: tests.positiveInBar,
-                  value: "right"
+                  value: "right",
                 },
                 {
                   test: tests.positiveRightOfBar,
-                  value: "left"
+                  value: "left",
                 },
                 {
                   test: tests.positiveElse,
-                  value: "right"
+                  value: "right",
                 },
                 {
                   test: tests.negativeInBar,
-                  value: "left"
+                  value: "left",
                 },
                 {
                   test: tests.negativeLeftOfBar,
-                  value: "right"
+                  value: "right",
                 },
                 {
-                  value: "left"
-                }
+                  value: "left",
+                },
               ],
               dx: [
                 {
                   test: tests.positiveInBar,
-                  value: -valuePadding
+                  value: -valuePadding,
                 },
                 {
                   test: tests.positiveRightOfBar,
-                  value: valuePadding
+                  value: valuePadding,
                 },
                 {
                   test: tests.positiveElse,
-                  value: -valuePadding
+                  value: -valuePadding,
                 },
                 {
                   test: tests.negativeInBar,
-                  value: valuePadding
+                  value: valuePadding,
                 },
                 {
                   test: tests.negativeLeftOfBar,
-                  value: -valuePadding
+                  value: -valuePadding,
                 },
                 {
-                  value: valuePadding
-                }
+                  value: valuePadding,
+                },
               ],
               fill: [
                 {
                   test:
                     tests.positiveInBar + " && " + tests.contrastFineForDark,
-                  value: mappingData.toolRuntimeConfig.text.fill
+                  value: mappingData.toolRuntimeConfig.text.fill,
                 },
                 {
                   test: tests.positiveInBar,
-                  value: "white"
+                  value: "white",
                 },
                 {
                   test:
                     tests.negativeInBar + " && " + tests.contrastFineForDark,
-                  value: mappingData.toolRuntimeConfig.text.fill
+                  value: mappingData.toolRuntimeConfig.text.fill,
                 },
                 {
                   test: tests.negativeInBar,
-                  value: "white"
+                  value: "white",
                 },
                 {
-                  value: mappingData.toolRuntimeConfig.text.fill
-                }
+                  value: mappingData.toolRuntimeConfig.text.fill,
+                },
               ],
               text: {
-                signal: `format(datum.datum.yValue, "${d3config.specifier}")`
-              }
-            }
-          }
+                signal: `format(datum.datum.yValue, "${d3config.specifier}")`,
+              },
+            },
+          },
         };
 
         // add the value label marks
@@ -330,26 +335,30 @@ module.exports = function getMapping() {
 
         // make sure the axis is drawn on top, so it's in front of positive and negative bars
         objectPath.set(spec, "axes.0.zindex", 1);
-      }
+      },
     },
     {
       path: "item.options.hideAxisLabel",
-      mapToSpec: function(hideAxisLabel, spec) {
+      mapToSpec: function (hideAxisLabel, spec) {
         if (
           hideAxisLabel === true ||
+          !objectPath.get(spec, "axes.1.title") ||
           objectPath.get(spec, "axes.1.title").length < 1
         ) {
           // unset the x axis label
           objectPath.set(spec, "axes.1.title", undefined);
           objectPath.set(spec, "height", spec.height - 30); // decrease the height because we do not need space for the axis title
         }
-      }
+      },
     },
     {
       path: "item.options.barOptions.maxValue",
-      mapToSpec: function(maxValue, spec, mappingData) {
+      mapToSpec: function (maxValue, spec, mappingData) {
         // check if we need to shorten the number labels
-        const divisor = dataHelpers.getDivisor(mappingData.item.data, mappingData.item.options.largeNumbers);
+        const divisor = dataHelpers.getDivisor(
+          mappingData.item.data,
+          mappingData.item.options.largeNumbers
+        );
 
         const dataMaxValue = dataHelpers.getMaxValue(mappingData.item.data);
         if (dataMaxValue > maxValue) {
@@ -358,8 +367,8 @@ module.exports = function getMapping() {
 
         objectPath.set(spec, "scales.0.nice", false);
         objectPath.set(spec, "scales.0.domainMax", maxValue / divisor);
-      }
-    }
+      },
+    },
   ]
     .concat(commonMappings.getColorOverwritesRowsMappings())
     .concat(commonMappings.getHighlightRowsMapping())
