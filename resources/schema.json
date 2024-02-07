@@ -27,7 +27,11 @@
             "type": "ToolEndpoint",
             "config": {
               "endpoint": "notification/logScaleMinValueRequirements",
-              "fields": ["options.chartType", "options.lineChartOptions.yScaleType", "data"]
+              "fields": [
+                "options.chartType",
+                "options.lineChartOptions.yScaleType",
+                "data"
+              ]
             },
             "priority": {
               "type": "high",
@@ -231,36 +235,7 @@
                 "fields": ["data"]
               }
             },
-            "notificationChecks": [
-              {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "notification/shouldBeBarChart",
-                  "fields": ["data", "options.chartType"],
-                  "options": {
-                    "limit": 2
-                  }
-                },
-                "priority": {
-                  "type": "medium",
-                  "value": 3
-                }
-              },
-              {
-                "type": "ToolEndpoint",
-                "config": {
-                  "endpoint": "notification/shouldBeLineChart",
-                  "fields": ["data", "options.chartType"],
-                  "options": {
-                    "limit": 40
-                  }
-                },
-                "priority": {
-                  "type": "medium",
-                  "value": 4
-                }
-              }
-            ]
+            "notificationChecks": []
           },
           "default": "Bar"
         },
@@ -688,7 +663,10 @@
                 "type": "ToolEndpoint",
                 "config": {
                   "endpoint": "notification/checkMinValueYAxisLogScale",
-                  "fields": ["options.lineChartOptions.yScaleType", "options.lineChartOptions.minValue"]
+                  "fields": [
+                    "options.lineChartOptions.yScaleType",
+                    "options.lineChartOptions.minValue"
+                  ]
                 },
                 "priority": {
                   "type": "high",
