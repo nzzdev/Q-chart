@@ -14,8 +14,6 @@ module.exports = [
   require("./notification/supportedDateFormat"),
   require("./notification/unsupportedDateFormat"),
   require("./notification/unsupportedDateFormatEvents"),
-  require("./notification/shouldBeBarChart.js"),
-  require("./notification/shouldBeLineChart.js"),
   require("./notification/shouldBeBars.js"),
   require("./notification/tooManyRows.js"),
   require("./locales.js"),
